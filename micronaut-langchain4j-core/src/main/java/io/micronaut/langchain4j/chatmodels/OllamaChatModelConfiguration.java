@@ -6,9 +6,9 @@ import io.micronaut.context.annotation.ConfigurationBuilder;
 import io.micronaut.context.annotation.EachProperty;
 import io.micronaut.context.annotation.Requires;
 
-@EachProperty(value = OllamaChatModels.PREFIX, primary = "default")
+@EachProperty(value = OllamaChatModelConfiguration.PREFIX, primary = "default")
 @Requires(classes = OllamaLanguageModel.class)
-public class OllamaChatModels {
+public class OllamaChatModelConfiguration {
     public static final String PREFIX = "langchain4j.ollama.chat-models";
     @ConfigurationBuilder(prefixes = "")
     OllamaChatModel.OllamaChatModelBuilder builder = OllamaChatModel.builder();

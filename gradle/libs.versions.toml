@@ -36,6 +36,12 @@ micronaut-logging = { module = 'io.micronaut.logging:micronaut-logging-bom', ver
 micronaut-test-resources = { module = 'io.micronaut.testresources:micronaut-test-resources-bom', version.ref = 'micronaut-test-resources' }
 langchain4j = { module = 'dev.langchain4j:langchain4j' }
 langchain4j-ollama = { module = 'dev.langchain4j:langchain4j-ollama' }
+langchain4j-bedrock = { module = 'dev.langchain4j:langchain4j-bedrock' }
+langchain4j-anthropic = { module = 'dev.langchain4j:langchain4j-anthropic' }
+langchain4j-vertex-ai-gemini = { module = 'dev.langchain4j:langchain4j-vertex-ai-gemini' }
+langchain4j-vertex-ai = { module = 'dev.langchain4j:langchain4j-vertex-ai' }
+langchain4j-mistral-ai = { module = 'dev.langchain4j:langchain4j-mistral-ai' }
+langchain4j-open-ai = { module = 'dev.langchain4j:langchain4j-open-ai' }
 
 # BOMs
 boms-langchain4j = { module = "dev.langchain4j:langchain4j-bom", version.ref = "managed-langchain4j" }
