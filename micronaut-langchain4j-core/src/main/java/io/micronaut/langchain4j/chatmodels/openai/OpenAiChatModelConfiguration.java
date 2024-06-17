@@ -1,4 +1,4 @@
-package io.micronaut.langchain4j.chatmodels;
+package io.micronaut.langchain4j.chatmodels.openai;
 
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiLanguageModel;

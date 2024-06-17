@@ -1,14 +1,14 @@
-package io.micronaut.langchain4j.chatmodels;
+package io.micronaut.langchain4j.chatmodels.openai;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.ollama.OllamaLanguageModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.EachBean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.langchain4j.chatmodels.ollama.OllamaChatModelConfiguration;
 
-@Requires(classes = OllamaLanguageModel.class)
+@Requires(classes = OpenAiChatModel.class)
 @Factory
 public class OpenAiChatModelFactory {
     @EachBean(OllamaChatModelConfiguration.class)

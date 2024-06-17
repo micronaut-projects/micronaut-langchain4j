@@ -1,5 +1,7 @@
 plugins {
     id("io.micronaut.build.internal.langchain4j-module")
+    id("io.micronaut.test-resources")
+    id("org.graalvm.buildtools.native")
 }
 
 dependencies {
@@ -8,6 +10,7 @@ dependencies {
     api(libs.langchain4j)
     compileOnly(libs.langchain4j.ollama)
     compileOnly(libs.langchain4j.open.ai)
+    compileOnly(libs.langchain4j.azure.open.ai)
     compileOnly(libs.langchain4j.bedrock)
     compileOnly(libs.langchain4j.anthropic)
     compileOnly(libs.langchain4j.mistral.ai)
@@ -18,7 +21,7 @@ dependencies {
     testImplementation(libs.langchain4j.ollama)
     testImplementation(mnTest.micronaut.test.junit5)
     testRuntimeOnly(mnLogging.logback.classic)
-    testRuntimeOnly(mnTestResources.micronaut.test.resources.embedded)
-    testRuntimeOnly(projects.micronautLangchain4jOllamaTestresource)
+//    testRuntimeOnly(mnTestResources.micronaut.test.resources.embedded)
+    testResourcesService(projects.micronautLangchain4jOllamaTestresource)
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }

@@ -42,6 +42,7 @@ langchain4j-vertex-ai-gemini = { module = 'dev.langchain4j:langchain4j-vertex-ai
 langchain4j-vertex-ai = { module = 'dev.langchain4j:langchain4j-vertex-ai' }
 langchain4j-mistral-ai = { module = 'dev.langchain4j:langchain4j-mistral-ai' }
 langchain4j-open-ai = { module = 'dev.langchain4j:langchain4j-open-ai' }
+langchain4j-azure-open-ai = { module = 'dev.langchain4j:langchain4j-azure-open-ai' }
 
 # BOMs
 boms-langchain4j = { module = "dev.langchain4j:langchain4j-bom", version.ref = "managed-langchain4j" }

@@ -1,4 +1,4 @@
-package io.micronaut.langchain4j.chatmodels;
+package io.micronaut.langchain4j.chatmodels.ollama;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.ollama.OllamaChatModel;
