@@ -1,0 +1,6 @@
+plugins {
+    id 'io.micronaut.build.internal.langchain4j-base'
+    id "io.micronaut.build.internal.module"
+}
+
+dependencies {}
