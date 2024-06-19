@@ -16,8 +16,11 @@
 package io.micronaut.langchain4j.vertexai;
 
 import dev.langchain4j.model.vertexai.VertexAiChatModel;
+import dev.langchain4j.model.vertexai.VertexAiImageModel;
 import io.micronaut.langchain4j.annotation.ChatLanguageModelProvider;
+import io.micronaut.langchain4j.annotation.ImageLanguageModelProvider;
 
 @ChatLanguageModelProvider(VertexAiChatModel.class)
+@ImageLanguageModelProvider(VertexAiImageModel.class)
 final class VertexAiModule {
 }

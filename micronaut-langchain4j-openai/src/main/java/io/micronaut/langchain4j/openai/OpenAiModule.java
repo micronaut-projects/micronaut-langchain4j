@@ -16,10 +16,16 @@
 package io.micronaut.langchain4j.openai;
 
 import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.model.openai.OpenAiImageModel;
 import io.micronaut.langchain4j.annotation.ChatLanguageModelProvider;
+import io.micronaut.langchain4j.annotation.ImageLanguageModelProvider;
 
 @ChatLanguageModelProvider(
     value = OpenAiChatModel.class,
     optionalInject = {"tokenizer", "proxy", "listeners"})
+@ImageLanguageModelProvider(
+    value = OpenAiImageModel.class,
+    optionalInject = {"tokenizer", "proxy", "listeners"}
+)
 final class OpenAiModule {
 }

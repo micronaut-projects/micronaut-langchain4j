@@ -20,7 +20,7 @@ import io.micronaut.core.annotation.Internal;
 import io.micronaut.langchain4j.annotation.ChatLanguageModelProvider;
 
 /**
- * Generates the configuration binding for Ollama.
+ * Generates the configuration binding for Anthropic.
  */
 @ChatLanguageModelProvider(AnthropicChatModel.class)
 @Internal

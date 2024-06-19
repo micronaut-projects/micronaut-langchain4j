@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.azure.core.credential.TokenCredential;
 import dev.langchain4j.model.azure.AzureOpenAiChatModel;
+import dev.langchain4j.model.image.ImageModel;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.test.annotation.MockBean;
@@ -15,6 +16,7 @@ import reactor.core.publisher.Mono;
 @MicronautTest
 //@Property(name = "langchain4j.azure-open-ai.chat-models.default.model-name", value = "orca-mini")
 @Property(name = "langchain4j.azure-open-ai.chat-models.default.endpoint", value = "blah")
+@Property(name = "langchain4j.azure-open-ai.image-models.default.endpoint", value = "blah")
 @Property(name = "langchain4j.azure-open-ai.chat-models.default.response-format", value = "json_object")
 public class AzureTest {
 
@@ -29,6 +31,11 @@ public class AzureTest {
         assertNotNull(chatLanguageModelConfiguration);
         AzureOpenAiChatModel model = chatLanguageModelConfiguration.getBuilder().build();
         assertNotNull(model);
+    }
+
+    @Test
+    void testImageModel(ImageModel imageModel) {
+        assertNotNull(imageModel);
     }
 
     @MockBean

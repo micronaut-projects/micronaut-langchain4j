@@ -19,13 +19,20 @@ import com.azure.ai.openai.models.ChatCompletionsJsonResponseFormat;
 import com.azure.ai.openai.models.ChatCompletionsResponseFormat;
 import com.azure.ai.openai.models.ChatCompletionsTextResponseFormat;
 import dev.langchain4j.model.azure.AzureOpenAiChatModel;
+import dev.langchain4j.model.azure.AzureOpenAiImageModel;
 import io.micronaut.core.convert.MutableConversionService;
 import io.micronaut.core.convert.TypeConverterRegistrar;
 import io.micronaut.langchain4j.annotation.ChatLanguageModelProvider;
+import io.micronaut.langchain4j.annotation.ImageLanguageModelProvider;
 import jakarta.inject.Singleton;
 
 @ChatLanguageModelProvider(
     value = AzureOpenAiChatModel.class,
+    requiredInject = {"tokenCredential"},
+    optionalInject = {"proxyOptions", "keyCredential", "enhancements", "dataSources", "tokenizer"}
+)
+@ImageLanguageModelProvider(
+    value = AzureOpenAiImageModel.class,
     requiredInject = {"tokenCredential"},
     optionalInject = {"proxyOptions", "keyCredential", "enhancements", "dataSources", "tokenizer"}
 )
