@@ -4,3 +4,9 @@ plugins {
 }
 
 dependencies {}
+
+micronautBuild {
+    binaryCompatibility {
+        enabled = false
+    }
+}
