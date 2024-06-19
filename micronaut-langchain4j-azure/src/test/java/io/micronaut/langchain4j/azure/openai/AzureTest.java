@@ -1,11 +1,8 @@
 package io.micronaut.langchain4j.azure.openai;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.azure.core.credential.AccessToken;
 import com.azure.core.credential.TokenCredential;
-import com.azure.core.credential.TokenRequestContext;
 import dev.langchain4j.model.azure.AzureOpenAiChatModel;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Property;
