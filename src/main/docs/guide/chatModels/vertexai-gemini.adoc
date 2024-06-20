@@ -2,4 +2,4 @@ Add the following dependency:
 
 dependency:io.micronaut.langchain4j:micronaut-langchain4j-vertexai-gemini[]
 
-Then add the link:configurationreference.html#io.micronaut.langchain4j.vertexai.gemini.VertexAiGeminiChatModelConfiguration[necessary configuration].
+Then add the link:configurationreference.html#io.micronaut.langchain4j.vertexai.gemini.DefaultVertexAiGeminiChatModelConfiguration[necessary configuration].
