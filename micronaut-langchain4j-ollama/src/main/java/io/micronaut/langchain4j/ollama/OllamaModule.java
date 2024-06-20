@@ -15,14 +15,25 @@
  */
 package io.micronaut.langchain4j.ollama;
 
+import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.image.ImageModel;
 import dev.langchain4j.model.ollama.OllamaChatModel;
+import dev.langchain4j.model.ollama.OllamaStreamingChatModel;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.langchain4j.annotation.ChatLanguageModelProvider;
+import io.micronaut.langchain4j.annotation.ModelProvider;
 
 /**
  * Generates the configuration binding for Ollama.
  */
-@ChatLanguageModelProvider(OllamaChatModel.class)
+@ModelProvider(
+    kind = ChatLanguageModel.class,
+    impl = OllamaChatModel.class
+)
+@ModelProvider(
+    kind = StreamingChatLanguageModel.class,
+    impl = OllamaStreamingChatModel.class
+)
 @Internal
 final class OllamaModule {
 }

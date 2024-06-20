@@ -1,2 +1,1 @@
-io.micronaut.langchain4j.sourcegen.ChatLanguageModelVisitor
-io.micronaut.langchain4j.sourcegen.ImageModelVisitor
+io.micronaut.langchain4j.sourcegen.Langchain4jModelVisitor

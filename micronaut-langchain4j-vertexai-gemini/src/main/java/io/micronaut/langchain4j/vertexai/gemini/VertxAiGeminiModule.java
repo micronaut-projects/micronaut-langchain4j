@@ -15,9 +15,22 @@
  */
 package io.micronaut.langchain4j.vertexai.gemini;
 
+import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.image.ImageModel;
 import dev.langchain4j.model.vertexai.VertexAiGeminiChatModel;
-import io.micronaut.langchain4j.annotation.ChatLanguageModelProvider;
+import dev.langchain4j.model.vertexai.VertexAiGeminiStreamingChatModel;
+import io.micronaut.langchain4j.annotation.ModelProvider;
 
-@ChatLanguageModelProvider(VertexAiGeminiChatModel.class)
+@ModelProvider(
+    kind = ChatLanguageModel.class,
+    impl = VertexAiGeminiChatModel.class,
+    optionalInject = {"tokenizer", "proxy", "listeners"}
+)
+@ModelProvider(
+    kind = StreamingChatLanguageModel.class,
+    impl = VertexAiGeminiStreamingChatModel.class,
+    optionalInject = {"tokenizer", "proxy", "listeners"}
+)
 final class VertxAiGeminiModule {
 }

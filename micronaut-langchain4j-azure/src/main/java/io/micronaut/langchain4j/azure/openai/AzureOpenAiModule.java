@@ -20,19 +20,30 @@ import com.azure.ai.openai.models.ChatCompletionsResponseFormat;
 import com.azure.ai.openai.models.ChatCompletionsTextResponseFormat;
 import dev.langchain4j.model.azure.AzureOpenAiChatModel;
 import dev.langchain4j.model.azure.AzureOpenAiImageModel;
+import dev.langchain4j.model.azure.AzureOpenAiStreamingChatModel;
+import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.image.ImageModel;
 import io.micronaut.core.convert.MutableConversionService;
 import io.micronaut.core.convert.TypeConverterRegistrar;
-import io.micronaut.langchain4j.annotation.ChatLanguageModelProvider;
-import io.micronaut.langchain4j.annotation.ImageLanguageModelProvider;
+import io.micronaut.langchain4j.annotation.ModelProvider;
 import jakarta.inject.Singleton;
 
-@ChatLanguageModelProvider(
-    value = AzureOpenAiChatModel.class,
+@ModelProvider(
+    kind = ChatLanguageModel.class,
+    impl = AzureOpenAiChatModel.class,
     requiredInject = {"tokenCredential"},
     optionalInject = {"proxyOptions", "keyCredential", "enhancements", "dataSources", "tokenizer"}
 )
-@ImageLanguageModelProvider(
-    value = AzureOpenAiImageModel.class,
+@ModelProvider(
+    kind = StreamingChatLanguageModel.class,
+    impl = AzureOpenAiStreamingChatModel.class,
+    requiredInject = {"tokenCredential"},
+    optionalInject = {"proxyOptions", "keyCredential", "enhancements", "dataSources", "tokenizer"}
+)
+@ModelProvider(
+    kind = ImageModel.class,
+    impl = AzureOpenAiImageModel.class,
     requiredInject = {"tokenCredential"},
     optionalInject = {"proxyOptions", "keyCredential", "enhancements", "dataSources", "tokenizer"}
 )

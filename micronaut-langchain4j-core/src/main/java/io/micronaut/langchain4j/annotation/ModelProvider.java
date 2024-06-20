@@ -15,7 +15,7 @@
  */
 package io.micronaut.langchain4j.annotation;
 
-import dev.langchain4j.model.image.ImageModel;
+import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -23,11 +23,13 @@ import java.lang.annotation.RetentionPolicy;
  * Generates the code necessary to integrate a ChatLanguageModel provider.
  */
 @Retention(RetentionPolicy.SOURCE)
-public @interface ImageLanguageModelProvider {
+@Repeatable(ModelProvider.List.class)
+public @interface ModelProvider {
+    Class<?> kind();
     /**
      * @return The language model type.
      */
-    Class<? extends ImageModel> value();
+    Class<?> impl();
 
     /**
      * Names of builder options that are required injection points.
@@ -40,4 +42,8 @@ public @interface ImageLanguageModelProvider {
      * @return The name of the builder methods
      */
     String[] optionalInject() default {};
+
+    @interface List {
+        ModelProvider[] value();
+    }
 }

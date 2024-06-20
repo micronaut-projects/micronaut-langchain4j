@@ -4,7 +4,7 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.SystemMessage;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Property;
-import io.micronaut.langchain4j.annotation.AiService;
+import io.micronaut.langchain4j.annotation.RegisterAiService;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Assertions;
@@ -32,7 +32,7 @@ public class OllamaTest {
         Assertions.assertNotNull(result);
     }
 
-    @AiService
+    @RegisterAiService
     interface Friend {
 
         @SystemMessage("You are a good friend of mine. Answer using slang.")

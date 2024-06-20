@@ -23,10 +23,10 @@ import io.micronaut.aop.MethodInvocationContext;
 import io.micronaut.context.BeanContext;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.inject.qualifiers.Qualifiers;
-import io.micronaut.langchain4j.annotation.AiService;
+import io.micronaut.langchain4j.annotation.RegisterAiService;
 import java.util.concurrent.ConcurrentHashMap;
 
-@InterceptorBean(AiService.class)
+@InterceptorBean(RegisterAiService.class)
 public class AiServiceInterceptor implements MethodInterceptor<Object, Object> {
     private final ConcurrentHashMap<Class<Object>, Object> cachedAiServices = new ConcurrentHashMap<>();
     private final BeanContext beanContext;
@@ -37,12 +37,15 @@ public class AiServiceInterceptor implements MethodInterceptor<Object, Object> {
 
     @Override
     public @Nullable Object intercept(MethodInvocationContext<Object, Object> context) {
-        String name = context.stringValue(AiService.class).orElse("default");
+        String name = context.stringValue(RegisterAiService.class).orElse("default");
         Class<Object> declaringType = context.getDeclaringType();
         Object target = cachedAiServices.get(declaringType);
         if (target == null) {
             ChatLanguageModel chatLanguageModel = beanContext.getBean(ChatLanguageModel.class, Qualifiers.byName(name));
-            target = AiServices.create(declaringType, chatLanguageModel);
+            target = AiServices
+                        .builder(declaringType)
+                        .chatLanguageModel(chatLanguageModel)
+                        .build();
             cachedAiServices.put(declaringType, target);
         }
         return context.getExecutableMethod().invoke(

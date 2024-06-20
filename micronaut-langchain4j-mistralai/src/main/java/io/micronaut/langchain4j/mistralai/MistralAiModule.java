@@ -15,9 +15,19 @@
  */
 package io.micronaut.langchain4j.mistralai;
 
+import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import dev.langchain4j.model.mistralai.MistralAiChatModel;
-import io.micronaut.langchain4j.annotation.ChatLanguageModelProvider;
+import dev.langchain4j.model.mistralai.MistralAiStreamingChatModel;
+import io.micronaut.langchain4j.annotation.ModelProvider;
 
-@ChatLanguageModelProvider(MistralAiChatModel.class)
+@ModelProvider(
+    kind = ChatLanguageModel.class,
+    impl = MistralAiChatModel.class
+)
+@ModelProvider(
+    kind = StreamingChatLanguageModel.class,
+    impl = MistralAiStreamingChatModel.class
+)
 final class MistralAiModule {
 }

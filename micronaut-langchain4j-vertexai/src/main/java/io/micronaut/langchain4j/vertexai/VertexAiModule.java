@@ -15,12 +15,21 @@
  */
 package io.micronaut.langchain4j.vertexai;
 
+import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.image.ImageModel;
 import dev.langchain4j.model.vertexai.VertexAiChatModel;
 import dev.langchain4j.model.vertexai.VertexAiImageModel;
-import io.micronaut.langchain4j.annotation.ChatLanguageModelProvider;
-import io.micronaut.langchain4j.annotation.ImageLanguageModelProvider;
+import io.micronaut.langchain4j.annotation.ModelProvider;
 
-@ChatLanguageModelProvider(VertexAiChatModel.class)
-@ImageLanguageModelProvider(VertexAiImageModel.class)
+@ModelProvider(
+    kind = ChatLanguageModel.class,
+    impl = VertexAiChatModel.class,
+    optionalInject = {"tokenizer", "proxy", "listeners"}
+)
+@ModelProvider(
+    kind = ImageModel.class,
+    impl = VertexAiImageModel.class,
+    optionalInject = {"tokenizer", "proxy", "listeners"})
 final class VertexAiModule {
 }

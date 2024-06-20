@@ -8,6 +8,7 @@ import io.micronaut.context.annotation.EachBean;
 import io.micronaut.context.annotation.EachProperty;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Parameter;
+import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.naming.NameUtils;
 import io.micronaut.core.util.ArrayUtils;
@@ -18,6 +19,7 @@ import io.micronaut.inject.ast.MethodElement;
 import io.micronaut.inject.processing.ProcessingException;
 import io.micronaut.inject.visitor.TypeElementVisitor;
 import io.micronaut.inject.visitor.VisitorContext;
+import io.micronaut.langchain4j.annotation.ModelProvider;
 import io.micronaut.sourcegen.generator.SourceGenerator;
 import io.micronaut.sourcegen.generator.SourceGenerators;
 import io.micronaut.sourcegen.model.AnnotationDef;
@@ -35,14 +37,19 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import javax.lang.model.element.Modifier;
 
-public abstract sealed class AbstractLangchain4jModelVisitor<A extends Annotation> implements TypeElementVisitor<A, Object> permits ChatLanguageModelVisitor, ImageModelVisitor {
+public class Langchain4jModelVisitor implements TypeElementVisitor<ModelProvider.List, Object> {
     public static final String CONFIG_PREFIX = "langchain4j.";
+    private static final Map<String, String> MODEL_NAME_MAPPINGS = Map.of(
+        "ChatLanguageModel", "ChatModel",
+        "StreamingChatLanguageModel", "StreamingChatModel"
+    );
 
-    private ClassDef buildFactory(ClassDef configurationDef, ClassElement builderType, String factoryName, ClassElement languageModel) {
+    private ClassDef buildFactory(ClassDef configurationDef, ClassElement builderType, String factoryName, ClassElement languageModel, ClassElement languageModelKind) {
         ClassTypeDef configTypeDef = configurationDef.asTypeDef();
         ClassTypeDef builderTypeDef = ClassTypeDef.of(builderType);
         return ClassDef.builder(factoryName)
@@ -67,7 +74,7 @@ public abstract sealed class AbstractLangchain4jModelVisitor<A extends Annotatio
                 MethodDef.builder("model")
                     .addModifiers(Modifier.PROTECTED)
                     .addAnnotation(AnnotationDef.builder(Bean.class)
-                        .addMember("typed", new VariableDef.StaticField(TypeDef.of(lang4jType()), "class", TypeDef.of(Class.class)))
+                        .addMember("typed", new VariableDef.StaticField(TypeDef.of(languageModelKind), "class", TypeDef.of(Class.class)))
                         .build())
                     .addAnnotation(AnnotationDef.builder(EachBean.class)
                         .addMember("value", new VariableDef.StaticField(builderTypeDef, "class", TypeDef.of(Class.class)))
@@ -83,8 +90,6 @@ public abstract sealed class AbstractLangchain4jModelVisitor<A extends Annotatio
                     .build()
             ).build();
     }
-
-    protected abstract Class<?> lang4jType();
 
     private static void writeJavaSource(
         SourceGenerator generator,
@@ -144,10 +149,10 @@ public abstract sealed class AbstractLangchain4jModelVisitor<A extends Annotatio
                 .build());
 
         for (String requiredInject : requiredInjects) {
-            AbstractLangchain4jModelVisitor.addInjectionPoint(builderType, requiredInject, true, classDefBuilder);
+            Langchain4jModelVisitor.addInjectionPoint(builderType, requiredInject, true, classDefBuilder);
         }
         for (String optionalInject : optionalInjects) {
-            AbstractLangchain4jModelVisitor.addInjectionPoint(builderType, optionalInject, false, classDefBuilder);
+            Langchain4jModelVisitor.addInjectionPoint(builderType, optionalInject, false, classDefBuilder);
         }
 
         Optional<MethodElement> modelNameMethod = builderType.getEnclosedElement(
@@ -213,58 +218,72 @@ public abstract sealed class AbstractLangchain4jModelVisitor<A extends Annotatio
 
     @Override
     public Set<String> getSupportedAnnotationNames() {
-        return Set.of(annotationType().getName());
+        return Set.of(ModelProvider.List.class.getName());
     }
-
-    protected abstract Class<? extends Annotation> annotationType();
-
-    protected abstract String configurationKey();
-
-    protected abstract String getModelKind();
 
     @Override
     public void visitClass(ClassElement element, VisitorContext context) {
         SourceGenerator generator = SourceGenerators.findByLanguage(context.getLanguage()).orElse(null);
         if (generator != null) {
-            String modelKind = getModelKind();
-            String modelSuffix = configurationKey();
-            Class<? extends Annotation> providerAnnotation = annotationType();
-            ClassElement languageModel = element.stringValue(providerAnnotation)
-                .flatMap(context::getClassElement)
-                .orElse(null);
-            String[] requiredInjects = element.stringValues(providerAnnotation, "requiredInject");
-            String[] optionalInjects = element.stringValues(providerAnnotation, "optionalInject");
-            String packageName = element.getPackageName();
-            if (StringUtils.isNotEmpty(packageName) && languageModel != null) {
+            List<AnnotationValue<ModelProvider>> providers = element.getAnnotationValuesByType(ModelProvider.class);
+            for (AnnotationValue<ModelProvider> provider : providers) {
 
-                String modelName = NameUtils.decapitalize(languageModel.getSimpleName());
-                if (modelName.endsWith(modelKind)) {
-                    modelName = modelName.substring(0, modelName.length() - modelKind.length());
+                ClassElement languageModel = provider.stringValue( "impl")
+                    .flatMap(context::getClassElement)
+                    .orElse(null);
+                ClassElement languageModelKind = provider.stringValue("kind")
+                    .flatMap(context::getClassElement)
+                    .orElse(null);
+
+                if (languageModelKind == null) {
+                    throw new ProcessingException(element, "@ModelProvider kind must be on the compilation classpath");
                 }
-                ClassElement builderType = languageModel.getEnclosedElement(
-                    ElementQuery.ALL_METHODS.onlyStatic().onlyAccessible().onlyConcrete().named("builder")
-                ).map(MethodElement::getGenericReturnType).orElse(null);
+                if (languageModel == null) {
+                    throw new ProcessingException(element, "@ModelProvider kind must be on the compilation classpath");
+                }
 
-                if (builderType != null) {
+                String modelKind = MODEL_NAME_MAPPINGS.getOrDefault(languageModelKind.getSimpleName(), languageModelKind.getSimpleName());
+                String modelSuffix = NameUtils.hyphenate(modelKind, true) + "s";
+                String[] requiredInjects = provider.stringValues("requiredInject");
+                String[] optionalInjects = provider.stringValues( "optionalInject");
+                String packageName = element.getPackageName();
+                if (StringUtils.isNotEmpty(packageName)) {
 
-                    String prefix = CONFIG_PREFIX + NameUtils.hyphenate(modelName, true) + "." + modelSuffix;
-                    String configurationClassSimpleName = languageModel.getSimpleName() + "Configuration";
-                    String configurationClassName = packageName + "." + configurationClassSimpleName;
-                    ClassDef configurationDef = AbstractLangchain4jModelVisitor.buildConfigurationDef(
-                        prefix,
-                        configurationClassName,
-                        languageModel,
-                        builderType,
-                        requiredInjects,
-                        optionalInjects
-                    );
-                    AbstractLangchain4jModelVisitor.writeJavaSource(generator, context, element, packageName, configurationClassSimpleName, configurationDef, modelKind);
+                    String modelName = NameUtils.decapitalize(languageModel.getSimpleName());
+                    if (modelName.endsWith(modelKind)) {
+                        modelName = modelName.substring(0, modelName.length() - modelKind.length());
+                    }
+                    ClassElement builderType = languageModel.getEnclosedElement(
+                        ElementQuery.ALL_METHODS.onlyStatic().onlyAccessible().onlyConcrete().named("builder")
+                    ).map(MethodElement::getGenericReturnType).orElse(null);
 
-                    String factorySimpleName = languageModel.getSimpleName() + "Factory";
-                    String factoryName = packageName + "." + factorySimpleName;
-                    ClassDef factoryDef = buildFactory(configurationDef, builderType, factoryName, languageModel);
-                    AbstractLangchain4jModelVisitor.writeJavaSource(generator, context, element, packageName, factorySimpleName, factoryDef, modelKind);
+                    if (builderType != null) {
 
+                        String prefix = CONFIG_PREFIX + NameUtils.hyphenate(modelName, true) + "." + modelSuffix;
+                        String configurationClassSimpleName = languageModel.getSimpleName() + "Configuration";
+                        String configurationClassName = packageName + "." + configurationClassSimpleName;
+                        ClassDef configurationDef = Langchain4jModelVisitor.buildConfigurationDef(
+                            prefix,
+                            configurationClassName,
+                            languageModel,
+                            builderType,
+                            requiredInjects,
+                            optionalInjects
+                        );
+                        Langchain4jModelVisitor.writeJavaSource(generator, context, element, packageName, configurationClassSimpleName, configurationDef, modelKind);
+
+                        String factorySimpleName = languageModel.getSimpleName() + "Factory";
+                        String factoryName = packageName + "." + factorySimpleName;
+                        ClassDef factoryDef = buildFactory(
+                            configurationDef,
+                            builderType,
+                            factoryName,
+                            languageModel,
+                            languageModelKind
+                        );
+                        Langchain4jModelVisitor.writeJavaSource(generator, context, element, packageName, factorySimpleName, factoryDef, modelKind);
+
+                    }
                 }
             }
         }

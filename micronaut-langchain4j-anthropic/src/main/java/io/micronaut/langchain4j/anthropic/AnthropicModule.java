@@ -16,13 +16,23 @@
 package io.micronaut.langchain4j.anthropic;
 
 import dev.langchain4j.model.anthropic.AnthropicChatModel;
+import dev.langchain4j.model.anthropic.AnthropicStreamingChatModel;
+import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.langchain4j.annotation.ChatLanguageModelProvider;
+import io.micronaut.langchain4j.annotation.ModelProvider;
 
 /**
  * Generates the configuration binding for Anthropic.
  */
-@ChatLanguageModelProvider(AnthropicChatModel.class)
+@ModelProvider(
+    kind = ChatLanguageModel.class,
+    impl = AnthropicChatModel.class
+)
+@ModelProvider(
+    kind = StreamingChatLanguageModel.class,
+    impl = AnthropicStreamingChatModel.class
+)
 @Internal
 final class AnthropicModule {
 }

@@ -28,13 +28,13 @@ Now you can inject an instance of
 
 You can also define new https://docs.langchain4j.dev/tutorials/ai-services[AI services]:
 
-.Defining `@AiService` interfaces
+.Defining `@RegisterAiService` interfaces
 snippet::example.Friend[project-base="doc-examples/example", source="main"]
 
-<1> Define an interface annotated with ann:langchain4j.annotation.AiService[]
+<1> Define an interface annotated with ann:langchain4j.annotation.RegisterAiService[]
 <2> Use Langchain4j annotations like `@SystemMessage`
 
-You can now inject the `@AiService` definition into any Micronaut component including tests:
+You can now inject the `@RegisterAiService` definition into any Micronaut component including tests:
 
-.Calling `@AiService` definitions
+.Calling `@RegisterAiService` definitions
 snippet::example.AiServiceTest[project-base="doc-examples/example", source="test"]

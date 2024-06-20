@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
 @Introduction
 @Documented
 @ReflectiveAccess
-public @interface AiService {
+public @interface RegisterAiService {
     /**
      * The name of a configured AI model.
      * @return The model name.
