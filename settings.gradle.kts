@@ -43,5 +43,6 @@ configure<io.micronaut.build.MicronautBuildSettingsExtension> {
     importMicronautCatalog("micronaut-sourcegen")
     importMicronautCatalog("micronaut-test-resources")
     importMicronautCatalog("micronaut-logging")
+    importMicronautCatalog("micronaut-serde")
     // importMicronautCatalog("micronaut-validation")
 }

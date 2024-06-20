@@ -1,1 +1,1 @@
-TODO
+This module provides integration between Micronaut and https://docs.langchain4j.dev[Langchain4j].

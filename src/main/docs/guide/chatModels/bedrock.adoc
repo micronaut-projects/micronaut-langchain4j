@@ -1,0 +1,9 @@
+Add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-bedrock[]
+
+Then add the link:configurationreference.html#io.micronaut.langchain4j.bedrock.BedrockLlamaChatModelConfiguration[necessary configuration].
+
+You will additionally need to define a bean of type https://sdk.amazonaws.com/java/api/latest/software/amazon/awssdk/auth/credentials/AwsCredentialsProvider.html[AwsCredentialsProvider].
+
+One way to do this is to include the https://micronaut-projects.github.io/micronaut-aws/latest/guide/#sdkv2[AWS SDK module].

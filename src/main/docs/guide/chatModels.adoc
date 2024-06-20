@@ -1,0 +1,3 @@
+The following modules provide integration with Langchain4j https://docs.langchain4j.dev/category/language-models[Language Models].
+
+Each module configures one or more https://docs.langchain4j.dev/apidocs/dev/langchain4j/model/chat/ChatLanguageModel.html[ChatLanguageModel] beans, making them available for dependency injection based on configuration.

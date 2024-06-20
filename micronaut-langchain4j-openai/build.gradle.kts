@@ -6,7 +6,6 @@ dependencies {
     annotationProcessor(projects.micronautLangchain4jProcessor)
     annotationProcessor(mn.micronaut.inject.java)
     annotationProcessor(mnSourcegen.micronaut.sourcegen.generator.java)
-    api(platform(libs.boms.langchain4j))
     api(projects.micronautLangchain4jCore)
     implementation(libs.langchain4j.open.ai)
     testAnnotationProcessor(mn.micronaut.inject.java)

@@ -1,1 +1,40 @@
-TODO
+Add the following annotation processor dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-processor[scope="annotationProcessor"]
+
+Then the core module:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-core[]
+
+You are now ready to configure one of the <<chatModels, Chat Language Models>>, for the quick start we will use <<ollama, Ollama>>:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-ollama[]
+
+To test the integration add the test resources integration to your https://micronaut-projects.github.io/micronaut-maven-plugin/latest/examples/test-resources.html[Maven build] or https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/#_the_test_resources_plugin[Gradle build].
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-ollama-testresources[scope="testResourcesService"]
+
+NOTE: For Maven see https://micronaut-projects.github.io/micronaut-maven-plugin/latest/examples/test-resources.html#adding_modules_or_libraries_to_the_test_resources_service_classpath[Adding modules or libraries to the Test Resources service classpath].
+
+Add the necessary configuration to configure the model name you want to use:
+
+.Configuring the Model Name
+[configuration]
+----
+langchain4j.ollama.chat-models.default.model-name: orca-mini
+----
+
+Now you can inject an instance of
+
+You can also define new https://docs.langchain4j.dev/tutorials/ai-services[AI services]:
+
+.Defining `@AiService` interfaces
+snippet::example.Friend[project-base="doc-examples/example", source="main"]
+
+<1> Define an interface annotated with ann:langchain4j.annotation.AiService[]
+<2> Use Langchain4j annotations like `@SystemMessage`
+
+You can now inject the `@AiService` definition into any Micronaut component including tests:
+
+.Calling `@AiService` definitions
+snippet::example.AiServiceTest[project-base="doc-examples/example", source="test"]

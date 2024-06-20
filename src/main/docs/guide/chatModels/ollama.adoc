@@ -1,0 +1,5 @@
+Add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-ollama[]
+
+Then add the link:configurationreference.html#io.micronaut.langchain4j.ollama.OllamaChatModelConfiguration[necessary configuration].

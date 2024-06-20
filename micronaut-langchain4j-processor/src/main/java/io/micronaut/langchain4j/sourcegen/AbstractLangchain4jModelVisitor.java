@@ -46,9 +46,11 @@ public abstract sealed class AbstractLangchain4jModelVisitor<A extends Annotatio
         ClassTypeDef configTypeDef = configurationDef.asTypeDef();
         ClassTypeDef builderTypeDef = ClassTypeDef.of(builderType);
         return ClassDef.builder(factoryName)
+            .addModifiers(Modifier.PUBLIC)
             .addAnnotation(Factory.class)
             .addMethod(
                 MethodDef.builder("builder")
+                    .addModifiers(Modifier.PROTECTED)
                     .addAnnotation(AnnotationDef.builder(EachBean.class)
                         .addMember("value", new VariableDef.StaticField(configTypeDef, "class", TypeDef.of(Class.class)))
                         .build())
@@ -63,6 +65,7 @@ public abstract sealed class AbstractLangchain4jModelVisitor<A extends Annotatio
                     .build()
             ).addMethod(
                 MethodDef.builder("model")
+                    .addModifiers(Modifier.PROTECTED)
                     .addAnnotation(AnnotationDef.builder(Bean.class)
                         .addMember("typed", new VariableDef.StaticField(TypeDef.of(lang4jType()), "class", TypeDef.of(Class.class)))
                         .build())
@@ -110,6 +113,7 @@ public abstract sealed class AbstractLangchain4jModelVisitor<A extends Annotatio
             .initializer(new ExpressionDef.Constant(TypeDef.of(String.class), prefix)).build();
         String[] allExcludes = ArrayUtils.concat(requiredInjects, optionalInjects);
         ClassDef.ClassDefBuilder classDefBuilder = ClassDef.builder(configurationClassName)
+            .addModifiers(Modifier.PUBLIC)
             .addAnnotation(AnnotationDef.builder(EachProperty.class)
                 .addMember("value", prefix)
                 .addMember("primary", "default")
@@ -185,6 +189,7 @@ public abstract sealed class AbstractLangchain4jModelVisitor<A extends Annotatio
             );
             classDefBuilder.addMethod(
                 MethodDef.builder(methodName)
+                    .addModifiers(Modifier.PROTECTED)
                     .returns(void.class)
                     .addParameter(parameterDefBuilder.build())
                     .addAnnotation(Inject.class)

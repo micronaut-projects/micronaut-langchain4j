@@ -3,9 +3,9 @@ plugins {
 }
 
 dependencies {
-    implementation(platform(libs.boms.langchain4j))
     implementation(mn.micronaut.core.processor)
     implementation(mnSourcegen.micronaut.sourcegen.generator)
+    implementation(mnSourcegen.micronaut.sourcegen.generator.java)
     implementation(projects.micronautLangchain4jCore)
     testImplementation(mn.micronaut.inject.java.test)
     testImplementation(libs.langchain4j.ollama)

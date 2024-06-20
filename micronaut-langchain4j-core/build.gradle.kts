@@ -5,7 +5,6 @@ plugins {
 }
 
 dependencies {
-    api(platform(libs.boms.langchain4j))
     api(mn.micronaut.context)
     api(libs.langchain4j)
     testAnnotationProcessor(mn.micronaut.inject.java)

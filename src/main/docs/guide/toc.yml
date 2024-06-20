@@ -1,7 +1,17 @@
 introduction:
   title: Introduction
-releaseHistory: Release History
 quickStart:
   title: Quick Start
+chatModels:
+  title: Chat Language Models
+  anthropic: Anthropic
+  azure: Azure
+  bedrock: Bedrock
+  mistralai: MistralAi
+  ollama: Ollama
+  openai: OpenAi
+  vertexai: VertexAi
+  vertexai-gemini: VertexAi Gemini
 repository: Repository
+releaseHistory: Release History
 
