@@ -17,17 +17,26 @@ package io.micronaut.langchain4j.bedrock;
 
 import dev.langchain4j.model.bedrock.BedrockAnthropicStreamingChatModel;
 import dev.langchain4j.model.bedrock.BedrockLlamaChatModel;
+import dev.langchain4j.model.bedrock.BedrockTitanEmbeddingModel;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.embedding.EmbeddingModel;
 import io.micronaut.langchain4j.annotation.ModelProvider;
 
 @ModelProvider(
     kind = ChatLanguageModel.class,
-    impl = BedrockLlamaChatModel.class
+    impl = BedrockLlamaChatModel.class,
+    requiredInject = "credentialsProvider"
 )
 @ModelProvider(
     kind = StreamingChatLanguageModel.class,
-    impl = BedrockAnthropicStreamingChatModel.class
+    impl = BedrockAnthropicStreamingChatModel.class,
+    requiredInject = "credentialsProvider"
+)
+@ModelProvider(
+    kind = EmbeddingModel.class,
+    impl = BedrockTitanEmbeddingModel.class,
+    requiredInject = "credentialsProvider"
 )
 final class BedrockModule {
 }

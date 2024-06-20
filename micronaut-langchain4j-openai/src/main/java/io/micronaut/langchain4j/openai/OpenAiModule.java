@@ -17,15 +17,29 @@ package io.micronaut.langchain4j.openai;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.image.ImageModel;
+import dev.langchain4j.model.moderation.ModerationModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.model.openai.OpenAiEmbeddingModel;
 import dev.langchain4j.model.openai.OpenAiImageModel;
+import dev.langchain4j.model.openai.OpenAiModerationModel;
 import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
 import io.micronaut.langchain4j.annotation.ModelProvider;
 
 @ModelProvider(
     kind = ChatLanguageModel.class,
     impl = OpenAiChatModel.class,
+    optionalInject = {"tokenizer", "proxy", "listeners"}
+)
+@ModelProvider(
+    kind = ModerationModel.class,
+    impl = OpenAiModerationModel.class,
+    optionalInject = {"tokenizer", "proxy", "listeners"}
+)
+@ModelProvider(
+    kind = EmbeddingModel.class,
+    impl = OpenAiEmbeddingModel.class,
     optionalInject = {"tokenizer", "proxy", "listeners"}
 )
 @ModelProvider(

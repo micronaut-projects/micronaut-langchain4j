@@ -19,10 +19,12 @@ import com.azure.ai.openai.models.ChatCompletionsJsonResponseFormat;
 import com.azure.ai.openai.models.ChatCompletionsResponseFormat;
 import com.azure.ai.openai.models.ChatCompletionsTextResponseFormat;
 import dev.langchain4j.model.azure.AzureOpenAiChatModel;
+import dev.langchain4j.model.azure.AzureOpenAiEmbeddingModel;
 import dev.langchain4j.model.azure.AzureOpenAiImageModel;
 import dev.langchain4j.model.azure.AzureOpenAiStreamingChatModel;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.image.ImageModel;
 import io.micronaut.core.convert.MutableConversionService;
 import io.micronaut.core.convert.TypeConverterRegistrar;
@@ -44,6 +46,12 @@ import jakarta.inject.Singleton;
 @ModelProvider(
     kind = ImageModel.class,
     impl = AzureOpenAiImageModel.class,
+    requiredInject = {"tokenCredential"},
+    optionalInject = {"proxyOptions", "keyCredential", "enhancements", "dataSources", "tokenizer"}
+)
+@ModelProvider(
+    kind = EmbeddingModel.class,
+    impl = AzureOpenAiEmbeddingModel.class,
     requiredInject = {"tokenCredential"},
     optionalInject = {"proxyOptions", "keyCredential", "enhancements", "dataSources", "tokenizer"}
 )

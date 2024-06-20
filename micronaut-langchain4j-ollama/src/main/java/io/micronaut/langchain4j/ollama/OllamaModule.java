@@ -17,7 +17,9 @@ package io.micronaut.langchain4j.ollama;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.ollama.OllamaChatModel;
+import dev.langchain4j.model.ollama.OllamaEmbeddingModel;
 import dev.langchain4j.model.ollama.OllamaStreamingChatModel;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.langchain4j.annotation.ModelProvider;
@@ -32,6 +34,10 @@ import io.micronaut.langchain4j.annotation.ModelProvider;
 @ModelProvider(
     kind = StreamingChatLanguageModel.class,
     impl = OllamaStreamingChatModel.class
+)
+@ModelProvider(
+    kind = EmbeddingModel.class,
+    impl = OllamaEmbeddingModel.class
 )
 @Internal
 final class OllamaModule {

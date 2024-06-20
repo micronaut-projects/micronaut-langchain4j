@@ -17,8 +17,10 @@ package io.micronaut.langchain4j.vertexai;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.image.ImageModel;
 import dev.langchain4j.model.vertexai.VertexAiChatModel;
+import dev.langchain4j.model.vertexai.VertexAiEmbeddingModel;
 import dev.langchain4j.model.vertexai.VertexAiImageModel;
 import io.micronaut.langchain4j.annotation.ModelProvider;
 
@@ -31,5 +33,10 @@ import io.micronaut.langchain4j.annotation.ModelProvider;
     kind = ImageModel.class,
     impl = VertexAiImageModel.class,
     optionalInject = {"tokenizer", "proxy", "listeners"})
+@ModelProvider(
+    kind = EmbeddingModel.class,
+    impl = VertexAiEmbeddingModel.class,
+    optionalInject = {"tokenizer", "proxy", "listeners"}
+)
 final class VertexAiModule {
 }
