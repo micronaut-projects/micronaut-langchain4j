@@ -10,14 +10,15 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
 @MicronautTest
-@Property(name = "langchain4j.vertex-ai.chat-models.orca-mini.endpoint", value = "blah")
-@Property(name = "langchain4j.vertex-ai.chat-models.orca-mini.project", value = "myproject")
-@Property(name = "langchain4j.vertex-ai.chat-models.orca-mini.location", value = "somewhere")
-@Property(name = "langchain4j.vertex-ai.chat-models.orca-mini.publisher", value = "whoever")
+@Property(name = "langchain4j.vertex-ai.chat-model.endpoint", value = "blah")
+@Property(name = "langchain4j.vertex-ai.chat-model.model-name", value = "blah")
+@Property(name = "langchain4j.vertex-ai.chat-model.project", value = "myproject")
+@Property(name = "langchain4j.vertex-ai.chat-model.location", value = "somewhere")
+@Property(name = "langchain4j.vertex-ai.chat-model.publisher", value = "whoever")
 public class VertexAiTest {
 
     @Inject
-    VertexAiChatModelConfiguration chatLanguageModelConfiguration;
+    DefaultVertexAiChatModelConfiguration chatLanguageModelConfiguration;
 
     @Inject
     ApplicationContext applicationContext;

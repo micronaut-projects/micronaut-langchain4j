@@ -29,8 +29,7 @@ public class OllamaTestContainerProvider
     extends AbstractTestContainersProvider<OllamaContainer> {
     public static final String MODEL_NAME = "model-name";
     public static final String BASE_URL = "base-url";
-    private static final String PREFIX = "langchain4j.ollama.chat-models";
-    private static final List<String> SUPPORTED_LIST = List.of(BASE_URL);
+    private static final String PREFIX = "langchain4j.ollama.chat-model";
 
     @Override
     protected String getSimpleName() {
@@ -48,14 +47,8 @@ public class OllamaTestContainerProvider
     }
 
     @Override
-    public List<String> getRequiredPropertyEntries() {
-        return List.of(PREFIX);
-    }
-
-    @Override
     protected Optional<String> resolveProperty(String propertyName, OllamaContainer container) {
-        String prop = languageModelPropertyFrom(propertyName);
-        if (BASE_URL.equals(prop)) {
+        if (propertyName.endsWith(BASE_URL)) {
             return Optional.ofNullable(container.getEndpoint());
         }
         return Optional.empty();
@@ -63,10 +56,12 @@ public class OllamaTestContainerProvider
 
     @Override
     public List<String> getResolvableProperties(Map<String, Collection<String>> propertyEntries, Map<String, Object> testResourcesConfig) {
-        Collection<String> chatModels = propertyEntries.getOrDefault(PREFIX, Collections.emptyList());
-        return chatModels.stream()
-            .flatMap(chatModel -> SUPPORTED_LIST.stream().map(p -> PREFIX + "." + chatModel + "." + p))
-            .toList();
+        return List.of(PREFIX + '.' + BASE_URL);
+    }
+
+    @Override
+    public List<String> getRequiredPropertyEntries() {
+        return List.of(PREFIX);
     }
 
     @Override
@@ -77,10 +72,7 @@ public class OllamaTestContainerProvider
     @Override
     public List<String> getRequiredProperties(String expression) {
         if (isOllamaProperty(expression)) {
-            String datasource = languageModelNameFrom(expression);
-            return Stream.of(
-                    languageModelExpressionOf(datasource, MODEL_NAME)
-            ).toList();
+            return List.of(PREFIX + '.' + MODEL_NAME);
         } else {
             return Collections.emptyList();
         }
@@ -88,15 +80,6 @@ public class OllamaTestContainerProvider
 
     private boolean isOllamaProperty(String expression) {
         return expression.startsWith(PREFIX);
-    }
-
-    protected static String languageModelNameFrom(String expression) {
-        expression = expression.substring(PREFIX.length() + 1);
-        return expression.substring(0, expression.indexOf('.'));
-    }
-
-    protected static String languageModelExpressionOf(String languageModel, String property) {
-        return PREFIX + "." + languageModel + "." + property;
     }
 
     protected static String languageModelPropertyFrom(String expression) {

@@ -7,6 +7,7 @@ import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import org.junit.jupiter.api.Test;
 
 @MicronautTest
@@ -14,7 +15,8 @@ import org.junit.jupiter.api.Test;
 public class AnthropicTest {
 
     @Inject
-    AnthropicChatModelConfiguration chatLanguageModelConfiguration;
+    @Named("orca-mini")
+    NamedAnthropicChatModelConfiguration chatLanguageModelConfiguration;
 
     @Inject
     ApplicationContext applicationContext;

@@ -10,11 +10,11 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
 @MicronautTest
-@Property(name = "langchain4j.open-ai.chat-models.orca-mini.api-key", value = "blah")
+@Property(name = "langchain4j.open-ai.chat-model.api-key", value = "blah")
 public class OpenAiAiTest {
 
     @Inject
-    OpenAiChatModelConfiguration chatLanguageModelConfiguration;
+    DefaultOpenAiChatModelConfiguration chatLanguageModelConfiguration;
 
     @Inject
     ApplicationContext applicationContext;

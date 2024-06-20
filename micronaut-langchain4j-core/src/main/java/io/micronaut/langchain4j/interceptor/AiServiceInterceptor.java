@@ -37,11 +37,14 @@ public class AiServiceInterceptor implements MethodInterceptor<Object, Object> {
 
     @Override
     public @Nullable Object intercept(MethodInvocationContext<Object, Object> context) {
-        String name = context.stringValue(RegisterAiService.class).orElse("default");
+        String name = context.stringValue(RegisterAiService.class).orElse(null);
         Class<Object> declaringType = context.getDeclaringType();
         Object target = cachedAiServices.get(declaringType);
         if (target == null) {
-            ChatLanguageModel chatLanguageModel = beanContext.getBean(ChatLanguageModel.class, Qualifiers.byName(name));
+            ChatLanguageModel chatLanguageModel = beanContext.getBean(
+                ChatLanguageModel.class,
+                name != null ? Qualifiers.byName(name) : null
+            );
             target = AiServices
                         .builder(declaringType)
                         .chatLanguageModel(chatLanguageModel)

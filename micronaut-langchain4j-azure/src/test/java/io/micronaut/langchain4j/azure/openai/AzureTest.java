@@ -10,6 +10,7 @@ import io.micronaut.context.annotation.Property;
 import io.micronaut.test.annotation.MockBean;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 
@@ -21,7 +22,8 @@ import reactor.core.publisher.Mono;
 public class AzureTest {
 
     @Inject
-    AzureOpenAiChatModelConfiguration chatLanguageModelConfiguration;
+    @Named("default")
+    NamedAzureOpenAiChatModelConfiguration chatLanguageModelConfiguration;
 
     @Inject
     ApplicationContext applicationContext;

@@ -1,6 +1,5 @@
 plugins {
     id("io.micronaut.build.internal.langchain4j-module")
-    id("io.micronaut.test-resources")
 }
 
 dependencies {
@@ -14,6 +13,7 @@ dependencies {
     testImplementation(libs.langchain4j.ollama)
     testImplementation(mnTest.micronaut.test.junit5)
     testRuntimeOnly(mnLogging.logback.classic)
-    testResourcesService(projects.micronautLangchain4jOllamaTestresource)
+    testRuntimeOnly(mnTestResources.micronaut.test.resources.embedded)
+    testRuntimeOnly(projects.micronautLangchain4jOllamaTestresource)
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }

@@ -11,11 +11,11 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
 @MicronautTest
-@Property(name = "langchain4j.mistral-ai.chat-models.orca-mini.api-key", value = "blah")
+@Property(name = "langchain4j.mistral-ai.chat-model.api-key", value = "blah")
 public class MistalAiTest {
 
     @Inject
-    MistralAiChatModelConfiguration chatLanguageModelConfiguration;
+    DefaultMistralAiChatModelConfiguration chatLanguageModelConfiguration;
 
     @Inject
     ApplicationContext applicationContext;
