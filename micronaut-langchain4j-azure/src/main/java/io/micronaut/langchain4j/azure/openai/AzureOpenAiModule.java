@@ -28,33 +28,62 @@ import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.image.ImageModel;
 import io.micronaut.core.convert.MutableConversionService;
 import io.micronaut.core.convert.TypeConverterRegistrar;
-import io.micronaut.langchain4j.annotation.ModelProvider;
+import io.micronaut.langchain4j.annotation.Lang4jConfig;
+import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
+import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
 import jakarta.inject.Singleton;
 
-@ModelProvider(
-    kind = ChatLanguageModel.class,
-    impl = AzureOpenAiChatModel.class,
-    requiredInject = {"tokenCredential"},
-    optionalInject = {"proxyOptions", "keyCredential", "enhancements", "dataSources", "tokenizer"}
+@Lang4jConfig(
+    models = {
+        @Model(
+            kind = ChatLanguageModel.class,
+            impl = AzureOpenAiChatModel.class)
+        ,
+        @Model(
+            kind = StreamingChatLanguageModel.class,
+            impl = AzureOpenAiStreamingChatModel.class
+        ),
+        @Model(
+            kind = ImageModel.class,
+            impl = AzureOpenAiImageModel.class
+        ),
+        @Model(
+            kind = EmbeddingModel.class,
+            impl = AzureOpenAiEmbeddingModel.class
+        )
+    },
+    properties = {
+        @Property(
+            name = "tokenCredential",
+            injected = true,
+            required = true
+        ),
+        @Property(
+            name = "proxyOptions",
+            injected = true
+        ),
+        @Property(
+            name = "keyCredential",
+            injected = true
+        ),
+        @Property(
+            name = "dataSources",
+            injected = true
+        ),
+        @Property(
+            name = "tokenizer",
+            injected = true
+        ),
+        @Property(name = "apiKey", common = true, required = true),
+        @Property(name = "endpoint", common = true),
+        @Property(name = "serviceVersion", common = true),
+        @Property(name = "deploymentName", common = true),
+        @Property(name = "timeout", common = true),
+        @Property(name = "maxRetries", common = true),
+        @Property(name = "logRequestsAndResponses", common = true, required = true, defaultValue = "false")
+    }
 )
-@ModelProvider(
-    kind = StreamingChatLanguageModel.class,
-    impl = AzureOpenAiStreamingChatModel.class,
-    requiredInject = {"tokenCredential"},
-    optionalInject = {"proxyOptions", "keyCredential", "enhancements", "dataSources", "tokenizer"}
-)
-@ModelProvider(
-    kind = ImageModel.class,
-    impl = AzureOpenAiImageModel.class,
-    requiredInject = {"tokenCredential"},
-    optionalInject = {"proxyOptions", "keyCredential", "enhancements", "dataSources", "tokenizer"}
-)
-@ModelProvider(
-    kind = EmbeddingModel.class,
-    impl = AzureOpenAiEmbeddingModel.class,
-    requiredInject = {"tokenCredential"},
-    optionalInject = {"proxyOptions", "keyCredential", "enhancements", "dataSources", "tokenizer"}
-)
+
 @Singleton
 final class AzureOpenAiModule implements TypeConverterRegistrar {
     @Override

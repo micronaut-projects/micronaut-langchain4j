@@ -33,5 +33,11 @@ public @interface RegisterAiService {
      * The name of a configured AI model.
      * @return The model name.
      */
-    String value() default "";
+    String modelName() default "";
+
+    /**
+     * The types of the tools to include. Can be set to an empty array to include none.
+     * @return The tool types
+     */
+    Class<?>[] tools() default {};
 }

@@ -21,19 +21,30 @@ import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.mistralai.MistralAiChatModel;
 import dev.langchain4j.model.mistralai.MistralAiEmbeddingModel;
 import dev.langchain4j.model.mistralai.MistralAiStreamingChatModel;
-import io.micronaut.langchain4j.annotation.ModelProvider;
-
-@ModelProvider(
-    kind = ChatLanguageModel.class,
-    impl = MistralAiChatModel.class
-)
-@ModelProvider(
-    kind = StreamingChatLanguageModel.class,
-    impl = MistralAiStreamingChatModel.class
-)
-@ModelProvider(
-    kind = EmbeddingModel.class,
-    impl = MistralAiEmbeddingModel.class
+import io.micronaut.core.util.StringUtils;
+import io.micronaut.langchain4j.annotation.Lang4jConfig;
+@Lang4jConfig(
+    models = {
+        @Lang4jConfig.Model(
+            kind = ChatLanguageModel.class,
+            impl = MistralAiChatModel.class)
+        ,
+        @Lang4jConfig.Model(
+            kind = StreamingChatLanguageModel.class,
+            impl = MistralAiStreamingChatModel.class
+        ),
+        @Lang4jConfig.Model(
+            kind = EmbeddingModel.class,
+            impl = MistralAiEmbeddingModel.class
+        )
+    },
+    properties = {
+        @Lang4jConfig.Property(name = "baseUrl", common = true, required = true, defaultValue = "https://api.mistral.ai/v1/"),
+        @Lang4jConfig.Property(name = "modelName", common = true, required = true, defaultValue = "mistral-tiny"),
+        @Lang4jConfig.Property(name = "apiKey", common = true, required = true),
+        @Lang4jConfig.Property(name = "logRequests", common = true, defaultValue = StringUtils.FALSE),
+        @Lang4jConfig.Property(name = "logResponses", common = true, defaultValue = StringUtils.FALSE)
+    }
 )
 final class MistralAiModule {
 }

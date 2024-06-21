@@ -11,7 +11,7 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
 @MicronautTest
-@Property(name = "langchain4j.mistral-ai.chat-model.api-key", value = "blah")
+@Property(name = "langchain4j.mistral-ai.api-key", value = "blah")
 public class MistalAiTest {
 
     @Inject

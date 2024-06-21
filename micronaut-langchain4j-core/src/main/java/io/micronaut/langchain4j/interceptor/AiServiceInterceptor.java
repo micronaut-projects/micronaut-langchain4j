@@ -20,10 +20,15 @@ import io.micronaut.aop.InterceptorBean;
 import io.micronaut.aop.MethodInterceptor;
 import io.micronaut.aop.MethodInvocationContext;
 import io.micronaut.context.BeanContext;
+import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.langchain4j.annotation.RegisterAiService;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Interceptor implementation for register ai service.
+ */
 @InterceptorBean(RegisterAiService.class)
 public class AiServiceInterceptor implements MethodInterceptor<Object, Object> {
     private final ConcurrentHashMap<Class<Object>, Object> cachedAiServices = new ConcurrentHashMap<>();
@@ -35,11 +40,13 @@ public class AiServiceInterceptor implements MethodInterceptor<Object, Object> {
 
     @Override
     public @Nullable Object intercept(MethodInvocationContext<Object, Object> context) {
-        String name = context.stringValue(RegisterAiService.class).orElse(null);
         Class<Object> declaringType = context.getDeclaringType();
         Object target = cachedAiServices.get(declaringType);
         if (target == null) {
-            target = beanContext.createBean(AiServices.class, declaringType, name)
+            AnnotationValue<RegisterAiService> annotation = context.getAnnotation(RegisterAiService.class);
+            String name = annotation.stringValue("modelName").orElse(null);
+            Set<Class<?>> tools = annotation.contains("tools") ? Set.of(annotation.classValues("tools")) : null;
+            target = beanContext.createBean(AiServices.class, declaringType, name, tools)
                    .build();
             cachedAiServices.put(declaringType, target);
         }

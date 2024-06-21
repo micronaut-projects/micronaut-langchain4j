@@ -25,6 +25,8 @@ import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.inject.qualifiers.Qualifiers;
+import io.micronaut.langchain4j.tools.ToolRegistry;
+import java.util.Set;
 
 /**
  * An AI services factory.
@@ -33,9 +35,11 @@ import io.micronaut.inject.qualifiers.Qualifiers;
 public class AiServiceFactory {
 
     private final BeanContext beanContext;
+    private final ToolRegistry toolRegistry;
 
-    public AiServiceFactory(BeanContext beanContext) {
+    public AiServiceFactory(BeanContext beanContext, ToolRegistry toolRegistry) {
         this.beanContext = beanContext;
+        this.toolRegistry = toolRegistry;
     }
 
     /**
@@ -45,15 +49,19 @@ public class AiServiceFactory {
      *
      * @param type The type name
      * @param name The name
+     * @param toolTypes The tool types
      * @return The AI services.
      */
     @Bean
     protected AiServices<Object> createAiServices(
         @Parameter Class<Object> type,
-        @Parameter @Nullable String name) {
+        @Parameter @Nullable String name,
+        @Parameter @Nullable Set<?> toolTypes) {
         AiServices<Object> builder = AiServices
             .builder(type);
-
+        if (toolTypes != null) {
+            builder.tools(toolRegistry.getToolsTyped(toolTypes));
+        }
         beanContext.findBean(
             ChatLanguageModel.class,
             name != null ? Qualifiers.byName(name) : null

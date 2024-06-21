@@ -7,17 +7,19 @@ import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import org.junit.jupiter.api.Test;
 
 @MicronautTest
-@Property(name = "langchain4j.vertex-ai-gemini.chat-models.orca-mini.endpoint", value = "blah")
-@Property(name = "langchain4j.vertex-ai-gemini.chat-models.orca-mini.project", value = "myproject")
-@Property(name = "langchain4j.vertex-ai-gemini.chat-models.orca-mini.location", value = "somewhere")
-@Property(name = "langchain4j.vertex-ai-gemini.chat-models.orca-mini.publisher", value = "whoever")
-public class VertxAiTest {
+@Property(name = "langchain4j.vertex-ai-gemini.model-name", value = "orca-mini")
+@Property(name = "langchain4j.vertex-ai-gemini.endpoint", value = "blah")
+@Property(name = "langchain4j.vertex-ai-gemini.project", value = "myproject")
+@Property(name = "langchain4j.vertex-ai-gemini.location", value = "somewhere")
+@Property(name = "langchain4j.vertex-ai-gemini.publisher", value = "whoever")
+public class VertexAiGeminiTest {
 
     @Inject
-    VertexAiGeminiChatModelConfiguration chatLanguageModelConfiguration;
+    DefaultVertexAiGeminiChatModelConfiguration chatLanguageModelConfiguration;
 
     @Inject
     ApplicationContext applicationContext;

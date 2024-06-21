@@ -21,7 +21,7 @@ Add the necessary configuration to configure the model name you want to use:
 .Configuring the Model Name
 [configuration]
 ----
-langchain4j.ollama.chat-model.model-name: orca-mini
+langchain4j.ollama.model-name: orca-mini
 ----
 
 Now you can inject an instance of

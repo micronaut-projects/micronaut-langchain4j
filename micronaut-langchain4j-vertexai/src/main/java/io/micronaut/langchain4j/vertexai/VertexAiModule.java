@@ -15,28 +15,39 @@
  */
 package io.micronaut.langchain4j.vertexai;
 
+import static io.micronaut.langchain4j.annotation.Lang4jConfig.*;
+
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.image.ImageModel;
 import dev.langchain4j.model.vertexai.VertexAiChatModel;
 import dev.langchain4j.model.vertexai.VertexAiEmbeddingModel;
 import dev.langchain4j.model.vertexai.VertexAiImageModel;
-import io.micronaut.langchain4j.annotation.ModelProvider;
+import io.micronaut.langchain4j.annotation.Lang4jConfig;
 
-@ModelProvider(
-    kind = ChatLanguageModel.class,
-    impl = VertexAiChatModel.class,
-    optionalInject = {"tokenizer", "proxy", "listeners"}
-)
-@ModelProvider(
-    kind = ImageModel.class,
-    impl = VertexAiImageModel.class,
-    optionalInject = {"tokenizer", "proxy", "listeners"})
-@ModelProvider(
-    kind = EmbeddingModel.class,
-    impl = VertexAiEmbeddingModel.class,
-    optionalInject = {"tokenizer", "proxy", "listeners"}
+@Lang4jConfig(
+    models = {
+        @Model(
+            kind = ChatLanguageModel.class,
+            impl = VertexAiChatModel.class)
+        ,
+        @Model(
+            kind = ImageModel.class,
+            impl = VertexAiImageModel.class
+        ),
+        @Model(
+            kind = EmbeddingModel.class,
+            impl = VertexAiEmbeddingModel.class
+        )
+    },
+    properties = {
+        @Property(name = "endpoint", common = true, required = true),
+        @Property(name = "modelName", common = true, required = true),
+        @Property(name = "project", common = true, required = true),
+        @Property(name = "location", common = true, required = true),
+        @Property(name = "publisher", common = true, required = true),
+        @Property(name = "maxRetries", common = true, defaultValue = "5")
+    }
 )
 final class VertexAiModule {
 }

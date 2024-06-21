@@ -15,6 +15,8 @@
  */
 package io.micronaut.langchain4j.openai;
 
+import static io.micronaut.langchain4j.annotation.Lang4jConfig.*;
+
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
@@ -25,31 +27,54 @@ import dev.langchain4j.model.openai.OpenAiEmbeddingModel;
 import dev.langchain4j.model.openai.OpenAiImageModel;
 import dev.langchain4j.model.openai.OpenAiModerationModel;
 import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
-import io.micronaut.langchain4j.annotation.ModelProvider;
+import io.micronaut.core.util.StringUtils;
+import io.micronaut.langchain4j.annotation.Lang4jConfig;
+import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
 
-@ModelProvider(
-    kind = ChatLanguageModel.class,
-    impl = OpenAiChatModel.class,
-    optionalInject = {"tokenizer", "proxy", "listeners"}
+@Lang4jConfig(
+    models = {
+        @Model(
+            kind = ChatLanguageModel.class,
+            impl = OpenAiChatModel.class)
+        ,
+        @Model(
+            kind = ModerationModel.class,
+            impl = OpenAiModerationModel.class)
+        ,
+        @Model(
+            kind = StreamingChatLanguageModel.class,
+            impl = OpenAiStreamingChatModel.class
+        ),
+        @Model(
+            kind = ImageModel.class,
+            impl = OpenAiImageModel.class
+        ),
+        @Model(
+            kind = EmbeddingModel.class,
+            impl = OpenAiEmbeddingModel.class
+        )
+    },
+    properties = {
+        @Property(
+            name = "proxy",
+            injected = true
+        ),
+        @Property(
+            name = "listeners",
+            injected = true
+        ),
+        @Property(
+            name = "tokenizer",
+            injected = true
+        ),
+        @Property(name = "baseUrl", common = true, required = true, defaultValue = "https://api.openai.com/v1/"),
+        @Property(name = "modelName", common = true, required = true, defaultValue = "gpt-3.5-turbo"),
+        @Property(name = "apiKey", common = true, required = true),
+        @Property(name = "organizationId", common = true),
+        @Property(name = "timeout", common = true),
+        @Property(name = "logRequests", common = true, defaultValue = StringUtils.FALSE),
+        @Property(name = "logResponses", common = true, defaultValue = StringUtils.FALSE)
+    }
 )
-@ModelProvider(
-    kind = ModerationModel.class,
-    impl = OpenAiModerationModel.class,
-    optionalInject = {"tokenizer", "proxy", "listeners"}
-)
-@ModelProvider(
-    kind = EmbeddingModel.class,
-    impl = OpenAiEmbeddingModel.class,
-    optionalInject = {"tokenizer", "proxy", "listeners"}
-)
-@ModelProvider(
-    kind = StreamingChatLanguageModel.class,
-    impl = OpenAiStreamingChatModel.class,
-    optionalInject = {"tokenizer", "proxy", "listeners"}
-)
-@ModelProvider(
-    kind = ImageModel.class,
-    impl = OpenAiImageModel.class,
-    optionalInject = {"tokenizer", "proxy", "listeners"})
 final class OpenAiModule {
 }

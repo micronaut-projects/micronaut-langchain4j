@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @MicronautTest
-@Property(name = "langchain4j.ollama.chat-model.model-name", value = "orca-mini")
+@Property(name = "langchain4j.ollama.model-name", value = "orca-mini")
 public class OllamaTest {
 
     @Inject

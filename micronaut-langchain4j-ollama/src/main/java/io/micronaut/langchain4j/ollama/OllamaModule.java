@@ -22,22 +22,35 @@ import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.model.ollama.OllamaEmbeddingModel;
 import dev.langchain4j.model.ollama.OllamaStreamingChatModel;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.langchain4j.annotation.ModelProvider;
+import io.micronaut.langchain4j.annotation.Lang4jConfig;
+import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
+import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
 
 /**
  * Generates the configuration binding for Ollama.
  */
-@ModelProvider(
-    kind = ChatLanguageModel.class,
-    impl = OllamaChatModel.class
-)
-@ModelProvider(
-    kind = StreamingChatLanguageModel.class,
-    impl = OllamaStreamingChatModel.class
-)
-@ModelProvider(
-    kind = EmbeddingModel.class,
-    impl = OllamaEmbeddingModel.class
+@Lang4jConfig(
+    models = {
+        @Model(
+            kind = ChatLanguageModel.class,
+            impl = OllamaChatModel.class)
+        ,
+        @Model(
+            kind = StreamingChatLanguageModel.class,
+            impl = OllamaStreamingChatModel.class
+        ),
+        @Model(
+            kind = EmbeddingModel.class,
+            impl = OllamaEmbeddingModel.class
+        )
+    },
+    properties = {
+        @Property(name = "baseUrl", common = true, required = true),
+        @Property(name = "modelName", common = true, required = true, defaultValue = "llama3"),
+        @Property(name = "timeout", common = true),
+        @Property(name = "logRequests", common = true),
+        @Property(name = "logResponses", common = true)
+    }
 )
 @Internal
 final class OllamaModule {

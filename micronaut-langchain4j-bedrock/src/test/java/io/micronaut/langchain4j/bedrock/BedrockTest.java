@@ -13,7 +13,7 @@ import software.amazon.awssdk.auth.credentials.AwsCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 
 @MicronautTest
-@Property(name = "langchain4j.bedrock-llama.chat-model.api-key", value = "blah")
+@Property(name = "langchain4j.bedrock-llama.api-key", value = "blah")
 public class BedrockTest {
 
     @Inject

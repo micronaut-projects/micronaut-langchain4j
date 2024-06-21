@@ -17,20 +17,28 @@ package io.micronaut.langchain4j.vertexai.gemini;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
-import dev.langchain4j.model.image.ImageModel;
 import dev.langchain4j.model.vertexai.VertexAiGeminiChatModel;
 import dev.langchain4j.model.vertexai.VertexAiGeminiStreamingChatModel;
-import io.micronaut.langchain4j.annotation.ModelProvider;
+import io.micronaut.langchain4j.annotation.Lang4jConfig;
+import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
+import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
 
-@ModelProvider(
-    kind = ChatLanguageModel.class,
-    impl = VertexAiGeminiChatModel.class,
-    optionalInject = {"tokenizer", "proxy", "listeners"}
-)
-@ModelProvider(
-    kind = StreamingChatLanguageModel.class,
-    impl = VertexAiGeminiStreamingChatModel.class,
-    optionalInject = {"tokenizer", "proxy", "listeners"}
+@Lang4jConfig(
+    models = {
+        @Model(
+            kind = ChatLanguageModel.class,
+            impl = VertexAiGeminiChatModel.class)
+        ,
+        @Model(
+            kind = StreamingChatLanguageModel.class,
+            impl = VertexAiGeminiStreamingChatModel.class
+        )
+    },
+    properties = {
+        @Property(name = "modelName", common = true, required = true),
+        @Property(name = "project", common = true, required = true),
+        @Property(name = "location", common = true, required = true)
+    }
 )
 final class VertxAiGeminiModule {
 }

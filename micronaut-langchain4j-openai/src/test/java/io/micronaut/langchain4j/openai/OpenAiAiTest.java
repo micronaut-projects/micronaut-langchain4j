@@ -10,7 +10,8 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
 @MicronautTest
-@Property(name = "langchain4j.open-ai.chat-model.api-key", value = "blah")
+@Property(name = "langchain4j.open-ai.api-key", value = "blah")
+@Property(name = "langchain4j.open-ai.organization-id", value = "blah")
 public class OpenAiAiTest {
 
     @Inject

@@ -21,22 +21,34 @@ import dev.langchain4j.model.bedrock.BedrockTitanEmbeddingModel;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
-import io.micronaut.langchain4j.annotation.ModelProvider;
+import dev.langchain4j.model.image.ImageModel;
+import io.micronaut.langchain4j.annotation.Lang4jConfig;
+import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
+import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
 
-@ModelProvider(
-    kind = ChatLanguageModel.class,
-    impl = BedrockLlamaChatModel.class,
-    requiredInject = "credentialsProvider"
-)
-@ModelProvider(
-    kind = StreamingChatLanguageModel.class,
-    impl = BedrockAnthropicStreamingChatModel.class,
-    requiredInject = "credentialsProvider"
-)
-@ModelProvider(
-    kind = EmbeddingModel.class,
-    impl = BedrockTitanEmbeddingModel.class,
-    requiredInject = "credentialsProvider"
+@Lang4jConfig(
+    models = {
+        @Model(
+            kind = ChatLanguageModel.class,
+            impl = BedrockLlamaChatModel.class),
+        @Model(
+            kind = StreamingChatLanguageModel.class,
+            impl = BedrockAnthropicStreamingChatModel.class),
+        @Model(
+            kind = EmbeddingModel.class,
+            impl = BedrockTitanEmbeddingModel.class)
+    },
+    properties = {
+        @Property(
+            name = "credentialsProvider",
+            injected = true,
+            required = true
+        ),
+        @Property(name = "model", common = true, required = true, defaultValue = "claude-3-haiku-20240307"),
+        @Property(name = "anthropicVersion", common = true),
+        @Property(name = "region", common = true),
+        @Property(name = "maxRetries", common = true, defaultValue = "5")
+    }
 )
 final class BedrockModule {
 }

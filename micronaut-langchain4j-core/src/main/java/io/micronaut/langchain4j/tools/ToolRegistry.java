@@ -23,7 +23,11 @@ import io.micronaut.inject.ExecutableMethod;
 import jakarta.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+/**
+ * Register of tools.
+ */
 @Singleton
 public class ToolRegistry implements ExecutableMethodProcessor<Tool> {
     private final List<BeanDefinition<?>> beansWithTools = new ArrayList<>();
@@ -40,8 +44,24 @@ public class ToolRegistry implements ExecutableMethodProcessor<Tool> {
         }
     }
 
+    /**
+     * Get all available tools.
+     * @return The tools
+     */
     public List<Object> getAllTools() {
         return this.beansWithTools.stream()
+            .map(definition -> (Object) beanContext.getBean(definition))
+            .toList();
+    }
+
+    /**
+     * Get tools for the given types.
+     * @param toolTypes The tool types.
+     * @return A list of types
+     */
+    public List<Object> getToolsTyped(Set<?> toolTypes) {
+        return this.beansWithTools.stream()
+            .filter(definition -> toolTypes.contains(definition.getBeanType()))
             .map(definition -> (Object) beanContext.getBean(definition))
             .toList();
     }

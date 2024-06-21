@@ -15,7 +15,8 @@ import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 
 @MicronautTest
-//@Property(name = "langchain4j.azure-open-ai.chat-models.default.model-name", value = "orca-mini")
+@Property(name = "langchain4j.azure-open-ai.api-key", value = "somekey")
+@Property(name = "langchain4j.azure-open-ai.endpoint", value = "blah")
 @Property(name = "langchain4j.azure-open-ai.chat-models.default.endpoint", value = "blah")
 @Property(name = "langchain4j.azure-open-ai.image-models.default.endpoint", value = "blah")
 @Property(name = "langchain4j.azure-open-ai.chat-models.default.response-format", value = "json_object")

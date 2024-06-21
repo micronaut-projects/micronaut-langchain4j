@@ -11,12 +11,11 @@ import jakarta.inject.Named;
 import org.junit.jupiter.api.Test;
 
 @MicronautTest
-@Property(name = "langchain4j.anthropic.chat-models.orca-mini.api-key", value = "blah")
+@Property(name = "langchain4j.anthropic.api-key", value = "blah")
 public class AnthropicTest {
 
     @Inject
-    @Named("orca-mini")
-    NamedAnthropicChatModelConfiguration chatLanguageModelConfiguration;
+    DefaultAnthropicChatModelConfiguration chatLanguageModelConfiguration;
 
     @Inject
     ApplicationContext applicationContext;

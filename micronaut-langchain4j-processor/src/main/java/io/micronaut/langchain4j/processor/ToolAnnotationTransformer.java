@@ -18,22 +18,25 @@ package io.micronaut.langchain4j.processor;
 import dev.langchain4j.agent.tool.Tool;
 import io.micronaut.context.annotation.Executable;
 import io.micronaut.core.annotation.AnnotationValue;
-import io.micronaut.inject.annotation.TypedAnnotationMapper;
+import io.micronaut.core.annotation.ReflectiveAccess;
+import io.micronaut.inject.annotation.TypedAnnotationTransformer;
 import io.micronaut.inject.visitor.VisitorContext;
 import java.util.List;
 
-public class ToolMapper implements TypedAnnotationMapper<Tool> {
+public class ToolAnnotationTransformer implements TypedAnnotationTransformer<Tool> {
     @Override
     public Class<Tool> annotationType() {
         return Tool.class;
     }
 
     @Override
-    public List<AnnotationValue<?>> map(AnnotationValue<Tool> annotation, VisitorContext visitorContext) {
-        return List.of(
-            AnnotationValue.builder(Executable.class)
+    public List<AnnotationValue<?>> transform(AnnotationValue<Tool> annotation, VisitorContext visitorContext) {
+        return List.of(AnnotationValue.builder(annotation)
+            .stereotype(AnnotationValue.builder(Executable.class)
                 .member("processOnStartup", true)
-            .build()
-        );
+                .build()
+            )
+            .stereotype(AnnotationValue.builder(ReflectiveAccess.class).build())
+            .build());
     }
 }

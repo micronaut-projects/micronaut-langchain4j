@@ -21,7 +21,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 import org.testcontainers.ollama.OllamaContainer;
 import org.testcontainers.utility.DockerImageName;
 
@@ -29,7 +28,7 @@ public class OllamaTestContainerProvider
     extends AbstractTestContainersProvider<OllamaContainer> {
     public static final String MODEL_NAME = "model-name";
     public static final String BASE_URL = "base-url";
-    private static final String PREFIX = "langchain4j.ollama.chat-model";
+    private static final String PREFIX = "langchain4j.ollama";
 
     @Override
     protected String getSimpleName() {
@@ -43,7 +42,12 @@ public class OllamaTestContainerProvider
 
     @Override
     protected OllamaContainer createContainer(DockerImageName imageName, Map<String, Object> requestedProperties, Map<String, Object> testResourcesConfig) {
-        return new OllamaContainer(imageName.asCompatibleSubstituteFor("ollama/ollama"));
+        Object modelName = requestedProperties.get(PREFIX + "." + MODEL_NAME);
+        if (modelName != null) {
+            return new OllamaContainer(DockerImageName.parse("langchain4j/ollama-" + modelName + ":latest").asCompatibleSubstituteFor("ollama/ollama"));
+        } else {
+            return new OllamaContainer(imageName.asCompatibleSubstituteFor("ollama/ollama"));
+        }
     }
 
     @Override
@@ -80,10 +84,5 @@ public class OllamaTestContainerProvider
 
     private boolean isOllamaProperty(String expression) {
         return expression.startsWith(PREFIX);
-    }
-
-    protected static String languageModelPropertyFrom(String expression) {
-        expression = expression.substring(PREFIX.length() + 1);
-        return expression.substring(1 + expression.indexOf('.'));
     }
 }

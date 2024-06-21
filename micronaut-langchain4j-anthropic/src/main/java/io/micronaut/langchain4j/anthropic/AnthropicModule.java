@@ -20,18 +20,33 @@ import dev.langchain4j.model.anthropic.AnthropicStreamingChatModel;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.langchain4j.annotation.ModelProvider;
+import io.micronaut.langchain4j.annotation.Lang4jConfig;
+import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
+import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
 
 /**
  * Generates the configuration binding for Anthropic.
  */
-@ModelProvider(
-    kind = ChatLanguageModel.class,
-    impl = AnthropicChatModel.class
-)
-@ModelProvider(
-    kind = StreamingChatLanguageModel.class,
-    impl = AnthropicStreamingChatModel.class
+@Lang4jConfig(
+    models = {
+        @Model(
+            kind = ChatLanguageModel.class,
+            impl = AnthropicChatModel.class)
+        ,
+        @Model(
+            kind = StreamingChatLanguageModel.class,
+            impl = AnthropicStreamingChatModel.class
+        )
+    },
+    properties = {
+        @Property(name = "baseUrl", common = true, required = true, defaultValue = "https://api.anthropic.com/v1/"),
+        @Property(name = "modelName", common = true, required = true, defaultValue = "claude-3-haiku-20240307"),
+        @Property(name = "apiKey", common = true, required = true),
+        @Property(name = "version", common = true),
+        @Property(name = "timeout", common = true),
+        @Property(name = "logRequests", common = true),
+        @Property(name = "logResponses", common = true)
+    }
 )
 @Internal
 final class AnthropicModule {

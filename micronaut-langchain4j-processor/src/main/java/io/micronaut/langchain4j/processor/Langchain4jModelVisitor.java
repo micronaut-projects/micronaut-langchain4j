@@ -26,7 +26,9 @@ import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.bind.annotation.Bindable;
 import io.micronaut.core.naming.NameUtils;
 import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.core.util.StringUtils;
@@ -36,7 +38,8 @@ import io.micronaut.inject.ast.MethodElement;
 import io.micronaut.inject.processing.ProcessingException;
 import io.micronaut.inject.visitor.TypeElementVisitor;
 import io.micronaut.inject.visitor.VisitorContext;
-import io.micronaut.langchain4j.annotation.ModelProvider;
+import io.micronaut.langchain4j.annotation.Lang4jConfig;
+import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
 import io.micronaut.sourcegen.generator.SourceGenerator;
 import io.micronaut.sourcegen.generator.SourceGenerators;
 import io.micronaut.sourcegen.model.AnnotationDef;
@@ -45,12 +48,16 @@ import io.micronaut.sourcegen.model.ClassTypeDef;
 import io.micronaut.sourcegen.model.ExpressionDef;
 import io.micronaut.sourcegen.model.FieldDef;
 import io.micronaut.sourcegen.model.MethodDef;
+import io.micronaut.sourcegen.model.ObjectDef;
 import io.micronaut.sourcegen.model.ParameterDef;
+import io.micronaut.sourcegen.model.PropertyDef;
+import io.micronaut.sourcegen.model.RecordDef;
 import io.micronaut.sourcegen.model.StatementDef;
 import io.micronaut.sourcegen.model.TypeDef;
 import io.micronaut.sourcegen.model.VariableDef;
 import jakarta.inject.Inject;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +65,7 @@ import java.util.Optional;
 import java.util.Set;
 import javax.lang.model.element.Modifier;
 
-public class Langchain4jModelVisitor implements TypeElementVisitor<ModelProvider.List, Object> {
+public class Langchain4jModelVisitor implements TypeElementVisitor<Lang4jConfig, Object> {
     public static final String CONFIG_PREFIX = "langchain4j.";
     private static final Map<String, String> MODEL_NAME_MAPPINGS = Map.of(
         "ChatLanguageModel", "ChatModel",
@@ -72,92 +79,161 @@ public class Langchain4jModelVisitor implements TypeElementVisitor<ModelProvider
 
     @Override
     public Set<String> getSupportedAnnotationNames() {
-        return Set.of(ModelProvider.List.class.getName());
+        return Set.of(Lang4jConfig.class.getName());
     }
 
     @Override
     public void visitClass(ClassElement element, VisitorContext context) {
         SourceGenerator generator = SourceGenerators.findByLanguage(context.getLanguage()).orElse(null);
-        if (generator != null) {
-            List<AnnotationValue<ModelProvider>> providers = element.getAnnotationValuesByType(ModelProvider.class);
-            for (AnnotationValue<ModelProvider> provider : providers) {
+        AnnotationValue<Lang4jConfig> lang4jConfig = element.findAnnotation(Lang4jConfig.class).orElse(null);
+        String packageName = element.getPackageName();
+        if (generator != null && lang4jConfig != null) {
+            List<PropertyConfig> properties = lang4jConfig.getAnnotations("properties", Lang4jConfig.Property.class)
+                .stream().map(PropertyConfig::new).toList();
+            List<PropertyConfig> commonProperties = properties
+                .stream().filter(p -> p.common && !p.injected)
+                .toList();
 
-                ClassElement languageModel = provider.stringValue( "impl")
-                    .flatMap(context::getClassElement)
-                    .orElse(null);
-                ClassElement languageModelKind = provider.stringValue("kind")
-                    .flatMap(context::getClassElement)
-                    .orElse(null);
 
-                if (languageModelKind == null) {
-                    throw new ProcessingException(element, "@ModelProvider kind must be on the compilation classpath");
-                }
-                if (languageModel == null) {
-                    throw new ProcessingException(element, "@ModelProvider kind must be on the compilation classpath");
-                }
+            List<AnnotationValue<Model>> providers = lang4jConfig.getAnnotations("models", Model.class);
+            RecordDef commonConfig = buildCommonConfig(element, context, commonProperties, providers, packageName, generator);
 
-                String modelKind = MODEL_NAME_MAPPINGS.getOrDefault(languageModelKind.getSimpleName(), languageModelKind.getSimpleName());
-                String modelSuffix = NameUtils.hyphenate(modelKind, true);
-                String[] requiredInjects = provider.stringValues("requiredInject");
-                String[] optionalInjects = provider.stringValues( "optionalInject");
-                String packageName = element.getPackageName();
+            for (AnnotationValue<Model> provider : providers) {
+                ModelConfig modelConfig = getModelConfig(element, context, provider);
+                String[] requiredInjects = properties.stream().filter(p -> p.required && p.injected)
+                    .map(p -> p.name).toArray(String[]::new);
+                String[] optionalInjects = properties.stream().filter(p -> !p.required && p.injected)
+                    .map(p -> p.name).toArray(String[]::new);
+
                 if (StringUtils.isNotEmpty(packageName)) {
-
-                    String modelName = NameUtils.decapitalize(languageModel.getSimpleName());
-                    if (modelName.endsWith(modelKind)) {
-                        modelName = modelName.substring(0, modelName.length() - modelKind.length());
-                    }
-                    ClassElement builderType = languageModel.getEnclosedElement(
-                        ElementQuery.ALL_METHODS.onlyStatic().onlyAccessible().onlyConcrete().named("builder")
-                    ).map(MethodElement::getGenericReturnType).orElse(null);
-
-                    if (builderType != null) {
-
-                        String namedPrefix = CONFIG_PREFIX + NameUtils.hyphenate(modelName, true) + '.' + modelSuffix + "s";
-                        String namedConfigSimpleName = "Named" + languageModel.getSimpleName() + "Configuration";
+                        String namedPrefix = modelConfig.getNamedPrefix();
+                        String namedConfigSimpleName = "Named" + modelConfig.languageModel().getSimpleName() + "Configuration";
                         String namedConfigQualifiedName = packageName + "." + namedConfigSimpleName;
                         ClassDef namedConfigDef = buildNamedConfigurationDef(
                             namedPrefix,
                             namedConfigQualifiedName,
-                            languageModel,
-                            builderType,
+                            modelConfig.languageModel(),
+                            modelConfig.builderType,
                             requiredInjects,
-                            optionalInjects
+                            optionalInjects,
+                            commonConfig
                         );
-                        writeJavaSource(generator, context, element, packageName, namedConfigSimpleName, namedConfigDef, modelKind);
+                        writeJavaSource(generator, context, element, packageName, namedConfigSimpleName, namedConfigDef, modelConfig.modelKind);
 
-                        String defaultPrefix = CONFIG_PREFIX + NameUtils.hyphenate(modelName, true) + "." + modelSuffix;
-                        String defaultConfigSimpleName = "Default" + languageModel.getSimpleName() + "Configuration";
+                        String defaultPrefix = modelConfig.getDefaultPrefix();
+                        String defaultConfigSimpleName = "Default" + modelConfig.languageModel().getSimpleName() + "Configuration";
                         String defaultConfigQualifiedName = packageName + "." + defaultConfigSimpleName;
                         ClassDef defaultConfigDef = buildDefaultConfigurationDef(
                             defaultPrefix,
                             defaultConfigQualifiedName,
-                            languageModel,
-                            builderType,
+                            modelConfig.languageModel(),
+                            modelConfig.builderType,
                             requiredInjects,
-                            optionalInjects
+                            optionalInjects,
+                            commonConfig
                         );
 
-                        writeJavaSource(generator, context, element, packageName, defaultConfigSimpleName, defaultConfigDef, modelKind);
+                        writeJavaSource(generator, context, element, packageName, defaultConfigSimpleName, defaultConfigDef, modelConfig.modelKind);
 
-                        String factorySimpleName = languageModel.getSimpleName() + "Factory";
+                        String factorySimpleName = modelConfig.languageModel().getSimpleName() + "Factory";
 
                         String factoryName = packageName + "." + factorySimpleName;
                         ClassDef factoryDef = buildFactory(
                             namedConfigDef,
                             defaultConfigDef,
-                            builderType,
+                            modelConfig.builderType,
                             factoryName,
-                            languageModel,
-                            languageModelKind
+                            modelConfig.languageModel(),
+                            modelConfig.languageModelKind()
                         );
 
-                        writeJavaSource(generator, context, element, packageName, factorySimpleName, factoryDef, modelKind);
+                        writeJavaSource(generator, context, element, packageName, factorySimpleName, factoryDef, modelConfig.modelKind);
 
-                    }
                 }
             }
         }
+    }
+
+    private static RecordDef buildCommonConfig(ClassElement element, VisitorContext context, List<PropertyConfig> commonProperties, List<AnnotationValue<Model>> providers, String packageName, SourceGenerator generator) {
+        RecordDef commonConfig = null;
+        if (!commonProperties.isEmpty() && !providers.isEmpty()) {
+            ModelConfig firstConfig = getModelConfig(element, context, providers.iterator().next());
+            String commonConfigSimpleName = "Common" + firstConfig.languageModel().getSimpleName() + "Configuration";
+            String prefix = firstConfig.getCommonPrefix();
+            RecordDef.RecordDefBuilder recordDefBuilder = RecordDef.builder(packageName + "." + commonConfigSimpleName)
+                .addModifiers(Modifier.PUBLIC)
+                .addAnnotation(AnnotationDef.builder(Requires.class)
+                    .addMember("property", prefix)
+                    .build())
+                .addAnnotation(AnnotationDef.builder(Requires.class)
+                    .addMember("property", prefix + ".enabled")
+                    .addMember("value", StringUtils.TRUE)
+                    .addMember("defaultValue", StringUtils.TRUE)
+                    .build())
+                .addAnnotation(AnnotationDef.builder(ConfigurationProperties.class)
+                    .addMember("value", prefix)
+                    .build());
+            ClassElement builderType = firstConfig.builderType();
+            recordDefBuilder.addProperty(PropertyDef.builder("enabled").ofType(boolean.class)
+                    .addAnnotation(AnnotationDef.builder(Bindable.class)
+                        .addMember("defaultValue", StringUtils.TRUE).build())
+                .build());
+
+            for (PropertyConfig property : commonProperties) {
+                builderType.getEnclosedElement(
+                        ElementQuery.ALL_METHODS
+                                .onlyInstance()
+                                .onlyDeclared()
+                                .onlyAccessible()
+                                .named(n -> n.equals(property.name))
+                                .filter(m -> !m.getGenericReturnType().isVoid() && m.hasParameters())
+                ).ifPresent(methodElement -> {
+                    PropertyDef.PropertyDefBuilder builder = PropertyDef.builder(property.name);
+                    if (property.defaultValue != null) {
+                        builder.addAnnotation(
+                            AnnotationDef.builder(Bindable.class)
+                            .addMember("defaultValue", property.defaultValue).build()
+                        );
+                    }
+                    if (!property.required) {
+                        builder.addAnnotation(Nullable.class);
+                    }
+                    recordDefBuilder.addProperty(
+                            builder.ofType(TypeDef.of(methodElement.getParameters()[0].getGenericType()))
+                                   .build()
+                    );
+                });
+            }
+            commonConfig = recordDefBuilder.build();
+            writeJavaSource(
+                generator,
+                context,
+                element,
+                packageName,
+                commonConfigSimpleName,
+                commonConfig,
+                firstConfig.modelKind
+            );
+
+        }
+        return commonConfig;
+    }
+
+    private static ModelConfig getModelConfig(ClassElement element, VisitorContext context, AnnotationValue<Model> provider) {
+        ClassElement languageModel = provider.stringValue("impl")
+            .flatMap(context::getClassElement)
+            .orElse(null);
+        ClassElement languageModelKind = provider.stringValue("kind")
+            .flatMap(context::getClassElement)
+            .orElse(null);
+
+        if (languageModelKind == null) {
+            throw new ProcessingException(element, "@ModelProvider kind must be on the compilation classpath");
+        }
+        if (languageModel == null) {
+            throw new ProcessingException(element, "@ModelProvider kind must be on the compilation classpath");
+        }
+        return new ModelConfig(languageModel, languageModelKind);
     }
 
     private ClassDef buildFactory(
@@ -229,7 +305,7 @@ public class Langchain4jModelVisitor implements TypeElementVisitor<ModelProvider
         ClassElement element,
         String packageName,
         String simpleName,
-        ClassDef classDef,
+        ObjectDef classDef,
         String modelKind) {
         context.visitGeneratedSourceFile(packageName, simpleName, element)
             .ifPresent(sourceFile -> {
@@ -243,7 +319,7 @@ public class Langchain4jModelVisitor implements TypeElementVisitor<ModelProvider
             });
     }
 
-    private static ClassDef buildNamedConfigurationDef(String prefix, String configurationClassName, ClassElement model, ClassElement builderType, String[] requiredInjects, String[] optionalInjects) {
+    private static ClassDef buildNamedConfigurationDef(String prefix, String configurationClassName, ClassElement model, ClassElement builderType, String[] requiredInjects, String[] optionalInjects, RecordDef commonConfig) {
         FieldDef prefixField = FieldDef.builder("PREFIX")
             .ofType(TypeDef.of(String.class))
             .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
@@ -279,11 +355,13 @@ public class Langchain4jModelVisitor implements TypeElementVisitor<ModelProvider
                 ))
                 .build());
 
+        addCommonConstructor(builderType, commonConfig, classDefBuilder);
+
         for (String requiredInject : requiredInjects) {
-            Langchain4jModelVisitor.addInjectionPoint(builderType, requiredInject, true, classDefBuilder);
+            addInjectionPoint(builderType, requiredInject, true, classDefBuilder);
         }
         for (String optionalInject : optionalInjects) {
-            Langchain4jModelVisitor.addInjectionPoint(builderType, optionalInject, false, classDefBuilder);
+            addInjectionPoint(builderType, optionalInject, false, classDefBuilder);
         }
 
         Optional<MethodElement> modelNameMethod = builderType.getEnclosedElement(
@@ -308,7 +386,41 @@ public class Langchain4jModelVisitor implements TypeElementVisitor<ModelProvider
             .build();
     }
 
-    private static ClassDef buildDefaultConfigurationDef(String prefix, String configurationClassName, ClassElement model, ClassElement builderType, String[] requiredInjects, String[] optionalInjects) {
+    private static void addCommonConstructor(ClassElement builderType, RecordDef commonConfig, ClassDef.ClassDefBuilder classDefBuilder) {
+        if (commonConfig != null) {
+            classDefBuilder.addAnnotation(AnnotationDef.builder(Requires.class)
+                .addMember("beans", new VariableDef.StaticField(commonConfig.asTypeDef(), "class", TypeDef.of(Class.class)))
+                .build());
+            MethodDef.MethodDefBuilder constructorBuilder = MethodDef.builder("<init>")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(ParameterDef.builder("config", commonConfig.asTypeDef()).build());
+            List<PropertyDef> properties = commonConfig.getProperties();
+            for (PropertyDef property : properties) {
+                if (property.getName().equals("enabled")) {
+                    continue;
+                }
+                constructorBuilder.addStatement(
+                    ExpressionDef.invoke(
+                        new VariableDef.Local("builder", TypeDef.of(builderType)),
+                        property.getName(),
+                        List.of(ExpressionDef.invoke(
+                            new VariableDef.MethodParameter("config", commonConfig.asTypeDef()),
+                            property.getName(),
+                            List.of(),
+                            property.getType()
+                        )),
+                        TypeDef.of(void.class)
+                    )
+                );
+            }
+            classDefBuilder.addMethod(
+                constructorBuilder
+                    .build()
+            );
+        }
+    }
+
+    private static ClassDef buildDefaultConfigurationDef(String prefix, String configurationClassName, ClassElement model, ClassElement builderType, String[] requiredInjects, String[] optionalInjects, RecordDef commonConfig) {
         FieldDef prefixField = FieldDef.builder("PREFIX")
             .ofType(TypeDef.of(String.class))
             .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
@@ -316,10 +428,6 @@ public class Langchain4jModelVisitor implements TypeElementVisitor<ModelProvider
         String[] allExcludes = ArrayUtils.concat(requiredInjects, optionalInjects);
         ClassDef.ClassDefBuilder classDefBuilder = ClassDef.builder(configurationClassName)
             .addModifiers(Modifier.PUBLIC)
-            .addAnnotation(AnnotationDef.builder(Requires.class)
-                .addMember("property", prefix)
-                .build()
-            )
             .addAnnotation(AnnotationDef.builder(ConfigurationProperties.class)
                 .addMember("value", prefix)
                 .build()
@@ -354,7 +462,17 @@ public class Langchain4jModelVisitor implements TypeElementVisitor<ModelProvider
         for (String optionalInject : optionalInjects) {
             addInjectionPoint(builderType, optionalInject, false, classDefBuilder);
         }
-
+        if (commonConfig == null) {
+            classDefBuilder.addAnnotation(AnnotationDef.builder(Requires.class)
+                .addMember("property", prefix)
+                .build()
+            );
+        }
+        addCommonConstructor(
+            builderType,
+            commonConfig,
+            classDefBuilder
+        );
         return classDefBuilder
             .build();
     }
@@ -394,4 +512,85 @@ public class Langchain4jModelVisitor implements TypeElementVisitor<ModelProvider
         }
     }
 
+    private record ModelConfig(
+        @NonNull ClassElement languageModel,
+        @NonNull ClassElement languageModelKind,
+        @NonNull ClassElement builderType,
+        String modelKind,
+        String modelSuffix,
+        String modelName) {
+        public ModelConfig(ClassElement languageModel, ClassElement languageModelKind) {
+            this(
+                languageModel,
+                languageModelKind,
+                resolveBuilder(languageModel),
+                resolveModelKind(languageModelKind),
+                resolveModelSuffix(languageModelKind),
+                resolveModelName(languageModel, languageModelKind)
+            );
+        }
+
+        private static String resolveModelSuffix(ClassElement languageModelKind) {
+            return NameUtils.hyphenate(resolveModelKind(languageModelKind), true);
+        }
+
+        private static String resolveModelKind(ClassElement languageModelKind) {
+            return MODEL_NAME_MAPPINGS.getOrDefault(languageModelKind.getSimpleName(), languageModelKind.getSimpleName());
+        }
+
+        private static String resolveModelName(ClassElement languageModel, ClassElement languageModelKind) {
+            String modelKind = resolveModelKind(languageModelKind);
+            String modelName = NameUtils.decapitalize(languageModel.getSimpleName());
+            if (modelName.endsWith(modelKind)) {
+                modelName = modelName.substring(0, modelName.length() - modelKind.length());
+            }
+            return modelName;
+        }
+
+        private static ClassElement resolveBuilder(ClassElement languageModel) {
+            ClassElement builderType = languageModel.getEnclosedElement(
+                ElementQuery.ALL_METHODS.onlyStatic().onlyAccessible().onlyConcrete().named("builder")
+            ).map(MethodElement::getGenericReturnType).orElse(null);
+            if (builderType == null) {
+                throw new ProcessingException(null, "Model includes no builder() method: " + languageModel.getName());
+            }
+            return builderType;
+        }
+
+        public String getNamedPrefix() {
+            return CONFIG_PREFIX + NameUtils.hyphenate(modelName, true) + '.' + modelSuffix + "s";
+        }
+
+        public String getDefaultPrefix() {
+            return CONFIG_PREFIX + NameUtils.hyphenate(modelName, true) + "." + modelSuffix;
+        }
+
+        public String getCommonPrefix() {
+            return CONFIG_PREFIX + NameUtils.hyphenate(modelName, true);
+        }
+    }
+
+    @SuppressWarnings("ClassExplicitlyAnnotation")
+    record PropertyConfig(
+        String name,
+        String defaultValue,
+        boolean required,
+        boolean injected,
+        boolean common
+    ) implements Lang4jConfig.Property {
+        public PropertyConfig(AnnotationValue<Lang4jConfig.Property> annotation) {
+            this(
+                annotation.getRequiredValue("name", String.class),
+                annotation.stringValue("defaultValue").orElse(null),
+                annotation.booleanValue("required").orElse(false),
+                annotation.booleanValue("injected").orElse(false),
+                annotation.booleanValue("common").orElse(false)
+            );
+        }
+
+        @Override
+        public Class<? extends Annotation> annotationType() {
+            return Lang4jConfig.Property.class;
+        }
+    }
 }
