@@ -34,6 +34,7 @@ include("micronaut-langchain4j-ollama-testresource")
 include("micronaut-langchain4j-store-redis")
 include("doc-examples:example-groovy")
 include("doc-examples:example-java")
+include("doc-examples:example-openai-java")
 include("doc-examples:example-kotlin")
 
 val micronautVersion = providers.gradleProperty("micronautVersion")

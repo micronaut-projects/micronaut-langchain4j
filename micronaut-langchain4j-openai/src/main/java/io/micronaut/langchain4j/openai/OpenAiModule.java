@@ -31,6 +31,9 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.langchain4j.annotation.Lang4jConfig;
 import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
 
+/**
+ * Provides integration with OpenAI services.
+ */
 @Lang4jConfig(
     models = {
         @Model(
