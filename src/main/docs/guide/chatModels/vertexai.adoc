@@ -7,9 +7,9 @@ Then add the link:configurationreference.html#io.micronaut.langchain4j.vertexai.
 .Example Configuration
 [configuration]
 ----
-langchain4j.vertex-ai.endpoint=YOUR_ENDPOINT
-langchain4j.vertex-ai.model-name=YOUR_MODEL
-langchain4j.vertex-ai.project=YOUR_PROJECT
-langchain4j.vertex-ai.location=YOUR_LOCATION
-langchain4j.vertex-ai.publisher=YOUR_PUBLISHER
+langchain4j.vertex-ai.endpoint: YOUR_ENDPOINT
+langchain4j.vertex-ai.model-name: YOUR_MODEL
+langchain4j.vertex-ai.project: YOUR_PROJECT
+langchain4j.vertex-ai.location: YOUR_LOCATION
+langchain4j.vertex-ai.publisher: YOUR_PUBLISHER
 ----

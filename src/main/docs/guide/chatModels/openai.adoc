@@ -7,5 +7,5 @@ Then add the link:configurationreference.html#io.micronaut.langchain4j.openai.Co
 .Example Configuration
 [configuration]
 ----
-langchain4j.open-ai.api-key=YOUR_KEY
+langchain4j.open-ai.api-key: YOUR_KEY
 ----

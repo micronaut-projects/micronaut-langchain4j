@@ -1,1 +1,1 @@
-io.micronaut.langchain4j.processor.Langchain4jModelVisitor
+io.micronaut.langchain4j.processor.Langchain4jConfigVisitor

@@ -7,8 +7,8 @@ Then add the link:configurationreference.html#io.micronaut.langchain4j.azure.Com
 .Example Configuration
 [configuration]
 ----
-langchain4j.azure-open-ai.api-key=YOUR_KEY
-langchain4j.azure-open-ai.endpoint=YOUR_ENDPOINT
+langchain4j.azure-open-ai.api-key: YOUR_KEY
+langchain4j.azure-open-ai.endpoint: YOUR_ENDPOINT
 ----
 
 You will additionally need to define a bean of type https://learn.microsoft.com/en-us/java/api/com.azure.core.credential.tokencredential?view=azure-java-stable[TokenCredentials].

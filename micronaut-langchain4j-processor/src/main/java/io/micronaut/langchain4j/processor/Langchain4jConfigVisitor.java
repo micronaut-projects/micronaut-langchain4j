@@ -65,7 +65,7 @@ import java.util.Optional;
 import java.util.Set;
 import javax.lang.model.element.Modifier;
 
-public class Langchain4jModelVisitor implements TypeElementVisitor<Lang4jConfig, Object> {
+public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig, Object> {
     public static final String CONFIG_PREFIX = "langchain4j.";
     private static final Map<String, String> MODEL_NAME_MAPPINGS = Map.of(
         "ChatLanguageModel", "ChatModel",
@@ -162,6 +162,7 @@ public class Langchain4jModelVisitor implements TypeElementVisitor<Lang4jConfig,
             String prefix = firstConfig.getCommonPrefix();
             RecordDef.RecordDefBuilder recordDefBuilder = RecordDef.builder(packageName + "." + commonConfigSimpleName)
                 .addModifiers(Modifier.PUBLIC)
+                .addAnnotation(Context.class)
                 .addAnnotation(AnnotationDef.builder(Requires.class)
                     .addMember("property", prefix)
                     .build())
@@ -282,7 +283,7 @@ public class Langchain4jModelVisitor implements TypeElementVisitor<Lang4jConfig,
                     .addModifiers(Modifier.PROTECTED)
                     .addAnnotation(Context.class)
                     .addAnnotation(AnnotationDef.builder(Bean.class)
-                        .addMember("typed", new VariableDef.StaticField(TypeDef.of(languageModelKind), "class", TypeDef.of(Class.class)))
+                        .addMember("typed", new VariableDef.StaticField(ClassTypeDef.of(languageModelKind.getRawClassElement().getName()), "class", TypeDef.of(Class.class)))
                         .build())
                     .addAnnotation(AnnotationDef.builder(EachBean.class)
                         .addMember("value", new VariableDef.StaticField(builderTypeDef, "class", TypeDef.of(Class.class)))

@@ -16,7 +16,10 @@
 package io.micronaut.langchain4j.annotation;
 
 import io.micronaut.aop.Introduction;
+import io.micronaut.context.annotation.AliasFor;
+import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.ReflectiveAccess;
+import jakarta.inject.Named;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
@@ -33,7 +36,8 @@ public @interface RegisterAiService {
      * The name of a configured AI model.
      * @return The model name.
      */
-    String modelName() default "";
+    @AliasFor(annotation = Named.class, member = AnnotationMetadata.VALUE_MEMBER)
+    String named() default "";
 
     /**
      * The types of the tools to include. Can be set to an empty array to include none.

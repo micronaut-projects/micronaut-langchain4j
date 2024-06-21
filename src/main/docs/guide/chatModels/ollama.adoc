@@ -7,5 +7,5 @@ Then add the link:configurationreference.html#io.micronaut.langchain4j.ollama.Co
 .Example Configuration
 [configuration]
 ----
-langchain4j.ollama.base-url=YOUR_URL
+langchain4j.ollama.base-url: YOUR_URL
 ----

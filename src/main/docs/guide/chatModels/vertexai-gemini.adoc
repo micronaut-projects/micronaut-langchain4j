@@ -7,7 +7,7 @@ Then add the link:configurationreference.html#io.micronaut.langchain4j.vertexai.
 .Example Configuration
 [configuration]
 ----
-langchain4j.vertex-ai-gemini.model-name=YOUR_MODEL
-langchain4j.vertex-ai-gemini.project=YOUR_PROJECT
-langchain4j.vertex-ai-gemini.location=YOUR_LOCATION
+langchain4j.vertex-ai-gemini.model-name: YOUR_MODEL
+langchain4j.vertex-ai-gemini.project: YOUR_PROJECT
+langchain4j.vertex-ai-gemini.location: YOUR_LOCATION
 ----

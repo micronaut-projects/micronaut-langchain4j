@@ -7,5 +7,5 @@ Then add the link:configurationreference.html#io.micronaut.langchain4j.mistralai
 .Example Configuration
 [configuration]
 ----
-langchain4j.mistral-ai.api-key=YOUR_KEY
+langchain4j.mistral-ai.api-key: YOUR_KEY
 ----
