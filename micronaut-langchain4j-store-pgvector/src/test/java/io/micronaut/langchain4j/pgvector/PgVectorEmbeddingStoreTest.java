@@ -31,6 +31,6 @@ public class PgVectorEmbeddingStoreTest {
         EmbeddingMatch<TextSegment> embeddingMatch = relevant.get(0);
 
         System.out.println(embeddingMatch.score()); // 0.8144288608390052
-        System.out.println(embeddingMatch.embedded().text()); // I like football.
+        Assertions.assertEquals("I like football.", embeddingMatch.embedded().text());
     }
 }
