@@ -2,4 +2,10 @@ Add the following dependency:
 
 dependency:io.micronaut.langchain4j:micronaut-langchain4j-openai[]
 
-Then add the link:configurationreference.html#io.micronaut.langchain4j.openai.DefaultOpenAiImageModelConfiguration[necessary configuration].
+Then add the link:configurationreference.html#io.micronaut.langchain4j.openai.CommonOpenAiImageModelConfiguration[necessary configuration].
+
+.Example Configuration
+[configuration]
+----
+langchain4j.open-ai.api-key=YOUR_KEY
+----

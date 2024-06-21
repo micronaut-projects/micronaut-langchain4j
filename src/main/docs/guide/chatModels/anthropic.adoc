@@ -2,4 +2,10 @@ Add the following dependency:
 
 dependency:io.micronaut.langchain4j:micronaut-langchain4j-anthropic[]
 
-Then add the link:configurationreference.html#io.micronaut.langchain4j.azure.DefaultAnthropicChatModelConfiguration[necessary configuration].
+Then add the link:configurationreference.html#io.micronaut.langchain4j.anthropic.CommonAnthropicChatModelConfiguration[necessary configuration].
+
+.Example Configuration
+[configuration]
+----
+langchain4j.anthropic.api-key=YOUR_KEY
+----

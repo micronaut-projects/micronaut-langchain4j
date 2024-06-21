@@ -2,4 +2,10 @@ Add the following dependency:
 
 dependency:io.micronaut.langchain4j:micronaut-langchain4j-mistralai[]
 
-Then add the link:configurationreference.html#io.micronaut.langchain4j.mistralai.DefaultMistralAiChatModelConfiguration[necessary configuration].
+Then add the link:configurationreference.html#io.micronaut.langchain4j.mistralai.CommonMistralAiChatModelConfiguration[necessary configuration].
+
+.Example Configuration
+[configuration]
+----
+langchain4j.mistral-ai.api-key=YOUR_KEY
+----

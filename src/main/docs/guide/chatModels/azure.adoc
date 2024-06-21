@@ -2,7 +2,14 @@ Add the following dependency:
 
 dependency:io.micronaut.langchain4j:micronaut-langchain4j-azure[]
 
-Then add the link:configurationreference.html#io.micronaut.langchain4j.anthropic.DefaultAzureOpenAiChatModelConfiguration[necessary configuration].
+Then add the link:configurationreference.html#io.micronaut.langchain4j.azure.CommonAzureOpenAiChatModelConfiguration[necessary configuration].
+
+.Example Configuration
+[configuration]
+----
+langchain4j.azure-open-ai.api-key=YOUR_KEY
+langchain4j.azure-open-ai.endpoint=YOUR_ENDPOINT
+----
 
 You will additionally need to define a bean of type https://learn.microsoft.com/en-us/java/api/com.azure.core.credential.tokencredential?view=azure-java-stable[TokenCredentials].
 
