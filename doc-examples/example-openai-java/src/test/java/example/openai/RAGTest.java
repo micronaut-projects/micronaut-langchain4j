@@ -38,6 +38,7 @@ public class RAGTest {
     static void init(
         EmbeddingStore<TextSegment> embeddingStore,
         EmbeddingModel embeddingModel) throws IOException {
+        assertInstanceOf(E5SmallV2QuantizedEmbeddingModel.class, embeddingModel);
         System.out.println("Ingesting model");
         URL url = URI.create("https://github.com/glaforge/gemini-workshop-for-java-developers/raw/main/attention-is-all-you-need.pdf").toURL();
         ApachePdfBoxDocumentParser pdfParser = new ApachePdfBoxDocumentParser();
@@ -69,6 +70,7 @@ public class RAGTest {
     @Bean
     AiServiceCustomizer<LlmExpert> customizer(EmbeddingStore<TextSegment> embeddingStore,
                                               EmbeddingModel embeddingModel) {
+        assertInstanceOf(E5SmallV2QuantizedEmbeddingModel.class, embeddingModel);
         return (context ->
             context.aiServices()
                 .contentRetriever(new EmbeddingStoreContentRetriever(embeddingStore, embeddingModel) {

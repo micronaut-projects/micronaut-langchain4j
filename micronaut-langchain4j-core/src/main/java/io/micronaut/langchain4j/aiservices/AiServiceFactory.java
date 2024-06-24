@@ -68,7 +68,8 @@ public class AiServiceFactory {
         AiServices<Object> builder = AiServices
             .builder(type);
 
-        AiServiceCustomizer<Object> creationCustomizer = Optional.ofNullable(creationContext).flatMap(cc -> beanContext.findBean(creationContext))
+        AiServiceCustomizer<Object> creationCustomizer = Optional.ofNullable(creationContext)
+            .flatMap(cc -> beanContext.findBean(creationContext))
             .orElseGet(() -> {
                 Argument<AiServiceCustomizer> creationContextArgument = Argument.of(AiServiceCustomizer.class, type);
                 return beanContext.findBean(creationContextArgument,
@@ -77,7 +78,6 @@ public class AiServiceFactory {
             });
         List<Object> toolsTyped = toolTypes != null ? toolRegistry.getToolsTyped(toolTypes) : List.of();
         if (CollectionUtils.isNotEmpty(toolsTyped)) {
-
             builder.tools(toolsTyped);
         }
         beanContext.findBean(
