@@ -19,6 +19,8 @@ import io.micronaut.aop.Introduction;
 import io.micronaut.context.annotation.AliasFor;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.ReflectiveAccess;
+import io.micronaut.langchain4j.aiservices.AiServiceCreationContext;
+import io.micronaut.langchain4j.aiservices.AiServiceCustomizer;
 import jakarta.inject.Named;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -44,4 +46,19 @@ public @interface RegisterAiService {
      * @return The tool types
      */
     Class<?>[] tools() default {};
+
+    /**
+     * A customizer can be registered to customize its creation.
+     *
+     * <p>Normally these are picked up automatically if declared as beans, using this members allows the chosen customizer to be overridden.</p>
+     * @return The customizer
+     */
+    Class<? extends AiServiceCustomizer<?>> customizer() default NoOpCustomizer.class;
+
+    final class NoOpCustomizer implements AiServiceCustomizer<Object> {
+        @Override
+        public void customize(AiServiceCreationContext<Object> creationContext) {
+            // no-op
+        }
+    }
 }

@@ -13,19 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.langchain4j.interceptor;
+package io.micronaut.langchain4j.aiservices;
 
+import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import dev.langchain4j.model.moderation.ModerationModel;
 import dev.langchain4j.service.AiServices;
+import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.type.Argument;
+import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.langchain4j.tools.ToolRegistry;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -50,17 +56,29 @@ public class AiServiceFactory {
      * @param type The type name
      * @param name The name
      * @param toolTypes The tool types
+     * @param creationContext The creation context
      * @return The AI services.
      */
     @Bean
     protected AiServices<Object> createAiServices(
         @Parameter Class<Object> type,
         @Parameter @Nullable String name,
-        @Parameter @Nullable Set<?> toolTypes) {
+        @Parameter @Nullable Set<?> toolTypes,
+        @Parameter @Nullable Class<AiServiceCustomizer<Object>> creationContext) {
         AiServices<Object> builder = AiServices
             .builder(type);
-        if (toolTypes != null) {
-            builder.tools(toolRegistry.getToolsTyped(toolTypes));
+
+        AiServiceCustomizer<Object> creationCustomizer = Optional.ofNullable(creationContext).flatMap(cc -> beanContext.findBean(creationContext))
+            .orElseGet(() -> {
+                Argument<AiServiceCustomizer> creationContextArgument = Argument.of(AiServiceCustomizer.class, type);
+                return beanContext.findBean(creationContextArgument,
+                    name != null ? Qualifiers.byName(name) : null
+                ).orElse(null);
+            });
+        List<Object> toolsTyped = toolTypes != null ? toolRegistry.getToolsTyped(toolTypes) : List.of();
+        if (CollectionUtils.isNotEmpty(toolsTyped)) {
+
+            builder.tools(toolsTyped);
         }
         beanContext.findBean(
             ChatLanguageModel.class,
@@ -77,6 +95,21 @@ public class AiServiceFactory {
             name != null ? Qualifiers.byName(name) : null
         ).ifPresent(builder::moderationModel);
 
+        builder.chatMemory(
+            MessageWindowChatMemory.builder()
+                .maxMessages(10)
+                .chatMemoryStore(new InMemoryChatMemoryStore())
+                .build()
+        );
+
+        if (creationCustomizer != null) {
+            creationCustomizer.customize(new AiServiceCreationContext<>(
+                type,
+                name,
+                toolsTyped,
+                builder
+            ));
+        }
         return builder;
     }
 }
