@@ -46,6 +46,7 @@ langchain4j = { module = 'dev.langchain4j:langchain4j', version.ref = "managed-l
 langchain4j-ollama = { module = 'dev.langchain4j:langchain4j-ollama', version.ref = "managed-langchain4j" }
 langchain4j-bedrock = { module = 'dev.langchain4j:langchain4j-bedrock', version.ref = "managed-langchain4j" }
 langchain4j-anthropic = { module = 'dev.langchain4j:langchain4j-anthropic', version.ref = "managed-langchain4j" }
+langchain4j-hugging-face = { module = 'dev.langchain4j:langchain4j-hugging-face', version.ref = "managed-langchain4j" }
 langchain4j-vertex-ai-gemini = { module = 'dev.langchain4j:langchain4j-vertex-ai-gemini', version.ref = "managed-langchain4j" }
 langchain4j-vertex-ai = { module = 'dev.langchain4j:langchain4j-vertex-ai', version.ref = "managed-langchain4j" }
 langchain4j-mistral-ai = { module = 'dev.langchain4j:langchain4j-mistral-ai', version.ref = "managed-langchain4j" }
