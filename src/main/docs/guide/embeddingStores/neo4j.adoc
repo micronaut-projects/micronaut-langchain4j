@@ -1,1 +1,12 @@
-TODO
+Add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-store-neo4j[]
+
+Then https://micronaut-projects.github.io/micronaut-neo4j/latest/guide/#setup[configure the Neo4j driver].
+
+.Example Configuration
+[configuration]
+----
+neo4j.uri: bolt://localhost
+langchain4j.neo4j.embedding-stores.default.dimension: 384
+----

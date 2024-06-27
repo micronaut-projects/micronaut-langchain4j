@@ -1,1 +1,12 @@
-TODO
+Add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-store-elasticsearch[]
+
+Then https://micronaut-projects.github.io/micronaut-elasticsearch/latest/guide/#configuration[configure the Elasticsearch client].
+
+.Example Configuration
+[configuration]
+----
+elasticsearch.httpHosts: "http://localhost:9200,http://127.0.0.2:9200"
+langchain4j.elasticsearch.embedding-stores.default.dimension: 384
+----

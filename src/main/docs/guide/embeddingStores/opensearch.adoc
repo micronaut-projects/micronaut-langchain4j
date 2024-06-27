@@ -1,1 +1,12 @@
-TODO
+Add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-store-opensearch[]
+
+Then https://micronaut-projects.github.io/micronaut-opensearch/latest/guide/#openSearchRestClient[configure the OpenSearch client].
+
+.Example Configuration
+[configuration]
+----
+micronaut.opensearch.rest-client.http-hosts: "http://localhost:9200,http://127.0.0.2:9200"
+langchain4j.opensearch.embedding-stores.default.dimension: 384
+----
