@@ -84,5 +84,10 @@ public @interface Lang4jConfig {
          * @return The implementation of the model.
          */
         Class<?> impl();
+
+        /**
+         * @return The model name to default to.
+         */
+        String defaultModelName() default "";
     }
 }

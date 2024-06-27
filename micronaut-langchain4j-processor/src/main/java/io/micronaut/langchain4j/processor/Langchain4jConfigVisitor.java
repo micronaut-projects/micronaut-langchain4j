@@ -17,6 +17,7 @@ package io.micronaut.langchain4j.processor;
 
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.ConfigurationBuilder;
+import io.micronaut.context.annotation.ConfigurationInject;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.EachBean;
@@ -61,7 +62,6 @@ import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import javax.lang.model.element.Modifier;
 
@@ -71,6 +71,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         "ChatLanguageModel", "ChatModel",
         "StreamingChatLanguageModel", "StreamingChatModel"
     );
+    private static final String CTOR_NAME = "<init>";
 
     @Override
     public VisitorKind getVisitorKind() {
@@ -100,6 +101,8 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
 
             for (AnnotationValue<Model> provider : providers) {
                 ModelConfig modelConfig = getModelConfig(element, context, provider);
+                MethodElement modelNameMethod = modelConfig.builderType.getEnclosedElement(
+                    ElementQuery.ALL_METHODS.named("modelName").onlyAccessible().onlyInstance()).orElse(null);
                 String[] requiredInjects = properties.stream().filter(p -> p.required && p.injected)
                     .map(p -> p.name).toArray(String[]::new);
                 String[] optionalInjects = properties.stream().filter(p -> !p.required && p.injected)
@@ -116,7 +119,9 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                             modelConfig.builderType,
                             requiredInjects,
                             optionalInjects,
-                            commonConfig
+                            commonConfig,
+                            modelNameMethod,
+                            modelConfig.defaultModelName
                         );
                         writeJavaSource(generator, context, element, packageName, namedConfigSimpleName, namedConfigDef, modelConfig.modelKind);
 
@@ -130,7 +135,9 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                             modelConfig.builderType,
                             requiredInjects,
                             optionalInjects,
-                            commonConfig
+                            commonConfig,
+                            modelNameMethod,
+                            modelConfig.defaultModelName
                         );
 
                         writeJavaSource(generator, context, element, packageName, defaultConfigSimpleName, defaultConfigDef, modelConfig.modelKind);
@@ -227,6 +234,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         ClassElement languageModelKind = provider.stringValue("kind")
             .flatMap(context::getClassElement)
             .orElse(null);
+        String defaultModelName = provider.stringValue("defaultModelName").orElse(null);
 
         if (languageModelKind == null) {
             throw new ProcessingException(element, "@ModelProvider kind must be on the compilation classpath");
@@ -234,7 +242,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         if (languageModel == null) {
             throw new ProcessingException(element, "@ModelProvider kind must be on the compilation classpath");
         }
-        return new ModelConfig(languageModel, languageModelKind);
+        return new ModelConfig(languageModel, languageModelKind, defaultModelName);
     }
 
     private ClassDef buildFactory(
@@ -320,7 +328,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             });
     }
 
-    private static ClassDef buildNamedConfigurationDef(String prefix, String configurationClassName, ClassElement model, ClassElement builderType, String[] requiredInjects, String[] optionalInjects, RecordDef commonConfig) {
+    private static ClassDef buildNamedConfigurationDef(String prefix, String configurationClassName, ClassElement model, ClassElement builderType, String[] requiredInjects, String[] optionalInjects, RecordDef commonConfig, MethodElement modelNameMethod, String defaultModelName) {
         FieldDef prefixField = FieldDef.builder("PREFIX")
             .ofType(TypeDef.of(String.class))
             .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
@@ -356,7 +364,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                 ))
                 .build());
 
-        addCommonConstructor(builderType, commonConfig, classDefBuilder);
+        addCommonConstructor(builderType, commonConfig, classDefBuilder, modelNameMethod, defaultModelName, false);
 
         for (String requiredInject : requiredInjects) {
             addInjectionPoint(builderType, requiredInject, true, classDefBuilder);
@@ -365,36 +373,37 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             addInjectionPoint(builderType, optionalInject, false, classDefBuilder);
         }
 
-        Optional<MethodElement> modelNameMethod = builderType.getEnclosedElement(
-            ElementQuery.ALL_METHODS.named("modelName").onlyAccessible().onlyInstance());
-        if (modelNameMethod.isPresent()) {
-            classDefBuilder.addMethod(MethodDef.builder("<init>").addParameter(
-                ParameterDef.builder("modelName", TypeDef.of(String.class))
-                    .addAnnotation(Parameter.class)
-                    .build()
-            ).addStatements(
-                List.of(
-                    ExpressionDef.invoke(
-                        new VariableDef.Local("builder", TypeDef.of(builderType)),
-                        "modelName",
-                        List.of(new VariableDef.MethodParameter("modelName", TypeDef.of(String.class))),
-                        TypeDef.of(void.class)
-                    )
-                )
-            ).build());
-        }
         return classDefBuilder
             .build();
     }
 
-    private static void addCommonConstructor(ClassElement builderType, RecordDef commonConfig, ClassDef.ClassDefBuilder classDefBuilder) {
+    private static void addCommonConstructor(
+        ClassElement builderType,
+        RecordDef commonConfig,
+        ClassDef.ClassDefBuilder classDefBuilder,
+        MethodElement modelNameMethod,
+        String defaultModelName,
+        boolean isDefaultConfiguration) {
+        MethodDef.MethodDefBuilder constructorBuilder = MethodDef.builder(CTOR_NAME).addAnnotation(ConfigurationInject.class).addModifiers(Modifier.PUBLIC);
         if (commonConfig != null) {
             classDefBuilder.addAnnotation(AnnotationDef.builder(Requires.class)
                 .addMember("beans", new VariableDef.StaticField(commonConfig.asTypeDef(), "class", TypeDef.of(Class.class)))
                 .build());
-            MethodDef.MethodDefBuilder constructorBuilder = MethodDef.builder("<init>")
-                .addModifiers(Modifier.PUBLIC)
-                .addParameter(ParameterDef.builder("config", commonConfig.asTypeDef()).build());
+
+            if (modelNameMethod != null && defaultModelName != null) {
+                String modelNameMethodName = modelNameMethod.getName();
+                constructorBuilder.addParameter(
+                    ParameterDef.builder(modelNameMethodName, TypeDef.of(String.class))
+                        .addAnnotation(AnnotationDef.builder(Bindable.class).addMember(
+                            "defaultValue", defaultModelName
+                        ).build())
+                        .build()
+                );
+                constructorBuilder.addStatement(
+                    addModelNameStatement(builderType, modelNameMethodName)
+                );
+            }
+            constructorBuilder.addParameter(ParameterDef.builder("config", commonConfig.asTypeDef()).build());
             List<PropertyDef> properties = commonConfig.getProperties();
             for (PropertyDef property : properties) {
                 if (property.getName().equals("enabled")) {
@@ -418,10 +427,36 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                 constructorBuilder
                     .build()
             );
+        } else if (modelNameMethod != null && !isDefaultConfiguration) {
+            String modelNameMethodName = modelNameMethod.getName();
+            classDefBuilder.addMethod(constructorBuilder.addParameter(
+                ParameterDef.builder(modelNameMethodName, TypeDef.of(String.class))
+                    .addAnnotation(Parameter.class)
+                    .build()
+            ).addStatements(
+                List.of(addModelNameStatement(builderType, modelNameMethodName))
+            ).build());
         }
     }
 
-    private static ClassDef buildDefaultConfigurationDef(String prefix, String configurationClassName, ClassElement model, ClassElement builderType, String[] requiredInjects, String[] optionalInjects, RecordDef commonConfig) {
+    private static ExpressionDef.CallInstanceMethod addModelNameStatement(ClassElement builderType, String modelNameMethodName) {
+        return ExpressionDef.invoke(
+            new VariableDef.Local("builder", TypeDef.of(builderType)),
+            modelNameMethodName,
+            List.of(new VariableDef.MethodParameter(modelNameMethodName, TypeDef.of(String.class))),
+            TypeDef.of(void.class)
+        );
+    }
+
+    private static ClassDef buildDefaultConfigurationDef(
+        String prefix,
+        String configurationClassName,
+        ClassElement model,
+        ClassElement builderType, String[] requiredInjects,
+        String[] optionalInjects,
+        RecordDef commonConfig,
+        MethodElement modelNameMethod,
+        String defaultModelName) {
         FieldDef prefixField = FieldDef.builder("PREFIX")
             .ofType(TypeDef.of(String.class))
             .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
@@ -472,7 +507,10 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         addCommonConstructor(
             builderType,
             commonConfig,
-            classDefBuilder
+            classDefBuilder,
+            modelNameMethod,
+            defaultModelName,
+            true
         );
         return classDefBuilder
             .build();
@@ -519,15 +557,17 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         @NonNull ClassElement builderType,
         String modelKind,
         String modelSuffix,
-        String modelName) {
-        public ModelConfig(ClassElement languageModel, ClassElement languageModelKind) {
+        String modelName,
+        String defaultModelName) {
+        public ModelConfig(ClassElement languageModel, ClassElement languageModelKind, String defaultModelName) {
             this(
                 languageModel,
                 languageModelKind,
                 resolveBuilder(languageModel),
                 resolveModelKind(languageModelKind),
                 resolveModelSuffix(languageModelKind),
-                resolveModelName(languageModel, languageModelKind)
+                resolveModelName(languageModel, languageModelKind),
+                defaultModelName
             );
         }
 

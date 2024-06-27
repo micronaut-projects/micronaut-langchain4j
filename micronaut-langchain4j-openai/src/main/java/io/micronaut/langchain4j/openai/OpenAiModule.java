@@ -38,23 +38,26 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
     models = {
         @Model(
             kind = ChatLanguageModel.class,
-            impl = OpenAiChatModel.class)
-        ,
-        @Model(
-            kind = ModerationModel.class,
-            impl = OpenAiModerationModel.class)
-        ,
-        @Model(
-            kind = StreamingChatLanguageModel.class,
-            impl = OpenAiStreamingChatModel.class
+            impl = OpenAiChatModel.class,
+            defaultModelName = OpenAiModule.DEFAULT_CHAT_MODEL
         ),
         @Model(
+            kind = StreamingChatLanguageModel.class,
+            impl = OpenAiStreamingChatModel.class,
+            defaultModelName = OpenAiModule.DEFAULT_CHAT_MODEL
+        ),
+        @Model(
+            kind = ModerationModel.class,
+            impl = OpenAiModerationModel.class),
+        @Model(
             kind = ImageModel.class,
-            impl = OpenAiImageModel.class
+            impl = OpenAiImageModel.class,
+            defaultModelName = OpenAiModule.DEFAULT_IMAGE_MODEL
         ),
         @Model(
             kind = EmbeddingModel.class,
-            impl = OpenAiEmbeddingModel.class
+            impl = OpenAiEmbeddingModel.class,
+            defaultModelName = OpenAiModule.DEFAULT_EMBEDDING_MODEL
         )
     },
     properties = {
@@ -71,7 +74,6 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
             injected = true
         ),
         @Property(name = "baseUrl", common = true, required = true, defaultValue = "https://api.openai.com/v1/"),
-        @Property(name = "modelName", common = true, required = true, defaultValue = "gpt-3.5-turbo"),
         @Property(name = "apiKey", common = true, required = true),
         @Property(name = "organizationId", common = true),
         @Property(name = "timeout", common = true),
@@ -80,4 +82,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
     }
 )
 final class OpenAiModule {
+    public static final String DEFAULT_CHAT_MODEL = "gpt-3.5-turbo";
+    public static final String DEFAULT_IMAGE_MODEL = "dall-e-3";
+    public static final String DEFAULT_EMBEDDING_MODEL = "text-embedding-ada-002";
 }
