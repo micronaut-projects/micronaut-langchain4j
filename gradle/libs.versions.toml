@@ -20,6 +20,7 @@ micronaut = "4.5.0"
 micronaut-core = "4.5.3"
 micronaut-platform = "4.5.0"
 micronaut-docs = "2.0.0"
+micronaut-neo4j = "6.6.0"
 micronaut-serde = "2.10.1"
 micronaut-sql = "5.7.0"
 micronaut-redis = "6.4.0"
@@ -37,6 +38,7 @@ managed-langchain4j = "0.31.0"
 [libraries]
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut-core' }
 micronaut-redis = { module = 'io.micronaut.redis:micronaut-redis-bom', version.ref = 'micronaut-redis' }
+micronaut-neo4j = { module = 'io.micronaut.neo4j:micronaut-neo4j-bom', version.ref = 'micronaut-neo4j' }
 micronaut-logging = { module = 'io.micronaut.logging:micronaut-logging-bom', version.ref = 'micronaut-logging' }
 micronaut-serde = { module = 'io.micronaut.serde:micronaut-serde-bom', version.ref = 'micronaut-serde' }
 micronaut-sql = { module = 'io.micronaut.sql:micronaut-sql-bom', version.ref = 'micronaut-sql' }
@@ -53,6 +55,7 @@ langchain4j-mistral-ai = { module = 'dev.langchain4j:langchain4j-mistral-ai', ve
 langchain4j-open-ai = { module = 'dev.langchain4j:langchain4j-open-ai', version.ref = "managed-langchain4j" }
 langchain4j-azure-open-ai = { module = 'dev.langchain4j:langchain4j-azure-open-ai', version.ref = "managed-langchain4j" }
 langchain4j-redis = { module = 'dev.langchain4j:langchain4j-redis', version.ref = "managed-langchain4j" }
+langchain4j-neo4j = { module = 'dev.langchain4j:langchain4j-neo4j', version.ref = "managed-langchain4j" }
 langchain4j-pgvector = { module = 'dev.langchain4j:langchain4j-pgvector', version.ref = "managed-langchain4j" }
 langchain4j-embeddings-all-minilm-l6-v2 = { module = 'dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2', version.ref = "managed-langchain4j" }
 
