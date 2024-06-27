@@ -16,21 +16,30 @@
 package io.micronaut.langchain4j.aiservices;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.inject.BeanDefinition;
+import java.util.Set;
 
 /**
- * Interface that allows customization the creation of {@link dev.langchain4j.service.AiServices}.
+ * Models a AiService definition.
  *
- * @param <T> The type of the service
+ * @param beanDefinition The bean definition
+ * @param type           The type
+ * @param name           The name
+ * @param tools          The tools
+ * @param customizer     The customizer class
+ * @param <T>            The generic type
  * @see io.micronaut.langchain4j.annotation.RegisterAiService
  */
-@FunctionalInterface
-public interface AiServiceCustomizer<T> {
-
-    /**
-     * Call back invocation that receives the {@link AiServiceCreationContext}.
-     *
-     * <p>The context allows customizing the builder and analysing the metadata associated with the service.</p>
-     * @param creationContext The creation context, never {@code null}
-     */
-    void customize(@NonNull AiServiceCreationContext<T> creationContext);
+public record AiServiceDef<T>(
+    BeanDefinition<T> beanDefinition,
+    @NonNull
+    Class<T> type,
+    @Nullable
+    String name,
+    @Nullable
+    Set<Class<?>> tools,
+    @Nullable
+    Class<AiServiceCustomizer<T>> customizer
+) {
 }

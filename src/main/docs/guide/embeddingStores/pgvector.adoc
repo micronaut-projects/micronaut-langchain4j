@@ -1,0 +1,18 @@
+Add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-store-pgvector[]
+
+Then add one of the https://micronaut-projects.github.io/micronaut-sql/latest/guide/#jdbc[supported JDBC connection pools], for example Hikari:
+
+dependency:micronaut-jdbc-hikari[groupId="io.micronaut.sql", scope="runtime"]
+
+.Example Configuration
+[configuration]
+----
+datasources.default.dialect: postgres
+langchain4j.pgvector.embedding-stores.default.table: "mytable"
+langchain4j.pgvector.embedding-stores.default.dimension: 384
+
+# Add this if you plan to use testresources
+test-resources.containers.postgres.image-name: pgvector/pgvector:pg16
+----

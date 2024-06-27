@@ -34,6 +34,15 @@ import java.lang.annotation.Target;
 @Documented
 @ReflectiveAccess
 public @interface RegisterAiService {
+
+    /**
+     * Defines the service name. Same as {@link #named()}.
+     * @return The service name
+     */
+    @AliasFor(annotation = Named.class, member = AnnotationMetadata.VALUE_MEMBER)
+    @AliasFor(member = "named")
+    String value() default "";
+
     /**
      * The name of a configured AI model.
      * @return The model name.
@@ -55,6 +64,9 @@ public @interface RegisterAiService {
      */
     Class<? extends AiServiceCustomizer<?>> customizer() default NoOpCustomizer.class;
 
+    /**
+     * The default no-op customizer.
+     */
     final class NoOpCustomizer implements AiServiceCustomizer<Object> {
         @Override
         public void customize(AiServiceCreationContext<Object> creationContext) {

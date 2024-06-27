@@ -18,10 +18,15 @@ package io.micronaut.langchain4j.aiservices;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.moderation.ModerationModel;
+import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.service.AiServices;
+import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore;
 import io.micronaut.context.BeanContext;
+import io.micronaut.context.BeanProvider;
+import io.micronaut.context.Qualifier;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Parameter;
@@ -32,7 +37,8 @@ import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.langchain4j.tools.ToolRegistry;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 /**
  * An AI services factory.
@@ -53,63 +59,76 @@ public class AiServiceFactory {
      *
      * <p>A {@link io.micronaut.context.event.BeanCreatedEventListener} can be registered to intercept creation.</p>
      *
-     * @param type The type name
-     * @param name The name
-     * @param toolTypes The tool types
-     * @param creationContext The creation context
+     * @param serviceDef The service definition
      * @return The AI services.
      */
     @Bean
     protected AiServices<Object> createAiServices(
-        @Parameter Class<Object> type,
-        @Parameter @Nullable String name,
-        @Parameter @Nullable Set<?> toolTypes,
-        @Parameter @Nullable Class<AiServiceCustomizer<Object>> creationContext) {
+        @Parameter AiServiceDef<Object> serviceDef) {
+        Class<Object> type = serviceDef.type();
+        String name = serviceDef.name();
+
         AiServices<Object> builder = AiServices
             .builder(type);
 
-        AiServiceCustomizer<Object> creationCustomizer = Optional.ofNullable(creationContext)
-            .flatMap(cc -> beanContext.findBean(creationContext))
+        AiServiceCustomizer<Object> creationCustomizer = Optional.ofNullable(serviceDef.customizer())
+            .flatMap(beanContext::findBean)
             .orElseGet(() -> {
-                Argument<AiServiceCustomizer> creationContextArgument = Argument.of(AiServiceCustomizer.class, type);
-                return beanContext.findBean(creationContextArgument,
-                    name != null ? Qualifiers.byName(name) : null
-                ).orElse(null);
+                AtomicReference<AiServiceCustomizer<Object>> ref = new AtomicReference<>();
+                lookupByNameOrDefault(name, Argument.of(AiServiceCustomizer.class, type), null, ref::set);
+                return ref.get();
             });
-        List<Object> toolsTyped = toolTypes != null ? toolRegistry.getToolsTyped(toolTypes) : List.of();
+
+        List<Object> toolsTyped = serviceDef.tools() != null ? toolRegistry.getToolsTyped(serviceDef.tools()) : List.of();
         if (CollectionUtils.isNotEmpty(toolsTyped)) {
             builder.tools(toolsTyped);
         }
-        beanContext.findBean(
-            ChatLanguageModel.class,
-            name != null ? Qualifiers.byName(name) : null
-        ).ifPresent(builder::chatLanguageModel);
 
-        beanContext.findBean(
-            StreamingChatLanguageModel.class,
-            name != null ? Qualifiers.byName(name) : null
-        ).ifPresent(builder::streamingChatLanguageModel);
+        lookupByNameOrDefault(name, ChatLanguageModel.class, builder::chatLanguageModel);
 
-        beanContext.findBean(
-            ModerationModel.class,
-            name != null ? Qualifiers.byName(name) : null
-        ).ifPresent(builder::moderationModel);
+        lookupByNameOrDefault(name, StreamingChatLanguageModel.class, builder::streamingChatLanguageModel);
 
-        builder.chatMemory(
+        lookupByNameOrDefault(name, ModerationModel.class, builder::moderationModel);
+
+        // default to in-memory chat store, but allow replacement
+        lookupByNameOrDefault(name, InMemoryChatMemoryStore.class, new InMemoryChatMemoryStore(), (store) -> builder.chatMemory(
             MessageWindowChatMemory.builder()
                 .maxMessages(10)
-                .chatMemoryStore(new InMemoryChatMemoryStore())
+                .chatMemoryStore(store)
                 .build()
-        );
+        ));
 
+        lookupByNameOrDefault(name, EmbeddingModel.class, null, embeddingModel ->
+            lookupByNameOrDefault(name, EmbeddingStore.class, null, embeddingStore ->
+                builder.contentRetriever(new EmbeddingStoreContentRetriever(embeddingStore, embeddingModel))));
         if (creationCustomizer != null) {
             creationCustomizer.customize(new AiServiceCreationContext<>(
-                type,
-                name,
-                toolsTyped,
+                serviceDef,
                 builder
             ));
         }
         return builder;
+    }
+
+    private <T> void lookupByNameOrDefault(String name, Class<T> beanType, @Nullable T defaultValue, Consumer<T> configurer) {
+        lookupByNameOrDefault(name, Argument.of(beanType), defaultValue, configurer);
+    }
+
+    private <T> void lookupByNameOrDefault(String name, Class<T> beanType, Consumer<T> configurer) {
+        lookupByNameOrDefault(name, Argument.of(beanType), null, configurer);
+    }
+
+    private <T> void lookupByNameOrDefault(String name, Argument<T> beanType, @Nullable T defaultValue, Consumer<T> configurer) {
+        Qualifier<T> qualifier = name != null ? Qualifiers.byName(name) : null;
+        BeanProvider<T> provider = beanContext.getProvider(
+            beanType
+        );
+
+        if (defaultValue != null) {
+            configurer.accept(defaultValue);
+        }
+
+        provider.ifPresent(configurer);
+        provider.find(qualifier).ifPresent(configurer);
     }
 }

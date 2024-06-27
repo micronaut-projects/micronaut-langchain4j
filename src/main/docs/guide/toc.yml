@@ -7,11 +7,19 @@ chatModels:
   anthropic: Anthropic
   azure: Azure
   bedrock: Bedrock
+  hugging-face: HuggingFace
   mistralai: MistralAi
   ollama: Ollama
   openai: OpenAi
   vertexai: VertexAi
   vertexai-gemini: VertexAi Gemini
+embeddingStores:
+  title: Embedding Stores
+  elasticsearch: Elastic Search
+  neo4j: Neo4j
+  opensearch: Open Search
+  pgvector: PGVector
+  redis: Redis
 repository: Repository
 releaseHistory: Release History
 

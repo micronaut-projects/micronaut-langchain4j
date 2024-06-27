@@ -22,7 +22,9 @@ import io.micronaut.aop.MethodInvocationContext;
 import io.micronaut.context.BeanContext;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.inject.BeanDefinition;
 import io.micronaut.langchain4j.aiservices.AiServiceCustomizer;
+import io.micronaut.langchain4j.aiservices.AiServiceDef;
 import io.micronaut.langchain4j.annotation.RegisterAiService;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -45,11 +47,21 @@ public class AiServiceInterceptor implements MethodInterceptor<Object, Object> {
         Object target = cachedAiServices.get(declaringType);
         if (target == null) {
             AnnotationValue<RegisterAiService> annotation = context.getAnnotation(RegisterAiService.class);
-            String name = annotation.stringValue("modelName").orElse(null);
+
+            String name = annotation.stringValue("named").orElse(null);
             Set<Class<?>> tools = annotation.contains("tools") ? Set.of(annotation.classValues("tools")) : null;
-            @SuppressWarnings("unchecked") Class<AiServiceCustomizer<Object>> creationContextClass =
+            @SuppressWarnings("unchecked") Class<AiServiceCustomizer<Object>> customizer =
                 (Class<AiServiceCustomizer<Object>>) annotation.classValue("customizer").orElse(null);
-            target = beanContext.createBean(AiServices.class, declaringType, name, tools, creationContextClass)
+
+            BeanDefinition<Object> beanDefinition = beanContext.getBeanDefinition(declaringType);
+            AiServiceDef<Object> serviceDef = new AiServiceDef<>(
+                beanDefinition,
+                declaringType,
+                name,
+                tools,
+                customizer
+            );
+            target = beanContext.createBean(AiServices.class, serviceDef)
                    .build();
             cachedAiServices.put(declaringType, target);
         }

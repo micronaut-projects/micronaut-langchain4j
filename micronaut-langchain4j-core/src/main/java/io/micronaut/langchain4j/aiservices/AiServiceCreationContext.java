@@ -16,19 +16,16 @@
 package io.micronaut.langchain4j.aiservices;
 
 import dev.langchain4j.service.AiServices;
-import java.util.List;
 
 /**
  * A context object when an AiService is created.
- * @param type The type
- * @param name The name
- * @param tools The tools
+ *
+ * @param definition The definition
  * @param aiServices The {@link AiServices}.
  * @param <T> The generic type
+ * @see AiServiceCustomizer
  */
 public record AiServiceCreationContext<T>(
-    Class<T> type,
-    String name,
-    List<Object> tools,
+    AiServiceDef<T> definition,
     AiServices<T> aiServices) {
 }
