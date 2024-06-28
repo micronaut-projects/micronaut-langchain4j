@@ -1,0 +1,21 @@
+Add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-store-qdrant[]
+
+To use Testcontainers & Test Resources add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-qdrant-testresource[scope="testResourcesService"]
+
+NOTE: For Maven see https://micronaut-projects.github.io/micronaut-maven-plugin/latest/examples/test-resources.html#adding_modules_or_libraries_to_the_test_resources_service_classpath[Adding modules or libraries to the Test Resources service classpath].
+
+
+.Example Configuration
+[configuration]
+----
+# Omitt the following 2 properties if you use Test resources
+langchain4j.qdrant.embedding-store.host: localhost
+langchain4j.qdrant.embedding-store.port: 6334
+
+# Minimal configuration required for Test resources
+langchain4j.qdrant.embedding-store.collection-name: mycollection
+----

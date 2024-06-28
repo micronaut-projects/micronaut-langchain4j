@@ -63,6 +63,7 @@ langchain4j-neo4j = { module = 'dev.langchain4j:langchain4j-neo4j', version.ref 
 langchain4j-opensearch = { module = 'dev.langchain4j:langchain4j-opensearch', version.ref = "managed-langchain4j" }
 langchain4j-elasticsearch = { module = 'dev.langchain4j:langchain4j-elasticsearch', version.ref = "managed-langchain4j" }
 langchain4j-pgvector = { module = 'dev.langchain4j:langchain4j-pgvector', version.ref = "managed-langchain4j" }
+langchain4j-qdrant = { module = 'dev.langchain4j:langchain4j-qdrant', version.ref = "managed-langchain4j" }
 langchain4j-embeddings-all-minilm-l6-v2 = { module = 'dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2', version.ref = "managed-langchain4j" }
 
 # BOMs

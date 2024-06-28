@@ -203,11 +203,12 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                             .addMember("defaultValue", property.defaultValue).build()
                         );
                     }
-                    if (!property.required) {
+                    ClassElement propertyType = methodElement.getParameters()[0].getGenericType();
+                    if (!property.required && !(propertyType.isPrimitive() && !propertyType.isArray())) {
                         builder.addAnnotation(Nullable.class);
                     }
                     recordDefBuilder.addProperty(
-                            builder.ofType(TypeDef.of(methodElement.getParameters()[0].getGenericType()))
+                            builder.ofType(TypeDef.of(propertyType))
                                    .build()
                     );
                 });

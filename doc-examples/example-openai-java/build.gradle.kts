@@ -1,7 +1,7 @@
 plugins {
     id("java")
     id("io.micronaut.build.internal.langchain4j-example")
-
+    id("io.micronaut.test-resources")
 }
 
 micronaut {
@@ -12,6 +12,7 @@ dependencies {
     implementation(platform(libs.boms.langchain4j))
     annotationProcessor(projects.micronautLangchain4jProcessor)
     implementation(projects.micronautLangchain4jOpenai)
+    implementation(projects.micronautLangchain4jStoreQdrant)
     implementation(mn.micronaut.http.client)
     implementation(mnSerde.micronaut.serde.jackson)
     runtimeOnly(mnLogging.logback.classic)
@@ -19,6 +20,7 @@ dependencies {
     testImplementation("dev.langchain4j:langchain4j-document-parser-apache-pdfbox")
     testImplementation("dev.langchain4j:langchain4j-embeddings-e5-small-v2-q")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testResourcesService(projects.micronautLangchain4jQdrantTestresource)
 }
 
 tasks {
