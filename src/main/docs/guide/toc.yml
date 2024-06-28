@@ -16,10 +16,12 @@ chatModels:
 embeddingStores:
   title: Embedding Stores
   elasticsearch: Elastic Search
+  mongodb: MongoDB
   neo4j: Neo4j
   opensearch: Open Search
   pgvector: PGVector
   redis: Redis
+  qdrant: Qdrant
 repository: Repository
 releaseHistory: Release History
 

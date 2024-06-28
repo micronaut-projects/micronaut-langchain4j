@@ -1,0 +1,17 @@
+Add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-store-mongodb-atlas[]
+
+.Configuring a MongoDB server
+[source,yaml]
+----
+mongodb.servers.default.uri: mongodb://username:password@localhost:27017/databaseName
+----
+
+.Example Configuration
+[configuration]
+----
+langchain4j.mongodb-atlas.embedding-stores.default.database-name: testdb
+langchain4j.mongodb-atlas.embedding-stores.default.collection-name: testcol
+langchain4j.mongodb-atlas.embedding-stores.default.index-name: testindex
+----
