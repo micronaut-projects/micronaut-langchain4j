@@ -18,6 +18,7 @@ embeddingStores:
   elasticsearch: Elastic Search
   mongodb: MongoDB
   neo4j: Neo4j
+  oracledb: Oracle
   opensearch: Open Search
   pgvector: PGVector
   redis: Redis

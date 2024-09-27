@@ -27,7 +27,7 @@ import io.micronaut.core.annotation.Nullable;
 import java.util.Set;
 
 /**
- * Configures for PgVectorEmbeddingStore.
+ * Configures for MongoDbEmbeddingStore.
  */
 @EachProperty(value = NamedMongoDbAtlasEmbeddingStoreConfig.PREFIX, primary = "default")
 public class NamedMongoDbAtlasEmbeddingStoreConfig {
