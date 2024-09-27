@@ -1,9 +1,9 @@
 package example.openai;
 
 import dev.langchain4j.service.SystemMessage;
-import io.micronaut.langchain4j.annotation.RegisterAiService;
+import io.micronaut.langchain4j.annotation.AiService;
 
-@RegisterAiService // <1>
+@AiService // <1>
 public interface Friend {
 
     @SystemMessage("You are a good friend of mine. Answer using slang.") // <2>

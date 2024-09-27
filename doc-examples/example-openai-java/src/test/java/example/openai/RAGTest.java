@@ -20,7 +20,7 @@ import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.langchain4j.aiservices.AiServiceCustomizer;
-import io.micronaut.langchain4j.annotation.RegisterAiService;
+import io.micronaut.langchain4j.annotation.AiService;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Singleton;
 import java.io.IOException;
@@ -64,7 +64,7 @@ public class RAGTest {
         assertTrue(retrieved);
     }
 
-    @RegisterAiService
+    @AiService
     interface LlmExpert {
         String ask(String question);
     }

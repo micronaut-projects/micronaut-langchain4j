@@ -18,6 +18,7 @@ package io.micronaut.langchain4j.aiservices;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.inject.BeanDefinition;
+import io.micronaut.langchain4j.annotation.AiService;
 import java.util.Set;
 
 /**
@@ -29,7 +30,7 @@ import java.util.Set;
  * @param tools          The tools
  * @param customizer     The customizer class
  * @param <T>            The generic type
- * @see io.micronaut.langchain4j.annotation.RegisterAiService
+ * @see AiService
  */
 public record AiServiceDef<T>(
     BeanDefinition<T> beanDefinition,

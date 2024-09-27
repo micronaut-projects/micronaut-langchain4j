@@ -25,14 +25,14 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.langchain4j.aiservices.AiServiceCustomizer;
 import io.micronaut.langchain4j.aiservices.AiServiceDef;
-import io.micronaut.langchain4j.annotation.RegisterAiService;
+import io.micronaut.langchain4j.annotation.AiService;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Interceptor implementation for register ai service.
  */
-@InterceptorBean(RegisterAiService.class)
+@InterceptorBean(AiService.class)
 public class AiServiceInterceptor implements MethodInterceptor<Object, Object> {
     private final ConcurrentHashMap<Class<Object>, Object> cachedAiServices = new ConcurrentHashMap<>();
     private final BeanContext beanContext;
@@ -46,7 +46,7 @@ public class AiServiceInterceptor implements MethodInterceptor<Object, Object> {
         Class<Object> declaringType = context.getDeclaringType();
         Object target = cachedAiServices.get(declaringType);
         if (target == null) {
-            AnnotationValue<RegisterAiService> annotation = context.getAnnotation(RegisterAiService.class);
+            AnnotationValue<AiService> annotation = context.getAnnotation(AiService.class);
 
             String name = annotation.stringValue("named").orElse(null);
             Set<Class<?>> tools = annotation.contains("tools") ? Set.of(annotation.classValues("tools")) : null;

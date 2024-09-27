@@ -33,7 +33,7 @@ import java.lang.annotation.Target;
 @Introduction
 @Documented
 @ReflectiveAccess
-public @interface RegisterAiService {
+public @interface AiService {
 
     /**
      * Defines the service name. Same as {@link #named()}.

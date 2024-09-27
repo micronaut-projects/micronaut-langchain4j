@@ -1,8 +1,8 @@
 package example;
 
-import io.micronaut.langchain4j.annotation.RegisterAiService;
+import io.micronaut.langchain4j.annotation.AiService;
 
-@RegisterAiService(tools = Calculator.class)
+@AiService(tools = Calculator.class)
 public interface MathGenius {
     String ask(String question);
 }

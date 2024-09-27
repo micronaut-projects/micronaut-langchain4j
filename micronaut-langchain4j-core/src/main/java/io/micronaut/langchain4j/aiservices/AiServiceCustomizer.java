@@ -16,12 +16,13 @@
 package io.micronaut.langchain4j.aiservices;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.langchain4j.annotation.AiService;
 
 /**
  * Interface that allows customization the creation of {@link dev.langchain4j.service.AiServices}.
  *
  * @param <T> The type of the service
- * @see io.micronaut.langchain4j.annotation.RegisterAiService
+ * @see AiService
  */
 @FunctionalInterface
 public interface AiServiceCustomizer<T> {
