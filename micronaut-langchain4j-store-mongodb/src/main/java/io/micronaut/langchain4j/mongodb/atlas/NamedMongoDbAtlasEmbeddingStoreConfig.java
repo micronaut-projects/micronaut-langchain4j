@@ -70,7 +70,7 @@ public class NamedMongoDbAtlasEmbeddingStoreConfig {
     @ConfigurationProperties("index-mapping")
     static class IndexMappingConfig {
         @ConfigurationBuilder(prefixes = "")
-        final IndexMapping.IndexMappingBuilder indexMapping;
+        final IndexMapping.Builder indexMapping;
 
         public IndexMappingConfig() {
             this.indexMapping = IndexMapping.builder().dimension(1536).metadataFieldNames(Set.of());
