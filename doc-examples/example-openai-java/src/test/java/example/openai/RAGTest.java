@@ -29,9 +29,13 @@ import java.net.URL;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
 @MicronautTest
-@Requires(property = "langchain4j.open-ai.api-key")
+@EnabledIfEnvironmentVariable(
+    named = "LANGCHAIN4J_OPEN_AI_API_KEY",
+    matches = "\\.+"
+)
 public class RAGTest {
     boolean retrieved = false;
 
