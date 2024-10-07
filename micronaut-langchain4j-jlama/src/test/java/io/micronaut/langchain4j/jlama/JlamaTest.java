@@ -15,9 +15,6 @@ public class JlamaTest {
     @Inject
     ChatLanguageModel chatLanguageModel;
 
-    @Inject
-    ApplicationContext applicationContext;
-
     @Test
     void testJlamaLanguageModel() {
         Assertions.assertNotNull(chatLanguageModel);

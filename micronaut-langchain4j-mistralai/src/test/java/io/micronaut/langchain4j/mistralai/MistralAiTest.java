@@ -16,9 +16,6 @@ public class MistralAiTest {
     @Inject
     DefaultMistralAiChatModelConfiguration chatLanguageModelConfiguration;
 
-    @Inject
-    ApplicationContext applicationContext;
-
     @Test
     void testLanguageModel() {
         assertNotNull(chatLanguageModelConfiguration);

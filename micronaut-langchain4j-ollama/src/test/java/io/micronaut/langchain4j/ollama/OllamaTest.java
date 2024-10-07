@@ -18,9 +18,6 @@ public class OllamaTest {
     @Inject
     ChatLanguageModel chatLanguageModel;
 
-    @Inject
-    ApplicationContext applicationContext;
-
     @Test
     void testOllamaLanguageModel() {
         Assertions.assertNotNull(chatLanguageModel);

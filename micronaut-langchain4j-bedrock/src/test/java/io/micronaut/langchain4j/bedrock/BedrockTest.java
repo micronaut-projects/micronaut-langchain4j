@@ -19,9 +19,6 @@ public class BedrockTest {
     @Inject
     DefaultBedrockLlamaChatModelConfiguration chatLanguageModelConfiguration;
 
-    @Inject
-    ApplicationContext applicationContext;
-
     @Test
     void testLanguageModel() {
         assertNotNull(chatLanguageModelConfiguration);
