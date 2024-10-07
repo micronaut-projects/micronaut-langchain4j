@@ -589,6 +589,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             return modelName;
         }
 
+        @SuppressWarnings("java:S2637")
         private static ClassElement resolveBuilder(ClassElement languageModel) {
             ClassElement builderType = languageModel.getEnclosedElement(
                 ElementQuery.ALL_METHODS.onlyStatic().onlyAccessible().onlyConcrete().named("builder")

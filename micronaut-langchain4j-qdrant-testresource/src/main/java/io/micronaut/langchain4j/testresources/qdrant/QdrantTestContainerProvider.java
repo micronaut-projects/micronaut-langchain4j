@@ -75,6 +75,8 @@ public class QdrantTestContainerProvider
                             .setDistance(Collections.Distance.valueOf(distance))
                             .build()
                     ).get();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
                 } catch (Exception e) {
                     LOG.info("Qdrant Collection already exists, skipping creation.");
                 }
