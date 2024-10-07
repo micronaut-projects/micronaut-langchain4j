@@ -13,7 +13,7 @@ dependencies {
     implementation(libs.langchain4j.qdrant)
     testImplementation(mnTest.micronaut.test.junit5)
     testRuntimeOnly(mnTestResources.micronaut.test.resources.embedded)
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
 }
 
 micronautBuild {

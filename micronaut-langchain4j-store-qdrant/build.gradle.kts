@@ -13,7 +13,7 @@ dependencies {
     testImplementation(mnSerde.micronaut.serde.jackson)
     testImplementation(libs.langchain4j.embeddings.all.minilm.l6.v2)
     testRuntimeOnly(mnLogging.logback.classic)
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
     testRuntimeOnly(mnTestResources.micronaut.test.resources.embedded)
     testRuntimeOnly(projects.micronautLangchain4jQdrantTestresource)
 }

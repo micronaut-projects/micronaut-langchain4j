@@ -18,7 +18,7 @@ dependencies {
     testImplementation(mnSql.micronaut.jdbc.hikari)
     testImplementation(mnSerde.micronaut.serde.jackson)
     testRuntimeOnly(mnLogging.logback.classic)
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
     testRuntimeOnly(mnTestResources.micronaut.test.resources.embedded)
     testRuntimeOnly(mnTestResources.micronaut.test.resources.jdbc.postgresql)
 }
