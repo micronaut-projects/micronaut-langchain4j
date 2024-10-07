@@ -9,7 +9,7 @@ dependency:micronaut-jdbc-hikari[groupId="io.micronaut.sql", scope="runtime"]
 .Example Configuration
 [configuration]
 ----
-datasources.default.dialect=oracle
-langchain4j.oracle.embedding-stores.default.table="test"
-langchain4j.oracle.embedding-stores.default.table.create-option=create_if_not_exists
+datasources.default.dialect: oracle
+langchain4j.oracle.embedding-stores.default.table: test
+langchain4j.oracle.embedding-stores.default.table.create-option: create_if_not_exists
 ----
