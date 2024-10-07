@@ -23,9 +23,6 @@ public class OpenAiAiTest {
     @Inject
     DefaultOpenAiChatModelConfiguration chatLanguageModelConfiguration;
 
-    @Inject
-    ApplicationContext applicationContext;
-
     @Test
     void testLanguageModel() {
         assertNotNull(chatLanguageModelConfiguration);

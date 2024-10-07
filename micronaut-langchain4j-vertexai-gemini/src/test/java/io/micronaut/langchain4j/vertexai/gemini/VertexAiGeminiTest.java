@@ -20,10 +20,7 @@ public class VertexAiGeminiTest {
 
     @Inject
     DefaultVertexAiGeminiChatModelConfiguration chatLanguageModelConfiguration;
-
-    @Inject
-    ApplicationContext applicationContext;
-
+    
     @Test
     void testLanguageModel() {
         assertNotNull(chatLanguageModelConfiguration);

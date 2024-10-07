@@ -26,9 +26,6 @@ public class AzureTest {
     @Named("default")
     NamedAzureOpenAiChatModelConfiguration chatLanguageModelConfiguration;
 
-    @Inject
-    ApplicationContext applicationContext;
-
     @Test
     void testLanguageModel() {
         assertNotNull(chatLanguageModelConfiguration);

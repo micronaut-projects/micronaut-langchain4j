@@ -14,5 +14,5 @@ dependencies {
     testRuntimeOnly(mnLogging.logback.classic)
 //    testRuntimeOnly(mnTestResources.micronaut.test.resources.embedded)
     testResourcesService(projects.micronautLangchain4jOllamaTestresource)
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
 }
