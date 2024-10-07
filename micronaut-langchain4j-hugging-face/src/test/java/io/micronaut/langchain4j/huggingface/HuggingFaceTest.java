@@ -15,9 +15,6 @@ public class HuggingFaceTest {
     @Inject
     DefaultHuggingFaceChatModelConfiguration chatLanguageModelConfiguration;
 
-    @Inject
-    ApplicationContext applicationContext;
-
     @Test
     void testLanguageModel() {
         assertNotNull(chatLanguageModelConfiguration);

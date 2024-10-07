@@ -17,9 +17,6 @@ public class AnthropicTest {
     @Inject
     DefaultAnthropicChatModelConfiguration chatLanguageModelConfiguration;
 
-    @Inject
-    ApplicationContext applicationContext;
-
     @Test
     void testLanguageModel() {
         assertNotNull(chatLanguageModelConfiguration);
