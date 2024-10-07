@@ -4,7 +4,7 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.micronaut.langchain4j/micronaut-langchain4j.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.micronaut.langchain4j%22%20AND%20a:%22micronaut-langchain4j%22)
 [![Build Status](https://github.com/micronaut-projects/micronaut-langchain4j/workflows/Java%20CI/badge.svg)](https://github.com/micronaut-projects/micronaut-langchain4j/actions)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=micronaut-projects_micronaut-template&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=micronaut-projects_micronaut-template)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=micronaut-projects_micronaut-langchain4j&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=micronaut-projects_micronaut-langchain4j)
 [![Revved up by Develocity](https://img.shields.io/badge/Revved%20up%20by-Develocity-06A0CE?logo=Gradle&labelColor=02303A)](https://ge.micronaut.io/scans)
 
 Micronaut Langchain4j
