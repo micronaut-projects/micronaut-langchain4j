@@ -44,10 +44,10 @@ include("micronaut-langchain4j-store-oracle")
 include("micronaut-langchain4j-store-qdrant")
 include("micronaut-langchain4j-store-redis")
 include("micronaut-langchain4j-store-pgvector")
-include("doc-examples:example-groovy")
+//include("doc-examples:example-groovy")
 include("doc-examples:example-java")
 include("doc-examples:example-openai-java")
-include("doc-examples:example-kotlin")
+//include("doc-examples:example-kotlin")
 
 val micronautVersion = providers.gradleProperty("micronautVersion")
 
