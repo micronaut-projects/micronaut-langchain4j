@@ -18,11 +18,13 @@ package io.micronaut.langchain4j.processor;
 import dev.langchain4j.agent.tool.Tool;
 import io.micronaut.context.annotation.Executable;
 import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.inject.annotation.TypedAnnotationTransformer;
 import io.micronaut.inject.visitor.VisitorContext;
 import java.util.List;
 
+@Internal
 public class ToolAnnotationTransformer implements TypedAnnotationTransformer<Tool> {
     @Override
     public Class<Tool> annotationType() {
