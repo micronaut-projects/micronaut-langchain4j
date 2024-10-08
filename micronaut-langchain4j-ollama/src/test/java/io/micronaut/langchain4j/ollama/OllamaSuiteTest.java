@@ -9,7 +9,7 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 @SelectPackages("io.micronaut.langchain4j.chatmodels.tck.tests")
 @ExcludeClassNamePatterns({
     "io.micronaut.langchain4j.chatmodels.tck.tests.AiServiceTest",
-    "io.micronaut.langchain4j.chatmodels.tck.tests.ChatLanguageModelTest"
+    "io.micronaut.langchain4j.chatmodels.tck.tests.ChatLanguageModelTest" // java.lang.RuntimeException: java.io.InterruptedIOException: timeout
 })
 @SuiteDisplayName("ChatModels Test Compatibility Kit for the Ollama implementation")
 public class OllamaSuiteTest {
