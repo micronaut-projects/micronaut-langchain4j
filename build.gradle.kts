@@ -9,8 +9,9 @@ repositories {
     mavenCentral()
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_21
-java.targetCompatibility = JavaVersion.VERSION_21
+micronautBuild {
+    javaVersion = 21
+}
 
 if (System.getenv("SONAR_TOKEN") != null) {
     configure<SonarExtension> {

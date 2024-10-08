@@ -8,6 +8,6 @@ dependencies {}
 micronautBuild {
     javaVersion = 21
     binaryCompatibility {
-        enabled = false
+        enabledAfter '1.0.0'
     }
 }

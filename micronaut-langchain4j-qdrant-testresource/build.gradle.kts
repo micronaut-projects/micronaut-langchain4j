@@ -22,8 +22,3 @@ micronautBuild {
         enabled.set(false)
     }
 }
-tasks {
-    javadoc {
-        enabled = false
-    }
-}

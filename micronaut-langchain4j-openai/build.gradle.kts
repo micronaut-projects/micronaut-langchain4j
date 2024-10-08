@@ -5,8 +5,3 @@ plugins {
 dependencies {
     implementation(libs.langchain4j.open.ai)
 }
-tasks {
-    javadoc {
-        enabled = false
-    }
-}

@@ -5,8 +5,3 @@ plugins {
 dependencies {
     implementation(libs.langchain4j.mistral.ai)
 }
-tasks {
-    javadoc {
-        enabled = false
-    }
-}
