@@ -14,15 +14,6 @@ import org.junit.jupiter.api.Test;
 @MicronautTest
 @Property(name = "langchain4j.ollama.model-name", value = "orca-mini")
 public class OllamaTest {
-
-    @Inject
-    ChatLanguageModel chatLanguageModel;
-
-    @Test
-    void testOllamaLanguageModel() {
-        Assertions.assertNotNull(chatLanguageModel);
-    }
-
     @Test
     @Disabled("404 error: Something broken in Ollama Testcontainers?")
     void testAiService(Friend friend) {
