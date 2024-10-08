@@ -35,7 +35,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
         )
     },
     properties = {
-        @Property(name = "modelName", common = true, required = true),
+        @Property(name = "modelName", common = true, required = true, defaultValue = "gemini-1.5-flash-001"),
         @Property(name = "project", common = true, required = true),
         @Property(name = "location", common = true, required = true)
     }
