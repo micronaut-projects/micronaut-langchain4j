@@ -34,6 +34,7 @@ micronaut-gradle-plugin = "4.4.3"
 micronaut-sourcegen = "1.1.0"
 groovy = "4.0.23"
 spock = "2.3-groovy-4.0"
+awaitility = "4.2.2"
 
 # Managed versions appear in the BOM
 managed-langchain4j = "0.35.0"
@@ -73,6 +74,7 @@ langchain4j-google-ai-gemini = { module = 'dev.langchain4j:langchain4j-google-ai
 
 langchain4j-embeddings-all-minilm-l6-v2 = { module = 'dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2', version.ref = "managed-langchain4j" }
 junit-platform-engine = { module = "org.junit.platform:junit-platform-suite-engine" }
+awaitility = { module = 'org.awaitility:awaitility', version.ref = "awaitility" }
 
 # BOMs
 boms-langchain4j = { module = "dev.langchain4j:langchain4j-bom", version.ref = "managed-langchain4j" }

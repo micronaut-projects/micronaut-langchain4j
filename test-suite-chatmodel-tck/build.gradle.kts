@@ -5,4 +5,5 @@ dependencies {
     implementation(projects.micronautLangchain4jCore)
     annotationProcessor(mn.micronaut.inject.java)
     implementation(mnTest.micronaut.test.junit5)
+    implementation(libs.awaitility)
 }
