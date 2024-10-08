@@ -7,5 +7,7 @@ configurations.all {
     resolutionStrategy.preferProjectModules()
 }
 micronaut {
+    sourceCompatibility = "21"
+    targetCompatibility = "21"
     version libs.versions.micronaut.platform.get()
 }
