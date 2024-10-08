@@ -4,8 +4,6 @@ plugins {
 
 dependencies {
     api(libs.langchain4j.jlama)
-    testImplementation(projects.testSuiteChatmodelTck)
-    testImplementation(libs.junit.platform.engine)
 }
 
 micronautBuild {

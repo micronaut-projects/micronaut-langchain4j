@@ -8,6 +8,4 @@ dependencies {
     testImplementation(libs.langchain4j.ollama)
     testRuntimeOnly(mnTestResources.micronaut.test.resources.embedded)
     testRuntimeOnly(projects.micronautLangchain4jOllamaTestresource)
-    testImplementation(projects.testSuiteChatmodelTck)
-    testImplementation(libs.junit.platform.engine)
 }

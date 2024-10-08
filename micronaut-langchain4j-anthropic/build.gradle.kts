@@ -4,6 +4,4 @@ plugins {
 
 dependencies {
     implementation(libs.langchain4j.anthropic)
-    testImplementation(projects.testSuiteChatmodelTck)
-    testImplementation(libs.junit.platform.engine)
 }
