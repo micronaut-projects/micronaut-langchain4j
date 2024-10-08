@@ -25,6 +25,7 @@ include("micronaut-langchain4j-core")
 if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_21)) {
     include("micronaut-langchain4j-jlama")
 }
+include("micronaut-langchain4j-googleai-gemini")
 include("micronaut-langchain4j-ollama")
 include("micronaut-langchain4j-anthropic")
 include("micronaut-langchain4j-azure")
@@ -48,6 +49,7 @@ include("micronaut-langchain4j-store-pgvector")
 include("doc-examples:example-java")
 include("doc-examples:example-openai-java")
 //include("doc-examples:example-kotlin")
+include("test-suite-chatmodel-tck")
 
 val micronautVersion = providers.gradleProperty("micronautVersion")
 
