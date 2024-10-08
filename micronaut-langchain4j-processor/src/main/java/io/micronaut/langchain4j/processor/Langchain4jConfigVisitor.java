@@ -27,6 +27,7 @@ import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.bind.annotation.Bindable;
@@ -65,6 +66,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.lang.model.element.Modifier;
 
+@Internal
 public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig, Object> {
     public static final String CONFIG_PREFIX = "langchain4j.";
     private static final Map<String, String> MODEL_NAME_MAPPINGS = Map.of(
