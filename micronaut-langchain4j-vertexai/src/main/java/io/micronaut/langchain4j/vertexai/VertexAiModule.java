@@ -45,7 +45,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig;
         @Property(name = "modelName", common = true, required = true, defaultValue = "chat-bison"),
         @Property(name = "project", common = true, required = true),
         @Property(name = "location", common = true, required = true),
-        @Property(name = "publisher", common = true, required = true, defaultValue = "google"),
+        @Property(name = "publisher", common = true, required = true),
         @Property(name = "maxRetries", common = true, defaultValue = "5")
     }
 )
