@@ -4,4 +4,6 @@ plugins {
 
 dependencies {
     implementation(libs.langchain4j.vertex.ai)
+    testImplementation(projects.testSuiteChatmodelTck)
+    testImplementation(libs.junit.platform.engine)
 }
