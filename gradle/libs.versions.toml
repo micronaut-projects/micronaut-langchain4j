@@ -70,6 +70,7 @@ langchain4j-elasticsearch = { module = 'dev.langchain4j:langchain4j-elasticsearc
 langchain4j-pgvector = { module = 'dev.langchain4j:langchain4j-pgvector', version.ref = "managed-langchain4j" }
 langchain4j-qdrant = { module = 'dev.langchain4j:langchain4j-qdrant', version.ref = "managed-langchain4j" }
 langchain4j-embeddings-all-minilm-l6-v2 = { module = 'dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2', version.ref = "managed-langchain4j" }
+junit-platform-engine = { module = "org.junit.platform:junit-platform-suite-engine" }
 
 # BOMs
 boms-langchain4j = { module = "dev.langchain4j:langchain4j-bom", version.ref = "managed-langchain4j" }

@@ -48,6 +48,7 @@ include("micronaut-langchain4j-store-pgvector")
 include("doc-examples:example-java")
 include("doc-examples:example-openai-java")
 //include("doc-examples:example-kotlin")
+include("test-suite-chatmodel-tck")
 
 val micronautVersion = providers.gradleProperty("micronautVersion")
 
