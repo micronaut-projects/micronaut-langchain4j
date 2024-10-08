@@ -56,7 +56,6 @@ configure<io.micronaut.build.MicronautBuildSettingsExtension> {
     importMicronautCatalog()
     importMicronautCatalog("micronaut-sourcegen")
     importMicronautCatalog("micronaut-test-resources")
-    importMicronautCatalog("micronaut-logging")
     importMicronautCatalog("micronaut-elasticsearch")
     importMicronautCatalog("micronaut-mongodb")
     importMicronautCatalog("micronaut-neo4j")
