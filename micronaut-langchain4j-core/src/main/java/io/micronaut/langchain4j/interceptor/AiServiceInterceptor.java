@@ -30,7 +30,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Interceptor implementation for register ai service.
+ * Interceptor implementation for register AI service.
  */
 @InterceptorBean(AiService.class)
 public class AiServiceInterceptor implements MethodInterceptor<Object, Object> {
@@ -43,31 +43,31 @@ public class AiServiceInterceptor implements MethodInterceptor<Object, Object> {
 
     @Override
     public @Nullable Object intercept(MethodInvocationContext<Object, Object> context) {
+        Object target = cachedAiService(context);
+        return context.getExecutableMethod().invoke(target, context.getParameterValues());
+    }
+
+    private Object cachedAiService(MethodInvocationContext<Object, Object> context) {
         Class<Object> declaringType = context.getDeclaringType();
         Object target = cachedAiServices.get(declaringType);
-        if (target == null) {
-            AnnotationValue<AiService> annotation = context.getAnnotation(AiService.class);
-
-            String name = annotation.stringValue("named").orElse(null);
-            Set<Class<?>> tools = annotation.contains("tools") ? Set.of(annotation.classValues("tools")) : null;
-            @SuppressWarnings("unchecked") Class<AiServiceCustomizer<Object>> customizer =
-                (Class<AiServiceCustomizer<Object>>) annotation.classValue("customizer").orElse(null);
-
-            BeanDefinition<Object> beanDefinition = beanContext.getBeanDefinition(declaringType);
-            AiServiceDef<Object> serviceDef = new AiServiceDef<>(
-                beanDefinition,
-                declaringType,
-                name,
-                tools,
-                customizer
-            );
-            target = beanContext.createBean(AiServices.class, serviceDef)
-                   .build();
-            cachedAiServices.put(declaringType, target);
+        if (target != null) {
+            return target;
         }
-        return context.getExecutableMethod().invoke(
-            target,
-            context.getParameterValues()
-        );
+        AiServiceDef<Object> serviceDef = serviceDefinition(context);
+        target = beanContext.createBean(AiServices.class, serviceDef).build();
+        cachedAiServices.put(declaringType, target);
+        return target;
+    }
+
+    private AiServiceDef<Object> serviceDefinition(MethodInvocationContext<Object, Object> context) {
+        Class<Object> declaringType = context.getDeclaringType();
+        AnnotationValue<AiService> annotation = context.getAnnotation(AiService.class);
+        String name = annotation.stringValue("named").orElse(null);
+        Set<Class<?>> tools = annotation.contains("tools") ? Set.of(annotation.classValues("tools")) : null;
+        @SuppressWarnings("unchecked") Class<AiServiceCustomizer<Object>> customizer =
+            (Class<AiServiceCustomizer<Object>>) annotation.classValue("customizer").orElse(null);
+
+        BeanDefinition<Object> beanDefinition = beanContext.getBeanDefinition(declaringType);
+        return new AiServiceDef<>(beanDefinition, declaringType, name, tools, customizer);
     }
 }
