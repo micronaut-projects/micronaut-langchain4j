@@ -1935,10 +1935,245 @@
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
+<h3 id="_micronaut_langchain4j_googleai_gemini_config_properties">Micronaut Langchain4j Googleai Gemini Config Properties</h3>
+<a id="io.micronaut.langchain4j.googleaigemini.CommonGoogleAiGeminiChatModelConfiguration" href="#io.micronaut.langchain4j.googleaigemini.CommonGoogleAiGeminiChatModelConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 23. Configuration Properties for <a href="../api/io/micronaut/langchain4j/googleaigemini/CommonGoogleAiGeminiChatModelConfiguration.html">CommonGoogleAiGeminiChatModelConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.api-key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="io.micronaut.langchain4j.googleaigemini.NamedGoogleAiGeminiChatModelConfiguration" href="#io.micronaut.langchain4j.googleaigemini.NamedGoogleAiGeminiChatModelConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 24. Configuration Properties for <a href="../api/io/micronaut/langchain4j/googleaigemini/NamedGoogleAiGeminiChatModelConfiguration.html">NamedGoogleAiGeminiChatModelConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.safety-settings</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.api-key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.max-retries</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Double</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.top-k</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.top-p</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Double</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.max-output-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.candidate-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.stop-sequences</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.allow-code-execution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.include-code-execution-output</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.log-requests-and-responses</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.listeners</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="io.micronaut.langchain4j.googleaigemini.DefaultGoogleAiGeminiChatModelConfiguration" href="#io.micronaut.langchain4j.googleaigemini.DefaultGoogleAiGeminiChatModelConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 25. Configuration Properties for <a href="../api/io/micronaut/langchain4j/googleaigemini/DefaultGoogleAiGeminiChatModelConfiguration.html">DefaultGoogleAiGeminiChatModelConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.safety-settings</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.api-key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.max-retries</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Double</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.top-k</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.top-p</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Double</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.max-output-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.candidate-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.stop-sequences</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.allow-code-execution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.include-code-execution-output</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.log-requests-and-responses</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.listeners</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
 <h3 id="_micronaut_langchain4j_hugging_face_config_properties">Micronaut Langchain4j Hugging Face Config Properties</h3>
 <a id="io.micronaut.langchain4j.huggingface.DefaultHuggingFaceEmbeddingModelConfiguration" href="#io.micronaut.langchain4j.huggingface.DefaultHuggingFaceEmbeddingModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 23. Configuration Properties for <a href="../api/io/micronaut/langchain4j/huggingface/DefaultHuggingFaceEmbeddingModelConfiguration.html">DefaultHuggingFaceEmbeddingModelConfiguration</a></caption>
+<caption class="title">Table 26. Configuration Properties for <a href="../api/io/micronaut/langchain4j/huggingface/DefaultHuggingFaceEmbeddingModelConfiguration.html">DefaultHuggingFaceEmbeddingModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1977,7 +2212,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.huggingface.DefaultHuggingFaceChatModelConfiguration" href="#io.micronaut.langchain4j.huggingface.DefaultHuggingFaceChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 24. Configuration Properties for <a href="../api/io/micronaut/langchain4j/huggingface/DefaultHuggingFaceChatModelConfiguration.html">DefaultHuggingFaceChatModelConfiguration</a></caption>
+<caption class="title">Table 27. Configuration Properties for <a href="../api/io/micronaut/langchain4j/huggingface/DefaultHuggingFaceChatModelConfiguration.html">DefaultHuggingFaceChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2031,7 +2266,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.huggingface.NamedHuggingFaceChatModelConfiguration" href="#io.micronaut.langchain4j.huggingface.NamedHuggingFaceChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 25. Configuration Properties for <a href="../api/io/micronaut/langchain4j/huggingface/NamedHuggingFaceChatModelConfiguration.html">NamedHuggingFaceChatModelConfiguration</a></caption>
+<caption class="title">Table 28. Configuration Properties for <a href="../api/io/micronaut/langchain4j/huggingface/NamedHuggingFaceChatModelConfiguration.html">NamedHuggingFaceChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2085,7 +2320,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.huggingface.CommonHuggingFaceChatModelConfiguration" href="#io.micronaut.langchain4j.huggingface.CommonHuggingFaceChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 26. Configuration Properties for <a href="../api/io/micronaut/langchain4j/huggingface/CommonHuggingFaceChatModelConfiguration.html">CommonHuggingFaceChatModelConfiguration</a></caption>
+<caption class="title">Table 29. Configuration Properties for <a href="../api/io/micronaut/langchain4j/huggingface/CommonHuggingFaceChatModelConfiguration.html">CommonHuggingFaceChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2124,7 +2359,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.huggingface.NamedHuggingFaceEmbeddingModelConfiguration" href="#io.micronaut.langchain4j.huggingface.NamedHuggingFaceEmbeddingModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 27. Configuration Properties for <a href="../api/io/micronaut/langchain4j/huggingface/NamedHuggingFaceEmbeddingModelConfiguration.html">NamedHuggingFaceEmbeddingModelConfiguration</a></caption>
+<caption class="title">Table 30. Configuration Properties for <a href="../api/io/micronaut/langchain4j/huggingface/NamedHuggingFaceEmbeddingModelConfiguration.html">NamedHuggingFaceEmbeddingModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2166,7 +2401,7 @@
 <h3 id="_micronaut_langchain4j_mistralai_config_properties">Micronaut Langchain4j Mistralai Config Properties</h3>
 <a id="io.micronaut.langchain4j.mistralai.NamedMistralAiChatModelConfiguration" href="#io.micronaut.langchain4j.mistralai.NamedMistralAiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 28. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mistralai/NamedMistralAiChatModelConfiguration.html">NamedMistralAiChatModelConfiguration</a></caption>
+<caption class="title">Table 31. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mistralai/NamedMistralAiChatModelConfiguration.html">NamedMistralAiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2250,7 +2485,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.mistralai.DefaultMistralAiStreamingChatModelConfiguration" href="#io.micronaut.langchain4j.mistralai.DefaultMistralAiStreamingChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 29. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mistralai/DefaultMistralAiStreamingChatModelConfiguration.html">DefaultMistralAiStreamingChatModelConfiguration</a></caption>
+<caption class="title">Table 32. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mistralai/DefaultMistralAiStreamingChatModelConfiguration.html">DefaultMistralAiStreamingChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2329,7 +2564,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.mistralai.DefaultMistralAiEmbeddingModelConfiguration" href="#io.micronaut.langchain4j.mistralai.DefaultMistralAiEmbeddingModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 30. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mistralai/DefaultMistralAiEmbeddingModelConfiguration.html">DefaultMistralAiEmbeddingModelConfiguration</a></caption>
+<caption class="title">Table 33. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mistralai/DefaultMistralAiEmbeddingModelConfiguration.html">DefaultMistralAiEmbeddingModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2383,7 +2618,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.mistralai.NamedMistralAiEmbeddingModelConfiguration" href="#io.micronaut.langchain4j.mistralai.NamedMistralAiEmbeddingModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 31. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mistralai/NamedMistralAiEmbeddingModelConfiguration.html">NamedMistralAiEmbeddingModelConfiguration</a></caption>
+<caption class="title">Table 34. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mistralai/NamedMistralAiEmbeddingModelConfiguration.html">NamedMistralAiEmbeddingModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2437,7 +2672,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.mistralai.NamedMistralAiStreamingChatModelConfiguration" href="#io.micronaut.langchain4j.mistralai.NamedMistralAiStreamingChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 32. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mistralai/NamedMistralAiStreamingChatModelConfiguration.html">NamedMistralAiStreamingChatModelConfiguration</a></caption>
+<caption class="title">Table 35. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mistralai/NamedMistralAiStreamingChatModelConfiguration.html">NamedMistralAiStreamingChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2516,7 +2751,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.mistralai.CommonMistralAiChatModelConfiguration" href="#io.micronaut.langchain4j.mistralai.CommonMistralAiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 33. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mistralai/CommonMistralAiChatModelConfiguration.html">CommonMistralAiChatModelConfiguration</a></caption>
+<caption class="title">Table 36. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mistralai/CommonMistralAiChatModelConfiguration.html">CommonMistralAiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2565,7 +2800,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.mistralai.DefaultMistralAiChatModelConfiguration" href="#io.micronaut.langchain4j.mistralai.DefaultMistralAiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 34. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mistralai/DefaultMistralAiChatModelConfiguration.html">DefaultMistralAiChatModelConfiguration</a></caption>
+<caption class="title">Table 37. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mistralai/DefaultMistralAiChatModelConfiguration.html">DefaultMistralAiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2652,7 +2887,7 @@
 <h3 id="_micronaut_langchain4j_ollama_config_properties">Micronaut Langchain4j Ollama Config Properties</h3>
 <a id="io.micronaut.langchain4j.ollama.NamedOllamaStreamingChatModelConfiguration" href="#io.micronaut.langchain4j.ollama.NamedOllamaStreamingChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 35. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ollama/NamedOllamaStreamingChatModelConfiguration.html">NamedOllamaStreamingChatModelConfiguration</a></caption>
+<caption class="title">Table 38. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ollama/NamedOllamaStreamingChatModelConfiguration.html">NamedOllamaStreamingChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2751,7 +2986,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.ollama.NamedOllamaEmbeddingModelConfiguration" href="#io.micronaut.langchain4j.ollama.NamedOllamaEmbeddingModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 36. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ollama/NamedOllamaEmbeddingModelConfiguration.html">NamedOllamaEmbeddingModelConfiguration</a></caption>
+<caption class="title">Table 39. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ollama/NamedOllamaEmbeddingModelConfiguration.html">NamedOllamaEmbeddingModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2805,7 +3040,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.ollama.DefaultOllamaStreamingChatModelConfiguration" href="#io.micronaut.langchain4j.ollama.DefaultOllamaStreamingChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 37. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ollama/DefaultOllamaStreamingChatModelConfiguration.html">DefaultOllamaStreamingChatModelConfiguration</a></caption>
+<caption class="title">Table 40. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ollama/DefaultOllamaStreamingChatModelConfiguration.html">DefaultOllamaStreamingChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2904,7 +3139,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.ollama.CommonOllamaChatModelConfiguration" href="#io.micronaut.langchain4j.ollama.CommonOllamaChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 38. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ollama/CommonOllamaChatModelConfiguration.html">CommonOllamaChatModelConfiguration</a></caption>
+<caption class="title">Table 41. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ollama/CommonOllamaChatModelConfiguration.html">CommonOllamaChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2953,7 +3188,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.ollama.NamedOllamaChatModelConfiguration" href="#io.micronaut.langchain4j.ollama.NamedOllamaChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 39. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ollama/NamedOllamaChatModelConfiguration.html">NamedOllamaChatModelConfiguration</a></caption>
+<caption class="title">Table 42. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ollama/NamedOllamaChatModelConfiguration.html">NamedOllamaChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3057,7 +3292,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.ollama.DefaultOllamaChatModelConfiguration" href="#io.micronaut.langchain4j.ollama.DefaultOllamaChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 40. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ollama/DefaultOllamaChatModelConfiguration.html">DefaultOllamaChatModelConfiguration</a></caption>
+<caption class="title">Table 43. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ollama/DefaultOllamaChatModelConfiguration.html">DefaultOllamaChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3161,7 +3396,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.ollama.DefaultOllamaEmbeddingModelConfiguration" href="#io.micronaut.langchain4j.ollama.DefaultOllamaEmbeddingModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 41. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ollama/DefaultOllamaEmbeddingModelConfiguration.html">DefaultOllamaEmbeddingModelConfiguration</a></caption>
+<caption class="title">Table 44. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ollama/DefaultOllamaEmbeddingModelConfiguration.html">DefaultOllamaEmbeddingModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3218,7 +3453,7 @@
 <h3 id="_micronaut_langchain4j_openai_config_properties">Micronaut Langchain4j Openai Config Properties</h3>
 <a id="io.micronaut.langchain4j.openai.NamedOpenAiModerationModelConfiguration" href="#io.micronaut.langchain4j.openai.NamedOpenAiModerationModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 42. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiModerationModelConfiguration.html">NamedOpenAiModerationModelConfiguration</a></caption>
+<caption class="title">Table 45. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiModerationModelConfiguration.html">NamedOpenAiModerationModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3282,7 +3517,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.NamedOpenAiChatModelConfiguration" href="#io.micronaut.langchain4j.openai.NamedOpenAiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 43. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiChatModelConfiguration.html">NamedOpenAiChatModelConfiguration</a></caption>
+<caption class="title">Table 46. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiChatModelConfiguration.html">NamedOpenAiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3416,7 +3651,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.NamedOpenAiImageModelConfiguration" href="#io.micronaut.langchain4j.openai.NamedOpenAiImageModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 44. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiImageModelConfiguration.html">NamedOpenAiImageModelConfiguration</a></caption>
+<caption class="title">Table 47. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiImageModelConfiguration.html">NamedOpenAiImageModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3515,7 +3750,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.DefaultOpenAiChatModelConfiguration" href="#io.micronaut.langchain4j.openai.DefaultOpenAiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 45. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiChatModelConfiguration.html">DefaultOpenAiChatModelConfiguration</a></caption>
+<caption class="title">Table 48. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiChatModelConfiguration.html">DefaultOpenAiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3649,7 +3884,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.NamedOpenAiEmbeddingModelConfiguration" href="#io.micronaut.langchain4j.openai.NamedOpenAiEmbeddingModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 46. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiEmbeddingModelConfiguration.html">NamedOpenAiEmbeddingModelConfiguration</a></caption>
+<caption class="title">Table 49. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiEmbeddingModelConfiguration.html">NamedOpenAiEmbeddingModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3723,7 +3958,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.CommonOpenAiChatModelConfiguration" href="#io.micronaut.langchain4j.openai.CommonOpenAiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 47. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/CommonOpenAiChatModelConfiguration.html">CommonOpenAiChatModelConfiguration</a></caption>
+<caption class="title">Table 50. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/CommonOpenAiChatModelConfiguration.html">CommonOpenAiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3777,7 +4012,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.DefaultOpenAiImageModelConfiguration" href="#io.micronaut.langchain4j.openai.DefaultOpenAiImageModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 48. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiImageModelConfiguration.html">DefaultOpenAiImageModelConfiguration</a></caption>
+<caption class="title">Table 51. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiImageModelConfiguration.html">DefaultOpenAiImageModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3876,7 +4111,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.DefaultOpenAiStreamingChatModelConfiguration" href="#io.micronaut.langchain4j.openai.DefaultOpenAiStreamingChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 49. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiStreamingChatModelConfiguration.html">DefaultOpenAiStreamingChatModelConfiguration</a></caption>
+<caption class="title">Table 52. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiStreamingChatModelConfiguration.html">DefaultOpenAiStreamingChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4000,7 +4235,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.NamedOpenAiStreamingChatModelConfiguration" href="#io.micronaut.langchain4j.openai.NamedOpenAiStreamingChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 50. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiStreamingChatModelConfiguration.html">NamedOpenAiStreamingChatModelConfiguration</a></caption>
+<caption class="title">Table 53. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiStreamingChatModelConfiguration.html">NamedOpenAiStreamingChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4124,7 +4359,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.DefaultOpenAiEmbeddingModelConfiguration" href="#io.micronaut.langchain4j.openai.DefaultOpenAiEmbeddingModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 51. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiEmbeddingModelConfiguration.html">DefaultOpenAiEmbeddingModelConfiguration</a></caption>
+<caption class="title">Table 54. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiEmbeddingModelConfiguration.html">DefaultOpenAiEmbeddingModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4198,7 +4433,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.DefaultOpenAiModerationModelConfiguration" href="#io.micronaut.langchain4j.openai.DefaultOpenAiModerationModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 52. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiModerationModelConfiguration.html">DefaultOpenAiModerationModelConfiguration</a></caption>
+<caption class="title">Table 55. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiModerationModelConfiguration.html">DefaultOpenAiModerationModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4265,7 +4500,7 @@
 <h3 id="_micronaut_langchain4j_store_elasticsearch_config_properties">Micronaut Langchain4j Store Elasticsearch Config Properties</h3>
 <a id="io.micronaut.langchain4j.elasticsearch.DefaultElasticsearchEmbeddingStoreConfiguration" href="#io.micronaut.langchain4j.elasticsearch.DefaultElasticsearchEmbeddingStoreConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 53. Configuration Properties for <a href="../api/io/micronaut/langchain4j/elasticsearch/DefaultElasticsearchEmbeddingStoreConfiguration.html">DefaultElasticsearchEmbeddingStoreConfiguration</a></caption>
+<caption class="title">Table 56. Configuration Properties for <a href="../api/io/micronaut/langchain4j/elasticsearch/DefaultElasticsearchEmbeddingStoreConfiguration.html">DefaultElasticsearchEmbeddingStoreConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4294,7 +4529,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.elasticsearch.CommonElasticsearchEmbeddingStoreConfiguration" href="#io.micronaut.langchain4j.elasticsearch.CommonElasticsearchEmbeddingStoreConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 54. Configuration Properties for <a href="../api/io/micronaut/langchain4j/elasticsearch/CommonElasticsearchEmbeddingStoreConfiguration.html">CommonElasticsearchEmbeddingStoreConfiguration</a></caption>
+<caption class="title">Table 57. Configuration Properties for <a href="../api/io/micronaut/langchain4j/elasticsearch/CommonElasticsearchEmbeddingStoreConfiguration.html">CommonElasticsearchEmbeddingStoreConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4328,7 +4563,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.elasticsearch.NamedElasticsearchEmbeddingStoreConfiguration" href="#io.micronaut.langchain4j.elasticsearch.NamedElasticsearchEmbeddingStoreConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 55. Configuration Properties for <a href="../api/io/micronaut/langchain4j/elasticsearch/NamedElasticsearchEmbeddingStoreConfiguration.html">NamedElasticsearchEmbeddingStoreConfiguration</a></caption>
+<caption class="title">Table 58. Configuration Properties for <a href="../api/io/micronaut/langchain4j/elasticsearch/NamedElasticsearchEmbeddingStoreConfiguration.html">NamedElasticsearchEmbeddingStoreConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4360,7 +4595,7 @@
 <h3 id="_micronaut_langchain4j_store_mongodb_config_properties">Micronaut Langchain4j Store Mongodb Config Properties</h3>
 <a id="io.micronaut.langchain4j.mongodb.atlas.NamedMongoDbAtlasEmbeddingStoreConfig" href="#io.micronaut.langchain4j.mongodb.atlas.NamedMongoDbAtlasEmbeddingStoreConfig">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 56. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mongodb/atlas/NamedMongoDbAtlasEmbeddingStoreConfig.html">NamedMongoDbAtlasEmbeddingStoreConfig</a></caption>
+<caption class="title">Table 59. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mongodb/atlas/NamedMongoDbAtlasEmbeddingStoreConfig.html">NamedMongoDbAtlasEmbeddingStoreConfig</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4404,7 +4639,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.mongodb.atlas.NamedMongoDbAtlasEmbeddingStoreConfig$IndexMappingConfig" href="#io.micronaut.langchain4j.mongodb.atlas.NamedMongoDbAtlasEmbeddingStoreConfig$IndexMappingConfig">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 57. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mongodb/atlas/NamedMongoDbAtlasEmbeddingStoreConfig.IndexMappingConfig.html">NamedMongoDbAtlasEmbeddingStoreConfig$IndexMappingConfig</a></caption>
+<caption class="title">Table 60. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mongodb/atlas/NamedMongoDbAtlasEmbeddingStoreConfig.IndexMappingConfig.html">NamedMongoDbAtlasEmbeddingStoreConfig$IndexMappingConfig</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4436,7 +4671,7 @@
 <h3 id="_micronaut_langchain4j_store_neo4j_config_properties">Micronaut Langchain4j Store Neo4j Config Properties</h3>
 <a id="io.micronaut.langchain4j.neo4j.NamedNeo4jEmbeddingStoreConfiguration" href="#io.micronaut.langchain4j.neo4j.NamedNeo4jEmbeddingStoreConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 58. Configuration Properties for <a href="../api/io/micronaut/langchain4j/neo4j/NamedNeo4jEmbeddingStoreConfiguration.html">NamedNeo4jEmbeddingStoreConfiguration</a></caption>
+<caption class="title">Table 61. Configuration Properties for <a href="../api/io/micronaut/langchain4j/neo4j/NamedNeo4jEmbeddingStoreConfiguration.html">NamedNeo4jEmbeddingStoreConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4505,7 +4740,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.neo4j.DefaultNeo4jEmbeddingStoreConfiguration" href="#io.micronaut.langchain4j.neo4j.DefaultNeo4jEmbeddingStoreConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 59. Configuration Properties for <a href="../api/io/micronaut/langchain4j/neo4j/DefaultNeo4jEmbeddingStoreConfiguration.html">DefaultNeo4jEmbeddingStoreConfiguration</a></caption>
+<caption class="title">Table 62. Configuration Properties for <a href="../api/io/micronaut/langchain4j/neo4j/DefaultNeo4jEmbeddingStoreConfiguration.html">DefaultNeo4jEmbeddingStoreConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4577,7 +4812,7 @@
 <h3 id="_micronaut_langchain4j_store_opensearch_config_properties">Micronaut Langchain4j Store Opensearch Config Properties</h3>
 <a id="io.micronaut.langchain4j.opensearch.NamedOpenSearchEmbeddingStoreConfiguration" href="#io.micronaut.langchain4j.opensearch.NamedOpenSearchEmbeddingStoreConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 60. Configuration Properties for <a href="../api/io/micronaut/langchain4j/opensearch/NamedOpenSearchEmbeddingStoreConfiguration.html">NamedOpenSearchEmbeddingStoreConfiguration</a></caption>
+<caption class="title">Table 63. Configuration Properties for <a href="../api/io/micronaut/langchain4j/opensearch/NamedOpenSearchEmbeddingStoreConfiguration.html">NamedOpenSearchEmbeddingStoreConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4631,7 +4866,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.opensearch.DefaultOpenSearchEmbeddingStoreConfiguration" href="#io.micronaut.langchain4j.opensearch.DefaultOpenSearchEmbeddingStoreConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 61. Configuration Properties for <a href="../api/io/micronaut/langchain4j/opensearch/DefaultOpenSearchEmbeddingStoreConfiguration.html">DefaultOpenSearchEmbeddingStoreConfiguration</a></caption>
+<caption class="title">Table 64. Configuration Properties for <a href="../api/io/micronaut/langchain4j/opensearch/DefaultOpenSearchEmbeddingStoreConfiguration.html">DefaultOpenSearchEmbeddingStoreConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4685,7 +4920,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.opensearch.CommonOpenSearchEmbeddingStoreConfiguration" href="#io.micronaut.langchain4j.opensearch.CommonOpenSearchEmbeddingStoreConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 62. Configuration Properties for <a href="../api/io/micronaut/langchain4j/opensearch/CommonOpenSearchEmbeddingStoreConfiguration.html">CommonOpenSearchEmbeddingStoreConfiguration</a></caption>
+<caption class="title">Table 65. Configuration Properties for <a href="../api/io/micronaut/langchain4j/opensearch/CommonOpenSearchEmbeddingStoreConfiguration.html">CommonOpenSearchEmbeddingStoreConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4722,7 +4957,7 @@
 <h3 id="_micronaut_langchain4j_store_oracle_config_properties">Micronaut Langchain4j Store Oracle Config Properties</h3>
 <a id="io.micronaut.langchain4j.oracle.database.OracleEmbeddingStoreConfig" href="#io.micronaut.langchain4j.oracle.database.OracleEmbeddingStoreConfig">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 63. Configuration Properties for <a href="../api/io/micronaut/langchain4j/oracle/database/OracleEmbeddingStoreConfig.html">OracleEmbeddingStoreConfig</a></caption>
+<caption class="title">Table 66. Configuration Properties for <a href="../api/io/micronaut/langchain4j/oracle/database/OracleEmbeddingStoreConfig.html">OracleEmbeddingStoreConfig</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4789,7 +5024,7 @@
 <h3 id="_micronaut_langchain4j_store_pgvector_config_properties">Micronaut Langchain4j Store Pgvector Config Properties</h3>
 <a id="io.micronaut.langchain4j.pgvector.PgVectorEmbeddingStoreConfig" href="#io.micronaut.langchain4j.pgvector.PgVectorEmbeddingStoreConfig">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 64. Configuration Properties for <a href="../api/io/micronaut/langchain4j/pgvector/PgVectorEmbeddingStoreConfig.html">PgVectorEmbeddingStoreConfig</a></caption>
+<caption class="title">Table 67. Configuration Properties for <a href="../api/io/micronaut/langchain4j/pgvector/PgVectorEmbeddingStoreConfig.html">PgVectorEmbeddingStoreConfig</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4841,7 +5076,7 @@
 <h3 id="_micronaut_langchain4j_store_qdrant_config_properties">Micronaut Langchain4j Store Qdrant Config Properties</h3>
 <a id="io.micronaut.langchain4j.qdrant.test.QdrantTestResourceConfig" href="#io.micronaut.langchain4j.qdrant.test.QdrantTestResourceConfig">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 65. Configuration Properties for <a href="../api/io/micronaut/langchain4j/qdrant/test/QdrantTestResourceConfig.html">QdrantTestResourceConfig</a></caption>
+<caption class="title">Table 68. Configuration Properties for <a href="../api/io/micronaut/langchain4j/qdrant/test/QdrantTestResourceConfig.html">QdrantTestResourceConfig</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4870,7 +5105,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.qdrant.NamedQdrantEmbeddingStoreConfiguration" href="#io.micronaut.langchain4j.qdrant.NamedQdrantEmbeddingStoreConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 66. Configuration Properties for <a href="../api/io/micronaut/langchain4j/qdrant/NamedQdrantEmbeddingStoreConfiguration.html">NamedQdrantEmbeddingStoreConfiguration</a></caption>
+<caption class="title">Table 69. Configuration Properties for <a href="../api/io/micronaut/langchain4j/qdrant/NamedQdrantEmbeddingStoreConfiguration.html">NamedQdrantEmbeddingStoreConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4919,7 +5154,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.qdrant.CommonQdrantEmbeddingStoreConfiguration" href="#io.micronaut.langchain4j.qdrant.CommonQdrantEmbeddingStoreConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 67. Configuration Properties for <a href="../api/io/micronaut/langchain4j/qdrant/CommonQdrantEmbeddingStoreConfiguration.html">CommonQdrantEmbeddingStoreConfiguration</a></caption>
+<caption class="title">Table 70. Configuration Properties for <a href="../api/io/micronaut/langchain4j/qdrant/CommonQdrantEmbeddingStoreConfiguration.html">CommonQdrantEmbeddingStoreConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4953,7 +5188,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.qdrant.DefaultQdrantEmbeddingStoreConfiguration" href="#io.micronaut.langchain4j.qdrant.DefaultQdrantEmbeddingStoreConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 68. Configuration Properties for <a href="../api/io/micronaut/langchain4j/qdrant/DefaultQdrantEmbeddingStoreConfiguration.html">DefaultQdrantEmbeddingStoreConfiguration</a></caption>
+<caption class="title">Table 71. Configuration Properties for <a href="../api/io/micronaut/langchain4j/qdrant/DefaultQdrantEmbeddingStoreConfiguration.html">DefaultQdrantEmbeddingStoreConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -5005,7 +5240,7 @@
 <h3 id="_micronaut_langchain4j_store_redis_config_properties">Micronaut Langchain4j Store Redis Config Properties</h3>
 <a id="io.micronaut.langchain4j.redis.NamedRedisEmbeddingStoreConfiguration" href="#io.micronaut.langchain4j.redis.NamedRedisEmbeddingStoreConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 69. Configuration Properties for <a href="../api/io/micronaut/langchain4j/redis/NamedRedisEmbeddingStoreConfiguration.html">NamedRedisEmbeddingStoreConfiguration</a></caption>
+<caption class="title">Table 72. Configuration Properties for <a href="../api/io/micronaut/langchain4j/redis/NamedRedisEmbeddingStoreConfiguration.html">NamedRedisEmbeddingStoreConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -5059,7 +5294,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.redis.DefaultRedisEmbeddingStoreConfiguration" href="#io.micronaut.langchain4j.redis.DefaultRedisEmbeddingStoreConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 70. Configuration Properties for <a href="../api/io/micronaut/langchain4j/redis/DefaultRedisEmbeddingStoreConfiguration.html">DefaultRedisEmbeddingStoreConfiguration</a></caption>
+<caption class="title">Table 73. Configuration Properties for <a href="../api/io/micronaut/langchain4j/redis/DefaultRedisEmbeddingStoreConfiguration.html">DefaultRedisEmbeddingStoreConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -5114,9 +5349,157 @@
 </div>
 <div class="sect2">
 <h3 id="_micronaut_langchain4j_vertexai_config_properties">Micronaut Langchain4j Vertexai Config Properties</h3>
+<a id="io.micronaut.langchain4j.vertexai.NamedVertexAiEmbeddingModelConfiguration" href="#io.micronaut.langchain4j.vertexai.NamedVertexAiEmbeddingModelConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 74. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/NamedVertexAiEmbeddingModelConfiguration.html">NamedVertexAiEmbeddingModelConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.project</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.publisher</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.max-retries</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.max-segments-per-batch</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.max-tokens-per-batch</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.task-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.vertexai.VertexAiEmbeddingModel$TaskType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.title-metadata-key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.auto-truncate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.output-dimensionality</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="io.micronaut.langchain4j.vertexai.NamedVertexAiChatModelConfiguration" href="#io.micronaut.langchain4j.vertexai.NamedVertexAiChatModelConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 75. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/NamedVertexAiChatModelConfiguration.html">NamedVertexAiChatModelConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.project</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.publisher</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Double</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.max-output-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.top-k</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.top-p</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Double</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.max-retries</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.vertexai.CommonVertexAiChatModelConfiguration" href="#io.micronaut.langchain4j.vertexai.CommonVertexAiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 71. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/CommonVertexAiChatModelConfiguration.html">CommonVertexAiChatModelConfiguration</a></caption>
+<caption class="title">Table 76. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/CommonVertexAiChatModelConfiguration.html">CommonVertexAiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -5168,281 +5551,9 @@
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
-<a id="io.micronaut.langchain4j.vertexai.DefaultVertexAiEmbeddingModelConfiguration" href="#io.micronaut.langchain4j.vertexai.DefaultVertexAiEmbeddingModelConfiguration">&#128279;</a>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 72. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/DefaultVertexAiEmbeddingModelConfiguration.html">DefaultVertexAiEmbeddingModelConfiguration</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.endpoint</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.project</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.location</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.publisher</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.model-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.max-retries</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.max-segments-per-batch</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.max-tokens-per-batch</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.task-type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.vertexai.VertexAiEmbeddingModel$TaskType</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.title-metadata-key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.auto-truncate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.output-dimensionality</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-<div style="page-break-after: always;"></div>
-<a id="io.micronaut.langchain4j.vertexai.DefaultVertexAiChatModelConfiguration" href="#io.micronaut.langchain4j.vertexai.DefaultVertexAiChatModelConfiguration">&#128279;</a>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 73. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/DefaultVertexAiChatModelConfiguration.html">DefaultVertexAiChatModelConfiguration</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.endpoint</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.project</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.location</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.publisher</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.model-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.temperature</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Double</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.max-output-tokens</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.top-k</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.top-p</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Double</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.max-retries</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-<div style="page-break-after: always;"></div>
-<a id="io.micronaut.langchain4j.vertexai.DefaultVertexAiImageModelConfiguration" href="#io.micronaut.langchain4j.vertexai.DefaultVertexAiImageModelConfiguration">&#128279;</a>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 74. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/DefaultVertexAiImageModelConfiguration.html">DefaultVertexAiImageModelConfiguration</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.endpoint</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.project</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.location</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.publisher</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.model-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.seed</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.language</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.guidance-scale</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.negative-prompt</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.sample-image-style</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.vertexai.VertexAiImageModel$ImageStyle</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.sample-image-size</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.aspect-ratio</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.vertexai.VertexAiImageModel$AspectRatio</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.mime-type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.vertexai.VertexAiImageModel$MimeType</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.compression-quality</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.person-generation</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.vertexai.VertexAiImageModel$PersonGeneration</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.watermark</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.max-retries</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.persist-to-cloud-storage</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.persist-to</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.log-requests</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.log-responses</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-<div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.vertexai.NamedVertexAiImageModelConfiguration" href="#io.micronaut.langchain4j.vertexai.NamedVertexAiImageModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 75. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/NamedVertexAiImageModelConfiguration.html">NamedVertexAiImageModelConfiguration</a></caption>
+<caption class="title">Table 77. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/NamedVertexAiImageModelConfiguration.html">NamedVertexAiImageModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -5564,9 +5675,9 @@
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
-<a id="io.micronaut.langchain4j.vertexai.NamedVertexAiChatModelConfiguration" href="#io.micronaut.langchain4j.vertexai.NamedVertexAiChatModelConfiguration">&#128279;</a>
+<a id="io.micronaut.langchain4j.vertexai.DefaultVertexAiChatModelConfiguration" href="#io.micronaut.langchain4j.vertexai.DefaultVertexAiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 76. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/NamedVertexAiChatModelConfiguration.html">NamedVertexAiChatModelConfiguration</a></caption>
+<caption class="title">Table 78. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/DefaultVertexAiChatModelConfiguration.html">DefaultVertexAiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -5581,61 +5692,61 @@
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.endpoint</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.project</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.project</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.location</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.publisher</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.publisher</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.model-name</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.temperature</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Double</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.max-output-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.max-output-tokens</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.top-k</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.top-k</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.top-p</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.top-p</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Double</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-models.*.max-retries</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.chat-model.max-retries</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
-<a id="io.micronaut.langchain4j.vertexai.NamedVertexAiEmbeddingModelConfiguration" href="#io.micronaut.langchain4j.vertexai.NamedVertexAiEmbeddingModelConfiguration">&#128279;</a>
+<a id="io.micronaut.langchain4j.vertexai.DefaultVertexAiImageModelConfiguration" href="#io.micronaut.langchain4j.vertexai.DefaultVertexAiImageModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 77. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/NamedVertexAiEmbeddingModelConfiguration.html">NamedVertexAiEmbeddingModelConfiguration</a></caption>
+<caption class="title">Table 79. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/DefaultVertexAiImageModelConfiguration.html">DefaultVertexAiImageModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -5650,62 +5761,186 @@
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.endpoint</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.project</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.project</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.location</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.publisher</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.publisher</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.model-name</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.max-retries</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.seed</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.language</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.guidance-scale</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.max-segments-per-batch</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.max-tokens-per-batch</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.task-type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.vertexai.VertexAiEmbeddingModel$TaskType</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.title-metadata-key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.negative-prompt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.auto-truncate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.sample-image-style</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.vertexai.VertexAiImageModel$ImageStyle</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.sample-image-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.aspect-ratio</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.vertexai.VertexAiImageModel$AspectRatio</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.mime-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.vertexai.VertexAiImageModel$MimeType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.compression-quality</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.person-generation</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.vertexai.VertexAiImageModel$PersonGeneration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.watermark</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-models.*.output-dimensionality</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.max-retries</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.persist-to-cloud-storage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.persist-to</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.log-requests</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.image-model.log-responses</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="io.micronaut.langchain4j.vertexai.DefaultVertexAiEmbeddingModelConfiguration" href="#io.micronaut.langchain4j.vertexai.DefaultVertexAiEmbeddingModelConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 80. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/DefaultVertexAiEmbeddingModelConfiguration.html">DefaultVertexAiEmbeddingModelConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.project</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.publisher</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.max-retries</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.max-segments-per-batch</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.max-tokens-per-batch</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.task-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.vertexai.VertexAiEmbeddingModel$TaskType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.title-metadata-key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.auto-truncate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai.embedding-model.output-dimensionality</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -5715,9 +5950,9 @@
 </div>
 <div class="sect2">
 <h3 id="_micronaut_langchain4j_vertexai_gemini_config_properties">Micronaut Langchain4j Vertexai Gemini Config Properties</h3>
-<a id="io.micronaut.langchain4j.vertexai.gemini.DefaultVertexAiGeminiChatModelConfiguration" href="#io.micronaut.langchain4j.vertexai.gemini.DefaultVertexAiGeminiChatModelConfiguration">&#128279;</a>
+<a id="io.micronaut.langchain4j.vertexai.gemini.CommonVertexAiGeminiChatModelConfiguration" href="#io.micronaut.langchain4j.vertexai.gemini.CommonVertexAiGeminiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 78. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/gemini/DefaultVertexAiGeminiChatModelConfiguration.html">DefaultVertexAiGeminiChatModelConfiguration</a></caption>
+<caption class="title">Table 81. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/gemini/CommonVertexAiGeminiChatModelConfiguration.html">CommonVertexAiGeminiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -5732,97 +5967,126 @@
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.project</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.model-name</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.project</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="io.micronaut.langchain4j.vertexai.gemini.DefaultVertexAiGeminiStreamingChatModelConfiguration" href="#io.micronaut.langchain4j.vertexai.gemini.DefaultVertexAiGeminiStreamingChatModelConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 82. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/gemini/DefaultVertexAiGeminiStreamingChatModelConfiguration.html">DefaultVertexAiGeminiStreamingChatModelConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.project</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.temperature</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.max-output-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.max-output-tokens</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.top-k</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.top-k</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.top-p</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.top-p</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.seed</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.max-retries</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.response-mime-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.response-mime-type</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.response-schema</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.response-schema</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">com.google.cloud.vertexai.api.Schema</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.safety-settings</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.safety-settings</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.use-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.use-google-search</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.vertex-search-datastore</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.vertex-search-datastore</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.tool-calling-mode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.tool-calling-mode</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.vertexai.ToolCallingMode</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.allowed-function-names</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.allowed-function-names</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.log-requests</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.log-requests</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.log-responses</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.log-responses</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.listeners</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.listeners</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -5831,7 +6095,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.vertexai.gemini.NamedVertexAiGeminiChatModelConfiguration" href="#io.micronaut.langchain4j.vertexai.gemini.NamedVertexAiGeminiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 79. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/gemini/NamedVertexAiGeminiChatModelConfiguration.html">NamedVertexAiGeminiChatModelConfiguration</a></caption>
+<caption class="title">Table 83. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/gemini/NamedVertexAiGeminiChatModelConfiguration.html">NamedVertexAiGeminiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -5943,152 +6207,9 @@
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
-<a id="io.micronaut.langchain4j.vertexai.gemini.DefaultVertexAiGeminiStreamingChatModelConfiguration" href="#io.micronaut.langchain4j.vertexai.gemini.DefaultVertexAiGeminiStreamingChatModelConfiguration">&#128279;</a>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 80. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/gemini/DefaultVertexAiGeminiStreamingChatModelConfiguration.html">DefaultVertexAiGeminiStreamingChatModelConfiguration</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.project</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.location</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.model-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.temperature</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.max-output-tokens</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.top-k</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.top-p</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.response-mime-type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.response-schema</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">com.google.cloud.vertexai.api.Schema</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.safety-settings</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.use-google-search</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.vertex-search-datastore</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.tool-calling-mode</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.vertexai.ToolCallingMode</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.allowed-function-names</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.log-requests</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.log-responses</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.listeners</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-<div style="page-break-after: always;"></div>
-<a id="io.micronaut.langchain4j.vertexai.gemini.CommonVertexAiGeminiChatModelConfiguration" href="#io.micronaut.langchain4j.vertexai.gemini.CommonVertexAiGeminiChatModelConfiguration">&#128279;</a>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 81. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/gemini/CommonVertexAiGeminiChatModelConfiguration.html">CommonVertexAiGeminiChatModelConfiguration</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.enabled</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.model-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.project</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.location</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-<div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.vertexai.gemini.NamedVertexAiGeminiStreamingChatModelConfiguration" href="#io.micronaut.langchain4j.vertexai.gemini.NamedVertexAiGeminiStreamingChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 82. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/gemini/NamedVertexAiGeminiStreamingChatModelConfiguration.html">NamedVertexAiGeminiStreamingChatModelConfiguration</a></caption>
+<caption class="title">Table 84. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/gemini/NamedVertexAiGeminiStreamingChatModelConfiguration.html">NamedVertexAiGeminiStreamingChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -6184,6 +6305,120 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-models.*.listeners</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="io.micronaut.langchain4j.vertexai.gemini.DefaultVertexAiGeminiChatModelConfiguration" href="#io.micronaut.langchain4j.vertexai.gemini.DefaultVertexAiGeminiChatModelConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 85. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/gemini/DefaultVertexAiGeminiChatModelConfiguration.html">DefaultVertexAiGeminiChatModelConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.project</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.max-output-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.top-k</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.top-p</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.seed</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.max-retries</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.response-mime-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.response-schema</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.google.cloud.vertexai.api.Schema</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.safety-settings</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.use-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.vertex-search-datastore</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.tool-calling-mode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.vertexai.ToolCallingMode</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.allowed-function-names</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.log-requests</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.log-responses</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.listeners</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>

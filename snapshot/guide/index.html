@@ -105,9 +105,11 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-openai"><a href="#openai"><strong>3.7</strong><span>OpenAi</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-vertexai"><a href="#vertexai"><strong>3.8</strong><span>VertexAi</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-googleai-gemini"><a href="#googleai-gemini"><strong>3.8</strong><span>Google AI Gemini</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-vertexai-gemini"><a href="#vertexai-gemini"><strong>3.9</strong><span>VertexAi Gemini</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-vertexai"><a href="#vertexai"><strong>3.9</strong><span>VertexAi</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-vertexai-gemini"><a href="#vertexai-gemini"><strong>3.10</strong><span>VertexAi Gemini</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-embeddingStores"><a href="#embeddingStores"><strong>4</strong><span>Embedding Stores</span></a></div>
         
@@ -892,7 +894,78 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 </div>
 </div>
 
-<h2 id="vertexai"><a class="anchor" href="#vertexai"></a>3.8 VertexAi</h2>
+<h2 id="googleai-gemini"><a class="anchor" href="#googleai-gemini"></a>3.8 Google AI Gemini</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/master/src/main/docs/guide/chatModels/googleai-gemini.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-googleai-gemini")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-googleai-gemini&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.googleaigemini.CommonGoogleAiGeminiChatModelConfiguration">necessary configuration</a>.</p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.google-ai-gemini.api-key=YOUR_API_KEY</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">langchain4j.google-ai-gemini.api-key: YOUR_API_KEY</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.google-ai-gemini.api-key"="YOUR_API_KEY"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j.googleAiGemini.apiKey = "YOUR_API_KEY"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "langchain4j.google-ai-gemini.api-key" = "YOUR_API_KEY"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j.google-ai-gemini.api-key": "YOUR_API_KEY"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h2 id="vertexai"><a class="anchor" href="#vertexai"></a>3.9 VertexAi</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/master/src/main/docs/guide/chatModels/vertexai.adoc"'>
@@ -987,7 +1060,7 @@ langchain4j.vertexAi.publisher = "YOUR_PUBLISHER"</code></pre>
 </div>
 </div>
 
-<h2 id="vertexai-gemini"><a class="anchor" href="#vertexai-gemini"></a>3.9 VertexAi Gemini</h2>
+<h2 id="vertexai-gemini"><a class="anchor" href="#vertexai-gemini"></a>3.10 VertexAi Gemini</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/master/src/main/docs/guide/chatModels/vertexai-gemini.adoc"'>
