@@ -6,8 +6,7 @@ plugins {
 dependencies {}
 
 micronautBuild {
-    sourceCompatibility = "21"
-    targetCompatibility = "21"
+    javaVersion = 21
     binaryCompatibility {
         enabled = false
     }
