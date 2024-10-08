@@ -9,3 +9,8 @@ dependencies {
     testImplementation(mnSerde.micronaut.serde.jackson)
     testImplementation(libs.langchain4j.embeddings.all.minilm.l6.v2)
 }
+tasks {
+    javadoc {
+        enabled = false
+    }
+}

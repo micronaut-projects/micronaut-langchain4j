@@ -9,3 +9,8 @@ dependencies {
     testRuntimeOnly(mnTestResources.micronaut.test.resources.embedded)
     testRuntimeOnly(projects.micronautLangchain4jOllamaTestresource)
 }
+tasks {
+    javadoc {
+        enabled = false
+    }
+}

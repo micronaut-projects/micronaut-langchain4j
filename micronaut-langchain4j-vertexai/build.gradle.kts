@@ -5,3 +5,8 @@ plugins {
 dependencies {
     implementation(libs.langchain4j.vertex.ai)
 }
+tasks {
+    javadoc {
+        enabled = false
+    }
+}

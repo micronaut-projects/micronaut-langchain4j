@@ -5,3 +5,9 @@ plugins {
 dependencies {
     implementation(libs.langchain4j.anthropic)
 }
+
+tasks {
+    javadoc {
+        enabled = false
+    }
+}

@@ -5,3 +5,8 @@ plugins {
 dependencies {
     implementation(libs.langchain4j.redis)
 }
+tasks {
+    javadoc {
+        enabled = false
+    }
+}

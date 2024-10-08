@@ -5,3 +5,9 @@ plugins {
 dependencies {
     implementation(libs.langchain4j.bedrock)
 }
+
+tasks {
+    javadoc {
+        enabled = false
+    }
+}

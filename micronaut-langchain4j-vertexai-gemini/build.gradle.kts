@@ -5,3 +5,9 @@ plugins {
 dependencies {
     implementation(libs.langchain4j.vertex.ai.gemini)
 }
+
+tasks {
+    javadoc {
+        enabled = false
+    }
+}

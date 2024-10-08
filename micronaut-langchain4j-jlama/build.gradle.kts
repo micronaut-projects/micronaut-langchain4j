@@ -11,6 +11,9 @@ micronautBuild {
 }
 
 tasks {
+    javadoc {
+        enabled = false
+    }
     test {
         jvmArgs = listOf("--enable-preview", "--add-modules", "jdk.incubator.vector")
     }

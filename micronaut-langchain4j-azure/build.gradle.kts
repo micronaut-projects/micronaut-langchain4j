@@ -5,3 +5,9 @@ plugins {
 dependencies {
     implementation(libs.langchain4j.azure.open.ai)
 }
+
+tasks {
+    javadoc {
+        enabled = false
+    }
+}
