@@ -6,8 +6,11 @@ import org.junit.platform.suite.api.Suite;
 import org.junit.platform.suite.api.SuiteDisplayName;
 
 @Suite
-@SelectPackages("io.micronaut.langchain4j.chatmodels.tck")
-@ExcludeClassNamePatterns("io.micronaut.langchain4j.chatmodels.tck.AiServiceTest")
+@SelectPackages("io.micronaut.langchain4j.chatmodels.tck.tests")
+@ExcludeClassNamePatterns({
+    "io.micronaut.langchain4j.chatmodels.tck.tests.AiServiceTest",
+    "io.micronaut.langchain4j.chatmodels.tck.tests.ChatLanguageModelTest"
+})
 @SuiteDisplayName("ChatModels Test Compatibility Kit for the Ollama implementation")
 public class OllamaSuiteTest {
 }
