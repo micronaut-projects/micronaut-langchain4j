@@ -8,9 +8,8 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-@MicronautTest
-@Property(name = "langchain4j.jlama.chat-model.model-name", value = "tjake/TinyLlama-1.1B-Chat-v1.0-Jlama-Q4")
-public class JlamaTest {
+@MicronautTest(startApplication = false)
+class JlamaTest {
 
     @Inject
     ChatLanguageModel chatLanguageModel;

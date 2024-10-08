@@ -11,6 +11,7 @@ chatModels:
   mistralai: MistralAi
   ollama: Ollama
   openai: OpenAi
+  googleai-gemini: Google AI Gemini
   vertexai: VertexAi
   vertexai-gemini: VertexAi Gemini
 embeddingStores:
