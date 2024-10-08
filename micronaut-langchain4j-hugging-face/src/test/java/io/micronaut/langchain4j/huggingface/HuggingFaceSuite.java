@@ -8,6 +8,7 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 @Suite
 @SelectPackages("io.micronaut.langchain4j.chatmodels.tck.tests")
 @ExcludeClassNamePatterns({
+        "io.micronaut.langchain4j.chatmodels.tck.tests.StreamingChatLanguageModelTest", // no bean of type StreamingChatLanguage
     "io.micronaut.langchain4j.chatmodels.tck.tests.AiServiceTest" // fails with error {"error":"Cannot override task for LLM models"}
 }
 )
