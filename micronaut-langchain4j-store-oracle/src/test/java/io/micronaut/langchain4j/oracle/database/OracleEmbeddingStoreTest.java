@@ -11,9 +11,13 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 @MicronautTest(transactional = false)
-public class OracleEmbeddingStoreTest {
+class OracleEmbeddingStoreTest {
+
+    @DisabledOnOs(value = OS.MAC, architectures = "arm64")
     @Test
     void testEmbeddingStore(EmbeddingStore<TextSegment> embeddingStore) {
         Assertions.assertNotNull(embeddingStore);
