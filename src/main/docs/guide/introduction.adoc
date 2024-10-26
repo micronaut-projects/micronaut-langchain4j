@@ -1,1 +1,3 @@
 This module provides integration between Micronaut and https://docs.langchain4j.dev[Langchain4j].
+
+NOTE: This module is regarded as experimental and subject to change since the underlying technology (Langchain4j) is not yet 1.0.0 or regarded as stable.
