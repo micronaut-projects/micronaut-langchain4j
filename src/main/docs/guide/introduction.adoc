@@ -1,3 +1,5 @@
 This module provides integration between Micronaut and https://docs.langchain4j.dev[Langchain4j].
 
 NOTE: This module is regarded as experimental and subject to change since the underlying technology (Langchain4j) is not yet 1.0.0 or regarded as stable.
+
+Various modules are provided that allow automatically configuring common Langchain4j types like `ChatModel`, `ImageModel` etc. Refer to the sections below for the supported Langchain4j extensions.
