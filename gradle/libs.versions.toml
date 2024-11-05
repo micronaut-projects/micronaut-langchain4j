@@ -17,7 +17,7 @@
 
 [versions]
 micronaut = "4.6.3"
-micronaut-core = "4.7.1"
+micronaut-core = "4.7.2"
 micronaut-platform = "4.6.3"
 micronaut-docs = "2.0.0"
 micronaut-mongodb = "5.4.0"
