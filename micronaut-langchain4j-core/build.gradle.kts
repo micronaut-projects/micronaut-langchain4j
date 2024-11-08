@@ -16,3 +16,7 @@ dependencies {
     testResourcesService(projects.micronautLangchain4jOllamaTestresource)
     testRuntimeOnly(mnTest.junit.jupiter.engine)
 }
+
+micronaut {
+    version(libs.versions.micronaut.platform.get())
+}
