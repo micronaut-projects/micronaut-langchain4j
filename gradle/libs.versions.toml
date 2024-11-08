@@ -17,7 +17,6 @@
 
 [versions]
 micronaut = "4.7.3"
-micronaut-core = "4.7.2"
 micronaut-platform = "4.6.3"
 micronaut-docs = "2.0.0"
 micronaut-mongodb = "5.4.0"
@@ -40,7 +39,7 @@ awaitility = "4.2.2"
 managed-langchain4j = "0.35.0"
 
 [libraries]
-micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut-core' }
+micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut'  }
 micronaut-redis = { module = 'io.micronaut.redis:micronaut-redis-bom', version.ref = 'micronaut-redis' }
 micronaut-mongodb = { module = 'io.micronaut.mongodb:micronaut-mongo-bom', version.ref = 'micronaut-mongodb' }
 micronaut-opensearch = { module = 'io.micronaut.opensearch:micronaut-opensearch-bom', version.ref = 'micronaut-opensearch' }
