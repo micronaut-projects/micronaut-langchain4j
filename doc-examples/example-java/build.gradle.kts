@@ -7,6 +7,7 @@ plugins {
 }
 
 micronaut {
+    version.set(libs.versions.micronaut.platform.get())
     runtime("netty")
     testRuntime("junit5")
 }
