@@ -1,0 +1,11 @@
+io.micronaut.langchain4j.aiservices
+io.micronaut.langchain4j.annotation
+io.micronaut.langchain4j.embedding
+io.micronaut.langchain4j.interceptor
+io.micronaut.langchain4j.mongodb.atlas
+io.micronaut.langchain4j.oracle.database
+io.micronaut.langchain4j.pgvector
+io.micronaut.langchain4j.processor
+io.micronaut.langchain4j.testresources.ollama
+io.micronaut.langchain4j.testresources.qdrant
+io.micronaut.langchain4j.tools

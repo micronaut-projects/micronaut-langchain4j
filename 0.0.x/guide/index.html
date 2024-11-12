@@ -1,0 +1,1864 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>Micronaut LangChain4j</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
+    <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
+    <link rel="stylesheet" href="../css/highlight/agate.css">
+    <script src="../js/highlight.pack.js"></script>
+    <script src="../js/guide.js"></script>
+    <script src="../js/multi-language-sample.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="../css/multi-language-sample.css"/>
+    <script src="../js/docs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
+    <script type="text/javascript">
+        function addJsClass(el) {
+            var classes = document.body.className.split(" ");
+            classes.push("js");
+            document.body.className = classes.join(" ");
+        }
+    </script>
+
+</head>
+
+<body class="body" id="docs" onload="addJsClass();" onhashchange="highlightMenu()">
+
+<div id="table-of-content-nav-link" class="desktop">
+    <a id="theme-switcher" title="Switch to dark theme" href="javascript:switchTheme(true)"><i class="fa fa-moon-o"></i></a>
+    <a title="Collapse/Open Table of contents" title="Hide Table of Contents" href="javascript:hideTableOfContents();" class="button">[ + ]</a>
+</div>
+
+<div id="main">
+    <div id="navigation" class="no-print">
+        <div class="navTitle">
+            <span id="logo"><a href="http://micronaut.io" title="Go to Micronaut Website"><img src="../img/micronaut-logo-white.svg" alt="Micronaut"/></a></span>
+        </div>
+        <div class="navLinks">
+            <ul>
+                    <li><div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)" class="desktop">
+                            <a href="../guide/index.html" class="button">Table of contents</a>
+                            <div id="nav-summary-childs" style="display:none;">
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#quickStart"><strong>2</strong><span>Quick Start</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#chatModels"><strong>3</strong><span>Chat Language Models</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#embeddingStores"><strong>4</strong><span>Embedding Stores</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>5</strong><span>Repository</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#releaseHistory"><strong>6</strong><span>Release History</span></a></div>
+                                
+                            </div>
+                        </div>
+                    </li>
+
+                <li id="table-of-content-nav-link-mobile" class="mobile">
+                    <a title="Scroll to Table of contents" href="javascript:scrollToTop();" class="button">Toc</a>
+                </li>
+                <li class="desktop">
+                    <a title="Go to API documentation" href="../api/index.html" class="button">API Reference</a>
+                </li>
+                <li class="mobile">
+                    <a title="Go to API documentation" href="../api/index.html" class="button">API</a>
+                </li>
+                <li class="desktop">
+                    <a title="Go to Configuration Reference documentation" href="../guide/configurationreference.html" class="button">Configuration Reference</a>
+                </li>
+                <li class="mobile">
+                    <a title="Go to Configuration Reference documentation" href="../guide/configurationreference.html" class="button">Conf</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    
+    <div id="table-of-content">
+        <div class="toc-content">
+
+        <h2>Table of Contents</h2>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-introduction"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-quickStart"><a href="#quickStart"><strong>2</strong><span>Quick Start</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-chatModels"><a href="#chatModels"><strong>3</strong><span>Chat Language Models</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-anthropic"><a href="#anthropic"><strong>3.1</strong><span>Anthropic</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-azure"><a href="#azure"><strong>3.2</strong><span>Azure</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-bedrock"><a href="#bedrock"><strong>3.3</strong><span>Bedrock</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-hugging-face"><a href="#hugging-face"><strong>3.4</strong><span>HuggingFace</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-mistralai"><a href="#mistralai"><strong>3.5</strong><span>MistralAi</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-ollama"><a href="#ollama"><strong>3.6</strong><span>Ollama</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-openai"><a href="#openai"><strong>3.7</strong><span>OpenAi</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-googleai-gemini"><a href="#googleai-gemini"><strong>3.8</strong><span>Google AI Gemini</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-vertexai"><a href="#vertexai"><strong>3.9</strong><span>VertexAi</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-vertexai-gemini"><a href="#vertexai-gemini"><strong>3.10</strong><span>VertexAi Gemini</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-embeddingStores"><a href="#embeddingStores"><strong>4</strong><span>Embedding Stores</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-elasticsearch"><a href="#elasticsearch"><strong>4.1</strong><span>Elastic Search</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-mongodb"><a href="#mongodb"><strong>4.2</strong><span>MongoDB</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-neo4j"><a href="#neo4j"><strong>4.3</strong><span>Neo4j</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-oracledb"><a href="#oracledb"><strong>4.4</strong><span>Oracle</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-opensearch"><a href="#opensearch"><strong>4.5</strong><span>Open Search</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-pgvector"><a href="#pgvector"><strong>4.6</strong><span>PGVector</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-redis"><a href="#redis"><strong>4.7</strong><span>Redis</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-qdrant"><a href="#qdrant"><strong>4.8</strong><span>Qdrant</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>5</strong><span>Repository</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-releaseHistory"><a href="#releaseHistory"><strong>6</strong><span>Release History</span></a></div>
+        
+        </div>
+    </div>
+    
+    <div class="docs-content">
+    <div class="project">
+        <h1>Micronaut LangChain4j</h1>
+        <p></p>
+        <p>Integration between Micronaut and Langchain4j</p>
+        <p><strong>Version:</strong> 0.0.1 </p>
+    </div>
+    
+<h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/introduction.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>This module provides integration between Micronaut and <a href="https://docs.langchain4j.dev">Langchain4j</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This module is regarded as experimental and subject to change since the underlying technology (Langchain4j) is not yet 1.0.0 or regarded as stable.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Various modules are provided that allow automatically configuring common Langchain4j types like <code>ChatModel</code>, <code>ImageModel</code> etc. Refer to the sections below for the supported Langchain4j extensions.</p>
+</div>
+
+<h1 id="quickStart"><a class="anchor" href="#quickStart"></a>2 Quick Start</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/quickStart.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following annotation processor dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-processor")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;annotationProcessorPaths&gt;
+    &lt;path&gt;
+        &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+        &lt;artifactId&gt;micronaut-langchain4j-processor&lt;/artifactId&gt;
+    &lt;/path&gt;
+&lt;/annotationProcessorPaths&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then the core module:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-core")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-core&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>You are now ready to configure one of the <a href="#chatModels">Chat Language Models</a>, for the quick start we will use <a href="#ollama">Ollama</a>:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-ollama")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-ollama&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>To test the integration add the test resources integration to your <a href="https://micronaut-projects.github.io/micronaut-maven-plugin/latest/examples/test-resources.html">Maven build</a> or <a href="https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/#_the_test_resources_plugin">Gradle build</a>.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">testResourcesService(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-ollama-testresources")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-ollama-testresources&lt;/artifactId&gt;
+    &lt;scope&gt;testResourcesService&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For Maven see <a href="https://micronaut-projects.github.io/micronaut-maven-plugin/latest/examples/test-resources.html#adding_modules_or_libraries_to_the_test_resources_service_classpath">Adding modules or libraries to the Test Resources service classpath</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Add the necessary configuration to configure the model name you want to use:</p>
+</div>
+<div class="openblock">
+<div class="title">Configuring the Model Name</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.ollama.model-name=orca-mini</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">langchain4j.ollama.model-name: orca-mini</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.ollama.model-name"="orca-mini"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j.ollama.modelName = "orca-mini"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "langchain4j.ollama.model-name" = "orca-mini"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j.ollama.model-name": "orca-mini"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Now you can inject an instance of</p>
+</div>
+<div class="paragraph">
+<p>You can also define new <a href="https://docs.langchain4j.dev/tutorials/ai-services">AI services</a>:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Defining <code>@AiService</code> interfaces</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package example;
+
+import dev.langchain4j.service.SystemMessage;
+import io.micronaut.langchain4j.annotation.AiService;
+
+@AiService // <b class="conum">(1)</b>
+public interface Friend {
+
+    @SystemMessage("You are a good friend of mine. Answer using slang.") // <b class="conum">(2)</b>
+    String chat(String userMessage);
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Define an interface annotated with <a href="../api/io/micronaut/langchain4j/annotation/AiService.html">@AiService</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Use Langchain4j annotations like <code>@SystemMessage</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You can now inject the <code>@AiService</code> definition into any Micronaut component including tests:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Calling <code>@AiService</code> definitions</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package example;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import dev.langchain4j.model.chat.ChatLanguageModel;
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+@MicronautTest
+@Disabled("Ollama Testcontainers broken?")
+public class AiServiceTest {
+    @Test
+    void testAiService(Friend friend, ChatLanguageModel languageModel) {
+        String result = friend.chat("Hello");
+
+        assertNotNull(result);
+        assertNotNull(languageModel);
+    }
+}</code></pre>
+</div>
+</div>
+
+<h1 id="chatModels"><a class="anchor" href="#chatModels"></a>3 Chat Language Models</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/chatModels.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The following modules provide integration with Langchain4j <a href="https://docs.langchain4j.dev/category/language-models">Language Models</a>.</p>
+</div>
+<div class="paragraph">
+<p>Each module configures one or more <a href="https://docs.langchain4j.dev/apidocs/dev/langchain4j/model/chat/ChatLanguageModel.html">ChatLanguageModel</a> beans, making them available for dependency injection based on configuration.</p>
+</div>
+
+<h2 id="anthropic"><a class="anchor" href="#anthropic"></a>3.1 Anthropic</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/chatModels/anthropic.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-anthropic")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-anthropic&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.anthropic.CommonAnthropicChatModelConfiguration">necessary configuration</a>.</p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.anthropic.api-key=YOUR_KEY</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">langchain4j.anthropic.api-key: YOUR_KEY</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.anthropic.api-key"="YOUR_KEY"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j.anthropic.apiKey = "YOUR_KEY"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "langchain4j.anthropic.api-key" = "YOUR_KEY"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j.anthropic.api-key": "YOUR_KEY"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h2 id="azure"><a class="anchor" href="#azure"></a>3.2 Azure</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/chatModels/azure.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-azure")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-azure&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.azure.CommonAzureOpenAiChatModelConfiguration">necessary configuration</a>.</p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.azure-open-ai.api-key=YOUR_KEY
+langchain4j.azure-open-ai.endpoint=YOUR_ENDPOINT</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">langchain4j.azure-open-ai.api-key: YOUR_KEY
+langchain4j.azure-open-ai.endpoint: YOUR_ENDPOINT</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.azure-open-ai.api-key"="YOUR_KEY"
+"langchain4j.azure-open-ai.endpoint"="YOUR_ENDPOINT"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j.azureOpenAi.apiKey = "YOUR_KEY"
+langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "langchain4j.azure-open-ai.api-key" = "YOUR_KEY"
+  "langchain4j.azure-open-ai.endpoint" = "YOUR_ENDPOINT"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j.azure-open-ai.api-key": "YOUR_KEY",
+  "langchain4j.azure-open-ai.endpoint": "YOUR_ENDPOINT"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>You will additionally need to define a bean of type <a href="https://learn.microsoft.com/en-us/java/api/com.azure.core.credential.tokencredential?view=azure-java-stable">TokenCredentials</a>.</p>
+</div>
+<div class="paragraph">
+<p>One way to do this is to include the <a href="https://micronaut-projects.github.io/micronaut-azure/latest/guide/#azureSdk">Azure SDK module</a>.</p>
+</div>
+
+<h2 id="bedrock"><a class="anchor" href="#bedrock"></a>3.3 Bedrock</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/chatModels/bedrock.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-bedrock")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-bedrock&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.bedrock.CommonBedrockLlamaChatModelConfiguration">necessary configuration</a>.</p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.bedrock-llama.api-key=YOUR_KEY</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">langchain4j.bedrock-llama.api-key: YOUR_KEY</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.bedrock-llama.api-key"="YOUR_KEY"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j.bedrockLlama.apiKey = "YOUR_KEY"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "langchain4j.bedrock-llama.api-key" = "YOUR_KEY"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j.bedrock-llama.api-key": "YOUR_KEY"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>You will additionally need to define a bean of type <a href="https://sdk.amazonaws.com/java/api/latest/software/amazon/awssdk/auth/credentials/AwsCredentialsProvider.html">AwsCredentialsProvider</a>.</p>
+</div>
+<div class="paragraph">
+<p>One way to do this is to include the <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/#sdkv2">AWS SDK module</a>.</p>
+</div>
+
+<h2 id="hugging-face"><a class="anchor" href="#hugging-face"></a>3.4 HuggingFace</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/chatModels/hugging-face.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-hugging-face")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-hugging-face&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.huggingface.CommonHuggingFaceChatModelConfiguration">necessary configuration</a>.</p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.hugging-face.access-token=YOUR_ACCESS_TOKEN</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">langchain4j.hugging-face.access-token: YOUR_ACCESS_TOKEN</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.hugging-face.access-token"="YOUR_ACCESS_TOKEN"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j.huggingFace.accessToken = "YOUR_ACCESS_TOKEN"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "langchain4j.hugging-face.access-token" = "YOUR_ACCESS_TOKEN"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j.hugging-face.access-token": "YOUR_ACCESS_TOKEN"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h2 id="mistralai"><a class="anchor" href="#mistralai"></a>3.5 MistralAi</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/chatModels/mistralai.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-mistralai")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-mistralai&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.mistralai.CommonMistralAiChatModelConfiguration">necessary configuration</a>.</p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.mistral-ai.api-key=YOUR_KEY</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">langchain4j.mistral-ai.api-key: YOUR_KEY</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.mistral-ai.api-key"="YOUR_KEY"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j.mistralAi.apiKey = "YOUR_KEY"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "langchain4j.mistral-ai.api-key" = "YOUR_KEY"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j.mistral-ai.api-key": "YOUR_KEY"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h2 id="ollama"><a class="anchor" href="#ollama"></a>3.6 Ollama</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/chatModels/ollama.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-ollama")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-ollama&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.ollama.CommonOllamaChatModelConfiguration">necessary configuration</a>.</p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.ollama.base-url=YOUR_URL</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">langchain4j.ollama.base-url: YOUR_URL</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.ollama.base-url"="YOUR_URL"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j.ollama.baseUrl = "YOUR_URL"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "langchain4j.ollama.base-url" = "YOUR_URL"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j.ollama.base-url": "YOUR_URL"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h2 id="openai"><a class="anchor" href="#openai"></a>3.7 OpenAi</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/chatModels/openai.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-openai")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-openai&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.openai.CommonOpenAiImageModelConfiguration">necessary configuration</a>.</p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.open-ai.api-key=YOUR_KEY</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">langchain4j.open-ai.api-key: YOUR_KEY</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.open-ai.api-key"="YOUR_KEY"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j.openAi.apiKey = "YOUR_KEY"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "langchain4j.open-ai.api-key" = "YOUR_KEY"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j.open-ai.api-key": "YOUR_KEY"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h2 id="googleai-gemini"><a class="anchor" href="#googleai-gemini"></a>3.8 Google AI Gemini</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/chatModels/googleai-gemini.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-googleai-gemini")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-googleai-gemini&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.googleaigemini.CommonGoogleAiGeminiChatModelConfiguration">necessary configuration</a>.</p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.google-ai-gemini.api-key=YOUR_API_KEY</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">langchain4j.google-ai-gemini.api-key: YOUR_API_KEY</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.google-ai-gemini.api-key"="YOUR_API_KEY"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j.googleAiGemini.apiKey = "YOUR_API_KEY"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "langchain4j.google-ai-gemini.api-key" = "YOUR_API_KEY"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j.google-ai-gemini.api-key": "YOUR_API_KEY"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h2 id="vertexai"><a class="anchor" href="#vertexai"></a>3.9 VertexAi</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/chatModels/vertexai.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-vertexai")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-vertexai&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.vertexai.CommonVertexAiChatModelConfiguration">necessary configuration</a>.</p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.vertex-ai.endpoint=YOUR_ENDPOINT
+langchain4j.vertex-ai.model-name=YOUR_MODEL
+langchain4j.vertex-ai.project=YOUR_PROJECT
+langchain4j.vertex-ai.location=YOUR_LOCATION
+langchain4j.vertex-ai.publisher=YOUR_PUBLISHER</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">langchain4j.vertex-ai.endpoint: YOUR_ENDPOINT
+langchain4j.vertex-ai.model-name: YOUR_MODEL
+langchain4j.vertex-ai.project: YOUR_PROJECT
+langchain4j.vertex-ai.location: YOUR_LOCATION
+langchain4j.vertex-ai.publisher: YOUR_PUBLISHER</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.vertex-ai.endpoint"="YOUR_ENDPOINT"
+"langchain4j.vertex-ai.model-name"="YOUR_MODEL"
+"langchain4j.vertex-ai.project"="YOUR_PROJECT"
+"langchain4j.vertex-ai.location"="YOUR_LOCATION"
+"langchain4j.vertex-ai.publisher"="YOUR_PUBLISHER"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j.vertexAi.endpoint = "YOUR_ENDPOINT"
+langchain4j.vertexAi.modelName = "YOUR_MODEL"
+langchain4j.vertexAi.project = "YOUR_PROJECT"
+langchain4j.vertexAi.location = "YOUR_LOCATION"
+langchain4j.vertexAi.publisher = "YOUR_PUBLISHER"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "langchain4j.vertex-ai.endpoint" = "YOUR_ENDPOINT"
+  "langchain4j.vertex-ai.model-name" = "YOUR_MODEL"
+  "langchain4j.vertex-ai.project" = "YOUR_PROJECT"
+  "langchain4j.vertex-ai.location" = "YOUR_LOCATION"
+  "langchain4j.vertex-ai.publisher" = "YOUR_PUBLISHER"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j.vertex-ai.endpoint": "YOUR_ENDPOINT",
+  "langchain4j.vertex-ai.model-name": "YOUR_MODEL",
+  "langchain4j.vertex-ai.project": "YOUR_PROJECT",
+  "langchain4j.vertex-ai.location": "YOUR_LOCATION",
+  "langchain4j.vertex-ai.publisher": "YOUR_PUBLISHER"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h2 id="vertexai-gemini"><a class="anchor" href="#vertexai-gemini"></a>3.10 VertexAi Gemini</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/chatModels/vertexai-gemini.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-vertexai-gemini")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-vertexai-gemini&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.vertexai.gemini.CommonVertexAiGeminiChatModelConfiguration">necessary configuration</a>.</p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.vertex-ai-gemini.model-name=YOUR_MODEL
+langchain4j.vertex-ai-gemini.project=YOUR_PROJECT
+langchain4j.vertex-ai-gemini.location=YOUR_LOCATION</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">langchain4j.vertex-ai-gemini.model-name: YOUR_MODEL
+langchain4j.vertex-ai-gemini.project: YOUR_PROJECT
+langchain4j.vertex-ai-gemini.location: YOUR_LOCATION</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.vertex-ai-gemini.model-name"="YOUR_MODEL"
+"langchain4j.vertex-ai-gemini.project"="YOUR_PROJECT"
+"langchain4j.vertex-ai-gemini.location"="YOUR_LOCATION"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j.vertexAiGemini.modelName = "YOUR_MODEL"
+langchain4j.vertexAiGemini.project = "YOUR_PROJECT"
+langchain4j.vertexAiGemini.location = "YOUR_LOCATION"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "langchain4j.vertex-ai-gemini.model-name" = "YOUR_MODEL"
+  "langchain4j.vertex-ai-gemini.project" = "YOUR_PROJECT"
+  "langchain4j.vertex-ai-gemini.location" = "YOUR_LOCATION"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j.vertex-ai-gemini.model-name": "YOUR_MODEL",
+  "langchain4j.vertex-ai-gemini.project": "YOUR_PROJECT",
+  "langchain4j.vertex-ai-gemini.location": "YOUR_LOCATION"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h1 id="embeddingStores"><a class="anchor" href="#embeddingStores"></a>4 Embedding Stores</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/embeddingStores.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+
+
+<h2 id="elasticsearch"><a class="anchor" href="#elasticsearch"></a>4.1 Elastic Search</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/embeddingStores/elasticsearch.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-store-elasticsearch")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-store-elasticsearch&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then <a href="https://micronaut-projects.github.io/micronaut-elasticsearch/latest/guide/#configuration">configure the Elasticsearch client</a>.</p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">elasticsearch.httpHosts=http://localhost:9200,http://127.0.0.2:9200
+langchain4j.elasticsearch.embedding-stores.default.dimension=384</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">elasticsearch.httpHosts: "http://localhost:9200,http://127.0.0.2:9200"
+langchain4j.elasticsearch.embedding-stores.default.dimension: 384</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"elasticsearch.httpHosts"="http://localhost:9200,http://127.0.0.2:9200"
+"langchain4j.elasticsearch.embedding-stores.default.dimension"=384</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">elasticsearch.httpHosts = "http://localhost:9200,http://127.0.0.2:9200"
+langchain4j.elasticsearch.embeddingStores.default.dimension = 384</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "elasticsearch.httpHosts" = "http://localhost:9200,http://127.0.0.2:9200"
+  "langchain4j.elasticsearch.embedding-stores.default.dimension" = 384
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "elasticsearch.httpHosts": "http://localhost:9200,http://127.0.0.2:9200",
+  "langchain4j.elasticsearch.embedding-stores.default.dimension": 384
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h2 id="mongodb"><a class="anchor" href="#mongodb"></a>4.2 MongoDB</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/embeddingStores/mongodb.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-store-mongodb-atlas")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-store-mongodb-atlas&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="listingblock">
+<div class="title">Configuring a MongoDB server</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">mongodb.servers.default.uri: mongodb://username:password@localhost:27017/databaseName</code></pre>
+</div>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.mongodb-atlas.embedding-stores.default.database-name=testdb
+langchain4j.mongodb-atlas.embedding-stores.default.collection-name=testcol
+langchain4j.mongodb-atlas.embedding-stores.default.index-name=testindex</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">langchain4j.mongodb-atlas.embedding-stores.default.database-name: testdb
+langchain4j.mongodb-atlas.embedding-stores.default.collection-name: testcol
+langchain4j.mongodb-atlas.embedding-stores.default.index-name: testindex</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.mongodb-atlas.embedding-stores.default.database-name"="testdb"
+"langchain4j.mongodb-atlas.embedding-stores.default.collection-name"="testcol"
+"langchain4j.mongodb-atlas.embedding-stores.default.index-name"="testindex"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j.mongodbAtlas.embeddingStores.default.databaseName = "testdb"
+langchain4j.mongodbAtlas.embeddingStores.default.collectionName = "testcol"
+langchain4j.mongodbAtlas.embeddingStores.default.indexName = "testindex"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "langchain4j.mongodb-atlas.embedding-stores.default.database-name" = "testdb"
+  "langchain4j.mongodb-atlas.embedding-stores.default.collection-name" = "testcol"
+  "langchain4j.mongodb-atlas.embedding-stores.default.index-name" = "testindex"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j.mongodb-atlas.embedding-stores.default.database-name": "testdb",
+  "langchain4j.mongodb-atlas.embedding-stores.default.collection-name": "testcol",
+  "langchain4j.mongodb-atlas.embedding-stores.default.index-name": "testindex"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h2 id="neo4j"><a class="anchor" href="#neo4j"></a>4.3 Neo4j</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/embeddingStores/neo4j.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-store-neo4j")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-store-neo4j&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then <a href="https://micronaut-projects.github.io/micronaut-neo4j/latest/guide/#setup">configure the Neo4j driver</a>.</p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">neo4j.uri=bolt://localhost
+langchain4j.neo4j.embedding-stores.default.dimension=384</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">neo4j.uri: bolt://localhost
+langchain4j.neo4j.embedding-stores.default.dimension: 384</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"neo4j.uri"="bolt://localhost"
+"langchain4j.neo4j.embedding-stores.default.dimension"=384</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">neo4j.uri = "bolt://localhost"
+langchain4j.neo4j.embeddingStores.default.dimension = 384</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "neo4j.uri" = "bolt://localhost"
+  "langchain4j.neo4j.embedding-stores.default.dimension" = 384
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "neo4j.uri": "bolt://localhost",
+  "langchain4j.neo4j.embedding-stores.default.dimension": 384
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h2 id="oracledb"><a class="anchor" href="#oracledb"></a>4.4 Oracle</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/embeddingStores/oracledb.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-store-oracle")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-store-oracle&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then add one of the <a href="https://micronaut-projects.github.io/micronaut-sql/latest/guide/#jdbc">supported JDBC connection pools</a>, for example Hikari:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtimeOnly(<span class="hljs-string">"io.micronaut.sql:micronaut-jdbc-hikari")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.sql&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-jdbc-hikari&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">datasources.default.dialect=oracle
+langchain4j.oracle.embedding-stores.default.table=test
+langchain4j.oracle.embedding-stores.default.table.create-option=create_if_not_exists</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">datasources.default.dialect: oracle
+langchain4j.oracle.embedding-stores.default.table: test
+langchain4j.oracle.embedding-stores.default.table.create-option: create_if_not_exists</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"datasources.default.dialect"="oracle"
+"langchain4j.oracle.embedding-stores.default.table"="test"
+"langchain4j.oracle.embedding-stores.default.table.create-option"="create_if_not_exists"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">datasources.default.dialect = "oracle"
+langchain4j.oracle.embeddingStores.default.table = "test"
+langchain4j.oracle.embeddingStores.default.table.createOption = "create_if_not_exists"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "datasources.default.dialect" = "oracle"
+  "langchain4j.oracle.embedding-stores.default.table" = "test"
+  "langchain4j.oracle.embedding-stores.default.table.create-option" = "create_if_not_exists"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "datasources.default.dialect": "oracle",
+  "langchain4j.oracle.embedding-stores.default.table": "test",
+  "langchain4j.oracle.embedding-stores.default.table.create-option": "create_if_not_exists"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h2 id="opensearch"><a class="anchor" href="#opensearch"></a>4.5 Open Search</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/embeddingStores/opensearch.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-store-opensearch")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-store-opensearch&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then <a href="https://micronaut-projects.github.io/micronaut-opensearch/latest/guide/#openSearchRestClient">configure the OpenSearch client</a>.</p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">micronaut.opensearch.rest-client.http-hosts=http://localhost:9200,http://127.0.0.2:9200
+langchain4j.opensearch.embedding-stores.default.dimension=384</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut.opensearch.rest-client.http-hosts: "http://localhost:9200,http://127.0.0.2:9200"
+langchain4j.opensearch.embedding-stores.default.dimension: 384</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"micronaut.opensearch.rest-client.http-hosts"="http://localhost:9200,http://127.0.0.2:9200"
+"langchain4j.opensearch.embedding-stores.default.dimension"=384</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">micronaut.opensearch.restClient.httpHosts = "http://localhost:9200,http://127.0.0.2:9200"
+langchain4j.opensearch.embeddingStores.default.dimension = 384</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "micronaut.opensearch.rest-client.http-hosts" = "http://localhost:9200,http://127.0.0.2:9200"
+  "langchain4j.opensearch.embedding-stores.default.dimension" = 384
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "micronaut.opensearch.rest-client.http-hosts": "http://localhost:9200,http://127.0.0.2:9200",
+  "langchain4j.opensearch.embedding-stores.default.dimension": 384
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h2 id="pgvector"><a class="anchor" href="#pgvector"></a>4.6 PGVector</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/embeddingStores/pgvector.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-store-pgvector")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-store-pgvector&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Then add one of the <a href="https://micronaut-projects.github.io/micronaut-sql/latest/guide/#jdbc">supported JDBC connection pools</a>, for example Hikari:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtimeOnly(<span class="hljs-string">"io.micronaut.sql:micronaut-jdbc-hikari")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.sql&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-jdbc-hikari&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">datasources.default.dialect=postgres
+langchain4j.pgvector.embedding-stores.default.table=mytable
+langchain4j.pgvector.embedding-stores.default.dimension=384
+test-resources.containers.postgres.image-name=pgvector/pgvector:pg16</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">datasources.default.dialect: postgres
+langchain4j.pgvector.embedding-stores.default.table: "mytable"
+langchain4j.pgvector.embedding-stores.default.dimension: 384
+
+# Add this if you plan to use testresources
+test-resources.containers.postgres.image-name: pgvector/pgvector:pg16</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"datasources.default.dialect"="postgres"
+"langchain4j.pgvector.embedding-stores.default.table"="mytable"
+"langchain4j.pgvector.embedding-stores.default.dimension"=384
+"test-resources.containers.postgres.image-name"="pgvector/pgvector:pg16"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">datasources.default.dialect = "postgres"
+langchain4j.pgvector.embeddingStores.default.table = "mytable"
+langchain4j.pgvector.embeddingStores.default.dimension = 384
+testResources.containers.postgres.imageName = "pgvector/pgvector:pg16"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "datasources.default.dialect" = "postgres"
+  "langchain4j.pgvector.embedding-stores.default.table" = "mytable"
+  "langchain4j.pgvector.embedding-stores.default.dimension" = 384
+  "test-resources.containers.postgres.image-name" = "pgvector/pgvector:pg16"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "datasources.default.dialect": "postgres",
+  "langchain4j.pgvector.embedding-stores.default.table": "mytable",
+  "langchain4j.pgvector.embedding-stores.default.dimension": 384,
+  "test-resources.containers.postgres.image-name": "pgvector/pgvector:pg16"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h2 id="redis"><a class="anchor" href="#redis"></a>4.7 Redis</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/embeddingStores/redis.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>TODO</p>
+</div>
+
+<h2 id="qdrant"><a class="anchor" href="#qdrant"></a>4.8 Qdrant</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/embeddingStores/qdrant.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-store-qdrant")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-store-qdrant&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>To use Testcontainers &amp; Test Resources add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">testResourcesService(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-qdrant-testresource")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-qdrant-testresource&lt;/artifactId&gt;
+    &lt;scope&gt;testResourcesService&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For Maven see <a href="https://micronaut-projects.github.io/micronaut-maven-plugin/latest/examples/test-resources.html#adding_modules_or_libraries_to_the_test_resources_service_classpath">Adding modules or libraries to the Test Resources service classpath</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.qdrant.embedding-store.host=localhost
+langchain4j.qdrant.embedding-store.port=6334
+langchain4j.qdrant.embedding-store.collection-name=mycollection</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml"># Omitt the following 2 properties if you use Test resources
+langchain4j.qdrant.embedding-store.host: localhost
+langchain4j.qdrant.embedding-store.port: 6334
+
+# Minimal configuration required for Test resources
+langchain4j.qdrant.embedding-store.collection-name: mycollection</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.qdrant.embedding-store.host"="localhost"
+"langchain4j.qdrant.embedding-store.port"=6334
+"langchain4j.qdrant.embedding-store.collection-name"="mycollection"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j.qdrant.embeddingStore.host = "localhost"
+langchain4j.qdrant.embeddingStore.port = 6334
+langchain4j.qdrant.embeddingStore.collectionName = "mycollection"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "langchain4j.qdrant.embedding-store.host" = "localhost"
+  "langchain4j.qdrant.embedding-store.port" = 6334
+  "langchain4j.qdrant.embedding-store.collection-name" = "mycollection"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j.qdrant.embedding-store.host": "localhost",
+  "langchain4j.qdrant.embedding-store.port": 6334,
+  "langchain4j.qdrant.embedding-store.collection-name": "mycollection"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h1 id="repository"><a class="anchor" href="#repository"></a>5 Repository</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/repository.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can find the source code of this project in this repository:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/micronaut-projects/micronaut-langchain4j">https://github.com/micronaut-projects/micronaut-langchain4j</a></p>
+</div>
+
+<h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>6 Release History</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/0.0.x/src/main/docs/guide/releaseHistory.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>For this project, you can find a list of releases (with release notes) here:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/micronaut-projects/micronaut-langchain4j/releases">https://github.com/micronaut-projects/micronaut-langchain4j/releases</a></p>
+</div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+</script>
+</body>
+</html>
