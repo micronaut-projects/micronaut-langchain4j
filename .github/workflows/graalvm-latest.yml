@@ -7,10 +7,12 @@ name: GraalVM Latest CI
 on:
   push:
     branches:
-      - '[0-9]+.[0-9]+.x'
+      - master
+      - '[1-9]+.[0-9]+.x'
   pull_request:
     branches:
-      - '[0-9]+.[0-9]+.x'
+      - master
+      - '[1-9]+.[0-9]+.x'
 jobs:
   build_matrix:
     if: github.repository != 'micronaut-projects/micronaut-project-template'
