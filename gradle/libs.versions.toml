@@ -36,7 +36,7 @@ spock = "2.3-groovy-4.0"
 awaitility = "4.2.2"
 
 # Managed versions appear in the BOM
-managed-langchain4j = "0.35.0"
+managed-langchain4j = "0.36.1"
 
 [libraries]
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut'  }
