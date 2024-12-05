@@ -16,7 +16,7 @@
 # a managed version (a version which alias starts with "managed-"
 
 [versions]
-micronaut = "4.7.6"
+micronaut = "4.7.7"
 micronaut-platform = "4.6.3"
 micronaut-docs = "2.0.0"
 micronaut-mongodb = "5.4.0"
