@@ -12,7 +12,7 @@ dependency:io.micronaut.langchain4j:micronaut-langchain4j-ollama[]
 
 To test the integration add the test resources integration to your https://micronaut-projects.github.io/micronaut-maven-plugin/latest/examples/test-resources.html[Maven build] or https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/#_the_test_resources_plugin[Gradle build].
 
-dependency:io.micronaut.langchain4j:micronaut-langchain4j-ollama-testresources[scope="testResourcesService"]
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-ollama-testresource[scope="testResourcesService"]
 
 NOTE: For Maven see https://micronaut-projects.github.io/micronaut-maven-plugin/latest/examples/test-resources.html#adding_modules_or_libraries_to_the_test_resources_service_classpath[Adding modules or libraries to the Test Resources service classpath].
 
