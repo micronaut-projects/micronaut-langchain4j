@@ -16,9 +16,3 @@ dependencies {
     implementation(libs.commons.compress) // declare the apache commons compress directly as the version from langchain4j has a security vulnerability
 }
 
-micronautBuild {
-    // new module, so disable binary check for now
-    binaryCompatibility {
-        enabled.set(false)
-    }
-}

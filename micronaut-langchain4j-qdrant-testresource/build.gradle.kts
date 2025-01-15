@@ -16,10 +16,3 @@ dependencies {
     testRuntimeOnly(mnTestResources.micronaut.test.resources.embedded)
     testRuntimeOnly(mnTest.junit.jupiter.engine)
 }
-
-micronautBuild {
-    // new module, so disable binary check for now
-    binaryCompatibility {
-        enabled.set(false)
-    }
-}
