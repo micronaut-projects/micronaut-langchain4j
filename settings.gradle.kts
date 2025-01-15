@@ -63,6 +63,7 @@ configure<io.micronaut.build.MicronautBuildSettingsExtension> {
     importMicronautCatalog("micronaut-neo4j")
     importMicronautCatalog("micronaut-opensearch")
     importMicronautCatalog("micronaut-redis")
+    importMicronautCatalog("micronaut-grpc")
     importMicronautCatalog("micronaut-serde")
     importMicronautCatalog("micronaut-sql")
     // importMicronautCatalog("micronaut-validation")

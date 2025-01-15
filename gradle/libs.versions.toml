@@ -31,16 +31,24 @@ micronaut-test-resources = "2.7.2"
 micronaut-logging = "1.5.1"
 micronaut-gradle-plugin = "4.4.5"
 micronaut-sourcegen = "1.4.1"
+micronaut-grpc = "4.8.0"
 groovy = "4.0.23"
 spock = "2.3-groovy-4.0"
 awaitility = "4.2.2"
+#TODO remove when non vulnerable versions exists
+commons-compress = "1.26.0"
+org-json = "20231013"
 
 # Managed versions appear in the BOM
 managed-langchain4j = "0.36.2"
+sonatype-scan = "3.0.0"
 
 [libraries]
+org-json = { module = 'org.json:json', version.ref = 'org-json'  }
+commons-compress = { module = 'org.apache.commons:commons-compress', version.ref = 'commons-compress'  }
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut'  }
 micronaut-redis = { module = 'io.micronaut.redis:micronaut-redis-bom', version.ref = 'micronaut-redis' }
+micronaut-grpc = { module = 'io.micronaut.grpc:micronaut-grpc-bom', version.ref = 'micronaut-grpc' }
 micronaut-mongodb = { module = 'io.micronaut.mongodb:micronaut-mongo-bom', version.ref = 'micronaut-mongodb' }
 micronaut-opensearch = { module = 'io.micronaut.opensearch:micronaut-opensearch-bom', version.ref = 'micronaut-opensearch' }
 micronaut-elasticsearch = { module = 'io.micronaut.elasticsearch:micronaut-elasticsearch-bom', version.ref = 'micronaut-elasticsearch' }
@@ -80,6 +88,7 @@ boms-langchain4j = { module = "dev.langchain4j:langchain4j-bom", version.ref = "
 
 # Plugins
 gradle-micronaut = { module = "io.micronaut.gradle:micronaut-gradle-plugin", version.ref = "micronaut-gradle-plugin" }
+sonatype-scan = { module = "org.sonatype.gradle.plugins:scan-gradle-plugin", version.ref = "sonatype-scan" }
 
 [bundles]
 
