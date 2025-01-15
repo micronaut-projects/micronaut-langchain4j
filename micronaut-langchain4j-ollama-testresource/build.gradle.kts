@@ -13,11 +13,6 @@ dependencies {
     testImplementation(mnTest.micronaut.test.junit5)
     testRuntimeOnly(mnTestResources.micronaut.test.resources.embedded)
     testRuntimeOnly(mnTest.junit.jupiter.engine)
+    implementation(libs.commons.compress) // declare the apache commons compress directly as the version from langchain4j has a security vulnerability
 }
 
-micronautBuild {
-    // new module, so disable binary check for now
-    binaryCompatibility {
-        enabled.set(false)
-    }
-}
