@@ -36,7 +36,7 @@ groovy = "4.0.23"
 spock = "2.3-groovy-4.0"
 awaitility = "4.2.2"
 #TODO remove when non vulnerable versions exists
-commons-compress = "1.26.0"
+commons-compress = "1.27.1"
 org-json = "20231013"
 
 # Managed versions appear in the BOM
