@@ -10,7 +10,8 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 @SuiteDisplayName("ChatModels Test Compatibility Kit for the Jlama implementation")
 @ExcludeClassNamePatterns({
         "io.micronaut.langchain4j.chatmodels.tck.tests.AiServiceTest",
-        "io.micronaut.langchain4j.chatmodels.tck.tests.ChatLanguageModelTest"
+        "io.micronaut.langchain4j.chatmodels.tck.tests.ChatLanguageModelTest",
+        "io.micronaut.langchain4j.chatmodels.tck.tests.StreamingChatLanguageModelTest"
 })
 // Flaky failures Unexpected exception thrown: java.lang.ArrayIndexOutOfBoundsException: Index 65536 out of bounds for length 65536
 public class JlamaSuite {
