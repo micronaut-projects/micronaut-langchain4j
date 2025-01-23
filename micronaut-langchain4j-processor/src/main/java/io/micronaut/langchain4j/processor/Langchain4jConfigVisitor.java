@@ -413,7 +413,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                                 property.getName(),
                                 TypeDef.of(void.class),
                                 parameters
-                                    .get(parameters.size() -1).invoke(
+                                    .get(parameters.size() - 1).invoke(
                                         property.getName(),
                                         property.getType()
                                     )
@@ -512,7 +512,6 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         return classDefBuilder
             .build();
     }
-
 
     private static void addInjectionPoint(ClassElement builderType, String requiredInject, boolean isRequired, ClassDef.ClassDefBuilder classDefBuilder) {
         MethodElement methodElement = builderType.getEnclosedElement(
