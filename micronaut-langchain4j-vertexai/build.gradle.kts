@@ -5,9 +5,7 @@ plugins {
 dependencies {
     implementation(libs.langchain4j.vertex.ai)
     // TODO: remove when non-vulnerable version released
-    constraints {
-        // apply com.google.protobuf:protobuf-java directly because the version brought transitively contains a vulnerable version.
-        implementation(mnGrpc.protobuf.java)
-        implementation(libs.threetenbp)
-    }
+    // apply com.google.protobuf:protobuf-java directly because the version brought transitively contains a vulnerable version.
+    runtimeOnly(mnGrpc.protobuf.java)
+    runtimeOnly(libs.threetenbp)
 }
