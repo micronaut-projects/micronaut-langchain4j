@@ -38,14 +38,19 @@ awaitility = "4.2.2"
 #TODO remove when non vulnerable versions exists
 commons-compress = "1.27.1"
 org-json = "20250107"
+threetenbp = "1.7.0"
 
 # Managed versions appear in the BOM
 managed-langchain4j = "1.0.0-alpha1"
 sonatype-scan = "3.0.0"
 
 [libraries]
+# TODO Remove when non vulnerable versions exist
 org-json = { module = 'org.json:json', version.ref = 'org-json'  }
 commons-compress = { module = 'org.apache.commons:commons-compress', version.ref = 'commons-compress'  }
+threetenbp = { module = 'org.threeten:threetenbp', version.ref = 'threetenbp'}
+
+# Micronaut BOMS
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut'  }
 micronaut-redis = { module = 'io.micronaut.redis:micronaut-redis-bom', version.ref = 'micronaut-redis' }
 micronaut-grpc = { module = 'io.micronaut.grpc:micronaut-grpc-bom', version.ref = 'micronaut-grpc' }
