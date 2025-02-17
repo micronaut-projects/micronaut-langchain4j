@@ -74,7 +74,7 @@ langchain4j-vertex-ai = { module = 'dev.langchain4j:langchain4j-vertex-ai', vers
 langchain4j-mistral-ai = { module = 'dev.langchain4j:langchain4j-mistral-ai', version.ref = "managed-langchain4j" }
 langchain4j-open-ai = { module = 'dev.langchain4j:langchain4j-open-ai', version.ref = "managed-langchain4j" }
 langchain4j-azure-open-ai = { module = 'dev.langchain4j:langchain4j-azure-open-ai', version.ref = "managed-langchain4j" }
-langchain4j-redis = { module = 'dev.langchain4j:langchain4j-redis', version.ref = "managed-langchain4j" }
+langchain4j-redis = { module = 'dev.langchain4j:langchain4j-community-redis', version.ref = "managed-langchain4j" }
 langchain4j-oracle = { module = 'dev.langchain4j:langchain4j-oracle', version.ref = "managed-langchain4j" }
 langchain4j-mongodb-atlas = { module = 'dev.langchain4j:langchain4j-mongodb-atlas', version.ref = "managed-langchain4j" }
 langchain4j-neo4j = { module = 'dev.langchain4j:langchain4j-neo4j', version.ref = "managed-langchain4j" }
