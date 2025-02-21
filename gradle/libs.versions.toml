@@ -34,7 +34,7 @@ micronaut-sourcegen = "1.7.0"
 micronaut-grpc = "4.8.0"
 groovy = "4.0.23"
 spock = "2.3-groovy-4.0"
-awaitility = "4.2.2"
+awaitility = "4.3.0"
 #TODO remove when non vulnerable versions exists
 commons-compress = "1.27.1"
 org-json = "20250107"
