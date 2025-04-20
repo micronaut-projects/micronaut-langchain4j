@@ -38,7 +38,7 @@ awaitility = "4.3.0"
 #TODO remove when non vulnerable versions exists
 commons-compress = "1.27.1"
 org-json = "20250107"
-threetenbp = "1.7.0"
+threetenbp = "1.7.1"
 
 # Managed versions appear in the BOM
 managed-langchain4j = "1.0.0-beta1"
