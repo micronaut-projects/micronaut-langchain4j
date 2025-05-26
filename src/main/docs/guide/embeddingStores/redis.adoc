@@ -1,1 +1,11 @@
-TODO
+Add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-store-redis[]
+
+.Example Configuration
+[configuration]
+----
+langchain4j.redis.embedding-store.host: localhost
+langchain4j.redis.embedding-store.port: 6379
+langchain4j.redis.embedding-stores.default.dimension: 384
+----
