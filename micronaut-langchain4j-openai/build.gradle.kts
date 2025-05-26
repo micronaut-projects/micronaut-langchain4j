@@ -3,5 +3,6 @@ plugins {
 }
 
 dependencies {
+    implementation(platform(libs.boms.langchain4j))
     implementation(libs.langchain4j.open.ai)
 }

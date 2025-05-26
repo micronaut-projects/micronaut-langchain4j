@@ -1,12 +1,14 @@
 package io.micronaut.langchain4j.neo4j;
 
+import dev.langchain4j.community.store.embedding.neo4j.Neo4jEmbeddingStore;
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2EmbeddingModel;
 import dev.langchain4j.store.embedding.EmbeddingMatch;
+import dev.langchain4j.store.embedding.EmbeddingSearchRequest;
+import dev.langchain4j.store.embedding.EmbeddingSearchResult;
 import dev.langchain4j.store.embedding.EmbeddingStore;
-import dev.langchain4j.store.embedding.neo4j.Neo4jEmbeddingStore;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import java.util.List;
@@ -39,8 +41,8 @@ public class Neo4jTest {
         embeddingStore.add(embedding2, segment2);
 
         Embedding queryEmbedding = embeddingModel.embed("What is your favourite sport?").content();
-        List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.findRelevant(queryEmbedding, 1);
-        EmbeddingMatch<TextSegment> embeddingMatch = relevant.get(0);
+        EmbeddingSearchResult<TextSegment> relevant = embeddingStore.search(EmbeddingSearchRequest.builder().queryEmbedding(queryEmbedding).maxResults(1).build());
+        EmbeddingMatch<TextSegment> embeddingMatch = relevant.matches().get(0);
 
         System.out.println(embeddingMatch.score()); // 0.8144288608390052
         Assertions.assertEquals("I like football.", embeddingMatch.embedded().text());

@@ -15,8 +15,8 @@
  */
 package io.micronaut.langchain4j.mistralai;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.mistralai.MistralAiChatModel;
 import dev.langchain4j.model.mistralai.MistralAiEmbeddingModel;
@@ -26,11 +26,11 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig;
 @Lang4jConfig(
     models = {
         @Lang4jConfig.Model(
-            kind = ChatLanguageModel.class,
+            kind = ChatModel.class,
             impl = MistralAiChatModel.class)
         ,
         @Lang4jConfig.Model(
-            kind = StreamingChatLanguageModel.class,
+            kind = StreamingChatModel.class,
             impl = MistralAiStreamingChatModel.class
         ),
         @Lang4jConfig.Model(

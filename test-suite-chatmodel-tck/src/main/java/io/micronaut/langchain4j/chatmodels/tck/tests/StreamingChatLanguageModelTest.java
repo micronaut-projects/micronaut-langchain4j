@@ -1,8 +1,9 @@
 package io.micronaut.langchain4j.chatmodels.tck.tests;
 
 import dev.langchain4j.data.message.AiMessage;
-import dev.langchain4j.model.StreamingResponseHandler;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
+import dev.langchain4j.model.chat.response.ChatResponse;
+import dev.langchain4j.model.chat.response.StreamingChatResponseHandler;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.langchain4j.chatmodels.tck.SuiteCondition;
@@ -22,14 +23,20 @@ class StreamingChatLanguageModelTest {
 
     @Test
     void testLanguageModel() {
-        assertTrue(beanContext.containsBean(StreamingChatLanguageModel.class), "A bean of type StreamingChatLanguageModel should be present");
+        assertTrue(beanContext.containsBean(StreamingChatModel.class), "A bean of type StreamingChatLanguageModel should be present");
 
-        StreamingChatLanguageModel streamingChatLanguageModel = beanContext.getBean(StreamingChatLanguageModel.class);
+        StreamingChatModel streamingChatLanguageModel = beanContext.getBean(StreamingChatModel.class);
         StringBuffer sb = new StringBuffer();
-        streamingChatLanguageModel.generate("Tell me a joke about Java?", new StreamingResponseHandler<AiMessage>() {
+        streamingChatLanguageModel.chat("Tell me a joke about Java?", new StreamingChatResponseHandler() {
+
             @Override
-            public void onNext(String s) {
-                sb.append(s);
+            public void onPartialResponse(String partialResponse) {
+                sb.append(partialResponse);
+            }
+
+            @Override
+            public void onCompleteResponse(ChatResponse completeResponse) {
+                // no-op
             }
 
             @Override

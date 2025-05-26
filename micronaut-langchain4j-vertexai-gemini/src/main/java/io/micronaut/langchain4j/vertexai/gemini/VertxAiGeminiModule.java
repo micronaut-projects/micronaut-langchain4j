@@ -15,8 +15,8 @@
  */
 package io.micronaut.langchain4j.vertexai.gemini;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.vertexai.VertexAiGeminiChatModel;
 import dev.langchain4j.model.vertexai.VertexAiGeminiStreamingChatModel;
 import io.micronaut.langchain4j.annotation.Lang4jConfig;
@@ -26,11 +26,11 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
 @Lang4jConfig(
     models = {
         @Model(
-            kind = ChatLanguageModel.class,
+            kind = ChatModel.class,
             impl = VertexAiGeminiChatModel.class)
         ,
         @Model(
-            kind = StreamingChatLanguageModel.class,
+            kind = StreamingChatModel.class,
             impl = VertexAiGeminiStreamingChatModel.class
         )
     },

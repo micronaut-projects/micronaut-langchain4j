@@ -17,8 +17,8 @@ package io.micronaut.langchain4j.openai;
 
 import static io.micronaut.langchain4j.annotation.Lang4jConfig.*;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.image.ImageModel;
 import dev.langchain4j.model.moderation.ModerationModel;
@@ -37,12 +37,12 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
 @Lang4jConfig(
     models = {
         @Model(
-            kind = ChatLanguageModel.class,
+            kind = ChatModel.class,
             impl = OpenAiChatModel.class,
             defaultModelName = OpenAiModule.DEFAULT_CHAT_MODEL
         ),
         @Model(
-            kind = StreamingChatLanguageModel.class,
+            kind = StreamingChatModel.class,
             impl = OpenAiStreamingChatModel.class,
             defaultModelName = OpenAiModule.DEFAULT_CHAT_MODEL
         ),

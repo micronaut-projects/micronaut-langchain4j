@@ -1,17 +1,17 @@
 package io.micronaut.langchain4j.chatmodels.tck.tests;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
 import jakarta.inject.Singleton;
 
 @Singleton
 class DefaultJokeGenerator implements JokeGenerator {
-    private final ChatLanguageModel model;
-    DefaultJokeGenerator(ChatLanguageModel model) {
+    private final ChatModel model;
+    DefaultJokeGenerator(ChatModel model) {
         this.model = model;
     }
 
     @Override
     public String generateJoke() {
-        return model.generate("Tell me a joke about Java?");
+        return model.chat("Tell me a joke about Java?");
     }
 }

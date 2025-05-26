@@ -16,8 +16,8 @@
 package io.micronaut.langchain4j.aiservices;
 
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.moderation.ModerationModel;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
@@ -84,9 +84,9 @@ public class AiServiceFactory {
             builder.tools(toolsTyped);
         }
 
-        lookupByNameOrDefault(name, ChatLanguageModel.class, builder::chatLanguageModel);
+        lookupByNameOrDefault(name, ChatModel.class, builder::chatModel);
 
-        lookupByNameOrDefault(name, StreamingChatLanguageModel.class, builder::streamingChatLanguageModel);
+        lookupByNameOrDefault(name, StreamingChatModel.class, builder::streamingChatModel);
 
         lookupByNameOrDefault(name, ModerationModel.class, builder::moderationModel);
 
