@@ -1704,7 +1704,74 @@ testResources.containers.postgres.imageName = "pgvector/pgvector:pg16"</code></p
 
 
 <div class="paragraph">
-<p>TODO</p>
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-store-redis")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-store-redis&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.redis.embedding-store.host=localhost
+langchain4j.redis.embedding-store.port=6379
+langchain4j.redis.embedding-stores.default.dimension=384</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">langchain4j.redis.embedding-store.host: localhost
+langchain4j.redis.embedding-store.port: 6379
+langchain4j.redis.embedding-stores.default.dimension: 384</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.redis.embedding-store.host"="localhost"
+"langchain4j.redis.embedding-store.port"=6379
+"langchain4j.redis.embedding-stores.default.dimension"=384</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j.redis.embeddingStore.host = "localhost"
+langchain4j.redis.embeddingStore.port = 6379
+langchain4j.redis.embeddingStores.default.dimension = 384</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "langchain4j.redis.embedding-store.host" = "localhost"
+  "langchain4j.redis.embedding-store.port" = 6379
+  "langchain4j.redis.embedding-stores.default.dimension" = 384
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j.redis.embedding-store.host": "localhost",
+  "langchain4j.redis.embedding-store.port": 6379,
+  "langchain4j.redis.embedding-stores.default.dimension": 384
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 
 <h2 id="qdrant"><a class="anchor" href="#qdrant"></a>4.8 Qdrant</h2>
