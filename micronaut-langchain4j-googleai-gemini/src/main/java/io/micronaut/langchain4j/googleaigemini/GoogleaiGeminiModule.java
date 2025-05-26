@@ -19,14 +19,24 @@ package io.micronaut.langchain4j.googleaigemini;
  * A module to integrate Google AI Gemini.
  */
 import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
+import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.model.googleai.GoogleAiEmbeddingModel;
 import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel;
+import dev.langchain4j.model.googleai.GoogleAiGeminiStreamingChatModel;
 import io.micronaut.langchain4j.annotation.Lang4jConfig;
 
 @Lang4jConfig(
     models = {
         @Lang4jConfig.Model(
             kind = ChatModel.class,
-            impl = GoogleAiGeminiChatModel.class)
+            impl = GoogleAiGeminiChatModel.class),
+        @Lang4jConfig.Model(
+            kind = StreamingChatModel.class,
+            impl = GoogleAiGeminiStreamingChatModel.class),
+        @Lang4jConfig.Model(
+            kind = EmbeddingModel.class,
+            impl = GoogleAiEmbeddingModel.class)
     },
     properties = {
         @Lang4jConfig.Property(name = "modelName", common = true, required = true, defaultValue = "gemini-1.5-flash"),
