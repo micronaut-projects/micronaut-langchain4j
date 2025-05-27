@@ -2,7 +2,7 @@ Add the following dependency:
 
 dependency:io.micronaut.langchain4j:micronaut-langchain4j-openai[]
 
-Then add the link:configurationreference.html#io.micronaut.langchain4j.openai.CommonOpenAiImageModelConfiguration[necessary configuration].
+Then add the link:configurationreference.html#io.micronaut.langchain4j.openai.CommonOpenAiChatModelConfiguration[necessary configuration].
 
 .Example Configuration
 [configuration]
