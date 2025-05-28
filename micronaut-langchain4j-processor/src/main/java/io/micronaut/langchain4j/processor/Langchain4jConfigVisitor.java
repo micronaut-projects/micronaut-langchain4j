@@ -193,7 +193,6 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                 builderType.getEnclosedElement(
                     ElementQuery.ALL_METHODS
                         .onlyInstance()
-                        .onlyDeclared()
                         .onlyAccessible()
                         .named(n -> n.equals(property.name))
                         .filter(m -> !m.getGenericReturnType().isVoid() && m.hasParameters())
