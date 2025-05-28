@@ -45,7 +45,6 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
             required = true
         ),
         @Property(name = "model", common = true, required = true, defaultValue = "claude-3-haiku-20240307"),
-        @Property(name = "anthropicVersion", common = true),
         @Property(name = "region", common = true),
         @Property(name = "maxRetries", common = true, defaultValue = "5")
     }
