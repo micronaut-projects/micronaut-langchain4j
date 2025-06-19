@@ -4,7 +4,12 @@ plugins {
 }
 
 dependencies {
-    api(libs.langchain4j.pgvector)
+    api(libs.langchain4j.pgvector) {
+        //TODO remove once langchain4j pgvector depends on a postgresql version without vulnerabilities
+        exclude(group = "org.postgresql", module = "postgresql")
+    }
+    implementation("org.postgresql:postgresql:42.7.7")
+
     api(mnSql.micronaut.jdbc)
     runtimeOnly(mnSql.postgresql)
 
