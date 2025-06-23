@@ -6,7 +6,7 @@ micronaut {
     version.set(libs.versions.micronaut.platform.get())
 }
 dependencies {
-    api(platform(libs.boms.langchain4j.community))
+    implementation(platform(libs.langchain4j.community.bom))
     api(mnNeo4j.micronaut.neo4j.bolt)
     implementation(libs.langchain4j.neo4j)
     testImplementation(mnSerde.micronaut.serde.jackson)

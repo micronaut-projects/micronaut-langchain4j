@@ -18,7 +18,7 @@ if (sonatypePluginConfigured) {
 }
 
 dependencies {
-    api(platform(libs.boms.langchain4j))
+    api(platform(libs.langchain4j.bom))    
 }
 
 micronautBuild {

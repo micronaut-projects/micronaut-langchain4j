@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api(platform(libs.boms.langchain4j.community))
+    api(platform(libs.langchain4j.community.bom))
     implementation(libs.langchain4j.redis)
     implementation(libs.org.json) //force a version without CVE
 }
