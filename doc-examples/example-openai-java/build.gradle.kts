@@ -10,7 +10,8 @@ micronaut {
     testRuntime("junit5")
 }
 dependencies {
-    implementation(platform(libs.boms.langchain4j))
+    implementation(platform(libs.langchain4j.bom))
+    
     annotationProcessor(projects.micronautLangchain4jProcessor)
     implementation(projects.micronautLangchain4jOpenai)
     implementation(projects.micronautLangchain4jStoreQdrant)
