@@ -1,0 +1,15 @@
+Add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-oci-genai[]
+
+Setup a supported https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#quickStart[OCI authentication method].
+
+Then add the link:configurationreference.html#io.micronaut.langchain4j.ocigenai.CommonOciGenAiChatModelConfiguration[necessary configuration] to configure a chat model.
+
+.Example Configuration
+[configuration]
+----
+langchain4j.oci-gen-ai.chat-model.model-name: orca-mini
+langchain4j.oci-gen-ai.compartment-id: your-compartment
+----
+

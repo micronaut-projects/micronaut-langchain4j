@@ -32,6 +32,7 @@ micronaut-logging = "1.7.0"
 micronaut-gradle-plugin = "4.5.4"
 micronaut-sourcegen = "1.8.2"
 micronaut-grpc = "4.9.0"
+micronaut-oraclecloud = "5.2.0"
 groovy = "4.0.23"
 spock = "2.3-groovy-4.0"
 awaitility = "4.3.0"
@@ -42,7 +43,7 @@ threetenbp = "1.7.1"
 
 # Managed versions appear in the BOM
 managed-langchain4j = "1.1.0"
-managed-langchain4j-community = "1.0.1-beta6"
+managed-langchain4j-community = "1.1.0-beta7"
 sonatype-scan = "3.1.1"
 
 [libraries]
@@ -62,6 +63,8 @@ micronaut-neo4j = { module = 'io.micronaut.neo4j:micronaut-neo4j-bom', version.r
 micronaut-logging = { module = 'io.micronaut.logging:micronaut-logging-bom', version.ref = 'micronaut-logging' }
 micronaut-serde = { module = 'io.micronaut.serde:micronaut-serde-bom', version.ref = 'micronaut-serde' }
 micronaut-sql = { module = 'io.micronaut.sql:micronaut-sql-bom', version.ref = 'micronaut-sql' }
+micronaut-oraclecloud = { module = 'io.micronaut.oraclecloud:micronaut-oraclecloud-bom', version.ref = 'micronaut-oraclecloud' }
+micronaut-oraclecloud-bmc-generativeaiinference = { module = 'io.micronaut.oraclecloud:micronaut-oraclecloud-bmc-generativeaiinference' }
 micronaut-sourcegen = { module = 'io.micronaut.sourcegen:micronaut-sourcegen-bom', version.ref = 'micronaut-sourcegen' }
 micronaut-test-resources = { module = 'io.micronaut.testresources:micronaut-test-resources-bom', version.ref = 'micronaut-test-resources' }
 langchain4j = { module = 'dev.langchain4j:langchain4j' }
@@ -77,6 +80,7 @@ langchain4j-open-ai = { module = 'dev.langchain4j:langchain4j-open-ai' }
 langchain4j-azure-open-ai = { module = 'dev.langchain4j:langchain4j-azure-open-ai' }
 langchain4j-redis = { module = 'dev.langchain4j:langchain4j-community-redis' }
 langchain4j-oracle = { module = 'dev.langchain4j:langchain4j-oracle' }
+langchain4j-oci-genai = { module = 'dev.langchain4j:langchain4j-community-oci-genai' }
 langchain4j-mongodb-atlas = { module = 'dev.langchain4j:langchain4j-mongodb-atlas' }
 langchain4j-neo4j = { module = 'dev.langchain4j:langchain4j-community-neo4j' }
 langchain4j-opensearch = { module = 'dev.langchain4j:langchain4j-opensearch' }

@@ -139,7 +139,8 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                         optionalInjects,
                         commonConfig,
                         modelNameMethod,
-                        modelConfig.defaultModelName
+                        modelConfig.defaultModelName,
+                        modelConfig.configRequired
                     );
 
                     writeJavaSource(generator, context, element, packageName, defaultConfigSimpleName, defaultConfigDef, modelConfig.modelKind);
@@ -243,6 +244,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             .flatMap(context::getClassElement)
             .orElse(null);
         String defaultModelName = provider.stringValue("defaultModelName").orElse(null);
+        boolean configRequired = provider.booleanValue("configRequired").orElse(false);
 
         if (languageModelKind == null) {
             throw new ProcessingException(element, "@ModelProvider kind must be on the compilation classpath");
@@ -250,7 +252,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         if (languageModel == null) {
             throw new ProcessingException(element, "@ModelProvider kind must be on the compilation classpath");
         }
-        return new ModelConfig(languageModel, languageModelKind, defaultModelName, exposedKind);
+        return new ModelConfig(languageModel, languageModelKind, defaultModelName, exposedKind, configRequired);
     }
 
     private ClassDef buildFactory(
@@ -460,7 +462,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         String[] optionalInjects,
         RecordDef commonConfig,
         MethodElement modelNameMethod,
-        String defaultModelName) {
+        String defaultModelName, boolean configRequired) {
         FieldDef prefixField = FieldDef.builder("PREFIX")
             .ofType(TypeDef.of(String.class))
             .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
@@ -494,6 +496,10 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                     new StatementDef.Return(new VariableDef.Field(new VariableDef.This(), "builder", TypeDef.of(builderType)))
                 ))
                 .build());
+
+        if (configRequired) {
+            classDefBuilder.addAnnotation(AnnotationDef.builder(Requires.class).addMember("property", prefix).build());
+        }
 
         for (String requiredInject : requiredInjects) {
             addInjectionPoint(builderType, requiredInject, true, classDefBuilder);
@@ -561,8 +567,9 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         String modelKind,
         String modelSuffix,
         String modelName,
-        String defaultModelName) {
-        public ModelConfig(ClassElement languageModel, ClassElement languageModelKind, String defaultModelName, ClassElement exposed) {
+        String defaultModelName,
+        boolean configRequired) {
+        public ModelConfig(ClassElement languageModel, ClassElement languageModelKind, String defaultModelName, ClassElement exposed, boolean configRequired) {
             this(
                 languageModel,
                 languageModelKind,
@@ -571,7 +578,8 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                 resolveModelKind(languageModelKind),
                 resolveModelSuffix(languageModelKind),
                 resolveModelName(languageModel, languageModelKind),
-                defaultModelName
+                defaultModelName,
+                configRequired
             );
         }
 

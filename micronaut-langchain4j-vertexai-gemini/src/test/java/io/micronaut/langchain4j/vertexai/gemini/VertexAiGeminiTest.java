@@ -3,11 +3,9 @@ package io.micronaut.langchain4j.vertexai.gemini;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel;
-import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import org.junit.jupiter.api.Test;
 
 @MicronautTest
