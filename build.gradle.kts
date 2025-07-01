@@ -20,3 +20,10 @@ if (System.getenv("SONAR_TOKEN") != null) {
         }
     }
 }
+
+
+tasks {
+    javadoc {
+        exclude("io/micronaut/langchain4j/bedrock/**")
+    }
+}
