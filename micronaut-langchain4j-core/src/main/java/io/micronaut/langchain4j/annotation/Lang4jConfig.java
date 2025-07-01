@@ -94,5 +94,11 @@ public @interface Lang4jConfig {
          * @return The model name to default to.
          */
         String defaultModelName() default "";
+
+        /**
+         * Whether some config is required to active.
+         * @return True if some config is required
+         */
+        boolean configRequired() default false;
     }
 }

@@ -15,3 +15,6 @@ tasks {
         jvmArgs = listOf("--enable-preview", "--add-modules", "jdk.incubator.vector")
     }
 }
+micronautBuild {
+    binaryCompatibility.enabledAfter("1.0.1")
+}

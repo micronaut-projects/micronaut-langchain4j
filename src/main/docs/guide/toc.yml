@@ -10,6 +10,7 @@ chatModels:
   hugging-face: HuggingFace
   mistralai: MistralAi
   ollama: Ollama
+  oci-genai: Oracle Cloud GenAI
   openai: OpenAi
   googleai-gemini: Google AI Gemini
   vertexai: VertexAi
