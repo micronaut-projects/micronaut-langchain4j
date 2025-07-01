@@ -86,6 +86,11 @@ public @interface Lang4jConfig {
         Class<?> impl();
 
         /**
+         * @return The exposed type
+         */
+        Class<?> exposed() default void.class;
+
+        /**
          * @return The model name to default to.
          */
         String defaultModelName() default "";

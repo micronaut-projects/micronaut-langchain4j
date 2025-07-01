@@ -147,16 +147,19 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                     String factorySimpleName = modelConfig.languageModel().getSimpleName() + "Factory";
 
                     String factoryName = packageName + "." + factorySimpleName;
-                    ClassDef factoryDef = buildFactory(
-                        namedConfigDef,
-                        defaultConfigDef,
-                        modelConfig.builderType,
-                        factoryName,
-                        modelConfig.languageModel(),
-                        modelConfig.languageModelKind()
-                    );
+                    if (context.getClassElement(factoryName).isEmpty()) {
+                        ClassDef factoryDef = buildFactory(
+                            namedConfigDef,
+                            defaultConfigDef,
+                            modelConfig.builderType,
+                            factoryName,
+                            modelConfig.languageModel(),
+                            modelConfig.languageModelKind(),
+                            modelConfig.exposed()
+                        );
+                        writeJavaSource(generator, context, element, packageName, factorySimpleName, factoryDef, modelConfig.modelKind);
+                    }
 
-                    writeJavaSource(generator, context, element, packageName, factorySimpleName, factoryDef, modelConfig.modelKind);
 
                 }
             }
@@ -236,6 +239,9 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         ClassElement languageModelKind = provider.stringValue("kind")
             .flatMap(context::getClassElement)
             .orElse(null);
+        ClassElement exposedKind = provider.stringValue("exposed")
+            .flatMap(context::getClassElement)
+            .orElse(null);
         String defaultModelName = provider.stringValue("defaultModelName").orElse(null);
 
         if (languageModelKind == null) {
@@ -244,7 +250,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         if (languageModel == null) {
             throw new ProcessingException(element, "@ModelProvider kind must be on the compilation classpath");
         }
-        return new ModelConfig(languageModel, languageModelKind, defaultModelName);
+        return new ModelConfig(languageModel, languageModelKind, defaultModelName, exposedKind);
     }
 
     private ClassDef buildFactory(
@@ -253,7 +259,8 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         ClassElement builderType,
         String factoryName,
         ClassElement languageModel,
-        ClassElement languageModelKind) {
+        ClassElement languageModelKind,
+        @Nullable ClassElement exposed) {
         ClassTypeDef namedConfigDefTypeDef = namedConfigDef.asTypeDef();
         ClassTypeDef builderTypeDef = ClassTypeDef.of(builderType);
         MethodDef.MethodBodyBuilder methodBody = (aThis, methodParameters) -> {
@@ -297,7 +304,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                         .addMember("value", new VariableDef.StaticField(ClassTypeDef.of(builderTypeDef.getCanonicalName()), "class", TypeDef.of(Class.class)))
                         .build())
                     .addParameter("builder", builderTypeDef)
-                    .returns(ClassTypeDef.of(languageModel))
+                    .returns(exposed != null ? ClassTypeDef.of(exposed) : ClassTypeDef.of(languageModel))
                     .build((aThis, parameters) -> {
                         VariableDef.MethodParameter builder = parameters.get(0);
                         return builder.invoke(MethodDef.builder("build").returns(ClassTypeDef.of(languageModel)).build())
@@ -550,15 +557,17 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         @NonNull ClassElement languageModel,
         @NonNull ClassElement languageModelKind,
         @NonNull ClassElement builderType,
+        @Nullable ClassElement exposed,
         String modelKind,
         String modelSuffix,
         String modelName,
         String defaultModelName) {
-        public ModelConfig(ClassElement languageModel, ClassElement languageModelKind, String defaultModelName) {
+        public ModelConfig(ClassElement languageModel, ClassElement languageModelKind, String defaultModelName, ClassElement exposed) {
             this(
                 languageModel,
                 languageModelKind,
                 resolveBuilder(languageModel),
+                exposed,
                 resolveModelKind(languageModelKind),
                 resolveModelSuffix(languageModelKind),
                 resolveModelName(languageModel, languageModelKind),

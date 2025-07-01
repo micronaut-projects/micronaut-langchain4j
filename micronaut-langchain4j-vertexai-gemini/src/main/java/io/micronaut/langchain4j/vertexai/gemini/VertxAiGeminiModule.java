@@ -17,8 +17,8 @@ package io.micronaut.langchain4j.vertexai.gemini;
 
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
-import dev.langchain4j.model.vertexai.VertexAiGeminiChatModel;
-import dev.langchain4j.model.vertexai.VertexAiGeminiStreamingChatModel;
+import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel;
+import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel;
 import io.micronaut.langchain4j.annotation.Lang4jConfig;
 import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
 import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
