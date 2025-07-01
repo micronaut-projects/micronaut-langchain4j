@@ -10,3 +10,6 @@ dependencies {
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(mnSerde.micronaut.serde.jackson)
 }
+micronautBuild {
+    binaryCompatibility.enabledAfter("1.0.1")
+}
