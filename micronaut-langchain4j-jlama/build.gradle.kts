@@ -16,5 +16,5 @@ tasks {
     }
 }
 micronautBuild {
-    binaryCompatibility.enabledAfter("1.0.1")
+    binaryCompatibility.enabled = false
 }
