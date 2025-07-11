@@ -4,6 +4,7 @@ quickStart:
   title: Quick Start
 chatModels:
   title: Chat Language Models
+  chatModelExample: ChatModel Example
   anthropic: Anthropic
   azure: Azure
   bedrock: Bedrock
