@@ -11,7 +11,7 @@ micronaut {
 }
 dependencies {
     implementation(platform(libs.langchain4j.bom))
-    
+
     annotationProcessor(projects.micronautLangchain4jProcessor)
     implementation(projects.micronautLangchain4jOpenai)
     implementation(projects.micronautLangchain4jStoreQdrant)
@@ -22,6 +22,7 @@ dependencies {
     testImplementation("dev.langchain4j:langchain4j-document-parser-apache-pdfbox")
     testImplementation("dev.langchain4j:langchain4j-embeddings-e5-small-v2-q")
     testRuntimeOnly(mnTest.junit.jupiter.engine)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testResourcesService(projects.micronautLangchain4jQdrantTestresource)
 }
 
