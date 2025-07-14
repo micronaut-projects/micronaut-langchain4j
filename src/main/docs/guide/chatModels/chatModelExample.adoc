@@ -1,0 +1,30 @@
+This example, asks a chat model to generate the list of the top 3 albums of a Jazz musician.
+
+snippet::example.micronaut.MusicianAssistant[source=main]
+
+<1> Inject via constructor injection a bean of type `ChatModel`.
+
+snippet::example.micronaut.Musician[source=main]
+
+You can configure the chat model via configuration.
+
+For example, you may want to configure <<openai, OpenAI>> in the main classpath:
+
+[source,properties]
+.src/main/resources/application.properties
+----
+include::test-suite/src/main/resources/application.properties[]
+----
+
+And a local SLM (Small Language Model) such as Ollama in the test classpath:
+
+[source,properties]
+.src/test/resources/application-test.properties
+----
+include::test-suite/src/test/resources/application-test.properties[]
+----
+
+Moreover, you can also register a bean of type https://docs.micronaut.io/latest/guide/#events[`BeanCreatedEventListener`] to configure the Chat Model builder programmatically if configuration is not enough.
+
+snippet::example.micronaut.OllamaChatModelBuilderListener[]
+
