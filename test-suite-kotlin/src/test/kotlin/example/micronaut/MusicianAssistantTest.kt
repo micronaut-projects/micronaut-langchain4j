@@ -2,7 +2,7 @@ package example.micronaut
 
 import io.micronaut.context.exceptions.ConfigurationException
 import io.micronaut.core.annotation.NonNull
-import io.micronaut.langchain4j.test.OllamaUtils
+import io.micronaut.langchain4j.testutils.OllamaUtils
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import io.micronaut.test.support.TestPropertyProvider
 import org.junit.jupiter.api.Assertions

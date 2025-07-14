@@ -6,10 +6,8 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import io.micronaut.test.support.TestPropertyProvider
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.testcontainers.junit.jupiter.Testcontainers
-import io.micronaut.langchain4j.test.OllamaUtils
+import io.micronaut.langchain4j.testutils.OllamaUtils
 
 import static org.junit.jupiter.api.Assertions.assertTrue
 

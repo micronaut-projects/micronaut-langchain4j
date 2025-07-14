@@ -2,24 +2,27 @@ package example.micronaut;
 
 import io.micronaut.context.exceptions.ConfigurationException;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.langchain4j.testutils.OllamaUtils;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.test.support.TestPropertyProvider;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import io.micronaut.langchain4j.testutils.OllamaUtils;
+
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Testcontainers(disabledWithoutDocker = true)
 @MicronautTest(startApplication = false)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class MusicianAssistantTest implements TestPropertyProvider {
+class AssistantWithoutMemoryTest implements TestPropertyProvider {
     @Test
-    void shouldGenerateMusicianTopThreeAlbums(MusicianAssistant assistant) {
-        Musician musician = assistant.generateTopThreeAlbums("Miles Davis");
-        assertTrue(musician.albums().toLowerCase().contains("kind of blue"));
+    void chatWithoutMemory(AssistantWithoutMemory assistant) {
+        assertDoesNotThrow(() -> assistant.chat("My Name is Sergio"));
+        String response = assistant.chat("What's my name?");
+        assertFalse(response.toLowerCase().contains("sergio"), response);
     }
 
     @Override

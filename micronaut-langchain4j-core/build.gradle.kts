@@ -7,6 +7,10 @@ plugins {
 dependencies {
     api(mn.micronaut.context)
     api(libs.langchain4j)
+    implementation(platform(libs.langchain4j.community.bom))
+    compileOnly(libs.langchain4j.community.redis)
+    compileOnly(libs.langchain4j.community.neo4j)
+    compileOnly(libs.langchain4j.cassandra)
     testAnnotationProcessor(mn.micronaut.inject.java)
     testImplementation(mn.micronaut.jackson.databind)
     testImplementation(libs.langchain4j.ollama)
