@@ -40,6 +40,7 @@ spock = "2.3-groovy-4.0"
 awaitility = "4.3.0"
 #TODO remove when non vulnerable versions exists
 commons-compress = "1.27.1"
+commons-lang3 = "3.18.0"
 org-json = "20250107"
 threetenbp = "1.7.1"
 
@@ -54,6 +55,7 @@ astra-db-client = "1.2.4"
 # TODO Remove when non vulnerable versions exist
 org-json = { module = 'org.json:json', version.ref = 'org-json'  }
 commons-compress = { module = 'org.apache.commons:commons-compress', version.ref = 'commons-compress'  }
+commons-lang3 = { module = 'org.apache.commons:commons-lang3', version.ref = 'commons-lang3' }
 threetenbp = { module = 'org.threeten:threetenbp', version.ref = 'threetenbp'}
 
 # Micronaut BOMS
