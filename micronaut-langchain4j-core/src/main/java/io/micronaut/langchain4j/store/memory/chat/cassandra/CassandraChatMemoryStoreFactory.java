@@ -59,8 +59,6 @@ class CassandraChatMemoryStoreFactory {
     @Singleton
     @EachBean(CassandraChatMemoryStore.Builder.class)
     CassandraChatMemoryStore createCassandraChatMemoryStore(CassandraChatMemoryStore.Builder builder) {
-        CassandraChatMemoryStore memoryStore = builder.build();
-        memoryStore.create(); // Create the table if not exist.
-        return memoryStore;
+        return builder.build();
     }
 }
