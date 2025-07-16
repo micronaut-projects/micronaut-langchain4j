@@ -1,6 +1,5 @@
 package io.micronaut.langchain4j.store.memory.chat;
 
-import io.micronaut.langchain4j.store.memory.chat.inmemory.InMemoryChatMemoryConfigurationProperties;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 
