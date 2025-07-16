@@ -19,7 +19,7 @@
 @Configuration
 @Requires(property = CassandraChatMemoryStoreConfigurationProperties.PROPERTY_ENABLED, value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Requires(classes = CassandraChatMemoryStore.class)
-package io.micronaut.langchain4j.store.memory.chat.cassandra;
+package io.micronaut.langchain4j.cassandra.memory;
 
 import dev.langchain4j.store.memory.chat.cassandra.CassandraChatMemoryStore;
 import io.micronaut.context.annotation.Configuration;

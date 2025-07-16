@@ -15,7 +15,7 @@ dependencies {
     testImplementation(project(":micronaut-langchain4j-store-redis"))
     testAnnotationProcessor(mn.micronaut.inject.java)
     testImplementation(project(":micronaut-langchain4j-store-neo4j"))
-    testImplementation(libs.langchain4j.cassandra)
+    testImplementation(project(":micronaut-langchain4j-cassandra"))
     testImplementation(mnTest.micronaut.test.junit5)
     testImplementation(mnTest.junit.jupiter.engine)
     testImplementation(libs.testcontainers.junit.jupiter)

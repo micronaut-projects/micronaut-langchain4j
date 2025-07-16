@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.langchain4j.store.memory.chat.cassandra;
+package io.micronaut.langchain4j.cassandra.memory;
 
 import dev.langchain4j.store.memory.chat.cassandra.CassandraChatMemoryStore;
 import io.micronaut.context.annotation.EachBean;
