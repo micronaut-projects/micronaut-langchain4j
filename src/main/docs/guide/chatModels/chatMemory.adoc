@@ -12,7 +12,7 @@ dependency:micronaut-langchain4j-store-redis[groupId=io.micronaut.langchain4j]
 
 To use the Neo4J implementation `dev.langchain4j.community.store.memory.chat.neo4j.Neo4jChatMemoryStore`, add the following dependency:
 
-dependency:langchain4j-community-neo4j[groupId=dev.langchain4j]
+dependency:micronaut-langchain4j-store-neo4j[groupId=io.micronaut.langchain4j]
 
 To use the Cassandra implementation `dev.langchain4j.store.memory.chat.cassandra.CassandraChatMemoryStore`, add the following dependency:
 

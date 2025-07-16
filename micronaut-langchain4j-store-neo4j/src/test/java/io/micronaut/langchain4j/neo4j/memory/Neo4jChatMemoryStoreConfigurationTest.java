@@ -1,8 +1,7 @@
-package example.micronaut;
+package io.micronaut.langchain4j.neo4j.memory;
 
 import io.micronaut.context.annotation.Property;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.langchain4j.store.memory.chat.neo4j.Neo4jChatMemoryStoreConfiguration;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 

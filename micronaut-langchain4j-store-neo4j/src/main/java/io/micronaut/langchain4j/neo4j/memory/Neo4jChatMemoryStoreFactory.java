@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.langchain4j.store.memory.chat.neo4j;
+package io.micronaut.langchain4j.neo4j.memory;
 
 import dev.langchain4j.community.store.memory.chat.neo4j.Neo4jChatMemoryStore;
 import io.micronaut.context.annotation.EachBean;

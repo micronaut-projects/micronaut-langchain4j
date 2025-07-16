@@ -19,7 +19,7 @@
 @Configuration
 @Requires(property = Neo4jChatMemoryStoreConfigurationProperties.PROPERTY_ENABLED, value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Requires(classes = Neo4jChatMemoryStore.class)
-package io.micronaut.langchain4j.store.memory.chat.neo4j;
+package io.micronaut.langchain4j.neo4j.memory;
 
 import dev.langchain4j.community.store.memory.chat.neo4j.Neo4jChatMemoryStore;
 import io.micronaut.context.annotation.Configuration;
