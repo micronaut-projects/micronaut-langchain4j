@@ -18,11 +18,13 @@ if (sonatypePluginConfigured) {
 }
 
 dependencies {
-    api(platform(libs.langchain4j.bom))    
+    annotationProcessor(mn.micronaut.inject.java)
+    api(platform(libs.langchain4j.bom))
+    implementation(platform(libs.langchain4j.bom))
+    testAnnotationProcessor(mn.micronaut.inject.java)
+    testImplementation(mnTest.micronaut.test.junit5)
+    testRuntimeOnly(mnLogging.logback.classic)
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
+    testImplementation(libs.junit.platform.engine)
 }
 
-micronautBuild {
-    binaryCompatibility {
-        enabledAfter '1.0.0'
-    }
-}

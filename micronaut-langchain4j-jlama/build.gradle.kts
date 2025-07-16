@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     api(libs.langchain4j.jlama)
+    implementation(libs.commons.lang3) // versions prior to 3.18.0 contains a CVE https://ossindex.sonatype.org/component/pkg:maven/org.apache.commons/commons-lang3
 }
 
 micronautBuild {
