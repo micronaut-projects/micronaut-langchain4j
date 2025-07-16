@@ -1,19 +1,16 @@
 package example.micronaut
 
-import dev.langchain4j.data.message.SystemMessage
 import dev.langchain4j.data.message.UserMessage
 import dev.langchain4j.memory.ChatMemory
+import dev.langchain4j.memory.chat.MessageWindowChatMemory
 import dev.langchain4j.model.chat.ChatModel
-import dev.langchain4j.store.memory.chat.ChatMemoryStore
-import io.micronaut.langchain4j.store.memory.chat.MessageWindowChatMemoryFactory
 import jakarta.inject.Singleton
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
 @Singleton
 class AssistantWithMemory(
-    val messageWindowChatMemoryFactory: MessageWindowChatMemoryFactory,
-    val chatMemoryStore: ChatMemoryStore,
+    val messageWindowChatMemoryBuilder: MessageWindowChatMemory.Builder,
     val model: ChatModel) {
     private val conversations: MutableMap<String, ChatMemory> = ConcurrentHashMap<String, ChatMemory>()
 
@@ -45,7 +42,7 @@ class AssistantWithMemory(
     }
 
     private fun generateChatMemory(memoryId: String): ChatMemory {
-        return messageWindowChatMemoryFactory.withChatMemoryStore(chatMemoryStore)
+        return messageWindowChatMemoryBuilder
             .id(memoryId)
             .build()
     }

@@ -1,13 +1,11 @@
 package example.micronaut;
 
 import dev.langchain4j.data.message.AiMessage;
-import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.memory.ChatMemory;
+import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.response.ChatResponse;
-import dev.langchain4j.store.memory.chat.ChatMemoryStore;
-import io.micronaut.langchain4j.store.memory.chat.MessageWindowChatMemoryFactory;
 import jakarta.inject.Singleton;
 import java.util.Map;
 import java.util.UUID;
@@ -16,16 +14,13 @@ import java.util.concurrent.ConcurrentHashMap;
 @Singleton
 public class AssistantWithMemory {
     private final Map<String, ChatMemory> conversations = new ConcurrentHashMap<>();
-    private final MessageWindowChatMemoryFactory messageWindowChatMemoryFactory;
     private final ChatModel model;
-    private final ChatMemoryStore chatMemoryStore;
+    private final MessageWindowChatMemory.Builder messageWindowChatMemoryBuilder;
 
-    public AssistantWithMemory(MessageWindowChatMemoryFactory messageWindowChatMemoryFactory,
-                               ChatMemoryStore chatMemoryStore,
+    public AssistantWithMemory(MessageWindowChatMemory.Builder messageWindowChatMemoryBuilder,
                                ChatModel model) {
-        this.messageWindowChatMemoryFactory = messageWindowChatMemoryFactory;
+        this.messageWindowChatMemoryBuilder = messageWindowChatMemoryBuilder;
         this.model = model;
-        this.chatMemoryStore = chatMemoryStore;
     }
 
     public MemoryIdAndResponse chat(String conversationId, String message) {
@@ -57,7 +52,7 @@ public class AssistantWithMemory {
     }
 
     private ChatMemory generateChatMemory(String memoryId) {
-        return messageWindowChatMemoryFactory.withChatMemoryStore(chatMemoryStore)
+        return messageWindowChatMemoryBuilder
             .id(memoryId)
             .build();
     }

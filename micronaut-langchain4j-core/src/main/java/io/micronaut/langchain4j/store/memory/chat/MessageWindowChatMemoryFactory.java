@@ -17,32 +17,31 @@ package io.micronaut.langchain4j.store.memory.chat;
 
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.store.memory.chat.ChatMemoryStore;
+import io.micronaut.context.annotation.EachBean;
+import io.micronaut.context.annotation.Factory;
+import io.micronaut.context.annotation.Prototype;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
-import jakarta.inject.Singleton;
 
 /**
  * Utility class to obtain instances of {@link MessageWindowChatMemory.Builder}.
  * The {@code maxMessages} will be populated with the bean {@link MessageWindowChatMemoryConfiguration} whose value can be set via configuration.
  */
-@Singleton
-public class MessageWindowChatMemoryFactory {
-    private final MessageWindowChatMemoryConfiguration config;
+@Factory
+@Internal
 
-    /**
-     *
-     * @param config Message Window Chat Memory Configuration
-     */
-    public MessageWindowChatMemoryFactory(MessageWindowChatMemoryConfiguration config) {
-        this.config = config;
-    }
+class MessageWindowChatMemoryFactory {
 
     /**
      *
      * @param chatMemoryStore Chat Memory Store
      * @return An instance of {@link MessageWindowChatMemory.Builder} with maxMessages already set with the value of {@link MessageWindowChatMemoryConfiguration#getMaxMessages()} and the supplied Chat memory store.
      */
+    @Prototype
+    @EachBean(ChatMemoryStore.class)
     @NonNull
-    public MessageWindowChatMemory.Builder withChatMemoryStore(@NonNull ChatMemoryStore chatMemoryStore) {
+    MessageWindowChatMemory.Builder createMessageWindowChatMemoryBuilder(@NonNull ChatMemoryStore chatMemoryStore,
+                                                                         @NonNull MessageWindowChatMemoryConfiguration config) {
         return MessageWindowChatMemory.builder()
             .maxMessages(config.getMaxMessages())
             .chatMemoryStore(chatMemoryStore);
