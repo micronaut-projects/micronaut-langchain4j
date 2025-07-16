@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Internal
 @ConfigurationProperties(CassandraChatMemoryStoreConfigurationProperties.PREFIX)
-public class CassandraChatMemoryStoreConfigurationProperties implements CassandraChatMemoryStoreConfiguration {
+class CassandraChatMemoryStoreConfigurationProperties implements CassandraChatMemoryStoreConfiguration {
     /**
      * Default port.
      */
