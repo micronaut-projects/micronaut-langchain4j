@@ -36,7 +36,7 @@ class RedisChatMemoryStoreConfigurationProperties implements RedisChatMemoryStor
     private boolean enabled = DEFAULT_ENABLED;
 
     /**
-     *
+     * Whether Redis ChatMemory store is enabled. Default value {@value #DEFAULT_ENABLED}.
      * @return Whether Redis ChatMemory store is enabled. Default value {@value #DEFAULT_ENABLED}.
      */
     @Override
@@ -45,7 +45,7 @@ class RedisChatMemoryStoreConfigurationProperties implements RedisChatMemoryStor
     }
 
     /**
-     *
+     * Whether Redis ChatMemory store is enabled. Default value {@value #DEFAULT_ENABLED}.
      * @param enabled Whether Redis ChatMemory store is enabled. Default value {@value #DEFAULT_ENABLED}.
      */
     public void setEnabled(boolean enabled) {

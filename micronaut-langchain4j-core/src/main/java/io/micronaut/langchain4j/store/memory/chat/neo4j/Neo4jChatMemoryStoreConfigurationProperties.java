@@ -42,7 +42,7 @@ class Neo4jChatMemoryStoreConfigurationProperties implements Neo4jChatMemoryStor
     private String password;
 
     /**
-     *
+     * Whether Neo4j ChatMemory store is enabled. Default value {@value #DEFAULT_ENABLED}.
      * @return enabled Whether Neo4j ChatMemory store is enabled. Default value {@value #DEFAULT_ENABLED}.
      */
     @Override

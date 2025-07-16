@@ -47,7 +47,7 @@ class CassandraChatMemoryStoreConfigurationProperties implements CassandraChatMe
     private String table = DEFAULT_TABLE_NAME;
 
     /**
-     *
+     * Whether Neo4j ChatMemory store is enabled. Default value {@value #DEFAULT_ENABLED}.
      * @return enabled Whether Neo4j ChatMemory store is enabled. Default value {@value #DEFAULT_ENABLED}.
      */
     @Override
