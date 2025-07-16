@@ -18,7 +18,7 @@ To use the Cassandra implementation `dev.langchain4j.store.memory.chat.cassandra
 
 dependency:micronaut-langchain4j-cassandra[groupId=io.micronaut.langchain4j]
 
-The following example shows how to use the `ChatMemoryStore`:
+The following example shows how to use the `ChatMemory`:
 
 snippet::example.micronaut.AssistantWithMemory[source=main]
 
