@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.langchain4j.store.memory.chat.redis;
+package io.micronaut.langchain4j.redis.memory;
 
 import dev.langchain4j.community.store.memory.chat.redis.RedisChatMemoryStore;
 import io.micronaut.context.annotation.ConfigurationBuilder;

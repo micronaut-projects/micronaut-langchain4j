@@ -10,10 +10,11 @@ dependencies {
     implementation(project(":micronaut-langchain4j-core"))
     implementation(project(":micronaut-langchain4j-openai"))
     testImplementation(project(":micronaut-langchain4j-ollama"))
+
     testImplementation(project(":test-suite-utils"))
     testImplementation(platform(mnTestResources.boms.testcontainers))
     testImplementation(platform(libs.langchain4j.community.bom))
-    testImplementation(libs.langchain4j.community.redis)
+    testImplementation(project(":micronaut-langchain4j-store-redis"))
     testAnnotationProcessor(mn.micronaut.inject.java)
     testImplementation(libs.langchain4j.community.neo4j)
     testImplementation(libs.langchain4j.cassandra)

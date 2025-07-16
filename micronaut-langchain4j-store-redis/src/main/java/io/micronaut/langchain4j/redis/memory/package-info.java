@@ -19,7 +19,7 @@
 @Configuration
 @Requires(property = RedisChatMemoryStoreConfigurationProperties.PROPERTY_ENABLED, value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Requires(classes = RedisChatMemoryStore.class)
-package io.micronaut.langchain4j.store.memory.chat.redis;
+package io.micronaut.langchain4j.redis.memory;
 
 import dev.langchain4j.community.store.memory.chat.redis.RedisChatMemoryStore;
 import io.micronaut.context.annotation.Configuration;

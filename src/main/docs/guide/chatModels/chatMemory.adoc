@@ -8,7 +8,7 @@ The default implementation of `ChatMemory`, `dev.langchain4j.store.memory.chat.I
 
 To use the Redis implementation `dev.langchain4j.community.store.memory.chat.redis.RedisChatMemoryStore`, add the following dependency:
 
-dependency:langchain4j-community-redis[groupId=dev.langchain4j]
+dependency:micronaut-langchain4j-store-redis[groupId=io.micronaut.langchain4j]
 
 To use the Neo4J implementation `dev.langchain4j.community.store.memory.chat.neo4j.Neo4jChatMemoryStore`, add the following dependency:
 
