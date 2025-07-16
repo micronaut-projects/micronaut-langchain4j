@@ -15,7 +15,8 @@
  */
 package io.micronaut.langchain4j.store.memory.chat.redis;
 
-import io.micronaut.core.annotation.Nullable;
+import dev.langchain4j.community.store.memory.chat.redis.RedisChatMemoryStore;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.Toggleable;
 
 /**
@@ -23,48 +24,9 @@ import io.micronaut.core.util.Toggleable;
  */
 public interface RedisChatMemoryStoreConfiguration extends Toggleable {
     /**
-     * Returns the Redis host.
      *
-     * @return The Redis server hostname or IP address
+     * @return An instance of RedisChatMemoryStore.Builder
      */
-    @Nullable
-    String getHost();
-
-    /**
-     * @return The Redis password
-     */
-    @Nullable
-    String getPassword();
-
-    /**
-     * @return The Redis username
-     */
-    @Nullable
-    String getUser();
-
-    /**
-     * Returns the Time-To-Live (TTL) value for the Redis keys.
-     * This value determines how long the keys will persist in Redis before being automatically deleted.
-     *
-     * @return The TTL value in seconds. A value of 0 or fewer means the keys will not expire.
-     */
-    @Nullable
-    Long getTtl();
-
-    /**
-     * @return The Redis server port
-     */
-    @Nullable
-    Integer getPort();
-
-    /**
-     * Returns the prefix to be used for Redis keys.
-     * This prefix is prepended to all keys stored in Redis, allowing for better organization or namespacing.
-     * Usually would end with a colon. ex "chat:"
-     *
-     * @return The prefix string to be added to Redis keys.
-     *
-     */
-    @Nullable
-    String getPrefix();
+    @NonNull
+    RedisChatMemoryStore.Builder getBuilder();
 }

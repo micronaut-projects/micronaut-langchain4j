@@ -20,7 +20,6 @@ import io.micronaut.context.annotation.EachBean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.util.StringUtils;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 
@@ -30,23 +29,7 @@ class RedisChatMemoryStoreFactory {
     @Named("redis")
     @Prototype
     RedisChatMemoryStore.Builder createRedisChatMemoryStoreBuilder(RedisChatMemoryStoreConfiguration config) {
-        RedisChatMemoryStore.Builder builder = RedisChatMemoryStore.builder();
-        if (StringUtils.isNotEmpty(config.getHost())) {
-            builder.host(config.getHost());
-        }
-        if (StringUtils.isNotEmpty(config.getUser())) {
-            builder.user(config.getUser());
-        }
-        if (StringUtils.isNotEmpty(config.getPassword())) {
-            builder.password(config.getPassword());
-        }
-        if (config.getPort() != null) {
-            builder.port(config.getPort());
-        }
-        if (StringUtils.isNotEmpty(config.getPrefix())) {
-            builder.prefix(config.getPrefix());
-        }
-        return builder;
+        return config.getBuilder();
     }
 
     @Singleton

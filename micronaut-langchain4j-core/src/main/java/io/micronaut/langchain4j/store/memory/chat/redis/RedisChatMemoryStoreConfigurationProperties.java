@@ -15,6 +15,8 @@
  */
 package io.micronaut.langchain4j.store.memory.chat.redis;
 
+import dev.langchain4j.community.store.memory.chat.redis.RedisChatMemoryStore;
+import io.micronaut.context.annotation.ConfigurationBuilder;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.annotation.Internal;
 
@@ -27,13 +29,9 @@ class RedisChatMemoryStoreConfigurationProperties implements RedisChatMemoryStor
     public static final String PREFIX = "langchain4j.store-memory-chat.redis";
     public static final boolean DEFAULT_ENABLED = true;
     public static final String PROPERTY_ENABLED = PREFIX + ".enabled";
-    private String host;
-    private String password;
-    private String user;
-    private Long ttl;
-    private Integer port;
-    private String prefix;
     private boolean enabled = DEFAULT_ENABLED;
+    @ConfigurationBuilder(prefixes = "")
+    private RedisChatMemoryStore.Builder builder = RedisChatMemoryStore.builder();
 
     /**
      * Whether Redis ChatMemory store is enabled. Default value {@value #DEFAULT_ENABLED}.
@@ -53,89 +51,15 @@ class RedisChatMemoryStoreConfigurationProperties implements RedisChatMemoryStor
     }
 
     @Override
-    public String getHost() {
-        return host;
+    public RedisChatMemoryStore.Builder getBuilder() {
+        return builder;
     }
 
     /**
-     * Sets the Redis host.
-     *
-     * @param host The Redis server hostname or IP address
+     * An instance of RedisChatMemoryStore.Builder.
+     * @param builder An instance of RedisChatMemoryStore.Builder
      */
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * Sets the Redis password for authentication.
-     * @param password The Redis password
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String getUser() {
-        return user;
-    }
-
-    /**
-     * Sets the Redis user for authentication.
-     *
-     * @param user The Redis username
-     */
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    @Override
-    public Long getTtl() {
-        return ttl;
-    }
-
-    /**
-     * Sets the Time-To-Live (TTL) value for the Redis keys.
-     * This value determines how long the keys will persist in Redis before being automatically deleted.
-     *
-     * @param ttl The TTL value in seconds. A value of 0 or fewer means the keys will not expire.
-     */
-    public void setTtl(Long ttl) {
-        this.ttl = ttl;
-    }
-
-    @Override
-    public Integer getPort() {
-        return port;
-    }
-
-    /**
-     * Sets the Redis port.
-     *
-     * @param port The Redis server port
-     */
-    public void setPort(Integer port) {
-        this.port = port;
-    }
-
-    @Override
-    public String getPrefix() {
-        return prefix;
-    }
-
-    /**
-     * Sets the prefix to be used for Redis keys.
-     * This prefix is prepended to all keys stored in Redis, allowing for better organization or namespacing.
-     * Usually would end with a colon. ex "chat:"
-     *
-     * @param prefix The prefix string to be added to Redis keys.
-     *
-     */
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
+    public void setBuilder(RedisChatMemoryStore.Builder builder) {
+        this.builder = builder;
     }
 }
