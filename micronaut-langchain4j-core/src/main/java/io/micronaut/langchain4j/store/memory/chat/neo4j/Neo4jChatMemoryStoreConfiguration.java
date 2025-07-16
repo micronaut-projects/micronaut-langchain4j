@@ -16,6 +16,7 @@
 package io.micronaut.langchain4j.store.memory.chat.neo4j;
 
 import dev.langchain4j.community.store.memory.chat.neo4j.Neo4jChatMemoryStore;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.Toggleable;
 
@@ -24,52 +25,11 @@ import io.micronaut.core.util.Toggleable;
  */
 public interface Neo4jChatMemoryStoreConfiguration extends Toggleable {
     /**
-     * @return the node label to be used for the memory ID
+     *
+     * @return Neo4j Chat Memory Store Builder
      */
-    @Nullable
-    String getMemoryLabel();
-
-    /**
-     * @return the node label to be used for the message
-     */
-    @Nullable
-    String getMessageLabel();
-
-    /**
-     * @return the optional memory ID property name of the node
-     */
-    @Nullable
-    String getIdProperty();
-
-    /**
-     * @return the property name to be used for the message text
-     */
-    @Nullable
-    String getMessageProperty();
-
-    /**
-     * @return the relationship type to be used to store the last message
-     */
-    @Nullable
-    String getLastMessageRelType();
-
-    /**
-     * @return the relationship type to be used to store the next messages
-     */
-    @Nullable
-    String getNextMessageRelType();
-
-    /**
-     * @return the optional database name
-     */
-    @Nullable
-    String getDatabaseName();
-
-    /**
-     * @return the optional message size to be retrieved from {@link Neo4jChatMemoryStore#getMessages(Object)}}.
-     */
-    @Nullable
-    Integer getSize();
+    @NonNull
+    Neo4jChatMemoryStore.Builder getBuilder();
 
     /**
      * @return the Bolt URI to a Neo4j instance

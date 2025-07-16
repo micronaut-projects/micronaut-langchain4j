@@ -14,15 +14,7 @@ class Neo4jChatMemoryStoreConfigurationTest {
     @Test
     void neo4jChatMemoryConfiguration(Neo4jChatMemoryStoreConfiguration config) {
         assertTrue(config.isEnabled());
-        assertNull(config.getSize());
-        assertNull(config.getMemoryLabel());
-        assertNull(config.getMessageLabel());
-        assertNull(config.getIdProperty());
-        assertNull(config.getMessageProperty());
-        assertNull(config.getLastMessageRelType());
-        assertNull(config.getNextMessageRelType());
-        assertNull(config.getDatabaseName());
-        assertNull(config.getSize());
+        assertNotNull(config.getBuilder());
         assertNull(config.getUri());
         assertNull(config.getUser());
         assertNull(config.getPassword());

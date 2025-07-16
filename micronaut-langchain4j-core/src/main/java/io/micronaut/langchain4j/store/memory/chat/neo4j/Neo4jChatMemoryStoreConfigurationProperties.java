@@ -16,8 +16,10 @@
 package io.micronaut.langchain4j.store.memory.chat.neo4j;
 
 import dev.langchain4j.community.store.memory.chat.neo4j.Neo4jChatMemoryStore;
+import io.micronaut.context.annotation.ConfigurationBuilder;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.annotation.NonNull;
 
 /**
  * {@link ConfigurationProperties} implementation for {@link Neo4jChatMemoryStoreConfiguration}.
@@ -29,14 +31,10 @@ class Neo4jChatMemoryStoreConfigurationProperties implements Neo4jChatMemoryStor
     public static final boolean DEFAULT_ENABLED = true;
     public static final String PROPERTY_ENABLED = PREFIX + ".enabled";
     private boolean enabled = DEFAULT_ENABLED;
-    private String memoryLabel;
-    private String messageLabel;
-    private String lastMessageRelType;
-    private String nextMessageRelType;
-    private String idProperty;
-    private String messageProperty;
-    private String databaseName;
-    private Integer size;
+    @ConfigurationBuilder(prefixes = "")
+    @NonNull
+    private Neo4jChatMemoryStore.Builder builder = Neo4jChatMemoryStore.builder();
+
     private String uri;
     private String user;
     private String password;
@@ -59,99 +57,16 @@ class Neo4jChatMemoryStoreConfigurationProperties implements Neo4jChatMemoryStor
     }
 
     @Override
-    public String getMemoryLabel() {
-        return memoryLabel;
+    public Neo4jChatMemoryStore.Builder getBuilder() {
+        return builder;
     }
 
     /**
-     * @param memoryLabel the node label to be used for the memory ID
+     *
+     * @param builder Neo4jChatMemoryStore Builder
      */
-    public void setMemoryLabel(String memoryLabel) {
-        this.memoryLabel = memoryLabel;
-    }
-
-    @Override
-    public String getMessageLabel() {
-        return messageLabel;
-    }
-
-    /**
-     * @param  messageLabel the node label to be used for the message
-     */
-    public void setMessageLabel(String messageLabel) {
-        this.messageLabel = messageLabel;
-    }
-
-    @Override
-    public String getLastMessageRelType() {
-        return lastMessageRelType;
-    }
-
-    /**
-     * @param lastMessageRelType the relationship type to be used to store the last message
-     */
-    public void setLastMessageRelType(String lastMessageRelType) {
-        this.lastMessageRelType = lastMessageRelType;
-    }
-
-    @Override
-    public String getNextMessageRelType() {
-        return nextMessageRelType;
-    }
-
-    /**
-     * @param nextMessageRelType the relationship type to be used to store the next messages
-     */
-    public void setNextMessageRelType(String nextMessageRelType) {
-        this.nextMessageRelType = nextMessageRelType;
-    }
-
-    @Override
-    public String getIdProperty() {
-        return idProperty;
-    }
-
-    /**
-     * @param idProperty the optional memory ID property name of the node
-     */
-    public void setIdProperty(String idProperty) {
-        this.idProperty = idProperty;
-    }
-
-    @Override
-    public String getMessageProperty() {
-        return messageProperty;
-    }
-
-    /**
-     * @param messageProperty the property name to be used for the message text
-     */
-    public void setMessageProperty(String messageProperty) {
-        this.messageProperty = messageProperty;
-    }
-
-    @Override
-    public String getDatabaseName() {
-        return databaseName;
-    }
-
-    /**
-     * @param databaseName the optional database name
-     */
-    public void setDatabaseName(String databaseName) {
-        this.databaseName = databaseName;
-    }
-
-    @Override
-    public Integer getSize() {
-        return size;
-    }
-
-    /**
-     * @param size the optional message size to be retrieved from {@link Neo4jChatMemoryStore#getMessages(Object)}}.
-     */
-    public void setSize(Integer size) {
-        this.size = size;
+    public void setBuilder(@NonNull Neo4jChatMemoryStore.Builder builder) {
+        this.builder = builder;
     }
 
     @Override

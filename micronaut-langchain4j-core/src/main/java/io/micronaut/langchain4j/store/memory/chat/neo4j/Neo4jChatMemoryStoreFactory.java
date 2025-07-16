@@ -30,31 +30,7 @@ class Neo4jChatMemoryStoreFactory {
     @Named("neo4j")
     @Prototype
     Neo4jChatMemoryStore.Builder createRedisChatMemoryStoreBuilder(Neo4jChatMemoryStoreConfiguration config) {
-        Neo4jChatMemoryStore.Builder builder = Neo4jChatMemoryStore.builder();
-        if (StringUtils.isNotEmpty(config.getMemoryLabel())) {
-            builder.memoryLabel(config.getMemoryLabel());
-        }
-        if (StringUtils.isNotEmpty(config.getMessageLabel())) {
-            builder.messageLabel(config.getMessageLabel());
-        }
-        if (StringUtils.isNotEmpty(config.getIdProperty())) {
-            builder.idProperty(config.getIdProperty());
-        }
-        if (StringUtils.isNotEmpty(config.getMessageProperty())) {
-            builder.messageProperty(config.getMessageProperty());
-        }
-        if (StringUtils.isNotEmpty(config.getLastMessageRelType())) {
-            builder.lastMessageRelType(config.getLastMessageRelType());
-        }
-        if (StringUtils.isNotEmpty(config.getNextMessageRelType())) {
-            builder.nextMessageRelType(config.getNextMessageRelType());
-        }
-        if (StringUtils.isNotEmpty(config.getDatabaseName())) {
-            builder.databaseName(config.getDatabaseName());
-        }
-        if (config.getSize() != null) {
-            builder.size(config.getSize());
-        }
+        Neo4jChatMemoryStore.Builder builder = config.getBuilder();
         if (StringUtils.isNotEmpty(config.getUri())) {
             builder.withBasicAuth(config.getUri(), config.getUser(), config.getPassword());
         }
