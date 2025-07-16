@@ -20,8 +20,6 @@ import io.micronaut.context.annotation.EachBean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.util.CollectionUtils;
-import io.micronaut.core.util.StringUtils;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 
@@ -31,29 +29,7 @@ class CassandraChatMemoryStoreFactory {
     @Named("cassandra")
     @Prototype
     CassandraChatMemoryStore.Builder createCassandraChatMemoryStoreBuilder(CassandraChatMemoryStoreConfiguration config) {
-        CassandraChatMemoryStore.Builder builder = CassandraChatMemoryStore.builder();
-        if (CollectionUtils.isNotEmpty(config.getContactPoints())) {
-            builder.contactPoints(config.getContactPoints());
-        }
-        if (StringUtils.isNotEmpty(config.getLocalDataCenter())) {
-            builder.localDataCenter(config.getLocalDataCenter());
-        }
-        if (StringUtils.isNotEmpty(config.getUserName())) {
-            builder.userName(config.getUserName());
-        }
-        if (StringUtils.isNotEmpty(config.getPassword())) {
-            builder.password(config.getPassword());
-        }
-        if (StringUtils.isNotEmpty(config.getKeyspace())) {
-            builder.keyspace(config.getKeyspace());
-        }
-        if (StringUtils.isNotEmpty(config.getTable())) {
-            builder.table(config.getTable());
-        }
-        if (config.getPort() != null) {
-            builder.port(config.getPort());
-        }
-        return builder;
+        return config.getBuilder();
     }
 
     @Singleton

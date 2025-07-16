@@ -15,10 +15,9 @@
  */
 package io.micronaut.langchain4j.store.memory.chat.cassandra;
 
-import io.micronaut.core.annotation.Nullable;
+import dev.langchain4j.store.memory.chat.cassandra.CassandraChatMemoryStore;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.Toggleable;
-
-import java.util.List;
 
 /**
  * Configuration for {@link dev.langchain4j.store.memory.chat.cassandra.CassandraChatMemoryStore.Builder}.
@@ -26,50 +25,8 @@ import java.util.List;
 public interface CassandraChatMemoryStoreConfiguration extends Toggleable {
     /**
      *
-     * @return Contact Points
+     * @return Cassandra Chat Memory Store builder
      */
-    @Nullable
-    List<String> getContactPoints();
-
-    /**
-     *
-     * @return Local Data Center
-     */
-    @Nullable
-    String getLocalDataCenter();
-
-    /**
-     *
-     * @return Port
-     */
-    @Nullable
-    Integer getPort();
-
-    /**
-     *
-     * @return Username
-     */
-    @Nullable
-    String getUserName();
-
-    /**
-     *
-     * @return Password
-     */
-    @Nullable
-    String getPassword();
-
-    /**
-     *
-     * @return Keyspace
-     */
-    @Nullable
-    String getKeyspace();
-
-    /**
-     *
-     * @return Table
-     */
-    @Nullable
-    String getTable();
+    @NonNull
+    CassandraChatMemoryStore.Builder getBuilder();
 }
