@@ -1,5 +1,6 @@
 package io.micronaut.langchain4j.store.memory.chat;
 
+import io.micronaut.langchain4j.store.memory.chat.inmemory.InMemoryChatMemoryConfigurationProperties;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 
@@ -10,5 +11,9 @@ class MessageWindowChatMemoryConfigurationTest {
     @Test
     void maxMessagesDefaultsTo20(MessageWindowChatMemoryConfiguration config) {
         assertEquals(20, config.getMaxMessages());
+
+        if (config instanceof MessageWindowChatMemoryConfigurationProperties configurationProperties) {
+            assertThrows(NullPointerException.class, () -> configurationProperties.setMaxMessages(null));
+        }
     }
 }

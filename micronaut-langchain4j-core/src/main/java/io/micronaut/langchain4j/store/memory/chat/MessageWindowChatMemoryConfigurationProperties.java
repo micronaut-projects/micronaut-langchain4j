@@ -19,6 +19,8 @@ import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 
+import java.util.Objects;
+
 /**
  * {@link ConfigurationProperties} for {@link MessageWindowChatMemoryConfiguration}.
  */
@@ -40,6 +42,6 @@ public class MessageWindowChatMemoryConfigurationProperties implements MessageWi
      * @param maxMessages The maximum number of messages to retain.
      */
     public void setMaxMessages(@NonNull Integer maxMessages) {
-        this.maxMessages = maxMessages;
+        this.maxMessages = Objects.requireNonNull(maxMessages, "maxMessages must not be null");
     }
 }
