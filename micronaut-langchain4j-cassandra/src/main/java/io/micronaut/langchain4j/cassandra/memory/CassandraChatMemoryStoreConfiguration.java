@@ -24,6 +24,28 @@ import io.micronaut.core.util.Toggleable;
  */
 public interface CassandraChatMemoryStoreConfiguration extends Toggleable {
     /**
+     * CassandraChatMemoryStore configuration prefix.
+     */
+    String PREFIX = "langchain4j.chat-memory-store.cassandra";
+    /**
+     * CassandraChatMemoryStore default value for enabled.
+     */
+    boolean DEFAULT_ENABLED = true;
+    /**
+     * CassandraChatMemoryStore enabled configuration prefix.
+     */
+    String PROPERTY_ENABLED = PREFIX + ".enabled";
+
+    /**
+     *
+     * @return Whether Neo4j ChatMemory store is enabled.
+     */
+    @Override
+    default boolean isEnabled() {
+        return DEFAULT_ENABLED;
+    }
+
+    /**
      *
      * @return Cassandra Chat Memory Store builder
      */

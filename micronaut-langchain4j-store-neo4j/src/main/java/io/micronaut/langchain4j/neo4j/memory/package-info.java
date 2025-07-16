@@ -17,7 +17,7 @@
  * Neo4j {@link dev.langchain4j.store.memory.chat.ChatMemoryStore} implementation related classes.
  */
 @Configuration
-@Requires(property = Neo4jChatMemoryStoreConfigurationProperties.PROPERTY_ENABLED, value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
+@Requires(property = Neo4jChatMemoryStoreConfiguration.PROPERTY_ENABLED, value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Requires(classes = Neo4jChatMemoryStore.class)
 package io.micronaut.langchain4j.neo4j.memory;
 

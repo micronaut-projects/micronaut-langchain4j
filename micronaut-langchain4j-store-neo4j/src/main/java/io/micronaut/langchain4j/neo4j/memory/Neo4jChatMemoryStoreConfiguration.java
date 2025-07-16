@@ -25,6 +25,24 @@ import io.micronaut.core.util.Toggleable;
  */
 public interface Neo4jChatMemoryStoreConfiguration extends Toggleable {
     /**
+     * Neo4jChatMemoryStore configuration prefix.
+     */
+    String PREFIX = "langchain4j.chat-memory-store.neo4j";
+    /**
+     * Neo4jChatMemoryStore default value for enabled.
+     */
+    boolean DEFAULT_ENABLED = true;
+    /**
+     * Neo4jChatMemoryStore enabled configuration prefix.
+     */
+    String PROPERTY_ENABLED = PREFIX + ".enabled";
+
+    @Override
+    default boolean isEnabled() {
+        return DEFAULT_ENABLED;
+    }
+
+    /**
      *
      * @return Neo4j Chat Memory Store Builder
      */

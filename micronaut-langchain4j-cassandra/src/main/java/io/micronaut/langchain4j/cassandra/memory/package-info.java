@@ -17,7 +17,7 @@
  * Cassandra {@link dev.langchain4j.store.memory.chat.ChatMemoryStore} implementation related classes.
  */
 @Configuration
-@Requires(property = CassandraChatMemoryStoreConfigurationProperties.PROPERTY_ENABLED, value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
+@Requires(property = CassandraChatMemoryStoreConfiguration.PROPERTY_ENABLED, value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Requires(classes = CassandraChatMemoryStore.class)
 package io.micronaut.langchain4j.cassandra.memory;
 

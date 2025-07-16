@@ -24,18 +24,15 @@ import io.micronaut.core.annotation.Internal;
  * {@link ConfigurationProperties} implementation for {@link RedisChatMemoryStoreConfiguration}.
  */
 @Internal
-@ConfigurationProperties(RedisChatMemoryStoreConfigurationProperties.PREFIX)
+@ConfigurationProperties(RedisChatMemoryStoreConfiguration.PREFIX)
 class RedisChatMemoryStoreConfigurationProperties implements RedisChatMemoryStoreConfiguration {
-    public static final String PREFIX = "langchain4j.chat-memory-store.redis";
-    public static final boolean DEFAULT_ENABLED = true;
-    public static final String PROPERTY_ENABLED = PREFIX + ".enabled";
     private boolean enabled = DEFAULT_ENABLED;
     @ConfigurationBuilder(prefixes = "")
     private RedisChatMemoryStore.Builder builder = RedisChatMemoryStore.builder();
 
     /**
-     * Whether Redis ChatMemory store is enabled. Default value {@value #DEFAULT_ENABLED}.
-     * @return Whether Redis ChatMemory store is enabled. Default value {@value #DEFAULT_ENABLED}.
+     * Whether Redis ChatMemory store is enabled. Default value true
+     * @return Whether Redis ChatMemory store is enabled. Default value true
      */
     @Override
     public boolean isEnabled() {
@@ -43,8 +40,8 @@ class RedisChatMemoryStoreConfigurationProperties implements RedisChatMemoryStor
     }
 
     /**
-     * Whether Redis ChatMemory store is enabled. Default value {@value #DEFAULT_ENABLED}.
-     * @param enabled Whether Redis ChatMemory store is enabled. Default value {@value #DEFAULT_ENABLED}.
+     * Whether Redis ChatMemory store is enabled. Default value true
+     * @param enabled Whether Redis ChatMemory store is enabled. Default value true
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;

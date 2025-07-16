@@ -17,7 +17,7 @@
  * Redis {@link dev.langchain4j.store.memory.chat.ChatMemoryStore} implementation related classes.
  */
 @Configuration
-@Requires(property = RedisChatMemoryStoreConfigurationProperties.PROPERTY_ENABLED, value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
+@Requires(property = RedisChatMemoryStoreConfiguration.PROPERTY_ENABLED, value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Requires(classes = RedisChatMemoryStore.class)
 package io.micronaut.langchain4j.redis.memory;
 

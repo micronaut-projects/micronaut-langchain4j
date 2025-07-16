@@ -25,19 +25,16 @@ import io.micronaut.core.annotation.NonNull;
  * {@link ConfigurationProperties} implementation for {@link CassandraChatMemoryStoreConfiguration}.
  */
 @Internal
-@ConfigurationProperties(CassandraChatMemoryStoreConfigurationProperties.PREFIX)
+@ConfigurationProperties(CassandraChatMemoryStoreConfiguration.PREFIX)
 class CassandraChatMemoryStoreConfigurationProperties implements CassandraChatMemoryStoreConfiguration {
-    public static final String PREFIX = "langchain4j.chat-memory-store.cassandra";
-    public static final boolean DEFAULT_ENABLED = true;
-    public static final String PROPERTY_ENABLED = PREFIX + ".enabled";
     private boolean enabled = DEFAULT_ENABLED;
 
     @ConfigurationBuilder(prefixes = "")
     private CassandraChatMemoryStore.Builder builder = CassandraChatMemoryStore.builder();
 
     /**
-     * Whether Neo4j ChatMemory store is enabled. Default value {@value #DEFAULT_ENABLED}.
-     * @return enabled Whether Neo4j ChatMemory store is enabled. Default value {@value #DEFAULT_ENABLED}.
+     * Whether Neo4j ChatMemory store is enabled. Default value true
+     * @return enabled Whether Neo4j ChatMemory store is enabled. Default value true
      */
     @Override
     public boolean isEnabled() {
@@ -46,7 +43,7 @@ class CassandraChatMemoryStoreConfigurationProperties implements CassandraChatMe
 
     /**
      *
-     * @param enabled Whether Neo4j ChatMemory store is enabled. Default value {@value #DEFAULT_ENABLED}.
+     * @param enabled Whether Neo4j ChatMemory store is enabled. Default value true
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
