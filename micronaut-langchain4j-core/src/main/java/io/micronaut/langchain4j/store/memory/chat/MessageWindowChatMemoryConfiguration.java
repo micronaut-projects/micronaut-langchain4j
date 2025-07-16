@@ -15,12 +15,22 @@
  */
 package io.micronaut.langchain4j.store.memory.chat;
 
+import io.micronaut.core.annotation.NonNull;
+
 /**
  * Configuration for {@link dev.langchain4j.memory.chat.MessageWindowChatMemory}.
  */
 public interface MessageWindowChatMemoryConfiguration {
     /**
+     * Default number of max messages
+     */
+    int DEFAULT_MAX_MESSAGES = 20;
+
+    /**
      * @return The maximum number of messages to retain. If there isn't enough space for a new message, the oldest one is evicted.
      */
-    Integer getMaxMessages();
+    @NonNull
+    default Integer getMaxMessages() {
+        return DEFAULT_MAX_MESSAGES;
+    }
 }
