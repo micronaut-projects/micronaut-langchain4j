@@ -1,25 +1,11 @@
 package example.micronaut
 
-import io.micronaut.context.exceptions.ConfigurationException
-import io.micronaut.core.annotation.NonNull
-import io.micronaut.langchain4j.testutils.OllamaUtils
-import io.micronaut.test.support.TestPropertyProvider
+import io.micronaut.langchain4j.testutils.OllamaTestPropertyProvider
 import org.junit.jupiter.api.Test
 import static org.junit.jupiter.api.Assertions.assertNotNull
 import static org.junit.jupiter.api.Assertions.assertTrue
 
-abstract class AssistantWithMemoryTest implements TestPropertyProvider {
-    @Override
-    @NonNull Map<String, String> getProperties() {
-        Map<String, String> result = new HashMap<>()
-        try {
-            result.put("langchain4j.ollama.base-url", OllamaUtils.ollamaContainerBaseUrl())
-        } catch (Exception e) {
-            throw new ConfigurationException("Could not set Ollama base URL", e)
-        }
-        return result
-    }
-
+abstract class AssistantWithMemoryTest implements OllamaTestPropertyProvider {
     //tag::test[]
     @Test
     void chatWithMemory(AssistantWithMemory assistant) {

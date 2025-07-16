@@ -5,6 +5,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
+    implementation(mnTest.micronaut.test.junit5)
     implementation(platform(mnTestResources.boms.testcontainers))
     implementation("org.testcontainers:ollama")
     implementation(libs.testcontainers.redis)
