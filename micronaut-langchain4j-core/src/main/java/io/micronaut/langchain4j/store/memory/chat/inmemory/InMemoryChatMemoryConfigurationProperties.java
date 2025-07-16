@@ -24,7 +24,7 @@ import io.micronaut.core.annotation.Internal;
 @Internal
 @ConfigurationProperties(InMemoryChatMemoryConfigurationProperties.PREFIX)
 class InMemoryChatMemoryConfigurationProperties implements InMemoryChatMemoryConfiguration {
-    public static final String PREFIX = "langchain4j.store-memory-chat.inmemory";
+    public static final String PREFIX = "langchain4j.chat-memory-store.inmemory";
     public static final boolean DEFAULT_ENABLED = true;
     public static final String PROPERTY_ENABLED = PREFIX + ".enabled";
     private boolean enabled = DEFAULT_ENABLED;

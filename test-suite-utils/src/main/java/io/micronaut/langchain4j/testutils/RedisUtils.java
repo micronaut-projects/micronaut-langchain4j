@@ -31,8 +31,8 @@ public final class RedisUtils {
             GlobalTestLifecycle.registerShutdownHook();
         }
         return Map.of(
-            "langchain4j.store-memory-chat.redis.host", container.getHost(),
-            "langchain4j.store-memory-chat.redis.port", container.getRedisPort()
+            "langchain4j.chat-memory-store.redis.host", container.getHost(),
+            "langchain4j.chat-memory-store.redis.port", container.getRedisPort()
         );
     }
 

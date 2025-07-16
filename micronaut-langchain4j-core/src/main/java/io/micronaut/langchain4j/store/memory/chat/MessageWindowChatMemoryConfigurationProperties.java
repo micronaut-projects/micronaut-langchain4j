@@ -27,7 +27,7 @@ import java.util.Objects;
 @Internal
 @ConfigurationProperties(MessageWindowChatMemoryConfigurationProperties.PREFIX)
 public class MessageWindowChatMemoryConfigurationProperties implements MessageWindowChatMemoryConfiguration {
-    public static final String PREFIX = "langchain4j.store-memory-chat.message-window";
+    public static final String PREFIX = "langchain4j.chat-memory-store.message-window";
     private Integer maxMessages = DEFAULT_MAX_MESSAGES;
 
     @Override

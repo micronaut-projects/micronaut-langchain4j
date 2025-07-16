@@ -27,7 +27,7 @@ import io.micronaut.core.annotation.NonNull;
 @Internal
 @ConfigurationProperties(Neo4jChatMemoryStoreConfigurationProperties.PREFIX)
 class Neo4jChatMemoryStoreConfigurationProperties implements Neo4jChatMemoryStoreConfiguration {
-    public static final String PREFIX = "langchain4j.store-memory-chat.neo4j";
+    public static final String PREFIX = "langchain4j.chat-memory-store.neo4j";
     public static final boolean DEFAULT_ENABLED = true;
     public static final String PROPERTY_ENABLED = PREFIX + ".enabled";
     private boolean enabled = DEFAULT_ENABLED;

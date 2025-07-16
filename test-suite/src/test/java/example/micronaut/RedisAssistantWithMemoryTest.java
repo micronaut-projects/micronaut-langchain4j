@@ -11,9 +11,9 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.Map;
 
-@Property(name = "langchain4j.store-memory-chat.neo4j.enabled", value = StringUtils.FALSE)
-@Property(name = "langchain4j.store-memory-chat.cassandra.enabled", value = StringUtils.FALSE)
-@Property(name = "langchain4j.store-memory-chat.inmemory.enabled", value = StringUtils.FALSE)
+@Property(name = "langchain4j.chat-memory-store.neo4j.enabled", value = StringUtils.FALSE)
+@Property(name = "langchain4j.chat-memory-store.cassandra.enabled", value = StringUtils.FALSE)
+@Property(name = "langchain4j.chat-memory-store.inmemory.enabled", value = StringUtils.FALSE)
 @Testcontainers(disabledWithoutDocker = true)
 @MicronautTest(startApplication = false)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

@@ -45,10 +45,10 @@ public final class CassandraUtils {
             GlobalTestLifecycle.registerShutdownHook();
         }
         return Map.of(
-            "langchain4j.store-memory-chat.cassandra.contact-points[0]", contactPoint.getHostName(),
-            "langchain4j.store-memory-chat.cassandra.port", contactPoint.getPort(),
-            "langchain4j.store-memory-chat.cassandra.local-data-center", DATACENTER,
-            "langchain4j.store-memory-chat.cassandra.keyspace", KEYSPACE
+            "langchain4j.chat-memory-store.cassandra.contact-points[0]", contactPoint.getHostName(),
+            "langchain4j.chat-memory-store.cassandra.port", contactPoint.getPort(),
+            "langchain4j.chat-memory-store.cassandra.local-data-center", DATACENTER,
+            "langchain4j.chat-memory-store.cassandra.keyspace", KEYSPACE
         );
     }
 }

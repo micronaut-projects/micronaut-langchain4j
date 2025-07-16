@@ -26,7 +26,7 @@ import io.micronaut.core.annotation.Internal;
 @Internal
 @ConfigurationProperties(RedisChatMemoryStoreConfigurationProperties.PREFIX)
 class RedisChatMemoryStoreConfigurationProperties implements RedisChatMemoryStoreConfiguration {
-    public static final String PREFIX = "langchain4j.store-memory-chat.redis";
+    public static final String PREFIX = "langchain4j.chat-memory-store.redis";
     public static final boolean DEFAULT_ENABLED = true;
     public static final String PROPERTY_ENABLED = PREFIX + ".enabled";
     private boolean enabled = DEFAULT_ENABLED;

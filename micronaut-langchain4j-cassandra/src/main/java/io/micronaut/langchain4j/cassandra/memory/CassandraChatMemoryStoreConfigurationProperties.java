@@ -27,7 +27,7 @@ import io.micronaut.core.annotation.NonNull;
 @Internal
 @ConfigurationProperties(CassandraChatMemoryStoreConfigurationProperties.PREFIX)
 class CassandraChatMemoryStoreConfigurationProperties implements CassandraChatMemoryStoreConfiguration {
-    public static final String PREFIX = "langchain4j.store-memory-chat.cassandra";
+    public static final String PREFIX = "langchain4j.chat-memory-store.cassandra";
     public static final boolean DEFAULT_ENABLED = true;
     public static final String PROPERTY_ENABLED = PREFIX + ".enabled";
     private boolean enabled = DEFAULT_ENABLED;
