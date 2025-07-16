@@ -22,7 +22,7 @@ import io.micronaut.core.annotation.NonNull;
  */
 public interface MessageWindowChatMemoryConfiguration {
     /**
-     * Default number of max messages
+     * Default number of max messages.
      */
     int DEFAULT_MAX_MESSAGES = 20;
 
