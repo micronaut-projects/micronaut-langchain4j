@@ -3,8 +3,8 @@ package example.micronaut.aiservice
 import dev.langchain4j.service.SystemMessage
 import io.micronaut.langchain4j.annotation.AiService
 
-@AiService
+@AiService // <1>
 interface Friend {
-    @SystemMessage("You are a good friend of mine. Answer using slang.")
+    @SystemMessage("You are a good friend of mine. Answer using slang.") // <2>
     fun chat(userMessage: String): String
 }
