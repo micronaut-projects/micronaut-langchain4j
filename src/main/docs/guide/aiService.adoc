@@ -1,7 +1,7 @@
 You can also define new https://docs.langchain4j.dev/tutorials/ai-services[AI services]:
 
 .Defining `@AiService` interfaces
-snippet::example.micronaut.Friend[source="main"]
+snippet::example.micronaut.aiservice.Friend[source="main"]
 
 <1> Define an interface annotated with ann:langchain4j.annotation.AiService[]
 <2> Use Langchain4j annotations like `@SystemMessage`
@@ -9,4 +9,4 @@ snippet::example.micronaut.Friend[source="main"]
 You can now inject the `@AiService` definition into any Micronaut component including tests:
 
 .Calling `@AiService` definitions
-snippet::example.micronaut.AiServiceTest[source="test"]
+snippet::example.micronaut.aiservice.AiServiceTest[source="test"]

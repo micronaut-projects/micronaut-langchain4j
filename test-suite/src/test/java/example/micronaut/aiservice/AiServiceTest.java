@@ -1,4 +1,4 @@
-package example.micronaut;
+package example.micronaut.aiservice;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

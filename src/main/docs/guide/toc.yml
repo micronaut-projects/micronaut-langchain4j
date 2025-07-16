@@ -2,7 +2,8 @@ introduction:
   title: Introduction
 quickStart:
   title: Quick Start
-  aiService: AI Service
+aiService: AI Service
+tools: Tools
 chatModels:
   title: Chat Language Models
   chatModelExample: ChatModel Example

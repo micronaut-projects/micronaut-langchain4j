@@ -1,4 +1,4 @@
-package example.micronaut;
+package example.micronaut.aiservice;
 
 import dev.langchain4j.service.SystemMessage;
 import io.micronaut.langchain4j.annotation.AiService;
