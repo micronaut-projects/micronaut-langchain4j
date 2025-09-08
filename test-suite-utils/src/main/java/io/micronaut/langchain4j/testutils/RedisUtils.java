@@ -22,7 +22,7 @@ public final class RedisUtils {
 
     public static Map<String, Object> getProperties() throws InterruptedException {
         if (container == null) {
-            container = new RedisContainer(DockerImageName.parse("redis:6.2.6"));
+            container = new RedisContainer(DockerImageName.parse("redis/redis-stack-server:latest"));
             container.start();
             do {
                 LOG.info("Waiting for Redis container to be ready...");
