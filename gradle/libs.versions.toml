@@ -16,7 +16,7 @@
 # a managed version (a version which alias starts with "managed-"
 
 [versions]
-micronaut = "4.9.9"
+micronaut = "4.9.11"
 micronaut-platform = "4.9.1"
 micronaut-groovy = "4.7.0"
 micronaut-kotlin = "4.7.0"
@@ -34,7 +34,7 @@ micronaut-logging = "1.7.0"
 micronaut-gradle-plugin = "4.5.4"
 micronaut-sourcegen = "1.8.2"
 micronaut-grpc = "4.11.0"
-micronaut-oraclecloud = "5.2.0"
+micronaut-oraclecloud = "5.3.2"
 groovy = "4.0.23"
 spock = "2.3-groovy-4.0"
 awaitility = "4.3.0"
@@ -45,10 +45,11 @@ org-json = "20250107"
 threetenbp = "1.7.1"
 
 # Managed versions appear in the BOM
-managed-langchain4j = "1.2.0"
-managed-langchain4j-community = "1.1.0-beta7"
-sonatype-scan = "3.1.1"
+managed-langchain4j = "1.4.0"
+managed-langchain4j-community = "1.4.0-beta10"
+sonatype-scan = "3.1.3"
 testcontainers-redis = "2.2.4"
+testcontainers = "1.21.3"
 astra-db-client = "1.2.7"
 
 [libraries]
@@ -100,6 +101,7 @@ langchain4j-cassandra = { module = 'dev.langchain4j:langchain4j-cassandra' }
 langchain4j-embeddings-all-minilm-l6-v2 = { module = 'dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2' }
 junit-platform-engine = { module = "org.junit.platform:junit-platform-suite-engine" }
 awaitility = { module = 'org.awaitility:awaitility', version.ref = "awaitility" }
+testcontainers-bom = { module = "org.testcontainers:testcontainers-bom", version.ref = "testcontainers" }
 testcontainers-junit-jupiter = { module = "org.testcontainers:junit-jupiter" }
 testcontainers-redis = { module = "com.redis:testcontainers-redis", version.ref = "testcontainers-redis" }
 testcontainers-neo4j = { module = "org.testcontainers:neo4j" }
