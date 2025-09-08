@@ -6,15 +6,14 @@ plugins {
 String ossIndexUsername = System.getenv("OSS_INDEX_USERNAME") ?: project.properties["ossIndexUsername"]
 String ossIndexPassword = System.getenv("OSS_INDEX_PASSWORD") ?: project.properties["ossIndexPassword"]
 boolean sonatypePluginConfigured = ossIndexUsername != null && ossIndexPassword != null
+ossIndexAudit {
 if (sonatypePluginConfigured) {
-    ossIndexAudit {
-        username = ossIndexUsername
-        password = ossIndexPassword
-        excludeVulnerabilityIds = [
-            'CVE-2024-23082', // disputed / false position. See https://www.threeten.org/threetenbp/security.html
-            'CVE-2024-23081' // disputed / false position. See https://www.threeten.org/threetenbp/security.html
-        ]
-    }
+    username = ossIndexUsername
+    password = ossIndexPassword
+}
+    excludeVulnerabilityIds = [
+            'CVE-2025-22227', // https://ossindex.sonatype.org/vulnerability/CVE-2025-22227?component-type=maven&component-name=io.projectreactor.netty%2Freactor-netty-http
+    ]
 }
 
 dependencies {

@@ -14,6 +14,7 @@ dependencies {
     implementation(mnGrpc.protobuf.java) // apply com.google.protobuf:protobuf-java directly because the version brought transitively contains a vulnerable version.
     implementation(libs.commons.compress) // declare the apache commons compress directly as the version from langchain4j has a security vulnerability
     implementation(libs.commons.lang3) // versions prior to 3.18.0 contains a CVE https://ossindex.sonatype.org/component/pkg:maven/org.apache.commons/commons-lang3
+    implementation(libs.gson) // versions prior to 2.12.0 contains a CVE https://ossindex.sonatype.org/component/pkg:maven/com.google.code.gson/gson
     testRuntimeOnly(mnTestResources.micronaut.test.resources.embedded)
     testRuntimeOnly(mnTest.junit.jupiter.engine)
 }
