@@ -42,6 +42,7 @@ awaitility = "4.3.0"
 commons-compress = "1.27.1"
 commons-lang3 = "3.18.0"
 gson = "2.12.0"
+jinjava = "2.8.1"
 
 # Managed versions appear in the BOM
 managed-langchain4j = "1.5.0"
@@ -56,6 +57,7 @@ astra-db-client = "1.2.7"
 commons-compress = { module = 'org.apache.commons:commons-compress', version.ref = 'commons-compress'  }
 commons-lang3 = { module = 'org.apache.commons:commons-lang3', version.ref = 'commons-lang3' }
 gson = { module = 'com.google.code.gson:gson', version.ref = 'gson' }
+jinjava = { module = "com.hubspot.jinjava:jinjava", version.ref = "jinjava"}
 
 # Micronaut BOMS
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut'  }
@@ -117,4 +119,3 @@ sonatype-scan = { module = "org.sonatype.gradle.plugins:scan-gradle-plugin", ver
 [bundles]
 
 [plugins]
-
