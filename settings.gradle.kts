@@ -3,10 +3,11 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
     }
+//        includeBuild("../micronaut-build-araysse")
 }
 
 plugins {
-    id("io.micronaut.build.shared.settings") version "7.6.4"
+    id("io.micronaut.build.shared.settings") version "8.0.0-M3"
 }
 
 dependencyResolutionManagement {
