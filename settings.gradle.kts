@@ -3,7 +3,6 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
     }
-//        includeBuild("../micronaut-build-araysse")
 }
 
 plugins {
