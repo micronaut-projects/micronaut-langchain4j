@@ -59,7 +59,6 @@ postgresql = "42.7.7"
 
 [libraries]
 # TODO Remove when non vulnerable versions exist
-org-json = { module = 'org.json:json', version.ref = 'org-json'  }
 commons-compress = { module = 'org.apache.commons:commons-compress', version.ref = 'commons-compress'  }
 commons-lang3 = { module = 'org.apache.commons:commons-lang3', version.ref = 'commons-lang3' }
 gson = { module = 'com.google.code.gson:gson', version.ref = 'gson' }
@@ -133,4 +132,3 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 micronaut-build-shared-settings = { id = "io.micronaut.build.shared.settings", version = "8.0.0-M2" }
-
