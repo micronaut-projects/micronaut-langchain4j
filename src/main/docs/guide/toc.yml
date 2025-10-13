@@ -3,6 +3,7 @@ introduction:
 quickStart:
   title: Quick Start
 aiService: AI Service
+agenticService: Agentic Service
 tools: Tools
 chatModels:
   title: Chat Language Models
@@ -31,4 +32,3 @@ embeddingStores:
   qdrant: Qdrant
 repository: Repository
 releaseHistory: Release History
-

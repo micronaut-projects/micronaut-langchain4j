@@ -8,7 +8,7 @@ dependencies {
     annotationProcessor(mn.micronaut.inject.java)
     annotationProcessor(projects.micronautLangchain4jProcessor)
     implementation(projects.micronautLangchain4jCore)
-    implementation(projects.micronautLangchain4jOpenai)
+    implementation(projects.micronautLangchain4jAgentic)
     testImplementation(platform(libs.testcontainers.bom))
     testImplementation(projects.micronautLangchain4jOllama)
 

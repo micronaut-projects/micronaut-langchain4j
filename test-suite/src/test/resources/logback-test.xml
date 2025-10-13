@@ -1,0 +1,18 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%cyan(%d{HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) %magenta(%logger{36}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Increase verbosity to diagnose OutputParsingException in SupervisorAgent flow -->
+    <logger name="dev.langchain4j" level="DEBUG"/>
+    <logger name="dev.langchain4j.agentic" level="DEBUG"/>
+    <logger name="dev.langchain4j.service" level="DEBUG"/>
+    <logger name="dev.langchain4j.model" level="DEBUG"/>
+    <logger name="io.micronaut.langchain4j" level="DEBUG"/>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>

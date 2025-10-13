@@ -45,8 +45,8 @@ gson = "2.12.0"
 jinjava = "2.8.1"
 
 # Managed versions appear in the BOM
-managed-langchain4j = "1.5.0"
-managed-langchain4j-community = "1.5.0-beta11"
+managed-langchain4j = "1.7.1"
+managed-langchain4j-community = "1.7.1-beta14"
 sonatype-scan = "3.1.3"
 testcontainers-redis = "2.2.4"
 testcontainers = "1.21.3"
@@ -61,6 +61,8 @@ jinjava = { module = "com.hubspot.jinjava:jinjava", version.ref = "jinjava"}
 
 # Micronaut BOMS
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut'  }
+micronaut-inject-java = { module = "io.micronaut:micronaut-inject-java", version.ref = "micronaut" }
+micronaut-core-annotation = { module = "io.micronaut:micronaut-core-annotation", version.ref = "micronaut" }
 micronaut-groovy = { module = 'io.micronaut.groovy:micronaut-groovy-bom', version.ref = 'micronaut-groovy' }
 micronaut-kotlin = { module = 'io.micronaut.kotlin:micronaut-kotlin-bom', version.ref = 'micronaut-kotlin' }
 micronaut-redis = { module = 'io.micronaut.redis:micronaut-redis-bom', version.ref = 'micronaut-redis' }
@@ -77,6 +79,7 @@ micronaut-oraclecloud-bmc-generativeaiinference = { module = 'io.micronaut.oracl
 micronaut-sourcegen = { module = 'io.micronaut.sourcegen:micronaut-sourcegen-bom', version.ref = 'micronaut-sourcegen' }
 micronaut-test-resources = { module = 'io.micronaut.testresources:micronaut-test-resources-bom', version.ref = 'micronaut-test-resources' }
 langchain4j = { module = 'dev.langchain4j:langchain4j' }
+langchain4j-agentic = { module = 'dev.langchain4j:langchain4j-agentic' }
 langchain4j-jlama = { module = 'dev.langchain4j:langchain4j-jlama' }
 langchain4j-ollama = { module = 'dev.langchain4j:langchain4j-ollama' }
 langchain4j-bedrock = { module = 'dev.langchain4j:langchain4j-bedrock' }

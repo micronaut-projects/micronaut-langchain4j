@@ -1,0 +1,97 @@
+package example.micronaut.agentic;
+
+import dev.langchain4j.agentic.Agent;
+import dev.langchain4j.agentic.declarative.Output;
+import dev.langchain4j.agentic.declarative.ParallelAgent;
+import dev.langchain4j.agentic.declarative.ParallelExecutor;
+import dev.langchain4j.agentic.declarative.SubAgent;
+import dev.langchain4j.service.UserMessage;
+import dev.langchain4j.service.V;
+import io.micronaut.langchain4j.agentic.annotation.AgenticService;
+import io.micronaut.langchain4j.testutils.OllamaTestPropertyProvider;
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.testcontainers.junit.jupiter.Testcontainers;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+/**
+ * Validates declarative ParallelAgent workflow wiring through @AgenticService.
+ * Ensures Micronaut DI correctly builds the agentic system and executes the parallel plan.
+ */
+@Testcontainers(disabledWithoutDocker = true)
+@MicronautTest(startApplication = false)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class ParallelPlanningAgentTest implements OllamaTestPropertyProvider {
+
+    @Test
+    void testDeclarativeParallel(EveningPlanner agent) {
+        String plan = agent.plan("jazz", "romantic");
+        System.out.println("parallel plan = " + plan);
+        assertFalse(plan.isEmpty());
+    }
+
+    @AgenticService
+    public interface MusicPlanner {
+        @UserMessage("""
+            Choose a band which plays music in the {{style}} style.
+            Answer with the name of the band only: no details, no explanation.
+            """)
+        @Agent
+        String suggestBand(@V("style") String style);
+    }
+
+    @AgenticService
+    public interface DinnerPlanner {
+        @UserMessage("""
+            Choose a menu for dinner for the following mood: {{mood}}
+            Answer with the menu only: no details, no explanations.
+            """)
+        @Agent
+        String suggestMenu(@V("mood") String mood);
+    }
+
+    /**
+     * Demonstrates declarative ParallelAgent orchestration using Micronaut DI.
+     */
+    @AgenticService(outputName = "plan")
+    public interface EveningPlanner {
+
+        @ParallelAgent(
+            subAgents = {
+                @SubAgent(type = MusicPlanner.class, outputName = "band"),
+                @SubAgent(type = DinnerPlanner.class, outputName = "menu")
+            },
+            outputName = "plan",
+            name = "planEvening"
+        )
+        String plan(@V("style") String style, @V("mood") String mood);
+
+        // Configure a small thread pool for parallel execution
+        @ParallelExecutor
+        static Executor executor() {
+            return Executors.newFixedThreadPool(2);
+        }
+
+        // Aggregate the parallel outputs into a single "plan" string
+        @Output
+        static String aggregate(@V("band") String band, @V("menu") String menu) {
+            String c = band == null ? "" : band.trim();
+            String r = menu == null ? "" : menu.trim();
+            if (c.isEmpty() && r.isEmpty()) {
+                return "";
+            }
+            if (c.isEmpty()) {
+                return "Play: " + r;
+            }
+            if (r.isEmpty()) {
+                return "Menu: " + c;
+            }
+            return "Play: " + c + " | Menu: " + r;
+        }
+    }
+}
