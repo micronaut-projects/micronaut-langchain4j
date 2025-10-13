@@ -1,7 +1,7 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.9.25"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.9.25"
-    id("com.google.devtools.ksp") version "1.9.25-1.0.20"
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.allopen)
+    alias(libs.plugins.ksp)
     `java-library`
 }
 repositories {
@@ -11,9 +11,8 @@ dependencies {
     ksp("io.micronaut:micronaut-inject-kotlin")
     kspTest("io.micronaut:micronaut-inject-kotlin")
     implementation(mnKotlin.micronaut.kotlin.runtime)
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.25")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.25")
-
+    implementation(libs.kotlin.reflect)
+    implementation(libs.kotlin.stdlib.jdk8)
     ksp(project(":micronaut-langchain4j-processor"))
     implementation(project(":micronaut-langchain4j-core"))
     implementation(project(":micronaut-langchain4j-openai"))
@@ -24,6 +23,10 @@ dependencies {
     testImplementation(mnTest.junit.jupiter.engine)
     testImplementation(libs.testcontainers.junit.jupiter)
     testRuntimeOnly(mnLogging.logback.classic)
+    // Ensure JUnit Platform engine is on the test runtime classpath
+    testImplementation(platform(libs.junit.bom))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 tasks.withType<Test> {
     useJUnitPlatform()

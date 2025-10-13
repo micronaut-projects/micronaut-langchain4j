@@ -7,6 +7,8 @@ dependencies {
     implementation(mnTest.micronaut.test.junit5)
     implementation(libs.awaitility)
 }
-java.sourceCompatibility = JavaVersion.VERSION_17
-java.targetCompatibility = JavaVersion.VERSION_17
-
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
