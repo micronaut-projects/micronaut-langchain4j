@@ -48,6 +48,7 @@ jinjava = "2.8.1"
 # Managed versions appear in the BOM
 managed-langchain4j = "1.5.0"
 managed-langchain4j-community = "1.5.0-beta11"
+sonatype-scan = "3.1.3"
 testcontainers-redis = "2.2.4"
 testcontainers = "1.21.3"
 astra-db-client = "1.2.7"
@@ -58,6 +59,7 @@ postgresql = "42.7.7"
 
 [libraries]
 # TODO Remove when non vulnerable versions exist
+org-json = { module = 'org.json:json', version.ref = 'org-json'  }
 commons-compress = { module = 'org.apache.commons:commons-compress', version.ref = 'commons-compress'  }
 commons-lang3 = { module = 'org.apache.commons:commons-lang3', version.ref = 'commons-lang3' }
 gson = { module = 'com.google.code.gson:gson', version.ref = 'gson' }
@@ -122,6 +124,7 @@ langchain4j-community-bom = { module = "dev.langchain4j:langchain4j-community-bo
 
 # Plugins
 gradle-micronaut = { module = "io.micronaut.gradle:micronaut-gradle-plugin", version.ref = "micronaut-gradle-plugin" }
+sonatype-scan = { module = "org.sonatype.gradle.plugins:scan-gradle-plugin", version.ref = "sonatype-scan" }
 
 [bundles]
 
@@ -130,3 +133,4 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 micronaut-build-shared-settings = { id = "io.micronaut.build.shared.settings", version = "8.0.0-M2" }
+
