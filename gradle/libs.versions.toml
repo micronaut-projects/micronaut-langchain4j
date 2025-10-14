@@ -20,7 +20,7 @@ micronaut = "4.9.11"
 micronaut-platform = "4.9.3"
 micronaut-groovy = "4.7.0"
 micronaut-kotlin = "4.7.0"
-micronaut-docs = "2.0.0"
+micronaut-docs = "3.0.0"
 micronaut-serde = "2.15.1"
 micronaut-sql = "6.2.1"
 micronaut-opensearch = "1.6.0"
@@ -47,7 +47,6 @@ jinjava = "2.8.1"
 # Managed versions appear in the BOM
 managed-langchain4j = "1.5.0"
 managed-langchain4j-community = "1.5.0-beta11"
-sonatype-scan = "3.1.3"
 testcontainers-redis = "2.2.4"
 testcontainers = "1.21.3"
 astra-db-client = "1.2.7"
@@ -122,7 +121,6 @@ langchain4j-community-bom = { module = "dev.langchain4j:langchain4j-community-bo
 
 # Plugins
 gradle-micronaut = { module = "io.micronaut.gradle:micronaut-gradle-plugin", version.ref = "micronaut-gradle-plugin" }
-sonatype-scan = { module = "org.sonatype.gradle.plugins:scan-gradle-plugin", version.ref = "sonatype-scan" }
 
 [bundles]
 

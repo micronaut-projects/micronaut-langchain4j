@@ -26,6 +26,11 @@ jobs:
       matrix: ${{ steps.build-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v5
+      - name: "🔧 Setup Java 21"
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
       - name: Build Matrix
         uses: micronaut-projects/github-actions/graalvm/build-matrix@master
         id: build-matrix
