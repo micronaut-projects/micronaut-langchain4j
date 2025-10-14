@@ -129,4 +129,4 @@ gradle-micronaut = { module = "io.micronaut.gradle:micronaut-gradle-plugin", ver
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-micronaut-build-shared-settings = { id = "io.micronaut.build.shared.settings", version = "8.0.0-M2" }
+micronaut-build-shared-settings = { id = "io.micronaut.build.shared.settings", version = "8.0.0-M4" }
