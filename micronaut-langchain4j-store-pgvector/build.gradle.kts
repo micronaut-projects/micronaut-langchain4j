@@ -9,7 +9,6 @@ dependencies {
         exclude(group = "org.postgresql", module = "postgresql")
     }
     implementation(libs.postgresql)
-
     api(mnSql.micronaut.jdbc)
     runtimeOnly(mnSql.postgresql)
 
