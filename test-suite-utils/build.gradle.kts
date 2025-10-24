@@ -13,3 +13,8 @@ dependencies {
     implementation(libs.testcontainers.cassandra)
     implementation(libs.astra.db.client)
 }
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
