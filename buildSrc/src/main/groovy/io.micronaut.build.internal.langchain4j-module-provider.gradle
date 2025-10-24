@@ -8,3 +8,8 @@ dependencies {
     api(projects.micronautLangchain4jCore)
     testImplementation(projects.testSuiteChatmodelTck)
 }
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
