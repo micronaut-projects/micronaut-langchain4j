@@ -16,26 +16,26 @@
 # a managed version (a version which alias starts with "managed-"
 
 [versions]
-micronaut = "4.10.4"
-micronaut-platform = "4.9.3"
+micronaut = "4.10.8"
+micronaut-platform = "4.10.1"
 micronaut-groovy = "4.7.0"
 micronaut-kotlin = "4.7.0"
 micronaut-docs = "3.0.0"
-micronaut-serde = "2.15.5"
-micronaut-sql = "6.3.0"
+micronaut-serde = "2.16.1"
+micronaut-sql = "6.3.1"
 micronaut-opensearch = "1.6.0"
-micronaut-neo4j = "6.10.0"
+micronaut-neo4j = "7.0.0"
 micronaut-mongodb = "5.7.0"
-micronaut-elasticsearch = "5.9.0"
+micronaut-elasticsearch = "5.10.0"
 micronaut-redis = "6.9.0"
-micronaut-test = "4.9.0"
+micronaut-test = "4.10.2"
 micronaut-test-resources = "2.10.1"
 micronaut-logging = "1.7.1"
 micronaut-gradle-plugin = "4.5.4"
 micronaut-sourcegen = "1.8.2"
 micronaut-grpc = "4.12.0"
-micronaut-oraclecloud = "5.5.0"
-groovy = "4.0.23"
+micronaut-oraclecloud = "5.5.2"
+groovy = "4.0.29"
 spock = "2.3-groovy-4.0"
 awaitility = "4.3.0"
 #TODO remove when non vulnerable versions exists
@@ -45,10 +45,9 @@ gson = "2.12.0"
 jinjava = "2.8.1"
 
 # Managed versions appear in the BOM
-managed-langchain4j = "1.5.0"
-managed-langchain4j-community = "1.5.0-beta11"
+managed-langchain4j = "1.8.0"
+managed-langchain4j-community = "1.8.0-beta15"
 testcontainers-redis = "2.2.4"
-testcontainers = "1.21.3"
 astra-db-client = "1.2.7"
 
 [libraries]
@@ -100,7 +99,6 @@ langchain4j-cassandra = { module = 'dev.langchain4j:langchain4j-cassandra' }
 langchain4j-embeddings-all-minilm-l6-v2 = { module = 'dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2' }
 junit-platform-engine = { module = "org.junit.platform:junit-platform-suite-engine" }
 awaitility = { module = 'org.awaitility:awaitility', version.ref = "awaitility" }
-testcontainers-bom = { module = "org.testcontainers:testcontainers-bom", version.ref = "testcontainers" }
 testcontainers-junit-jupiter = { module = "org.testcontainers:junit-jupiter" }
 testcontainers-redis = { module = "com.redis:testcontainers-redis", version.ref = "testcontainers-redis" }
 testcontainers-neo4j = { module = "org.testcontainers:neo4j" }
