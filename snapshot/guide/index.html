@@ -15,7 +15,7 @@
     <script>hljs.initHighlightingOnLoad();</script>
     <link rel="stylesheet" href="../css/multi-language-sample.css"/>
     <script src="../js/docs.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
     <script type="text/javascript">
         function addJsClass(el) {
             var classes = document.body.className.split(" ");
@@ -155,13 +155,13 @@
         <h1>Micronaut LangChain4j</h1>
         <p></p>
         <p>Integration between Micronaut and Langchain4j</p>
-        <p><strong>Version:</strong> 2.0.0-SNAPSHOT </p>
+        <p><strong>Version:</strong> 1.4.0-SNAPSHOT </p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/introduction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/introduction.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -189,7 +189,7 @@ This module is regarded as experimental and subject to change since the underlyi
 <h1 id="quickStart"><a class="anchor" href="#quickStart"></a>2 Quick Start</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/quickStart.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/quickStart.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -215,8 +215,7 @@ This module is regarded as experimental and subject to change since the underlyi
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Then the core module:</p>
@@ -235,8 +234,7 @@ This module is regarded as experimental and subject to change since the underlyi
     &lt;artifactId&gt;micronaut-langchain4j-core&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>You are now ready to configure one of the <a href="#chatModels">Chat Language Models</a>, for the quick start we will use <a href="#ollama">Ollama</a>:</p>
@@ -255,8 +253,7 @@ This module is regarded as experimental and subject to change since the underlyi
     &lt;artifactId&gt;micronaut-langchain4j-ollama&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>To test the integration add the test resources integration to your <a href="https://micronaut-projects.github.io/micronaut-maven-plugin/latest/examples/test-resources.html">Maven build</a> or <a href="https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/#_the_test_resources_plugin">Gradle build</a>.</p>
@@ -276,8 +273,7 @@ This module is regarded as experimental and subject to change since the underlyi
     &lt;scope&gt;testResourcesService&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -337,7 +333,7 @@ For Maven see <a href="https://micronaut-projects.github.io/micronaut-maven-plug
 <h1 id="aiService"><a class="anchor" href="#aiService"></a>3 AI Service</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/aiService.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/aiService.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -492,7 +488,7 @@ internal class AiServiceTest : OllamaTestPropertyProvider {
 <h1 id="tools"><a class="anchor" href="#tools"></a>4 Tools</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/tools.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/tools.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -614,7 +610,7 @@ interface CompanyBot {
 <h1 id="chatModels"><a class="anchor" href="#chatModels"></a>5 Chat Language Models</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/chatModels.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -630,7 +626,7 @@ interface CompanyBot {
 <h2 id="chatModelExample"><a class="anchor" href="#chatModelExample"></a>5.1 ChatModel Example</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/chatModelExample.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/chatModels/chatModelExample.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -902,7 +898,7 @@ class OllamaChatModelBuilderListener : BeanCreatedEventListener&lt;OllamaChatMod
 <h2 id="chatMemory"><a class="anchor" href="#chatMemory"></a>5.2 Chat Memory</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/chatMemory.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/chatModels/chatMemory.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -936,8 +932,7 @@ it relies on you to include the relevant messages in each request for coherent a
     &lt;artifactId&gt;micronaut-langchain4j-store-redis&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>To use the Neo4J implementation <code>dev.langchain4j.community.store.memory.chat.neo4j.Neo4jChatMemoryStore</code>, add the following dependency:</p>
@@ -956,8 +951,7 @@ it relies on you to include the relevant messages in each request for coherent a
     &lt;artifactId&gt;micronaut-langchain4j-store-neo4j&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>To use the Cassandra implementation <code>dev.langchain4j.store.memory.chat.cassandra.CassandraChatMemoryStore</code>, add the following dependency:</p>
@@ -976,8 +970,7 @@ it relies on you to include the relevant messages in each request for coherent a
     &lt;artifactId&gt;micronaut-langchain4j-cassandra&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>The following example shows how to use the <code>ChatMemory</code>:</p>
@@ -1218,7 +1211,7 @@ class AssistantWithMemory(
 <h2 id="anthropic"><a class="anchor" href="#anthropic"></a>5.3 Anthropic</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/anthropic.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/chatModels/anthropic.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1241,8 +1234,7 @@ class AssistantWithMemory(
     &lt;artifactId&gt;micronaut-langchain4j-anthropic&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.anthropic.CommonAnthropicChatModelConfiguration">necessary configuration</a>.</p>
@@ -1290,7 +1282,7 @@ class AssistantWithMemory(
 <h2 id="azure"><a class="anchor" href="#azure"></a>5.4 Azure</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/azure.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/chatModels/azure.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1313,8 +1305,7 @@ class AssistantWithMemory(
     &lt;artifactId&gt;micronaut-langchain4j-azure&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.azure.CommonAzureOpenAiChatModelConfiguration">necessary configuration</a>.</p>
@@ -1374,7 +1365,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 <h2 id="bedrock"><a class="anchor" href="#bedrock"></a>5.5 Bedrock</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/bedrock.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/chatModels/bedrock.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1397,8 +1388,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-bedrock&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.bedrock.CommonBedrockLlamaChatModelConfiguration">necessary configuration</a>.</p>
@@ -1452,7 +1442,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 <h2 id="hugging-face"><a class="anchor" href="#hugging-face"></a>5.6 HuggingFace</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/hugging-face.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/chatModels/hugging-face.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1475,8 +1465,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-hugging-face&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.huggingface.CommonHuggingFaceChatModelConfiguration">necessary configuration</a>.</p>
@@ -1524,7 +1513,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 <h2 id="mistralai"><a class="anchor" href="#mistralai"></a>5.7 MistralAi</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/mistralai.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/chatModels/mistralai.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1547,8 +1536,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-mistralai&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.mistralai.CommonMistralAiChatModelConfiguration">necessary configuration</a>.</p>
@@ -1596,7 +1584,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 <h2 id="ollama"><a class="anchor" href="#ollama"></a>5.8 Ollama</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/ollama.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/chatModels/ollama.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1619,8 +1607,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-ollama&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.ollama.CommonOllamaChatModelConfiguration">necessary configuration</a>.</p>
@@ -1668,7 +1655,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 <h2 id="oci-genai"><a class="anchor" href="#oci-genai"></a>5.9 Oracle Cloud GenAI</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/oci-genai.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/chatModels/oci-genai.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1691,8 +1678,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-oci-genai&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Setup a supported <a href="https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#quickStart">OCI authentication method</a>.</p>
@@ -1749,7 +1735,7 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
 <h2 id="openai"><a class="anchor" href="#openai"></a>5.10 OpenAi</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/openai.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/chatModels/openai.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1772,8 +1758,7 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-openai&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.openai.CommonOpenAiChatModelConfiguration">necessary configuration</a>.</p>
@@ -1821,7 +1806,7 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
 <h2 id="googleai-gemini"><a class="anchor" href="#googleai-gemini"></a>5.11 Google AI Gemini</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/googleai-gemini.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/chatModels/googleai-gemini.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1844,8 +1829,7 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-googleai-gemini&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.googleaigemini.CommonGoogleAiGeminiChatModelConfiguration">necessary configuration</a>.</p>
@@ -1893,7 +1877,7 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
 <h2 id="vertexai"><a class="anchor" href="#vertexai"></a>5.12 VertexAi</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/vertexai.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/chatModels/vertexai.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1916,8 +1900,7 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-vertexai&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.vertexai.CommonVertexAiChatModelConfiguration">necessary configuration</a>.</p>
@@ -1989,7 +1972,7 @@ langchain4j.vertexAi.publisher = "YOUR_PUBLISHER"</code></pre>
 <h2 id="vertexai-gemini"><a class="anchor" href="#vertexai-gemini"></a>5.13 VertexAi Gemini</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/vertexai-gemini.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/chatModels/vertexai-gemini.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2012,8 +1995,7 @@ langchain4j.vertexAi.publisher = "YOUR_PUBLISHER"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-vertexai-gemini&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.vertexai.gemini.CommonVertexAiGeminiChatModelConfiguration">necessary configuration</a>.</p>
@@ -2073,7 +2055,7 @@ langchain4j.vertexAiGemini.location = "YOUR_LOCATION"</code></pre>
 <h1 id="embeddingStores"><a class="anchor" href="#embeddingStores"></a>6 Embedding Stores</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/embeddingStores.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2084,7 +2066,7 @@ langchain4j.vertexAiGemini.location = "YOUR_LOCATION"</code></pre>
 <h2 id="elasticsearch"><a class="anchor" href="#elasticsearch"></a>6.1 Elastic Search</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/elasticsearch.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/embeddingStores/elasticsearch.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2107,8 +2089,7 @@ langchain4j.vertexAiGemini.location = "YOUR_LOCATION"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-store-elasticsearch&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Then <a href="https://micronaut-projects.github.io/micronaut-elasticsearch/latest/guide/#configuration">configure the Elasticsearch client</a>.</p>
@@ -2162,7 +2143,7 @@ langchain4j.elasticsearch.embeddingStores.default.dimension = 384</code></pre>
 <h2 id="mongodb"><a class="anchor" href="#mongodb"></a>6.2 MongoDB</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/mongodb.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/embeddingStores/mongodb.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2185,8 +2166,7 @@ langchain4j.elasticsearch.embeddingStores.default.dimension = 384</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-store-mongodb-atlas&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="listingblock">
 <div class="title">Configuring a MongoDB server</div>
@@ -2249,7 +2229,7 @@ langchain4j.mongodbAtlas.embeddingStores.default.indexName = "testindex"</code><
 <h2 id="neo4j"><a class="anchor" href="#neo4j"></a>6.3 Neo4j</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/neo4j.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/embeddingStores/neo4j.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2272,8 +2252,7 @@ langchain4j.mongodbAtlas.embeddingStores.default.indexName = "testindex"</code><
     &lt;artifactId&gt;micronaut-langchain4j-store-neo4j&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Then <a href="https://micronaut-projects.github.io/micronaut-neo4j/latest/guide/#setup">configure the Neo4j driver</a>.</p>
@@ -2327,7 +2306,7 @@ langchain4j.neo4j.embeddingStores.default.dimension = 384</code></pre>
 <h2 id="oracledb"><a class="anchor" href="#oracledb"></a>6.4 Oracle</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/oracledb.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/embeddingStores/oracledb.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2350,8 +2329,7 @@ langchain4j.neo4j.embeddingStores.default.dimension = 384</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-store-oracle&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Then add one of the <a href="https://micronaut-projects.github.io/micronaut-sql/latest/guide/#jdbc">supported JDBC connection pools</a>, for example Hikari:</p>
@@ -2371,8 +2349,7 @@ langchain4j.neo4j.embeddingStores.default.dimension = 384</code></pre>
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="openblock">
 <div class="title">Example Configuration</div>
@@ -2429,7 +2406,7 @@ langchain4j.oracle.embeddingStores.default.table.createOption = "create_if_not_e
 <h2 id="opensearch"><a class="anchor" href="#opensearch"></a>6.5 Open Search</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/opensearch.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/embeddingStores/opensearch.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2452,8 +2429,7 @@ langchain4j.oracle.embeddingStores.default.table.createOption = "create_if_not_e
     &lt;artifactId&gt;micronaut-langchain4j-store-opensearch&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Then <a href="https://micronaut-projects.github.io/micronaut-opensearch/latest/guide/#openSearchRestClient">configure the OpenSearch client</a>.</p>
@@ -2507,7 +2483,7 @@ langchain4j.opensearch.embeddingStores.default.dimension = 384</code></pre>
 <h2 id="pgvector"><a class="anchor" href="#pgvector"></a>6.6 PGVector</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/pgvector.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/embeddingStores/pgvector.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2530,8 +2506,7 @@ langchain4j.opensearch.embeddingStores.default.dimension = 384</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-store-pgvector&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Then add one of the <a href="https://micronaut-projects.github.io/micronaut-sql/latest/guide/#jdbc">supported JDBC connection pools</a>, for example Hikari:</p>
@@ -2551,8 +2526,7 @@ langchain4j.opensearch.embeddingStores.default.dimension = 384</code></pre>
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="openblock">
 <div class="title">Example Configuration</div>
@@ -2617,7 +2591,7 @@ testResources.containers.postgres.imageName = "pgvector/pgvector:pg16"</code></p
 <h2 id="redis"><a class="anchor" href="#redis"></a>6.7 Redis</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/redis.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/embeddingStores/redis.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2640,8 +2614,7 @@ testResources.containers.postgres.imageName = "pgvector/pgvector:pg16"</code></p
     &lt;artifactId&gt;micronaut-langchain4j-store-redis&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="openblock">
 <div class="title">Example Configuration</div>
@@ -2698,7 +2671,7 @@ langchain4j.redis.embeddingStores.default.dimension = 384</code></pre>
 <h2 id="qdrant"><a class="anchor" href="#qdrant"></a>6.8 Qdrant</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/qdrant.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/embeddingStores/qdrant.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2721,8 +2694,7 @@ langchain4j.redis.embeddingStores.default.dimension = 384</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-store-qdrant&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>To use Testcontainers &amp; Test Resources add the following dependency:</p>
@@ -2742,8 +2714,7 @@ langchain4j.redis.embeddingStores.default.dimension = 384</code></pre>
     &lt;scope&gt;testResourcesService&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2815,7 +2786,7 @@ langchain4j.qdrant.embeddingStore.collectionName = "mycollection"</code></pre>
 <h1 id="repository"><a class="anchor" href="#repository"></a>7 Repository</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/repository.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/repository.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2831,7 +2802,7 @@ langchain4j.qdrant.embeddingStore.collectionName = "mycollection"</code></pre>
 <h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>8 Release History</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/releaseHistory.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.4.x/src/main/docs/guide/releaseHistory.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
