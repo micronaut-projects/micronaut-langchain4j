@@ -35,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Property(name = "langchain4j.google-ai-gemini.chat-model.log-requests", value = StringUtils.TRUE)
 @Property(name = "langchain4j.google-ai-gemini.chat-model.log-responses", value = StringUtils.TRUE)
 @Property(name = "spec.name", value = "GoogleAiGeminiImageContentTest")
+@Property(name = "langchain4j.in-memory.embedding-store.enabled", value = StringUtils.FALSE)
 @MicronautTest(startApplication = false)
 class GoogleAiGeminiImageContentTest {
     @Inject

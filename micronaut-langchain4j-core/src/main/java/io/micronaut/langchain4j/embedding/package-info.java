@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@Requires(property = "langchain4j.in-memory.embedding-store.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.FALSE)
+/**
+ * Classes related with the creation of in-memory {@link dev.langchain4j.store.embedding.EmbeddingStore}.
+ */
+@Requires(property = "langchain4j.in-memory.embedding-store.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Configuration
 package io.micronaut.langchain4j.embedding;
 
