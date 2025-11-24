@@ -14,3 +14,4 @@ io.micronaut.langchain4j.store.memory.chat.inmemory
 io.micronaut.langchain4j.testresources.ollama
 io.micronaut.langchain4j.testresources.qdrant
 io.micronaut.langchain4j.tools
+io.micronaut.langchain4j.utils
