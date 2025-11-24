@@ -28,9 +28,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Property(name = "langchain4j.vertex-ai-gemini.model-name", value = "gemini-2.5-flash")
 @Property(name = "langchain4j.vertex-ai-gemini.chat-model.log-requests", value = StringUtils.TRUE)
 @Property(name = "langchain4j.vertex-ai-gemini.chat-model.log-responses", value = StringUtils.TRUE)
-@Property(name = "spec.name", value = "ImageContentTest")
+@Property(name = "spec.name", value = "VertexAiGeminiImageContentTest")
 @MicronautTest(startApplication = false)
-class ImageContentTest {
+class VertexAiGeminiImageContentTest {
     @Test
     void testImage(ChatService chatService) throws IOException {
         try (InputStream is = getClass().getClassLoader().getResourceAsStream("cat.jpg")) {
@@ -44,7 +44,7 @@ class ImageContentTest {
         }
     }
 
-    @Requires(property = "spec.name", value = "ImageContentTest")
+    @Requires(property = "spec.name", value = "VertexAiGeminiImageContentTest")
     @AiService
     interface ChatService {
         @SystemMessage("You are a helpful AI assistant.")
