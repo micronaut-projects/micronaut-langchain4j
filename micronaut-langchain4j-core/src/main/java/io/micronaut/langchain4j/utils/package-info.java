@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * Utility classes to work with Langchain4j
+ * Utility classes to work with Langchain4j.
  */
 package io.micronaut.langchain4j.utils;

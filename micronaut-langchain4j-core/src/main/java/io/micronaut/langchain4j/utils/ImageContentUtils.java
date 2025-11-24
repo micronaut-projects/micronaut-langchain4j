@@ -24,6 +24,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
 
+/**
+ * Utility class to create {@link ImageContent} instances.
+ */
 @Internal
 public final class ImageContentUtils {
     private ImageContentUtils() {

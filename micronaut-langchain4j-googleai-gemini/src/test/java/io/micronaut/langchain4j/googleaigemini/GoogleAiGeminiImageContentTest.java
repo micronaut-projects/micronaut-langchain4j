@@ -1,6 +1,5 @@
 package io.micronaut.langchain4j.googleaigemini;
 
-import dev.langchain4j.data.image.Image;
 import dev.langchain4j.data.message.ImageContent;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.service.SystemMessage;
@@ -9,7 +8,6 @@ import dev.langchain4j.store.embedding.EmbeddingStore;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.langchain4j.annotation.AiService;
 import io.micronaut.langchain4j.utils.ImageContentUtils;
@@ -20,7 +18,6 @@ import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 
