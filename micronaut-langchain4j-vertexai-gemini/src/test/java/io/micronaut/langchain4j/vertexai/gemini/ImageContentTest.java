@@ -1,6 +1,5 @@
 package io.micronaut.langchain4j.vertexai.gemini;
 
-import dev.langchain4j.data.image.Image;
 import dev.langchain4j.data.message.ImageContent;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
@@ -8,13 +7,13 @@ import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.langchain4j.annotation.AiService;
+import io.micronaut.langchain4j.utils.ImageContentUtils;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,7 +38,7 @@ class ImageContentTest {
                 throw new IllegalStateException("Resource cat.jpg not found");
             }
 
-            var imageContent = imageContent(is, "image/jpeg");
+            var imageContent = ImageContentUtils.imageContent(is, "image/jpeg");
             String response = assertDoesNotThrow(() -> chatService.chat("What animal is shown in this image?", List.of(imageContent)));
             assertTrue(response.toLowerCase(Locale.ROOT).contains("cat"), response + " did not contain 'cat'");
         }
@@ -50,23 +49,5 @@ class ImageContentTest {
     interface ChatService {
         @SystemMessage("You are a helpful AI assistant.")
         String chat(@UserMessage String userMessage, @UserMessage List<ImageContent> images);
-    }
-
-
-    private static ImageContent imageContent(InputStream is, String mediaType) throws IOException {
-        byte[] bytes = is.readAllBytes();
-        return imageContent(bytes, mediaType);
-    }
-
-    private static ImageContent imageContent(byte[] imageBytes, String mediaType) {
-        String base64 = Base64.getEncoder().encodeToString(imageBytes);
-        return imageContent(base64, mediaType);
-    }
-
-    private static ImageContent imageContent(String base64, String mediaType) {
-        return ImageContent.from(Image.builder()
-            .base64Data(base64)
-            .mimeType(mediaType)
-            .build());
     }
 }
