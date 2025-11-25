@@ -14,10 +14,6 @@ import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 @MicronautTest(startApplication = false)
 @Property(name = "langchain4j.open-ai.api-key", value = "blah")
 @Property(name = "langchain4j.open-ai.organization-id", value = "blah")
-@EnabledIfEnvironmentVariable(
-    named = "LANGCHAIN4J_OPEN_AI_API_KEY",
-    matches = "\\.+"
-)
 class OpenAiAiTest {
 
     @Inject
