@@ -29,8 +29,7 @@ import io.micronaut.core.annotation.NonNull;
  */
 @Factory
 @Internal
-
-class MessageWindowChatMemoryFactory {
+public class MessageWindowChatMemoryFactory {
 
     /**
      *
@@ -40,8 +39,8 @@ class MessageWindowChatMemoryFactory {
     @Prototype
     @EachBean(ChatMemoryStore.class)
     @NonNull
-    MessageWindowChatMemory.Builder createMessageWindowChatMemoryBuilder(@NonNull ChatMemoryStore chatMemoryStore,
-                                                                         @NonNull MessageWindowChatMemoryConfiguration config) {
+    public MessageWindowChatMemory.Builder createMessageWindowChatMemoryBuilder(@NonNull ChatMemoryStore chatMemoryStore,
+                                                                                @NonNull MessageWindowChatMemoryConfiguration config) {
         return MessageWindowChatMemory.builder()
             .maxMessages(config.getMaxMessages())
             .chatMemoryStore(chatMemoryStore);

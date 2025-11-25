@@ -15,7 +15,7 @@
  */
 package io.micronaut.langchain4j.aiservices;
 
-import dev.langchain4j.memory.chat.MessageWindowChatMemory;
+import dev.langchain4j.memory.chat.ChatMemoryProvider;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
@@ -23,7 +23,6 @@ import dev.langchain4j.model.moderation.ModerationModel;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.EmbeddingStore;
-import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.BeanProvider;
 import io.micronaut.context.Qualifier;
@@ -90,13 +89,7 @@ public class AiServiceFactory {
 
         lookupByNameOrDefault(name, ModerationModel.class, builder::moderationModel);
 
-        // default to in-memory chat store, but allow replacement
-        lookupByNameOrDefault(name, InMemoryChatMemoryStore.class, new InMemoryChatMemoryStore(), (store) -> builder.chatMemory(
-            MessageWindowChatMemory.builder()
-                .maxMessages(10)
-                .chatMemoryStore(store)
-                .build()
-        ));
+        lookupByNameOrDefault(name, ChatMemoryProvider.class, builder::chatMemoryProvider);
 
         lookupByNameOrDefault(name, EmbeddingModel.class, null, embeddingModel ->
             lookupByNameOrDefault(name, EmbeddingStore.class, null, embeddingStore ->
