@@ -18,7 +18,7 @@ import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
     named = "LANGCHAIN4J_OPEN_AI_API_KEY",
     matches = "\\.+"
 )
-public class OpenAiAiTest {
+class OpenAiAiTest {
 
     @Inject
     DefaultOpenAiChatModelConfiguration chatLanguageModelConfiguration;
