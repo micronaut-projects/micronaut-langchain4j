@@ -128,7 +128,7 @@ public class AiServiceFactory {
             configurer.accept(defaultValue);
         }
 
-        provider.ifPresent(configurer);
-        provider.find(qualifier).ifPresent(configurer);
+        provider.find(qualifier).ifPresentOrElse(configurer,
+            () -> provider.ifPresent(configurer));
     }
 }
