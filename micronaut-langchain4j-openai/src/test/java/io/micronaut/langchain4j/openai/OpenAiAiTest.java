@@ -11,7 +11,7 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
-@MicronautTest
+@MicronautTest(startApplication = false)
 @Property(name = "langchain4j.open-ai.api-key", value = "blah")
 @Property(name = "langchain4j.open-ai.organization-id", value = "blah")
 @EnabledIfEnvironmentVariable(
