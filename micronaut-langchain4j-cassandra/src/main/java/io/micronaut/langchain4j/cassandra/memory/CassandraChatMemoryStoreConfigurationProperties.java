@@ -19,7 +19,7 @@ import dev.langchain4j.store.memory.chat.cassandra.CassandraChatMemoryStore;
 import io.micronaut.context.annotation.ConfigurationBuilder;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * {@link ConfigurationProperties} implementation for {@link CassandraChatMemoryStoreConfiguration}.

@@ -17,7 +17,7 @@ package io.micronaut.langchain4j.embedding;
 
 
 import io.micronaut.context.annotation.EachProperty;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.core.bind.annotation.Bindable;
 import io.micronaut.core.util.StringUtils;
 

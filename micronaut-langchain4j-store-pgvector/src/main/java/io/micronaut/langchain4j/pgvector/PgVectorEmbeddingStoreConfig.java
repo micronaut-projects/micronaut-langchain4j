@@ -18,7 +18,7 @@ package io.micronaut.langchain4j.pgvector;
 import dev.langchain4j.store.embedding.pgvector.MetadataStorageConfig;
 import io.micronaut.context.annotation.EachProperty;
 import io.micronaut.context.annotation.Parameter;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import javax.sql.DataSource;
 
 /**
