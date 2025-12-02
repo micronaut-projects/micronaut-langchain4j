@@ -16,8 +16,8 @@
 package io.micronaut.langchain4j.neo4j.memory;
 
 import dev.langchain4j.community.store.memory.chat.neo4j.Neo4jChatMemoryStore;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.core.util.Toggleable;
 
 /**

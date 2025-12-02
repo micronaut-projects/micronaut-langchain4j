@@ -1,7 +1,7 @@
 package io.micronaut.langchain4j.testutils;
 
 import io.micronaut.context.exceptions.ConfigurationException;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.test.support.TestPropertyProvider;
 
 import java.util.HashMap;

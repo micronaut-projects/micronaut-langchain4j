@@ -19,7 +19,7 @@ import dev.langchain4j.community.store.memory.chat.neo4j.Neo4jChatMemoryStore;
 import io.micronaut.context.annotation.ConfigurationBuilder;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * {@link ConfigurationProperties} implementation for {@link Neo4jChatMemoryStoreConfiguration}.

@@ -15,7 +15,7 @@
  */
 package io.micronaut.langchain4j.store.memory.chat;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Configuration for {@link dev.langchain4j.memory.chat.MessageWindowChatMemory}.
