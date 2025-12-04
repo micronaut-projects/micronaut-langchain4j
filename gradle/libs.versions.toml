@@ -38,7 +38,7 @@ awaitility = "4.3.0"
 #TODO remove when non vulnerable versions exists
 commons-compress = "1.27.1"
 commons-lang3 = "3.18.0"
-gson = "2.12.0"
+gson = "2.13.2"
 jinjava = "2.8.1"
 
 # Managed versions appear in the BOM
