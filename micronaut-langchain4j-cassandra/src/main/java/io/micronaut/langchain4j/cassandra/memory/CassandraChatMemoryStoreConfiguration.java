@@ -49,6 +49,5 @@ public interface CassandraChatMemoryStoreConfiguration extends Toggleable {
      *
      * @return Cassandra Chat Memory Store builder
      */
-    @NonNull
-    CassandraChatMemoryStore.Builder getBuilder();
+    CassandraChatMemoryStore.@NonNull Builder getBuilder();
 }

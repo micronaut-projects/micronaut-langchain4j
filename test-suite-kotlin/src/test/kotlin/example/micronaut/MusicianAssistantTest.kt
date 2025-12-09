@@ -1,7 +1,7 @@
 package example.micronaut
 
 import io.micronaut.context.exceptions.ConfigurationException
-import io.micronaut.core.annotation.NonNull
+import org.jspecify.annotations.NonNull
 import io.micronaut.langchain4j.testutils.OllamaUtils
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import io.micronaut.test.support.TestPropertyProvider

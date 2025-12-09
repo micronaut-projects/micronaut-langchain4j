@@ -29,8 +29,7 @@ import org.jspecify.annotations.NonNull;
 class Neo4jChatMemoryStoreConfigurationProperties implements Neo4jChatMemoryStoreConfiguration {
     private boolean enabled = DEFAULT_ENABLED;
     @ConfigurationBuilder(prefixes = "")
-    @NonNull
-    private Neo4jChatMemoryStore.Builder builder = Neo4jChatMemoryStore.builder();
+    private Neo4jChatMemoryStore.@NonNull Builder builder = Neo4jChatMemoryStore.builder();
 
     private String uri;
     private String user;
@@ -62,7 +61,7 @@ class Neo4jChatMemoryStoreConfigurationProperties implements Neo4jChatMemoryStor
      *
      * @param builder Neo4jChatMemoryStore Builder
      */
-    public void setBuilder(@NonNull Neo4jChatMemoryStore.Builder builder) {
+    public void setBuilder(Neo4jChatMemoryStore.@NonNull Builder builder) {
         this.builder = builder;
     }
 

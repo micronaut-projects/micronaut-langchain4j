@@ -39,8 +39,7 @@ class MessageWindowChatMemoryFactory {
      */
     @Prototype
     @EachBean(ChatMemoryStore.class)
-    @NonNull
-    MessageWindowChatMemory.Builder createMessageWindowChatMemoryBuilder(@NonNull ChatMemoryStore chatMemoryStore,
+    MessageWindowChatMemory.@NonNull Builder createMessageWindowChatMemoryBuilder(@NonNull ChatMemoryStore chatMemoryStore,
                                                                          @NonNull MessageWindowChatMemoryConfiguration config) {
         return MessageWindowChatMemory.builder()
             .maxMessages(config.getMaxMessages())

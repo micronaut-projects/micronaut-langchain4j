@@ -45,6 +45,5 @@ public interface RedisChatMemoryStoreConfiguration extends Toggleable {
      *
      * @return An instance of RedisChatMemoryStore.Builder
      */
-    @NonNull
-    RedisChatMemoryStore.Builder getBuilder();
+    RedisChatMemoryStore.@NonNull Builder getBuilder();
 }

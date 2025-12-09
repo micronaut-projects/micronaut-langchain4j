@@ -50,12 +50,11 @@ class CassandraChatMemoryStoreConfigurationProperties implements CassandraChatMe
     }
 
     @Override
-    @NonNull
-    public CassandraChatMemoryStore.Builder getBuilder() {
+    public CassandraChatMemoryStore.@NonNull Builder getBuilder() {
         return builder;
     }
 
-    public void setBuilder(@NonNull CassandraChatMemoryStore.Builder builder) {
+    public void setBuilder(CassandraChatMemoryStore.@NonNull Builder builder) {
         this.builder = builder;
     }
 }

@@ -46,8 +46,7 @@ public interface Neo4jChatMemoryStoreConfiguration extends Toggleable {
      *
      * @return Neo4j Chat Memory Store Builder
      */
-    @NonNull
-    Neo4jChatMemoryStore.Builder getBuilder();
+    Neo4jChatMemoryStore.@NonNull Builder getBuilder();
 
     /**
      * @return the Bolt URI to a Neo4j instance
