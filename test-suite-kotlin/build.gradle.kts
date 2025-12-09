@@ -1,7 +1,5 @@
 plugins {
-    alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlin.allopen)
-    alias(libs.plugins.ksp)
+    id ("io.micronaut.build.internal.kotlin-ksp")
     `java-library`
 }
 repositories {
@@ -11,8 +9,6 @@ dependencies {
     ksp("io.micronaut:micronaut-inject-kotlin")
     kspTest("io.micronaut:micronaut-inject-kotlin")
     implementation(mnKotlin.micronaut.kotlin.runtime)
-    implementation(libs.kotlin.reflect)
-    implementation(libs.kotlin.stdlib.jdk8)
     ksp(project(":micronaut-langchain4j-processor"))
     implementation(project(":micronaut-langchain4j-core"))
     implementation(project(":micronaut-langchain4j-openai"))

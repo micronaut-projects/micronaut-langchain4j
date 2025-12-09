@@ -46,8 +46,6 @@ managed-langchain4j-community = "1.8.0-beta15"
 testcontainers-redis = "2.2.4"
 astra-db-client = "1.2.7"
 junit-bom = "5.10.2"
-kotlin = "2.0.21"
-ksp = "2.3.3"
 postgresql = "42.7.8"
 
 [libraries]
@@ -105,8 +103,6 @@ testcontainers-neo4j = { module = "org.testcontainers:neo4j" }
 testcontainers-cassandra = { module = "org.testcontainers:cassandra" }
 astra-db-client = { module = "com.datastax.astra:astra-db-client", version.ref = "astra-db-client" }
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit-bom" }
-kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
-kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 
 # BOMs
@@ -119,7 +115,4 @@ gradle-micronaut = { module = "io.micronaut.gradle:micronaut-gradle-plugin", ver
 [bundles]
 
 [plugins]
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlin-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 micronaut-build-shared-settings = { id = "io.micronaut.build.shared.settings", version = "8.0.0-M12" }
