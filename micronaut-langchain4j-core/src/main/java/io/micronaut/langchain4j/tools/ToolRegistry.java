@@ -36,9 +36,9 @@ public class ToolRegistry implements ExecutableMethodProcessor<Tool> {
     public ToolRegistry(BeanContext beanContext) {
         this.beanContext = beanContext;
     }
-
+    
     @Override
-    public void process(BeanDefinition<?> beanDefinition, ExecutableMethod<?, ?> method) {
+    public <B> void process(BeanDefinition<B> beanDefinition, ExecutableMethod<B, ?> method) {
         if (!this.beansWithTools.contains(beanDefinition)) {
             this.beansWithTools.add(beanDefinition);
         }
