@@ -48,7 +48,7 @@ testcontainers-redis = "2.2.4"
 astra-db-client = "1.2.7"
 junit-bom = "5.10.2"
 kotlin = "2.0.21"
-ksp = "2.0.21-1.0.25"
+ksp = "2.3.3"
 postgresql = "42.7.7"
 
 [libraries]
