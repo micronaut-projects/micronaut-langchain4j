@@ -29,8 +29,7 @@ import org.jspecify.annotations.NonNull;
  */
 @Factory
 @Internal
-
-class MessageWindowChatMemoryFactory {
+public class MessageWindowChatMemoryFactory {
 
     /**
      *
@@ -39,7 +38,7 @@ class MessageWindowChatMemoryFactory {
      */
     @Prototype
     @EachBean(ChatMemoryStore.class)
-    MessageWindowChatMemory.@NonNull Builder createMessageWindowChatMemoryBuilder(@NonNull ChatMemoryStore chatMemoryStore,
+    public MessageWindowChatMemory.@NonNull Builder createMessageWindowChatMemoryBuilder(@NonNull ChatMemoryStore chatMemoryStore,
                                                                          @NonNull MessageWindowChatMemoryConfiguration config) {
         return MessageWindowChatMemory.builder()
             .maxMessages(config.getMaxMessages())

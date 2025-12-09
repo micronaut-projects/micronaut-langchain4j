@@ -39,7 +39,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig;
             impl = GoogleAiEmbeddingModel.class)
     },
     properties = {
-        @Lang4jConfig.Property(name = "modelName", common = true, required = true, defaultValue = "gemini-1.5-flash"),
+        @Lang4jConfig.Property(name = "modelName", common = true, required = true, defaultValue = "gemini-2.5-flash"),
         @Lang4jConfig.Property(name = "apiKey", common = true, required = true)
     }
 )

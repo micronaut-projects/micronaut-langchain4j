@@ -1,0 +1,3 @@
+An in-memory embedding store is enable by default, set the following property
+`langchain4j.in-memory.embedding-store.enabled` with value `false` to disable it.
+

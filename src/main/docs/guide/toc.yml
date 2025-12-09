@@ -21,6 +21,7 @@ chatModels:
   vertexai-gemini: VertexAi Gemini
 embeddingStores:
   title: Embedding Stores
+  embeddingStoresInMemory: In-Memory
   elasticsearch: Elastic Search
   mongodb: MongoDB
   neo4j: Neo4j
