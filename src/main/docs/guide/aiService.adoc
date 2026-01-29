@@ -14,20 +14,7 @@ If you want your `@AiService` to return a `Flux<String>` for streaming responses
 
 1. Add the https://github.com/langchain4j/langchain4j-spring/tree/main/langchain4j-reactor[`langchain4j-reactor`] dependency:
 
-[source,xml,subs="attributes+"]
-----
-<dependency>
-    <groupId>dev.langchain4j</groupId>
-    <artifactId>langchain4j-reactor</artifactId>
-</dependency>
-----
-
-For Gradle:
-
-[source,groovy]
-----
-implementation("dev.langchain4j:langchain4j-reactor")
-----
+dependency:dev.langchain4j:langchain4j-reactor[]
 
 2. Configure a streaming chat model in your configuration (instead of or in addition to the regular chat model):
 
