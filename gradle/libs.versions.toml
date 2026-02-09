@@ -16,11 +16,11 @@
 # a managed version (a version which alias starts with "managed-"
 
 [versions]
-micronaut = "5.0.0-M2"
+micronaut = "5.0.0-M10"
 micronaut-platform = "4.10.1"
 micronaut-groovy = "4.7.0"
 micronaut-kotlin = "4.7.0"
-micronaut-serde = "3.0.0-M1"
+micronaut-serde = "3.0.0-M2"
 micronaut-sql = "6.3.3"
 micronaut-opensearch = "1.6.0"
 micronaut-neo4j = "7.0.0"
@@ -41,7 +41,7 @@ gson = "2.13.2"
 jinjava = "2.8.2"
 
 # Managed versions appear in the BOM
-managed-langchain4j = "1.9.1"
+managed-langchain4j = "1.11.0"
 managed-langchain4j-community = "1.8.0-beta15"
 testcontainers-redis = "2.2.4"
 astra-db-client = "1.2.7"
