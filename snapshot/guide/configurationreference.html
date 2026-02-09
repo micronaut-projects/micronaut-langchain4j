@@ -46,7 +46,7 @@
         <div class="docs-content">
             <div class="project">
                 <h1>Configuration Reference</h1>
-                <p><strong>Version:</strong>1.4.1-SNAPSHOT</p>
+                <p><strong>Version:</strong>1.5.0-SNAPSHOT</p>
                 <p></p>
             </div>
 <div class="sect2">
@@ -205,6 +205,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.tool-specifications</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -225,6 +231,24 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.disable-parallel-tool-use</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.server-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.return-server-tool-results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.tool-metadata-keys-to-send</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -319,6 +343,18 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.strict-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.supported-capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.Capability</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.http-client-builder</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.http.client.HttpClientBuilder</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -385,6 +421,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.tool-specifications</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -405,6 +447,24 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.disable-parallel-tool-use</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.server-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.return-server-tool-results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.tool-metadata-keys-to-send</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -495,6 +555,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.strict-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.supported-capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.Capability</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -586,6 +658,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.tool-specifications</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -606,6 +684,24 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.disable-parallel-tool-use</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.server-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.return-server-tool-results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.tool-metadata-keys-to-send</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -700,6 +796,18 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.strict-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.supported-capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.Capability</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.http-client-builder</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.http.client.HttpClientBuilder</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -766,6 +874,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.tool-specifications</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -786,6 +900,24 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.disable-parallel-tool-use</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.server-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.return-server-tool-results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.tool-metadata-keys-to-send</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -876,6 +1008,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.strict-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.supported-capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.Capability</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -967,6 +1111,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.tool-specifications</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -987,6 +1137,24 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.disable-parallel-tool-use</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.server-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.return-server-tool-results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.tool-metadata-keys-to-send</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1081,6 +1249,18 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.strict-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.supported-capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.Capability</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.http-client-builder</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.http.client.HttpClientBuilder</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -1147,6 +1327,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.tool-specifications</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -1167,6 +1353,24 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.disable-parallel-tool-use</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.server-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.return-server-tool-results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.tool-metadata-keys-to-send</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1257,6 +1461,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.strict-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.supported-capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.Capability</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1348,6 +1564,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.tool-specifications</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -1368,6 +1590,24 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.disable-parallel-tool-use</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.server-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.return-server-tool-results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.tool-metadata-keys-to-send</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1462,6 +1702,18 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.strict-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-model.supported-capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.Capability</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.http-client-builder</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.http.client.HttpClientBuilder</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -1528,6 +1780,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.tool-specifications</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -1548,6 +1806,24 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.disable-parallel-tool-use</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.server-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.return-server-tool-results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.tool-metadata-keys-to-send</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1641,6 +1917,18 @@
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.strict-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.chat-models.*.supported-capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.Capability</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
@@ -1725,6 +2013,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.stop-sequences</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1819,6 +2113,24 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.server-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.return-server-tool-results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.tool-metadata-keys-to-send</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.user-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -1827,6 +2139,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.strict-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.supported-capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.Capability</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1893,6 +2217,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.stop-sequences</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1987,6 +2317,24 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.server-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.return-server-tool-results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.tool-metadata-keys-to-send</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.user-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -1995,6 +2343,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.strict-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.supported-capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.Capability</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -2086,6 +2446,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.tool-specifications</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -2176,6 +2542,24 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.server-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.return-server-tool-results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.tool-metadata-keys-to-send</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.user-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -2184,6 +2568,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.strict-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.supported-capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.Capability</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -2250,6 +2646,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.stop-sequences</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -2344,6 +2746,24 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.server-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.return-server-tool-results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.tool-metadata-keys-to-send</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.user-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -2352,6 +2772,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.strict-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.supported-capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.Capability</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -2443,6 +2875,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.tool-specifications</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -2533,6 +2971,24 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.server-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.return-server-tool-results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.tool-metadata-keys-to-send</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.user-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -2541,6 +2997,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.strict-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.supported-capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.Capability</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -2607,6 +3075,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.stop-sequences</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -2701,6 +3175,24 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.server-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.return-server-tool-results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.tool-metadata-keys-to-send</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.user-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -2709,6 +3201,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.strict-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.supported-capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.Capability</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -2800,6 +3304,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.tool-specifications</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -2890,6 +3400,24 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.server-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.return-server-tool-results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.tool-metadata-keys-to-send</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.user-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -2898,6 +3426,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.strict-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-model.supported-capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.Capability</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -2964,6 +3504,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.stop-sequences</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.response-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ResponseFormat</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -3058,6 +3604,24 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.server-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.return-server-tool-results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.tool-metadata-keys-to-send</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.user-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -3066,6 +3630,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.strict-tools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.anthropic.streaming-chat-models.*.supported-capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.Capability</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -3337,6 +3913,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.chat-model.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.azure.ai.openai.models.ReasoningEffortValue</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.chat-models.*.default-request-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ChatRequestParameters</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -3507,6 +4089,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.chat-models.*.supported-capabilities</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.chat-models.*.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.azure.ai.openai.models.ReasoningEffortValue</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -3706,6 +4294,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.chat-model.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.azure.ai.openai.models.ReasoningEffortValue</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.chat-models.*.default-request-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ChatRequestParameters</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -3876,6 +4470,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.chat-models.*.supported-capabilities</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.chat-models.*.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.azure.ai.openai.models.ReasoningEffortValue</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -4075,6 +4675,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.chat-model.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.azure.ai.openai.models.ReasoningEffortValue</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.chat-models.*.default-request-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ChatRequestParameters</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -4245,6 +4851,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.chat-models.*.supported-capabilities</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.chat-models.*.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.azure.ai.openai.models.ReasoningEffortValue</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -4444,6 +5056,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.chat-model.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.azure.ai.openai.models.ReasoningEffortValue</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.chat-models.*.default-request-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ChatRequestParameters</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -4614,6 +5232,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.chat-models.*.supported-capabilities</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.chat-models.*.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.azure.ai.openai.models.ReasoningEffortValue</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -6517,6 +7141,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.streaming-chat-model.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.azure.ai.openai.models.ReasoningEffortValue</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.streaming-chat-models.*.default-request-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ChatRequestParameters</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -6687,6 +7317,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.streaming-chat-models.*.supported-capabilities</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.streaming-chat-models.*.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.azure.ai.openai.models.ReasoningEffortValue</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -6886,6 +7522,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.streaming-chat-model.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.azure.ai.openai.models.ReasoningEffortValue</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.streaming-chat-models.*.default-request-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ChatRequestParameters</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -7056,6 +7698,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.streaming-chat-models.*.supported-capabilities</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.streaming-chat-models.*.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.azure.ai.openai.models.ReasoningEffortValue</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -7255,6 +7903,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.streaming-chat-model.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.azure.ai.openai.models.ReasoningEffortValue</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.streaming-chat-models.*.default-request-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ChatRequestParameters</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -7425,6 +8079,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.streaming-chat-models.*.supported-capabilities</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.streaming-chat-models.*.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.azure.ai.openai.models.ReasoningEffortValue</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -7624,6 +8284,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.streaming-chat-model.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.azure.ai.openai.models.ReasoningEffortValue</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.streaming-chat-models.*.default-request-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.chat.request.ChatRequestParameters</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -7794,6 +8460,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.streaming-chat-models.*.supported-capabilities</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.azure-open-ai.streaming-chat-models.*.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.azure.ai.openai.models.ReasoningEffortValue</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -10295,6 +10967,30 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.allow-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.allow-google-maps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.retrieve-google-maps-widget-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.allow-url-context</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.thinking-config</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiThinkingConfig</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -10326,6 +11022,18 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.enable-enhanced-civic-answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.media-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiMediaResolutionLevel</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.media-resolution-per-part-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -10487,6 +11195,30 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.allow-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.allow-google-maps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.retrieve-google-maps-widget-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.allow-url-context</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.thinking-config</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiThinkingConfig</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -10518,6 +11250,18 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.enable-enhanced-civic-answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.media-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiMediaResolutionLevel</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.media-resolution-per-part-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -10700,6 +11444,30 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.allow-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.allow-google-maps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.retrieve-google-maps-widget-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.allow-url-context</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.thinking-config</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiThinkingConfig</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -10731,6 +11499,18 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.enable-enhanced-civic-answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.media-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiMediaResolutionLevel</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.media-resolution-per-part-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -10892,6 +11672,30 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.allow-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.allow-google-maps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.retrieve-google-maps-widget-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.allow-url-context</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.thinking-config</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiThinkingConfig</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -10923,6 +11727,18 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.enable-enhanced-civic-answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.media-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiMediaResolutionLevel</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.media-resolution-per-part-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -11105,6 +11921,30 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.allow-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.allow-google-maps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.retrieve-google-maps-widget-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.allow-url-context</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.thinking-config</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiThinkingConfig</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -11136,6 +11976,18 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.enable-enhanced-civic-answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.media-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiMediaResolutionLevel</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.media-resolution-per-part-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -11297,6 +12149,30 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.allow-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.allow-google-maps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.retrieve-google-maps-widget-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.allow-url-context</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.thinking-config</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiThinkingConfig</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -11328,6 +12204,18 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.enable-enhanced-civic-answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.media-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiMediaResolutionLevel</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.media-resolution-per-part-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -11510,6 +12398,30 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.allow-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.allow-google-maps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.retrieve-google-maps-widget-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.allow-url-context</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.thinking-config</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiThinkingConfig</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -11541,6 +12453,18 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.enable-enhanced-civic-answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.media-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiMediaResolutionLevel</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-model.media-resolution-per-part-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -11702,6 +12626,30 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.allow-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.allow-google-maps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.retrieve-google-maps-widget-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.allow-url-context</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.thinking-config</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiThinkingConfig</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -11733,6 +12681,18 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.enable-enhanced-civic-answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.media-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiMediaResolutionLevel</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.chat-models.*.media-resolution-per-part-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -11915,6 +12875,30 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.allow-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.allow-google-maps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.retrieve-google-maps-widget-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.allow-url-context</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.thinking-config</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiThinkingConfig</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -11946,6 +12930,18 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.enable-enhanced-civic-answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.media-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiMediaResolutionLevel</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.media-resolution-per-part-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -12095,6 +13091,30 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.allow-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.allow-google-maps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.retrieve-google-maps-widget-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.allow-url-context</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.thinking-config</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiThinkingConfig</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -12126,6 +13146,18 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.enable-enhanced-civic-answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.media-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiMediaResolutionLevel</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.media-resolution-per-part-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -12296,6 +13328,30 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.allow-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.allow-google-maps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.retrieve-google-maps-widget-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.allow-url-context</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.thinking-config</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiThinkingConfig</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -12327,6 +13383,18 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.enable-enhanced-civic-answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.media-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiMediaResolutionLevel</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.media-resolution-per-part-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -12476,6 +13544,30 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.allow-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.allow-google-maps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.retrieve-google-maps-widget-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.allow-url-context</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.thinking-config</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiThinkingConfig</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -12507,6 +13599,18 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.enable-enhanced-civic-answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.media-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiMediaResolutionLevel</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.media-resolution-per-part-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -12677,6 +13781,30 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.allow-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.allow-google-maps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.retrieve-google-maps-widget-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.allow-url-context</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.thinking-config</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiThinkingConfig</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -12708,6 +13836,18 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.enable-enhanced-civic-answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.media-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiMediaResolutionLevel</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.media-resolution-per-part-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -12857,6 +13997,30 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.allow-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.allow-google-maps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.retrieve-google-maps-widget-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.allow-url-context</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.thinking-config</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiThinkingConfig</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -12888,6 +14052,18 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.enable-enhanced-civic-answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.media-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiMediaResolutionLevel</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.media-resolution-per-part-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -13058,6 +14234,30 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.allow-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.allow-google-maps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.retrieve-google-maps-widget-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.allow-url-context</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.thinking-config</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiThinkingConfig</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -13089,6 +14289,18 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.enable-enhanced-civic-answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.media-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiMediaResolutionLevel</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-model.media-resolution-per-part-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -13238,6 +14450,30 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.allow-google-search</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.allow-google-maps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.retrieve-google-maps-widget-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.allow-url-context</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.thinking-config</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiThinkingConfig</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -13269,6 +14505,18 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.enable-enhanced-civic-answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.media-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.model.googleai.GeminiMediaResolutionLevel</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.google-ai-gemini.streaming-chat-models.*.media-resolution-per-part-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -14963,6 +16211,18 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-model.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-model.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-model.timeout</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -15085,6 +16345,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-models.*.random-seed</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-models.*.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-models.*.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -15236,6 +16508,18 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-model.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-model.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-model.timeout</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -15358,6 +16642,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-models.*.random-seed</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-models.*.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-models.*.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -15509,6 +16805,18 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-model.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-model.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-model.timeout</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -15631,6 +16939,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-models.*.random-seed</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-models.*.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-models.*.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -15782,6 +17102,18 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-model.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-model.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-model.timeout</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -15904,6 +17236,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-models.*.random-seed</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-models.*.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.chat-models.*.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -16571,6 +17915,18 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-model.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-model.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-model.timeout</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -16687,6 +18043,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-models.*.random-seed</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-models.*.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-models.*.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -16832,6 +18200,18 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-model.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-model.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-model.timeout</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -16948,6 +18328,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-models.*.random-seed</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-models.*.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-models.*.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -17093,6 +18485,18 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-model.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-model.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-model.timeout</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -17209,6 +18613,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-models.*.random-seed</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-models.*.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-models.*.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -17354,6 +18770,18 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-model.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-model.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-model.timeout</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -17470,6 +18898,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-models.*.random-seed</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-models.*.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.mistral-ai.streaming-chat-models.*.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -24962,7 +26402,19 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.send-thinking</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -25005,6 +26457,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.custom-query-params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -25154,7 +26612,19 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.send-thinking</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -25197,6 +26667,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.custom-query-params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -25367,7 +26843,19 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.send-thinking</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -25410,6 +26898,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.custom-query-params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -25559,7 +27053,19 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.send-thinking</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -25602,6 +27108,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.custom-query-params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -25799,7 +27311,19 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.send-thinking</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -25842,6 +27366,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.custom-query-params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -25991,7 +27521,19 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.send-thinking</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -26034,6 +27576,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.custom-query-params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -26204,7 +27752,19 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.send-thinking</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -26247,6 +27807,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.custom-query-params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-model.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -26396,7 +27962,19 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.send-thinking</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -26439,6 +28017,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.custom-query-params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.chat-models.*.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -29198,7 +30782,25 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.accumulate-tool-call-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -29235,6 +30837,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.custom-query-params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -29378,7 +30986,25 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.accumulate-tool-call-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -29415,6 +31041,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.custom-query-params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -29579,7 +31211,25 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.accumulate-tool-call-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -29616,6 +31266,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.custom-query-params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -29759,7 +31415,25 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.accumulate-tool-call-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -29796,6 +31470,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.custom-query-params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -29987,7 +31667,25 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.accumulate-tool-call-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -30024,6 +31722,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.custom-query-params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -30167,7 +31871,25 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.accumulate-tool-call-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -30204,6 +31926,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.custom-query-params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -30368,7 +32096,25 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.accumulate-tool-call-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -30405,6 +32151,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.custom-query-params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-model.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -30548,7 +32300,25 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.reasoning-effort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.return-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.send-thinking</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.accumulate-tool-call-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -30585,6 +32355,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.custom-query-params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.open-ai.streaming-chat-models.*.custom-parameters</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -34562,6 +36338,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.api-endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-models.*.project</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -34684,6 +36466,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-models.*.credentials</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">com.google.auth.oauth2.GoogleCredentials</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-models.*.api-endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -34835,6 +36623,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.api-endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-models.*.project</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -34957,6 +36751,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-models.*.credentials</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">com.google.auth.oauth2.GoogleCredentials</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-models.*.api-endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -35108,6 +36908,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.api-endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-models.*.project</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -35230,6 +37036,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-models.*.credentials</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">com.google.auth.oauth2.GoogleCredentials</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-models.*.api-endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -35381,6 +37193,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-model.api-endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-models.*.project</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -35503,6 +37321,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-models.*.credentials</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">com.google.auth.oauth2.GoogleCredentials</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.chat-models.*.api-endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -35636,6 +37460,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.api-endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.custom-headers</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -35752,6 +37582,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-models.*.listeners</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-models.*.api-endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -35897,6 +37733,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.api-endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.custom-headers</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -36013,6 +37855,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-models.*.listeners</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-models.*.api-endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -36158,6 +38006,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.api-endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.custom-headers</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -36274,6 +38128,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-models.*.listeners</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-models.*.api-endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -36419,6 +38279,12 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.api-endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-model.custom-headers</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -36535,6 +38401,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-models.*.listeners</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.vertex-ai-gemini.streaming-chat-models.*.api-endpoint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
