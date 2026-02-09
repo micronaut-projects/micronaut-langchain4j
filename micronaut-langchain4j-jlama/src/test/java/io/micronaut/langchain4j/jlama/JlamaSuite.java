@@ -10,6 +10,7 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 @SuiteDisplayName("ChatModels Test Compatibility Kit for the Jlama implementation")
 @ExcludeClassNamePatterns({
         "io.micronaut.langchain4j.chatmodels.tck.tests.AiServiceTest",
+        "io.micronaut.langchain4j.chatmodels.tck.tests.AiServiceMemoryIdTest",
         "io.micronaut.langchain4j.chatmodels.tck.tests.ChatLanguageModelTest",
         "io.micronaut.langchain4j.chatmodels.tck.tests.StreamingChatLanguageModelTest"
 })
