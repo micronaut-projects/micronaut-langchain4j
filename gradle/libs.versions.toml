@@ -41,7 +41,7 @@ gson = "2.13.2"
 jinjava = "2.8.2"
 
 # Managed versions appear in the BOM
-managed-langchain4j = "1.9.1"
+managed-langchain4j = "1.11.0"
 managed-langchain4j-community = "1.8.0-beta15"
 testcontainers-redis = "2.2.4"
 astra-db-client = "1.2.7"
