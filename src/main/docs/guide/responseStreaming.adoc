@@ -1,0 +1,22 @@
+It is possible to use https://docs.langchain4j.dev/tutorials/response-streaming/[response streaming].
+First, you need to configure a streaming chat model with `langchain4j.\*.streaming-chat-model.*`. For example, with <<openai, OpenAI>>:
+
+.Example Configuration
+[configuration]
+----
+langchain4j:
+  open-ai:
+    api-key: ${OPENAI_API_KEY}
+    streaming-chat-model:
+      model-name: gpt-4o
+      log-requests: true
+      log-responses: true
+----
+
+Then, you will be able to inject a bean of type `dev.langchain4j.model.chat.StreamingChatModel`.
+
+Additionally, you can use an <<aiService, AI Service>> with a method whose return type uses Project Reactor.
+For example, an `@AIService` interface with a method whose return type is `Flux<String>`.
+In order to do this, you will need to add the following dependency:
+
+dependency:langchain4j-reactor[groupId=dev.langchain4j]

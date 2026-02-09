@@ -35,6 +35,7 @@ micronaut-gradle-plugin = "4.5.4"
 micronaut-sourcegen = "1.8.4"
 micronaut-grpc = "4.12.0"
 micronaut-oraclecloud = "5.5.2"
+micronaut-reactor = "3.9.1"
 groovy = "4.0.29"
 spock = "2.3-groovy-4.0"
 awaitility = "4.3.0"
@@ -68,6 +69,7 @@ micronaut-opensearch = { module = 'io.micronaut.opensearch:micronaut-opensearch-
 micronaut-elasticsearch = { module = 'io.micronaut.elasticsearch:micronaut-elasticsearch-bom', version.ref = 'micronaut-elasticsearch' }
 micronaut-neo4j = { module = 'io.micronaut.neo4j:micronaut-neo4j-bom', version.ref = 'micronaut-neo4j' }
 micronaut-logging = { module = 'io.micronaut.logging:micronaut-logging-bom', version.ref = 'micronaut-logging' }
+micronaut-reactor = { module = 'io.micronaut.reactor:micronaut-reactor-bom', version.ref = 'micronaut-reactor' }
 micronaut-serde = { module = 'io.micronaut.serde:micronaut-serde-bom', version.ref = 'micronaut-serde' }
 micronaut-sql = { module = 'io.micronaut.sql:micronaut-sql-bom', version.ref = 'micronaut-sql' }
 micronaut-oraclecloud = { module = 'io.micronaut.oraclecloud:micronaut-oraclecloud-bom', version.ref = 'micronaut-oraclecloud' }
@@ -97,6 +99,9 @@ langchain4j-qdrant = { module = 'dev.langchain4j:langchain4j-qdrant' }
 langchain4j-google-ai-gemini = { module = 'dev.langchain4j:langchain4j-google-ai-gemini' }
 langchain4j-cassandra = { module = 'dev.langchain4j:langchain4j-cassandra' }
 langchain4j-embeddings-all-minilm-l6-v2 = { module = 'dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2' }
+langchain4j-reactor = { module = "dev.langchain4j:langchain4j-reactor" }
+reactor-test = { module = "io.projectreactor:reactor-test" }
+
 junit-platform-engine = { module = "org.junit.platform:junit-platform-suite-engine" }
 awaitility = { module = 'org.awaitility:awaitility', version.ref = "awaitility" }
 testcontainers-junit-jupiter = { module = "org.testcontainers:junit-jupiter" }

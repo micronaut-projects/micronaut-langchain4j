@@ -2,6 +2,7 @@ introduction:
   title: Introduction
 quickStart:
   title: Quick Start
+responseStreaming: Response Streaming
 aiService: AI Service
 tools: Tools
 chatModels:
