@@ -38,7 +38,7 @@ awaitility = "4.3.0"
 commons-compress = "1.27.1"
 commons-lang3 = "3.18.0"
 gson = "2.13.2"
-jinjava = "2.8.2"
+jinjava = "2.8.3"
 
 # Managed versions appear in the BOM
 managed-langchain4j = "1.11.0"
