@@ -46,7 +46,7 @@ managed-langchain4j-community = "1.8.0-beta15"
 testcontainers-redis = "2.2.4"
 astra-db-client = "1.2.7"
 junit-bom = "6.0.2"
-postgresql = "42.7.8"
+postgresql = "42.7.9"
 
 [libraries]
 # TODO Remove when non vulnerable versions exist
