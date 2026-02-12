@@ -50,7 +50,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Property(name = "langchain4j.oci-gen-ai.chat-model.model-name", value = "orca-mini")
 @Property(name = "langchain4j.oci-gen-ai.compartment-id", value = "test")
 @Property(name = "micronaut.server.port", value = "${random.port}")
-public class OciGenAiTest {
+class OciGenAiTest {
 
     @Test
     void testClient(GenerativeAiInference generativeAiInference) {
