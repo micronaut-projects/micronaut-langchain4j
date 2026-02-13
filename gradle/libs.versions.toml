@@ -44,6 +44,7 @@ commons-compress = "1.27.1"
 commons-lang3 = "3.18.0"
 gson = "2.12.0"
 jinjava = "2.8.1"
+testcontainers = "2.0.3"
 
 # Managed versions appear in the BOM
 managed-langchain4j = "1.11.0"
@@ -104,10 +105,14 @@ reactor-test = { module = "io.projectreactor:reactor-test" }
 
 junit-platform-engine = { module = "org.junit.platform:junit-platform-suite-engine" }
 awaitility = { module = 'org.awaitility:awaitility', version.ref = "awaitility" }
-testcontainers-junit-jupiter = { module = "org.testcontainers:junit-jupiter" }
+testcontainers-bom = { module = 'org.testcontainers:testcontainers-bom', version.ref = 'testcontainers' }
+testcontainers-junit-jupiter = { module = "org.testcontainers:testcontainers-junit-jupiter" }
 testcontainers-redis = { module = "com.redis:testcontainers-redis", version.ref = "testcontainers-redis" }
-testcontainers-neo4j = { module = "org.testcontainers:neo4j" }
-testcontainers-cassandra = { module = "org.testcontainers:cassandra" }
+testcontainers-neo4j = { module = "org.testcontainers:testcontainers-neo4j" }
+testcontainers-ollama = { module = "org.testcontainers:testcontainers-ollama" }
+testcontainers-cassandra = { module = "org.testcontainers:testcontainers-cassandra" }
+testcontainers-qdrant = { module = "org.testcontainers:testcontainers-qdrant" }
+
 astra-db-client = { module = "com.datastax.astra:astra-db-client", version.ref = "astra-db-client" }
 
 # BOMs
