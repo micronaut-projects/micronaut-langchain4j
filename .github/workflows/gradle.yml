@@ -69,6 +69,7 @@ jobs:
       - name: "🛠 Build with Gradle"
         id: gradle
         run: |
+          echo api.version=1.44 >> ~/.docker-java.properties
           ./gradlew jacocoReport check --no-daemon --continue
 
       - name: "🔎 Run static analysis"
