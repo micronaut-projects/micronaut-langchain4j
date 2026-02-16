@@ -62,6 +62,7 @@ val micronautVersion = providers.gradleProperty("micronautVersion")
 configure<io.micronaut.build.MicronautBuildSettingsExtension> {
     useStandardizedProjectNames.set(true)
     importMicronautCatalog()
+    importMicronautCatalog("micronaut-reactor")
     importMicronautCatalog("micronaut-sourcegen")
     importMicronautCatalog("micronaut-groovy")
     importMicronautCatalog("micronaut-kotlin")
