@@ -33,6 +33,7 @@ micronaut-gradle-plugin = "4.6.2"
 micronaut-sourcegen = "2.0.0-M1"
 micronaut-grpc = "4.12.0"
 micronaut-oraclecloud = "5.6.2"
+micronaut-reactor = "4.0.0-M1"
 awaitility = "4.3.0"
 #TODO remove when non vulnerable versions exists
 commons-compress = "1.28.0"
@@ -57,6 +58,7 @@ jinjava = { module = "com.hubspot.jinjava:jinjava", version.ref = "jinjava"}
 
 # Micronaut BOMS
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut'  }
+micronaut-reactor = { module = 'io.micronaut.reactor:micronaut-reactor-bom', version.ref = 'micronaut-reactor' }
 micronaut-groovy = { module = 'io.micronaut.groovy:micronaut-groovy-bom', version.ref = 'micronaut-groovy' }
 micronaut-kotlin = { module = 'io.micronaut.kotlin:micronaut-kotlin-bom', version.ref = 'micronaut-kotlin' }
 micronaut-redis = { module = 'io.micronaut.redis:micronaut-redis-bom', version.ref = 'micronaut-redis' }
