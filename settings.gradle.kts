@@ -23,9 +23,7 @@ include("micronaut-langchain4j-bom")
 include("micronaut-langchain4j-processor")
 include("micronaut-langchain4j-core")
 include("micronaut-langchain4j-cassandra")
-if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_21)) {
-    include("micronaut-langchain4j-jlama")
-}
+include("micronaut-langchain4j-jlama")
 include("micronaut-langchain4j-googleai-gemini")
 include("micronaut-langchain4j-ollama")
 include("micronaut-langchain4j-anthropic")
