@@ -9,7 +9,7 @@ dependencies {
     annotationProcessor(projects.micronautLangchain4jProcessor)
     implementation(projects.micronautLangchain4jCore)
     implementation(projects.micronautLangchain4jOpenai)
-    testImplementation(platform(mnTestResources.boms.testcontainers))
+    testImplementation(platform(mnTest.boms.testcontainers))
     testImplementation(projects.micronautLangchain4jOllama)
 
     testImplementation(projects.testSuiteUtils)

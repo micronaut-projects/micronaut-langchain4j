@@ -9,7 +9,8 @@ Provides core support for OLLama test resources.
 dependencies {
     api(mnTestResources.micronaut.test.resources.core)
     api(mnTestResources.micronaut.test.resources.testcontainers)
-    implementation("org.testcontainers:ollama")
+    implementation(platform(mnTest.boms.testcontainers))
+    implementation(libs.testcontainers.ollama)
     testImplementation(mnTest.micronaut.test.junit5)
     testRuntimeOnly(mnTestResources.micronaut.test.resources.embedded)
     testRuntimeOnly(mnTest.junit.jupiter.engine)

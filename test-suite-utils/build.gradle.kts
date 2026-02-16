@@ -7,8 +7,8 @@ repositories {
 dependencies {
     api(mn.jspecify)
     implementation(mnTest.micronaut.test.junit5)
-    implementation(platform(mnTestResources.boms.testcontainers))
-    implementation("org.testcontainers:ollama")
+    implementation(platform(mnTest.boms.testcontainers))
+    implementation(libs.testcontainers.ollama)
     implementation(libs.testcontainers.redis)
     implementation(libs.testcontainers.neo4j)
     implementation(libs.testcontainers.cassandra)

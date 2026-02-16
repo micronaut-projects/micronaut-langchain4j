@@ -15,7 +15,7 @@ dependencies {
     testImplementation(project(":micronaut-langchain4j-ollama"))
     testImplementation(project(":test-suite-utils"))
     testImplementation(mnTest.micronaut.test.junit5)
-    testImplementation(platform(mnTestResources.boms.testcontainers))
+    testImplementation(platform(mnTest.boms.testcontainers))
     testImplementation(mnTest.junit.jupiter.engine)
     testImplementation(libs.testcontainers.junit.jupiter)
     testRuntimeOnly(mnLogging.logback.classic)

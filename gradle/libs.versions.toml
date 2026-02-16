@@ -104,7 +104,10 @@ awaitility = { module = 'org.awaitility:awaitility', version.ref = "awaitility" 
 testcontainers-junit-jupiter = { module = "org.testcontainers:testcontainers-junit-jupiter" }
 testcontainers-redis = { module = "com.redis:testcontainers-redis", version.ref = "testcontainers-redis" }
 testcontainers-neo4j = { module = "org.testcontainers:testcontainers-neo4j" }
+testcontainers-ollama = { module = "org.testcontainers:testcontainers-ollama" }
 testcontainers-cassandra = { module = "org.testcontainers:testcontainers-cassandra" }
+testcontainers-qdrant = { module = "org.testcontainers:testcontainers-qdrant" }
+
 astra-db-client = { module = "com.datastax.astra:astra-db-client", version.ref = "astra-db-client" }
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit-bom" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
