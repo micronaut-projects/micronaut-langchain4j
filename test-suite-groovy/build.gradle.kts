@@ -16,7 +16,7 @@ dependencies {
     testImplementation(project(":test-suite-utils"))
     testCompileOnly(mn.micronaut.inject.groovy)
     testImplementation(mnTest.micronaut.test.junit5)
-    testImplementation(platform(libs.testcontainers.bom))
+    testImplementation(platform(mnTestResources.boms.testcontainers))
     testImplementation(mnTest.junit.jupiter.engine)
     testImplementation(libs.testcontainers.junit.jupiter)
     testRuntimeOnly(mnLogging.logback.classic)

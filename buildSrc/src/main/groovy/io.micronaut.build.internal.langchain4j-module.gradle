@@ -16,7 +16,6 @@ dependencies {
     testImplementation(mnTest.micronaut.test.junit5)
     testRuntimeOnly(mnLogging.logback.classic)
     testRuntimeOnly(mnTest.junit.jupiter.engine)
-    testImplementation(platform(libs.testcontainers.bom))
     testImplementation(libs.junit.platform.engine)
 }
 
