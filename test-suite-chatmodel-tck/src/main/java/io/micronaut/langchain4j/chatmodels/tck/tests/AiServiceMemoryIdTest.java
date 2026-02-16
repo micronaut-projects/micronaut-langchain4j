@@ -1,10 +1,11 @@
-package io.micronaut.langchain4j.openai;
+package io.micronaut.langchain4j.chatmodels.tck.tests;
 
 import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.UserMessage;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.langchain4j.annotation.AiService;
+import io.micronaut.langchain4j.chatmodels.tck.SuiteCondition;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
@@ -16,10 +17,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@EnabledIfEnvironmentVariables(value = {
-    @EnabledIfEnvironmentVariable(named = "LANGCHAIN4J_OPEN_AI_API_KEY", matches = "\\.+"),
-    @EnabledIfEnvironmentVariable(named = "LANGCHAIN4J_OPEN_AI_ORGANIZATION_ID", matches = "\\.+"),
-})
+@Requires(condition = SuiteCondition.class)
 @Property(name = "spec.name", value = "AiServiceMemoryIdTest")
 @MicronautTest(startApplication = false)
 class AiServiceMemoryIdTest {

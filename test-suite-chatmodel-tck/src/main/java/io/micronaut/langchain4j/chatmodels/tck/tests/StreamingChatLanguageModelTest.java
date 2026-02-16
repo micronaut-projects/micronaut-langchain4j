@@ -1,6 +1,5 @@
 package io.micronaut.langchain4j.chatmodels.tck.tests;
 
-import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.chat.response.StreamingChatResponseHandler;
