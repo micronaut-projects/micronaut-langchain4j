@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api(platform(libs.langchain4j.community.bom))
+    api(platform(libs.boms.langchain4j.community))
     api(platform(mnOraclecloud.micronaut.oraclecloud.bom))
     implementation(libs.langchain4j.oci.genai)
     api(libs.micronaut.oraclecloud.bmc.generativeaiinference)
