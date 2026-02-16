@@ -101,10 +101,10 @@ langchain4j-reactor = { module = "dev.langchain4j:langchain4j-reactor" }
 reactor-test = { module = "io.projectreactor:reactor-test" }
 junit-platform-engine = { module = "org.junit.platform:junit-platform-suite-engine" }
 awaitility = { module = 'org.awaitility:awaitility', version.ref = "awaitility" }
-testcontainers-junit-jupiter = { module = "org.testcontainers:junit-jupiter" }
+testcontainers-junit-jupiter = { module = "org.testcontainers:testcontainers-junit-jupiter" }
 testcontainers-redis = { module = "com.redis:testcontainers-redis", version.ref = "testcontainers-redis" }
-testcontainers-neo4j = { module = "org.testcontainers:neo4j" }
-testcontainers-cassandra = { module = "org.testcontainers:cassandra" }
+testcontainers-neo4j = { module = "org.testcontainers:testcontainers-neo4j" }
+testcontainers-cassandra = { module = "org.testcontainers:testcontainers-cassandra" }
 astra-db-client = { module = "com.datastax.astra:astra-db-client", version.ref = "astra-db-client" }
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit-bom" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
