@@ -9,7 +9,7 @@ repositories {
 }
 
 micronautBuild {
-    javaVersion = 21
+    javaVersion = 25
 }
 
 if (System.getenv("SONAR_TOKEN") != null) {
