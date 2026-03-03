@@ -2,14 +2,9 @@ plugins {
     id("io.micronaut.build.internal.langchain4j-module")
 }
 
-micronautBuild {
-    javaVersion = 25
-}
-
 dependencies {
     annotationProcessor(projects.micronautLangchain4jProcessor)
     annotationProcessor(mnSourcegen.micronaut.sourcegen.generator.java)
     api(projects.micronautLangchain4jCore)
     testImplementation(projects.testSuiteChatmodelTck)
 }
-
