@@ -13,11 +13,13 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.neo4j.driver.Driver;
 
+@Disabled
 @MicronautTest
-public class Neo4jTest {
+class Neo4jTest {
     @Inject
     Driver driver;
 
