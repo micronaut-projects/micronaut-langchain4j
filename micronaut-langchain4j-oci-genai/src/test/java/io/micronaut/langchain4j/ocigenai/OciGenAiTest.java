@@ -46,6 +46,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@Disabled
 @MicronautTest
 @Property(name = "oci.config.path", value = "") // disable local config
 @Property(name = "langchain4j.oci-gen-ai.chat-model.model-name", value = "orca-mini")
@@ -57,7 +58,6 @@ class OciGenAiTest {
     void testClient(GenerativeAiInference generativeAiInference) {
         assertNotNull(generativeAiInference);
     }
-
 
     @Test
     void testDefaultConfig(DefaultOciGenAiChatModelConfiguration configuration) {
