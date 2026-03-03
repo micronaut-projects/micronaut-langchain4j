@@ -1,9 +1,5 @@
 plugins {
     id("io.micronaut.build.internal.langchain4j-module-provider")
-    id("io.micronaut.test-resources")
-}
-micronaut {
-    version.set(libs.versions.micronaut.platform.get())
 }
 dependencies {
     implementation(platform(libs.langchain4j.community.bom))
