@@ -1,4 +1,5 @@
 plugins {
+    id ("io.micronaut.build.internal.java-base")
     `java-library`
 }
 repositories {
@@ -13,8 +14,4 @@ dependencies {
     implementation(libs.testcontainers.neo4j)
     implementation(libs.testcontainers.cassandra)
     implementation(libs.astra.db.client)
-}
-java {
-    sourceCompatibility = JavaVersion.VERSION_25
-    targetCompatibility = JavaVersion.VERSION_25
 }
