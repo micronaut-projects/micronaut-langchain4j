@@ -37,6 +37,9 @@ public final class Neo4jUtils {
             GlobalTestLifecycle.registerShutdownHook();
         }
         return Map.of(
+            "neo4j.uri", container.getBoltUrl(),
+            "neo4j.username", "neo4j",
+            "neo4j.password", container.getAdminPassword(),
             "langchain4j.chat-memory-store.neo4j.uri", container.getBoltUrl(),
             "langchain4j.chat-memory-store.neo4j.user", "neo4j",
             "langchain4j.chat-memory-store.neo4j.password", container.getAdminPassword()

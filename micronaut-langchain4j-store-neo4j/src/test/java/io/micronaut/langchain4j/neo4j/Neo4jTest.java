@@ -9,15 +9,26 @@ import dev.langchain4j.store.embedding.EmbeddingMatch;
 import dev.langchain4j.store.embedding.EmbeddingSearchRequest;
 import dev.langchain4j.store.embedding.EmbeddingSearchResult;
 import dev.langchain4j.store.embedding.EmbeddingStore;
+import io.micronaut.context.exceptions.ConfigurationException;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.langchain4j.testutils.Neo4jUtils;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import io.micronaut.test.support.TestPropertyProvider;
 import jakarta.inject.Inject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.neo4j.driver.Driver;
 
 @MicronautTest
-public class Neo4jTest {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class Neo4jTest implements TestPropertyProvider {
+
     @Inject
     Driver driver;
 
@@ -46,5 +57,19 @@ public class Neo4jTest {
 
         System.out.println(embeddingMatch.score()); // 0.8144288608390052
         Assertions.assertEquals("I like football.", embeddingMatch.embedded().text());
+    }
+
+    @Override
+    public @NonNull Map<String, String> getProperties() {
+        Map<String, String> result = new HashMap<>();
+        try {
+            Map<String, Object> props = Neo4jUtils.getProperties();
+            for (String k : props.keySet()) {
+                result.put(k, props.get(k).toString());
+            }
+        } catch (Exception e) {
+            throw new ConfigurationException("Could not set Neo4j properties", e);
+        }
+        return result;
     }
 }
