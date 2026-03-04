@@ -12,7 +12,7 @@
     <script src="../js/guide.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <script src="../js/docs.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
 </head>
 <body class="body">
     <div id="main">
@@ -46,7 +46,7 @@
         <div class="docs-content">
             <div class="project">
                 <h1>Configuration Reference</h1>
-                <p><strong>Version:</strong>1.5.0-SNAPSHOT</p>
+                <p><strong>Version:</strong>2.0.0-SNAPSHOT</p>
                 <p></p>
             </div>
 <div class="sect2">
@@ -16074,10 +16074,1465 @@
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
+<h3 id="_micronaut_langchain4j_jlama_config_properties">Micronaut Langchain4j Jlama Config Properties</h3>
+<a id="dev.langchain4j.model.jlama.JlamaChatModel$JlamaChatModelBuilder" href="#dev.langchain4j.model.jlama.JlamaChatModel$JlamaChatModelBuilder">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 71. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/jlama/JlamaChatModel.JlamaChatModelBuilder.html">JlamaChatModel$JlamaChatModelBuilder</a></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.working-quantized-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.safetensors.DType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.max-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.working-quantized-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.safetensors.DType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.max-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="dev.langchain4j.model.jlama.JlamaChatModel$JlamaChatModelBuilder" href="#dev.langchain4j.model.jlama.JlamaChatModel$JlamaChatModelBuilder">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 72. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/jlama/JlamaChatModel.JlamaChatModelBuilder.html">JlamaChatModel$JlamaChatModelBuilder</a></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.working-quantized-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.safetensors.DType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.max-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.working-quantized-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.safetensors.DType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.max-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="dev.langchain4j.model.jlama.JlamaChatModel$JlamaChatModelBuilder" href="#dev.langchain4j.model.jlama.JlamaChatModel$JlamaChatModelBuilder">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 73. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/jlama/JlamaChatModel.JlamaChatModelBuilder.html">JlamaChatModel$JlamaChatModelBuilder</a></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.working-quantized-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.safetensors.DType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.max-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.working-quantized-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.safetensors.DType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.max-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="dev.langchain4j.model.jlama.JlamaChatModel$JlamaChatModelBuilder" href="#dev.langchain4j.model.jlama.JlamaChatModel$JlamaChatModelBuilder">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 74. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/jlama/JlamaChatModel.JlamaChatModelBuilder.html">JlamaChatModel$JlamaChatModelBuilder</a></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.working-quantized-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.safetensors.DType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-model.max-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.working-quantized-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.safetensors.DType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.chat-models.*.max-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="dev.langchain4j.model.jlama.JlamaEmbeddingModel$JlamaEmbeddingModelBuilder" href="#dev.langchain4j.model.jlama.JlamaEmbeddingModel$JlamaEmbeddingModelBuilder">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 75. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/jlama/JlamaEmbeddingModel.JlamaEmbeddingModelBuilder.html">JlamaEmbeddingModel$JlamaEmbeddingModelBuilder</a></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.pooling-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.model.functions.Generator$PoolingType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.pooling-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.model.functions.Generator$PoolingType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="dev.langchain4j.model.jlama.JlamaEmbeddingModel$JlamaEmbeddingModelBuilder" href="#dev.langchain4j.model.jlama.JlamaEmbeddingModel$JlamaEmbeddingModelBuilder">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 76. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/jlama/JlamaEmbeddingModel.JlamaEmbeddingModelBuilder.html">JlamaEmbeddingModel$JlamaEmbeddingModelBuilder</a></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.pooling-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.model.functions.Generator$PoolingType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.pooling-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.model.functions.Generator$PoolingType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="dev.langchain4j.model.jlama.JlamaEmbeddingModel$JlamaEmbeddingModelBuilder" href="#dev.langchain4j.model.jlama.JlamaEmbeddingModel$JlamaEmbeddingModelBuilder">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 77. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/jlama/JlamaEmbeddingModel.JlamaEmbeddingModelBuilder.html">JlamaEmbeddingModel$JlamaEmbeddingModelBuilder</a></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.pooling-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.model.functions.Generator$PoolingType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.pooling-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.model.functions.Generator$PoolingType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="dev.langchain4j.model.jlama.JlamaEmbeddingModel$JlamaEmbeddingModelBuilder" href="#dev.langchain4j.model.jlama.JlamaEmbeddingModel$JlamaEmbeddingModelBuilder">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 78. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/jlama/JlamaEmbeddingModel.JlamaEmbeddingModelBuilder.html">JlamaEmbeddingModel$JlamaEmbeddingModelBuilder</a></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.pooling-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.model.functions.Generator$PoolingType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-model.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.pooling-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.model.functions.Generator$PoolingType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.embedding-models.*.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="dev.langchain4j.model.jlama.JlamaStreamingChatModel$JlamaStreamingChatModelBuilder" href="#dev.langchain4j.model.jlama.JlamaStreamingChatModel$JlamaStreamingChatModelBuilder">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 79. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/jlama/JlamaStreamingChatModel.JlamaStreamingChatModelBuilder.html">JlamaStreamingChatModel$JlamaStreamingChatModelBuilder</a></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.working-quantized-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.safetensors.DType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.max-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.working-quantized-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.safetensors.DType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.max-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="dev.langchain4j.model.jlama.JlamaStreamingChatModel$JlamaStreamingChatModelBuilder" href="#dev.langchain4j.model.jlama.JlamaStreamingChatModel$JlamaStreamingChatModelBuilder">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 80. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/jlama/JlamaStreamingChatModel.JlamaStreamingChatModelBuilder.html">JlamaStreamingChatModel$JlamaStreamingChatModelBuilder</a></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.working-quantized-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.safetensors.DType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.max-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.working-quantized-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.safetensors.DType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.max-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="dev.langchain4j.model.jlama.JlamaStreamingChatModel$JlamaStreamingChatModelBuilder" href="#dev.langchain4j.model.jlama.JlamaStreamingChatModel$JlamaStreamingChatModelBuilder">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 81. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/jlama/JlamaStreamingChatModel.JlamaStreamingChatModelBuilder.html">JlamaStreamingChatModel$JlamaStreamingChatModelBuilder</a></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.working-quantized-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.safetensors.DType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.max-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.working-quantized-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.safetensors.DType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.max-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="dev.langchain4j.model.jlama.JlamaStreamingChatModel$JlamaStreamingChatModelBuilder" href="#dev.langchain4j.model.jlama.JlamaStreamingChatModel$JlamaStreamingChatModelBuilder">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 82. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/jlama/JlamaStreamingChatModel.JlamaStreamingChatModelBuilder.html">JlamaStreamingChatModel$JlamaStreamingChatModelBuilder</a></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.working-quantized-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.safetensors.DType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-model.max-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.model-cache-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.model-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.auth-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.thread-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.quantize-model-at-runtime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.working-directory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.file.Path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.working-quantized-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.github.tjake.jlama.safetensors.DType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.temperature</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Float</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.jlama.streaming-chat-models.*.max-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
 <h3 id="_micronaut_langchain4j_mistralai_config_properties">Micronaut Langchain4j Mistralai Config Properties</h3>
 <a id="io.micronaut.langchain4j.mistralai.CommonMistralAiChatModelConfiguration" href="#io.micronaut.langchain4j.mistralai.CommonMistralAiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 71. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mistralai/CommonMistralAiChatModelConfiguration.html">CommonMistralAiChatModelConfiguration</a></caption>
+<caption class="title">Table 83. Configuration Properties for <a href="../api/io/micronaut/langchain4j/mistralai/CommonMistralAiChatModelConfiguration.html">CommonMistralAiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -16134,7 +17589,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.mistralai.MistralAiChatModel$MistralAiChatModelBuilder" href="#dev.langchain4j.model.mistralai.MistralAiChatModel$MistralAiChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 72. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiChatModel.MistralAiChatModelBuilder.html">MistralAiChatModel$MistralAiChatModelBuilder</a></caption>
+<caption class="title">Table 84. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiChatModel.MistralAiChatModelBuilder.html">MistralAiChatModel$MistralAiChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -16431,7 +17886,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.mistralai.MistralAiChatModel$MistralAiChatModelBuilder" href="#dev.langchain4j.model.mistralai.MistralAiChatModel$MistralAiChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 73. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiChatModel.MistralAiChatModelBuilder.html">MistralAiChatModel$MistralAiChatModelBuilder</a></caption>
+<caption class="title">Table 85. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiChatModel.MistralAiChatModelBuilder.html">MistralAiChatModel$MistralAiChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -16728,7 +18183,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.mistralai.MistralAiChatModel$MistralAiChatModelBuilder" href="#dev.langchain4j.model.mistralai.MistralAiChatModel$MistralAiChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 74. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiChatModel.MistralAiChatModelBuilder.html">MistralAiChatModel$MistralAiChatModelBuilder</a></caption>
+<caption class="title">Table 86. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiChatModel.MistralAiChatModelBuilder.html">MistralAiChatModel$MistralAiChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -17025,7 +18480,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.mistralai.MistralAiChatModel$MistralAiChatModelBuilder" href="#dev.langchain4j.model.mistralai.MistralAiChatModel$MistralAiChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 75. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiChatModel.MistralAiChatModelBuilder.html">MistralAiChatModel$MistralAiChatModelBuilder</a></caption>
+<caption class="title">Table 87. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiChatModel.MistralAiChatModelBuilder.html">MistralAiChatModel$MistralAiChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -17322,7 +18777,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.mistralai.MistralAiEmbeddingModel$MistralAiEmbeddingModelBuilder" href="#dev.langchain4j.model.mistralai.MistralAiEmbeddingModel$MistralAiEmbeddingModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 76. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiEmbeddingModel.MistralAiEmbeddingModelBuilder.html">MistralAiEmbeddingModel$MistralAiEmbeddingModelBuilder</a></caption>
+<caption class="title">Table 88. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiEmbeddingModel.MistralAiEmbeddingModelBuilder.html">MistralAiEmbeddingModel$MistralAiEmbeddingModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -17451,7 +18906,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.mistralai.MistralAiEmbeddingModel$MistralAiEmbeddingModelBuilder" href="#dev.langchain4j.model.mistralai.MistralAiEmbeddingModel$MistralAiEmbeddingModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 77. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiEmbeddingModel.MistralAiEmbeddingModelBuilder.html">MistralAiEmbeddingModel$MistralAiEmbeddingModelBuilder</a></caption>
+<caption class="title">Table 89. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiEmbeddingModel.MistralAiEmbeddingModelBuilder.html">MistralAiEmbeddingModel$MistralAiEmbeddingModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -17580,7 +19035,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.mistralai.MistralAiEmbeddingModel$MistralAiEmbeddingModelBuilder" href="#dev.langchain4j.model.mistralai.MistralAiEmbeddingModel$MistralAiEmbeddingModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 78. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiEmbeddingModel.MistralAiEmbeddingModelBuilder.html">MistralAiEmbeddingModel$MistralAiEmbeddingModelBuilder</a></caption>
+<caption class="title">Table 90. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiEmbeddingModel.MistralAiEmbeddingModelBuilder.html">MistralAiEmbeddingModel$MistralAiEmbeddingModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -17709,7 +19164,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.mistralai.MistralAiEmbeddingModel$MistralAiEmbeddingModelBuilder" href="#dev.langchain4j.model.mistralai.MistralAiEmbeddingModel$MistralAiEmbeddingModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 79. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiEmbeddingModel.MistralAiEmbeddingModelBuilder.html">MistralAiEmbeddingModel$MistralAiEmbeddingModelBuilder</a></caption>
+<caption class="title">Table 91. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiEmbeddingModel.MistralAiEmbeddingModelBuilder.html">MistralAiEmbeddingModel$MistralAiEmbeddingModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -17838,7 +19293,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.mistralai.MistralAiStreamingChatModel$MistralAiStreamingChatModelBuilder" href="#dev.langchain4j.model.mistralai.MistralAiStreamingChatModel$MistralAiStreamingChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 80. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiStreamingChatModel.MistralAiStreamingChatModelBuilder.html">MistralAiStreamingChatModel$MistralAiStreamingChatModelBuilder</a></caption>
+<caption class="title">Table 92. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiStreamingChatModel.MistralAiStreamingChatModelBuilder.html">MistralAiStreamingChatModel$MistralAiStreamingChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -18123,7 +19578,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.mistralai.MistralAiStreamingChatModel$MistralAiStreamingChatModelBuilder" href="#dev.langchain4j.model.mistralai.MistralAiStreamingChatModel$MistralAiStreamingChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 81. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiStreamingChatModel.MistralAiStreamingChatModelBuilder.html">MistralAiStreamingChatModel$MistralAiStreamingChatModelBuilder</a></caption>
+<caption class="title">Table 93. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiStreamingChatModel.MistralAiStreamingChatModelBuilder.html">MistralAiStreamingChatModel$MistralAiStreamingChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -18408,7 +19863,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.mistralai.MistralAiStreamingChatModel$MistralAiStreamingChatModelBuilder" href="#dev.langchain4j.model.mistralai.MistralAiStreamingChatModel$MistralAiStreamingChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 82. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiStreamingChatModel.MistralAiStreamingChatModelBuilder.html">MistralAiStreamingChatModel$MistralAiStreamingChatModelBuilder</a></caption>
+<caption class="title">Table 94. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiStreamingChatModel.MistralAiStreamingChatModelBuilder.html">MistralAiStreamingChatModel$MistralAiStreamingChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -18693,7 +20148,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.mistralai.MistralAiStreamingChatModel$MistralAiStreamingChatModelBuilder" href="#dev.langchain4j.model.mistralai.MistralAiStreamingChatModel$MistralAiStreamingChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 83. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiStreamingChatModel.MistralAiStreamingChatModelBuilder.html">MistralAiStreamingChatModel$MistralAiStreamingChatModelBuilder</a></caption>
+<caption class="title">Table 95. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/mistralai/MistralAiStreamingChatModel.MistralAiStreamingChatModelBuilder.html">MistralAiStreamingChatModel$MistralAiStreamingChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -18981,7 +20436,7 @@
 <h3 id="_micronaut_langchain4j_oci_genai_config_properties">Micronaut Langchain4j Oci Genai Config Properties</h3>
 <a id="io.micronaut.langchain4j.ocigenai.CommonOciGenAiChatModelConfiguration" href="#io.micronaut.langchain4j.ocigenai.CommonOciGenAiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 84. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ocigenai/CommonOciGenAiChatModelConfiguration.html">CommonOciGenAiChatModelConfiguration</a></caption>
+<caption class="title">Table 96. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ocigenai/CommonOciGenAiChatModelConfiguration.html">CommonOciGenAiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -19020,7 +20475,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.model.oracle.oci.genai.OciGenAiCohereChatModel$Builder" href="#dev.langchain4j.community.model.oracle.oci.genai.OciGenAiCohereChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 85. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiCohereChatModel.Builder.html">OciGenAiCohereChatModel$Builder</a></caption>
+<caption class="title">Table 97. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiCohereChatModel.Builder.html">OciGenAiCohereChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -19281,7 +20736,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.model.oracle.oci.genai.OciGenAiCohereChatModel$Builder" href="#dev.langchain4j.community.model.oracle.oci.genai.OciGenAiCohereChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 86. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiCohereChatModel.Builder.html">OciGenAiCohereChatModel$Builder</a></caption>
+<caption class="title">Table 98. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiCohereChatModel.Builder.html">OciGenAiCohereChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -19542,7 +20997,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.model.oracle.oci.genai.OciGenAiCohereChatModel$Builder" href="#dev.langchain4j.community.model.oracle.oci.genai.OciGenAiCohereChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 87. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiCohereChatModel.Builder.html">OciGenAiCohereChatModel$Builder</a></caption>
+<caption class="title">Table 99. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiCohereChatModel.Builder.html">OciGenAiCohereChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -19803,7 +21258,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.model.oracle.oci.genai.OciGenAiCohereChatModel$Builder" href="#dev.langchain4j.community.model.oracle.oci.genai.OciGenAiCohereChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 88. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiCohereChatModel.Builder.html">OciGenAiCohereChatModel$Builder</a></caption>
+<caption class="title">Table 100. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiCohereChatModel.Builder.html">OciGenAiCohereChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -20064,7 +21519,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.model.oracle.oci.genai.OciGenAiCohereStreamingChatModel$Builder" href="#dev.langchain4j.community.model.oracle.oci.genai.OciGenAiCohereStreamingChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 89. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiCohereStreamingChatModel.Builder.html">OciGenAiCohereStreamingChatModel$Builder</a></caption>
+<caption class="title">Table 101. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiCohereStreamingChatModel.Builder.html">OciGenAiCohereStreamingChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -20325,7 +21780,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.model.oracle.oci.genai.OciGenAiCohereStreamingChatModel$Builder" href="#dev.langchain4j.community.model.oracle.oci.genai.OciGenAiCohereStreamingChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 90. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiCohereStreamingChatModel.Builder.html">OciGenAiCohereStreamingChatModel$Builder</a></caption>
+<caption class="title">Table 102. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiCohereStreamingChatModel.Builder.html">OciGenAiCohereStreamingChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -20586,7 +22041,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.model.oracle.oci.genai.OciGenAiCohereStreamingChatModel$Builder" href="#dev.langchain4j.community.model.oracle.oci.genai.OciGenAiCohereStreamingChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 91. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiCohereStreamingChatModel.Builder.html">OciGenAiCohereStreamingChatModel$Builder</a></caption>
+<caption class="title">Table 103. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiCohereStreamingChatModel.Builder.html">OciGenAiCohereStreamingChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -20847,7 +22302,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.model.oracle.oci.genai.OciGenAiCohereStreamingChatModel$Builder" href="#dev.langchain4j.community.model.oracle.oci.genai.OciGenAiCohereStreamingChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 92. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiCohereStreamingChatModel.Builder.html">OciGenAiCohereStreamingChatModel$Builder</a></caption>
+<caption class="title">Table 104. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiCohereStreamingChatModel.Builder.html">OciGenAiCohereStreamingChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -21108,7 +22563,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.model.oracle.oci.genai.OciGenAiChatModel$Builder" href="#dev.langchain4j.community.model.oracle.oci.genai.OciGenAiChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 93. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiChatModel.Builder.html">OciGenAiChatModel$Builder</a></caption>
+<caption class="title">Table 105. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiChatModel.Builder.html">OciGenAiChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -21321,7 +22776,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.model.oracle.oci.genai.OciGenAiChatModel$Builder" href="#dev.langchain4j.community.model.oracle.oci.genai.OciGenAiChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 94. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiChatModel.Builder.html">OciGenAiChatModel$Builder</a></caption>
+<caption class="title">Table 106. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiChatModel.Builder.html">OciGenAiChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -21534,7 +22989,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.model.oracle.oci.genai.OciGenAiChatModel$Builder" href="#dev.langchain4j.community.model.oracle.oci.genai.OciGenAiChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 95. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiChatModel.Builder.html">OciGenAiChatModel$Builder</a></caption>
+<caption class="title">Table 107. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiChatModel.Builder.html">OciGenAiChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -21747,7 +23202,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.model.oracle.oci.genai.OciGenAiChatModel$Builder" href="#dev.langchain4j.community.model.oracle.oci.genai.OciGenAiChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 96. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiChatModel.Builder.html">OciGenAiChatModel$Builder</a></caption>
+<caption class="title">Table 108. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiChatModel.Builder.html">OciGenAiChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -21960,7 +23415,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.model.oracle.oci.genai.OciGenAiStreamingChatModel$Builder" href="#dev.langchain4j.community.model.oracle.oci.genai.OciGenAiStreamingChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 97. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiStreamingChatModel.Builder.html">OciGenAiStreamingChatModel$Builder</a></caption>
+<caption class="title">Table 109. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiStreamingChatModel.Builder.html">OciGenAiStreamingChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -22173,7 +23628,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.model.oracle.oci.genai.OciGenAiStreamingChatModel$Builder" href="#dev.langchain4j.community.model.oracle.oci.genai.OciGenAiStreamingChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 98. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiStreamingChatModel.Builder.html">OciGenAiStreamingChatModel$Builder</a></caption>
+<caption class="title">Table 110. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiStreamingChatModel.Builder.html">OciGenAiStreamingChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -22386,7 +23841,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.model.oracle.oci.genai.OciGenAiStreamingChatModel$Builder" href="#dev.langchain4j.community.model.oracle.oci.genai.OciGenAiStreamingChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 99. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiStreamingChatModel.Builder.html">OciGenAiStreamingChatModel$Builder</a></caption>
+<caption class="title">Table 111. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiStreamingChatModel.Builder.html">OciGenAiStreamingChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -22599,7 +24054,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.model.oracle.oci.genai.OciGenAiStreamingChatModel$Builder" href="#dev.langchain4j.community.model.oracle.oci.genai.OciGenAiStreamingChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 100. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiStreamingChatModel.Builder.html">OciGenAiStreamingChatModel$Builder</a></caption>
+<caption class="title">Table 112. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/model/oracle/oci/genai/OciGenAiStreamingChatModel.Builder.html">OciGenAiStreamingChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -22815,7 +24270,7 @@
 <h3 id="_micronaut_langchain4j_ollama_config_properties">Micronaut Langchain4j Ollama Config Properties</h3>
 <a id="io.micronaut.langchain4j.ollama.CommonOllamaChatModelConfiguration" href="#io.micronaut.langchain4j.ollama.CommonOllamaChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 101. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ollama/CommonOllamaChatModelConfiguration.html">CommonOllamaChatModelConfiguration</a></caption>
+<caption class="title">Table 113. Configuration Properties for <a href="../api/io/micronaut/langchain4j/ollama/CommonOllamaChatModelConfiguration.html">CommonOllamaChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -22872,7 +24327,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.ollama.OllamaChatModel$OllamaChatModelBuilder" href="#dev.langchain4j.model.ollama.OllamaChatModel$OllamaChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 102. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaChatModel.OllamaChatModelBuilder.html">OllamaChatModel$OllamaChatModelBuilder</a></caption>
+<caption class="title">Table 114. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaChatModel.OllamaChatModelBuilder.html">OllamaChatModel$OllamaChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -23229,7 +24684,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.ollama.OllamaChatModel$OllamaChatModelBuilder" href="#dev.langchain4j.model.ollama.OllamaChatModel$OllamaChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 103. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaChatModel.OllamaChatModelBuilder.html">OllamaChatModel$OllamaChatModelBuilder</a></caption>
+<caption class="title">Table 115. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaChatModel.OllamaChatModelBuilder.html">OllamaChatModel$OllamaChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -23586,7 +25041,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.ollama.OllamaChatModel$OllamaChatModelBuilder" href="#dev.langchain4j.model.ollama.OllamaChatModel$OllamaChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 104. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaChatModel.OllamaChatModelBuilder.html">OllamaChatModel$OllamaChatModelBuilder</a></caption>
+<caption class="title">Table 116. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaChatModel.OllamaChatModelBuilder.html">OllamaChatModel$OllamaChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -23943,7 +25398,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.ollama.OllamaChatModel$OllamaChatModelBuilder" href="#dev.langchain4j.model.ollama.OllamaChatModel$OllamaChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 105. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaChatModel.OllamaChatModelBuilder.html">OllamaChatModel$OllamaChatModelBuilder</a></caption>
+<caption class="title">Table 117. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaChatModel.OllamaChatModelBuilder.html">OllamaChatModel$OllamaChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -24300,7 +25755,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.ollama.OllamaEmbeddingModel$OllamaEmbeddingModelBuilder" href="#dev.langchain4j.model.ollama.OllamaEmbeddingModel$OllamaEmbeddingModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 106. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaEmbeddingModel.OllamaEmbeddingModelBuilder.html">OllamaEmbeddingModel$OllamaEmbeddingModelBuilder</a></caption>
+<caption class="title">Table 118. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaEmbeddingModel.OllamaEmbeddingModelBuilder.html">OllamaEmbeddingModel$OllamaEmbeddingModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -24417,7 +25872,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.ollama.OllamaEmbeddingModel$OllamaEmbeddingModelBuilder" href="#dev.langchain4j.model.ollama.OllamaEmbeddingModel$OllamaEmbeddingModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 107. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaEmbeddingModel.OllamaEmbeddingModelBuilder.html">OllamaEmbeddingModel$OllamaEmbeddingModelBuilder</a></caption>
+<caption class="title">Table 119. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaEmbeddingModel.OllamaEmbeddingModelBuilder.html">OllamaEmbeddingModel$OllamaEmbeddingModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -24534,7 +25989,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.ollama.OllamaEmbeddingModel$OllamaEmbeddingModelBuilder" href="#dev.langchain4j.model.ollama.OllamaEmbeddingModel$OllamaEmbeddingModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 108. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaEmbeddingModel.OllamaEmbeddingModelBuilder.html">OllamaEmbeddingModel$OllamaEmbeddingModelBuilder</a></caption>
+<caption class="title">Table 120. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaEmbeddingModel.OllamaEmbeddingModelBuilder.html">OllamaEmbeddingModel$OllamaEmbeddingModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -24651,7 +26106,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.ollama.OllamaEmbeddingModel$OllamaEmbeddingModelBuilder" href="#dev.langchain4j.model.ollama.OllamaEmbeddingModel$OllamaEmbeddingModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 109. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaEmbeddingModel.OllamaEmbeddingModelBuilder.html">OllamaEmbeddingModel$OllamaEmbeddingModelBuilder</a></caption>
+<caption class="title">Table 121. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaEmbeddingModel.OllamaEmbeddingModelBuilder.html">OllamaEmbeddingModel$OllamaEmbeddingModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -24768,7 +26223,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.ollama.OllamaStreamingChatModel$OllamaStreamingChatModelBuilder" href="#dev.langchain4j.model.ollama.OllamaStreamingChatModel$OllamaStreamingChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 110. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaStreamingChatModel.OllamaStreamingChatModelBuilder.html">OllamaStreamingChatModel$OllamaStreamingChatModelBuilder</a></caption>
+<caption class="title">Table 122. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaStreamingChatModel.OllamaStreamingChatModelBuilder.html">OllamaStreamingChatModel$OllamaStreamingChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -25113,7 +26568,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.ollama.OllamaStreamingChatModel$OllamaStreamingChatModelBuilder" href="#dev.langchain4j.model.ollama.OllamaStreamingChatModel$OllamaStreamingChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 111. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaStreamingChatModel.OllamaStreamingChatModelBuilder.html">OllamaStreamingChatModel$OllamaStreamingChatModelBuilder</a></caption>
+<caption class="title">Table 123. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaStreamingChatModel.OllamaStreamingChatModelBuilder.html">OllamaStreamingChatModel$OllamaStreamingChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -25458,7 +26913,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.ollama.OllamaStreamingChatModel$OllamaStreamingChatModelBuilder" href="#dev.langchain4j.model.ollama.OllamaStreamingChatModel$OllamaStreamingChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 112. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaStreamingChatModel.OllamaStreamingChatModelBuilder.html">OllamaStreamingChatModel$OllamaStreamingChatModelBuilder</a></caption>
+<caption class="title">Table 124. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaStreamingChatModel.OllamaStreamingChatModelBuilder.html">OllamaStreamingChatModel$OllamaStreamingChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -25803,7 +27258,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.ollama.OllamaStreamingChatModel$OllamaStreamingChatModelBuilder" href="#dev.langchain4j.model.ollama.OllamaStreamingChatModel$OllamaStreamingChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 113. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaStreamingChatModel.OllamaStreamingChatModelBuilder.html">OllamaStreamingChatModel$OllamaStreamingChatModelBuilder</a></caption>
+<caption class="title">Table 125. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/ollama/OllamaStreamingChatModel.OllamaStreamingChatModelBuilder.html">OllamaStreamingChatModel$OllamaStreamingChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -26151,7 +27606,7 @@
 <h3 id="_micronaut_langchain4j_openai_config_properties">Micronaut Langchain4j Openai Config Properties</h3>
 <a id="io.micronaut.langchain4j.openai.CommonOpenAiChatModelConfiguration" href="#io.micronaut.langchain4j.openai.CommonOpenAiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 114. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/CommonOpenAiChatModelConfiguration.html">CommonOpenAiChatModelConfiguration</a></caption>
+<caption class="title">Table 126. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/CommonOpenAiChatModelConfiguration.html">CommonOpenAiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -26214,7 +27669,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.DefaultOpenAiChatModelConfiguration" href="#io.micronaut.langchain4j.openai.DefaultOpenAiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 115. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiChatModelConfiguration.html">DefaultOpenAiChatModelConfiguration</a></caption>
+<caption class="title">Table 127. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiChatModelConfiguration.html">DefaultOpenAiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -26241,7 +27696,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiChatModel$OpenAiChatModelBuilder" href="#dev.langchain4j.model.openai.OpenAiChatModel$OpenAiChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 116. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiChatModel.OpenAiChatModelBuilder.html">OpenAiChatModel$OpenAiChatModelBuilder</a></caption>
+<caption class="title">Table 128. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiChatModel.OpenAiChatModelBuilder.html">OpenAiChatModel$OpenAiChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -26682,7 +28137,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiChatModel$OpenAiChatModelBuilder" href="#dev.langchain4j.model.openai.OpenAiChatModel$OpenAiChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 117. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiChatModel.OpenAiChatModelBuilder.html">OpenAiChatModel$OpenAiChatModelBuilder</a></caption>
+<caption class="title">Table 129. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiChatModel.OpenAiChatModelBuilder.html">OpenAiChatModel$OpenAiChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -27123,7 +28578,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.NamedOpenAiChatModelConfiguration" href="#io.micronaut.langchain4j.openai.NamedOpenAiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 118. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiChatModelConfiguration.html">NamedOpenAiChatModelConfiguration</a></caption>
+<caption class="title">Table 130. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiChatModelConfiguration.html">NamedOpenAiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -27150,7 +28605,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiChatModel$OpenAiChatModelBuilder" href="#dev.langchain4j.model.openai.OpenAiChatModel$OpenAiChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 119. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiChatModel.OpenAiChatModelBuilder.html">OpenAiChatModel$OpenAiChatModelBuilder</a></caption>
+<caption class="title">Table 131. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiChatModel.OpenAiChatModelBuilder.html">OpenAiChatModel$OpenAiChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -27591,7 +29046,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiChatModel$OpenAiChatModelBuilder" href="#dev.langchain4j.model.openai.OpenAiChatModel$OpenAiChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 120. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiChatModel.OpenAiChatModelBuilder.html">OpenAiChatModel$OpenAiChatModelBuilder</a></caption>
+<caption class="title">Table 132. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiChatModel.OpenAiChatModelBuilder.html">OpenAiChatModel$OpenAiChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -28032,7 +29487,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.DefaultOpenAiEmbeddingModelConfiguration" href="#io.micronaut.langchain4j.openai.DefaultOpenAiEmbeddingModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 121. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiEmbeddingModelConfiguration.html">DefaultOpenAiEmbeddingModelConfiguration</a></caption>
+<caption class="title">Table 133. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiEmbeddingModelConfiguration.html">DefaultOpenAiEmbeddingModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -28059,7 +29514,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiEmbeddingModel$OpenAiEmbeddingModelBuilder" href="#dev.langchain4j.model.openai.OpenAiEmbeddingModel$OpenAiEmbeddingModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 122. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiEmbeddingModel.OpenAiEmbeddingModelBuilder.html">OpenAiEmbeddingModel$OpenAiEmbeddingModelBuilder</a></caption>
+<caption class="title">Table 134. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiEmbeddingModel.OpenAiEmbeddingModelBuilder.html">OpenAiEmbeddingModel$OpenAiEmbeddingModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -28272,7 +29727,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiEmbeddingModel$OpenAiEmbeddingModelBuilder" href="#dev.langchain4j.model.openai.OpenAiEmbeddingModel$OpenAiEmbeddingModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 123. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiEmbeddingModel.OpenAiEmbeddingModelBuilder.html">OpenAiEmbeddingModel$OpenAiEmbeddingModelBuilder</a></caption>
+<caption class="title">Table 135. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiEmbeddingModel.OpenAiEmbeddingModelBuilder.html">OpenAiEmbeddingModel$OpenAiEmbeddingModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -28485,7 +29940,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.NamedOpenAiEmbeddingModelConfiguration" href="#io.micronaut.langchain4j.openai.NamedOpenAiEmbeddingModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 124. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiEmbeddingModelConfiguration.html">NamedOpenAiEmbeddingModelConfiguration</a></caption>
+<caption class="title">Table 136. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiEmbeddingModelConfiguration.html">NamedOpenAiEmbeddingModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -28512,7 +29967,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiEmbeddingModel$OpenAiEmbeddingModelBuilder" href="#dev.langchain4j.model.openai.OpenAiEmbeddingModel$OpenAiEmbeddingModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 125. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiEmbeddingModel.OpenAiEmbeddingModelBuilder.html">OpenAiEmbeddingModel$OpenAiEmbeddingModelBuilder</a></caption>
+<caption class="title">Table 137. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiEmbeddingModel.OpenAiEmbeddingModelBuilder.html">OpenAiEmbeddingModel$OpenAiEmbeddingModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -28725,7 +30180,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiEmbeddingModel$OpenAiEmbeddingModelBuilder" href="#dev.langchain4j.model.openai.OpenAiEmbeddingModel$OpenAiEmbeddingModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 126. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiEmbeddingModel.OpenAiEmbeddingModelBuilder.html">OpenAiEmbeddingModel$OpenAiEmbeddingModelBuilder</a></caption>
+<caption class="title">Table 138. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiEmbeddingModel.OpenAiEmbeddingModelBuilder.html">OpenAiEmbeddingModel$OpenAiEmbeddingModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -28938,7 +30393,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.DefaultOpenAiImageModelConfiguration" href="#io.micronaut.langchain4j.openai.DefaultOpenAiImageModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 127. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiImageModelConfiguration.html">DefaultOpenAiImageModelConfiguration</a></caption>
+<caption class="title">Table 139. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiImageModelConfiguration.html">DefaultOpenAiImageModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -28965,7 +30420,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiImageModel$OpenAiImageModelBuilder" href="#dev.langchain4j.model.openai.OpenAiImageModel$OpenAiImageModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 128. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiImageModel.OpenAiImageModelBuilder.html">OpenAiImageModel$OpenAiImageModelBuilder</a></caption>
+<caption class="title">Table 140. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiImageModel.OpenAiImageModelBuilder.html">OpenAiImageModel$OpenAiImageModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -29190,7 +30645,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiImageModel$OpenAiImageModelBuilder" href="#dev.langchain4j.model.openai.OpenAiImageModel$OpenAiImageModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 129. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiImageModel.OpenAiImageModelBuilder.html">OpenAiImageModel$OpenAiImageModelBuilder</a></caption>
+<caption class="title">Table 141. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiImageModel.OpenAiImageModelBuilder.html">OpenAiImageModel$OpenAiImageModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -29415,7 +30870,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.NamedOpenAiImageModelConfiguration" href="#io.micronaut.langchain4j.openai.NamedOpenAiImageModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 130. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiImageModelConfiguration.html">NamedOpenAiImageModelConfiguration</a></caption>
+<caption class="title">Table 142. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiImageModelConfiguration.html">NamedOpenAiImageModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -29442,7 +30897,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiImageModel$OpenAiImageModelBuilder" href="#dev.langchain4j.model.openai.OpenAiImageModel$OpenAiImageModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 131. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiImageModel.OpenAiImageModelBuilder.html">OpenAiImageModel$OpenAiImageModelBuilder</a></caption>
+<caption class="title">Table 143. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiImageModel.OpenAiImageModelBuilder.html">OpenAiImageModel$OpenAiImageModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -29667,7 +31122,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiImageModel$OpenAiImageModelBuilder" href="#dev.langchain4j.model.openai.OpenAiImageModel$OpenAiImageModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 132. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiImageModel.OpenAiImageModelBuilder.html">OpenAiImageModel$OpenAiImageModelBuilder</a></caption>
+<caption class="title">Table 144. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiImageModel.OpenAiImageModelBuilder.html">OpenAiImageModel$OpenAiImageModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -29892,7 +31347,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiModerationModel$OpenAiModerationModelBuilder" href="#dev.langchain4j.model.openai.OpenAiModerationModel$OpenAiModerationModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 133. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiModerationModel.OpenAiModerationModelBuilder.html">OpenAiModerationModel$OpenAiModerationModelBuilder</a></caption>
+<caption class="title">Table 145. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiModerationModel.OpenAiModerationModelBuilder.html">OpenAiModerationModel$OpenAiModerationModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -30069,7 +31524,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiModerationModel$OpenAiModerationModelBuilder" href="#dev.langchain4j.model.openai.OpenAiModerationModel$OpenAiModerationModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 134. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiModerationModel.OpenAiModerationModelBuilder.html">OpenAiModerationModel$OpenAiModerationModelBuilder</a></caption>
+<caption class="title">Table 146. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiModerationModel.OpenAiModerationModelBuilder.html">OpenAiModerationModel$OpenAiModerationModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -30246,7 +31701,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiModerationModel$OpenAiModerationModelBuilder" href="#dev.langchain4j.model.openai.OpenAiModerationModel$OpenAiModerationModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 135. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiModerationModel.OpenAiModerationModelBuilder.html">OpenAiModerationModel$OpenAiModerationModelBuilder</a></caption>
+<caption class="title">Table 147. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiModerationModel.OpenAiModerationModelBuilder.html">OpenAiModerationModel$OpenAiModerationModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -30423,7 +31878,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiModerationModel$OpenAiModerationModelBuilder" href="#dev.langchain4j.model.openai.OpenAiModerationModel$OpenAiModerationModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 136. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiModerationModel.OpenAiModerationModelBuilder.html">OpenAiModerationModel$OpenAiModerationModelBuilder</a></caption>
+<caption class="title">Table 148. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiModerationModel.OpenAiModerationModelBuilder.html">OpenAiModerationModel$OpenAiModerationModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -30600,7 +32055,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.DefaultOpenAiStreamingChatModelConfiguration" href="#io.micronaut.langchain4j.openai.DefaultOpenAiStreamingChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 137. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiStreamingChatModelConfiguration.html">DefaultOpenAiStreamingChatModelConfiguration</a></caption>
+<caption class="title">Table 149. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/DefaultOpenAiStreamingChatModelConfiguration.html">DefaultOpenAiStreamingChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -30627,7 +32082,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiStreamingChatModel$OpenAiStreamingChatModelBuilder" href="#dev.langchain4j.model.openai.OpenAiStreamingChatModel$OpenAiStreamingChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 138. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiStreamingChatModel.OpenAiStreamingChatModelBuilder.html">OpenAiStreamingChatModel$OpenAiStreamingChatModelBuilder</a></caption>
+<caption class="title">Table 150. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiStreamingChatModel.OpenAiStreamingChatModelBuilder.html">OpenAiStreamingChatModel$OpenAiStreamingChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -31056,7 +32511,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiStreamingChatModel$OpenAiStreamingChatModelBuilder" href="#dev.langchain4j.model.openai.OpenAiStreamingChatModel$OpenAiStreamingChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 139. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiStreamingChatModel.OpenAiStreamingChatModelBuilder.html">OpenAiStreamingChatModel$OpenAiStreamingChatModelBuilder</a></caption>
+<caption class="title">Table 151. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiStreamingChatModel.OpenAiStreamingChatModelBuilder.html">OpenAiStreamingChatModel$OpenAiStreamingChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -31485,7 +32940,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.langchain4j.openai.NamedOpenAiStreamingChatModelConfiguration" href="#io.micronaut.langchain4j.openai.NamedOpenAiStreamingChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 140. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiStreamingChatModelConfiguration.html">NamedOpenAiStreamingChatModelConfiguration</a></caption>
+<caption class="title">Table 152. Configuration Properties for <a href="../api/io/micronaut/langchain4j/openai/NamedOpenAiStreamingChatModelConfiguration.html">NamedOpenAiStreamingChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -31512,7 +32967,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiStreamingChatModel$OpenAiStreamingChatModelBuilder" href="#dev.langchain4j.model.openai.OpenAiStreamingChatModel$OpenAiStreamingChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 141. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiStreamingChatModel.OpenAiStreamingChatModelBuilder.html">OpenAiStreamingChatModel$OpenAiStreamingChatModelBuilder</a></caption>
+<caption class="title">Table 153. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiStreamingChatModel.OpenAiStreamingChatModelBuilder.html">OpenAiStreamingChatModel$OpenAiStreamingChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -31941,7 +33396,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.openai.OpenAiStreamingChatModel$OpenAiStreamingChatModelBuilder" href="#dev.langchain4j.model.openai.OpenAiStreamingChatModel$OpenAiStreamingChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 142. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiStreamingChatModel.OpenAiStreamingChatModelBuilder.html">OpenAiStreamingChatModel$OpenAiStreamingChatModelBuilder</a></caption>
+<caption class="title">Table 154. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/openai/OpenAiStreamingChatModel.OpenAiStreamingChatModelBuilder.html">OpenAiStreamingChatModel$OpenAiStreamingChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -32370,232 +33825,10 @@
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_micronaut_langchain4j_store_elasticsearch_config_properties">Micronaut Langchain4j Store Elasticsearch Config Properties</h3>
-<a id="io.micronaut.langchain4j.elasticsearch.CommonElasticsearchEmbeddingStoreConfiguration" href="#io.micronaut.langchain4j.elasticsearch.CommonElasticsearchEmbeddingStoreConfiguration">&#128279;</a>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 143. Configuration Properties for <a href="../api/io/micronaut/langchain4j/elasticsearch/CommonElasticsearchEmbeddingStoreConfiguration.html">CommonElasticsearchEmbeddingStoreConfiguration</a></caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.enabled</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.api-key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.server-url</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-<div style="page-break-after: always;"></div>
-<a id="dev.langchain4j.store.embedding.elasticsearch.ElasticsearchEmbeddingStore$Builder" href="#dev.langchain4j.store.embedding.elasticsearch.ElasticsearchEmbeddingStore$Builder">&#128279;</a>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 144. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/elasticsearch/ElasticsearchEmbeddingStore.Builder.html">ElasticsearchEmbeddingStore$Builder</a></caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.embedding-store.index-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.embedding-store.configuration</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.store.embedding.elasticsearch.ElasticsearchConfiguration</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.embedding-stores.*.index-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.embedding-stores.*.configuration</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.store.embedding.elasticsearch.ElasticsearchConfiguration</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-<div style="page-break-after: always;"></div>
-<a id="dev.langchain4j.store.embedding.elasticsearch.ElasticsearchEmbeddingStore$Builder" href="#dev.langchain4j.store.embedding.elasticsearch.ElasticsearchEmbeddingStore$Builder">&#128279;</a>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 145. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/elasticsearch/ElasticsearchEmbeddingStore.Builder.html">ElasticsearchEmbeddingStore$Builder</a></caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.embedding-store.index-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.embedding-store.configuration</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.store.embedding.elasticsearch.ElasticsearchConfiguration</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.embedding-stores.*.index-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.embedding-stores.*.configuration</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.store.embedding.elasticsearch.ElasticsearchConfiguration</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-<div style="page-break-after: always;"></div>
-<a id="dev.langchain4j.store.embedding.elasticsearch.ElasticsearchEmbeddingStore$Builder" href="#dev.langchain4j.store.embedding.elasticsearch.ElasticsearchEmbeddingStore$Builder">&#128279;</a>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 146. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/elasticsearch/ElasticsearchEmbeddingStore.Builder.html">ElasticsearchEmbeddingStore$Builder</a></caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.embedding-store.index-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.embedding-store.configuration</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.store.embedding.elasticsearch.ElasticsearchConfiguration</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.embedding-stores.*.index-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.embedding-stores.*.configuration</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.store.embedding.elasticsearch.ElasticsearchConfiguration</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-<div style="page-break-after: always;"></div>
-<a id="dev.langchain4j.store.embedding.elasticsearch.ElasticsearchEmbeddingStore$Builder" href="#dev.langchain4j.store.embedding.elasticsearch.ElasticsearchEmbeddingStore$Builder">&#128279;</a>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 147. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/elasticsearch/ElasticsearchEmbeddingStore.Builder.html">ElasticsearchEmbeddingStore$Builder</a></caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.embedding-store.index-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.embedding-store.configuration</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.store.embedding.elasticsearch.ElasticsearchConfiguration</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.embedding-stores.*.index-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.elasticsearch.embedding-stores.*.configuration</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.store.embedding.elasticsearch.ElasticsearchConfiguration</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-<div style="page-break-after: always;"></div>
-</div>
-<div class="sect2">
 <h3 id="_micronaut_langchain4j_store_mongodb_config_properties">Micronaut Langchain4j Store Mongodb Config Properties</h3>
 <a id="dev.langchain4j.store.embedding.mongodb.MongoDbEmbeddingStore$Builder" href="#dev.langchain4j.store.embedding.mongodb.MongoDbEmbeddingStore$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 148. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/mongodb/MongoDbEmbeddingStore.Builder.html">MongoDbEmbeddingStore$Builder</a></caption>
+<caption class="title">Table 155. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/mongodb/MongoDbEmbeddingStore.Builder.html">MongoDbEmbeddingStore$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -32646,7 +33879,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.store.embedding.mongodb.MongoDbEmbeddingStore$Builder" href="#dev.langchain4j.store.embedding.mongodb.MongoDbEmbeddingStore$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 149. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/mongodb/MongoDbEmbeddingStore.Builder.html">MongoDbEmbeddingStore$Builder</a></caption>
+<caption class="title">Table 156. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/mongodb/MongoDbEmbeddingStore.Builder.html">MongoDbEmbeddingStore$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -32697,7 +33930,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.store.embedding.mongodb.IndexMapping$Builder" href="#dev.langchain4j.store.embedding.mongodb.IndexMapping$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 150. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/mongodb/IndexMapping.Builder.html">IndexMapping$Builder</a></caption>
+<caption class="title">Table 157. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/mongodb/IndexMapping.Builder.html">IndexMapping$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -32733,7 +33966,7 @@
 <h3 id="_micronaut_langchain4j_store_neo4j_config_properties">Micronaut Langchain4j Store Neo4j Config Properties</h3>
 <a id="io.micronaut.langchain4j.neo4j.memory.Neo4jChatMemoryStoreConfigurationProperties" href="#io.micronaut.langchain4j.neo4j.memory.Neo4jChatMemoryStoreConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 151. Configuration Properties for <a href="../api/io/micronaut/langchain4j/neo4j/memory/Neo4jChatMemoryStoreConfigurationProperties.html">Neo4jChatMemoryStoreConfigurationProperties</a></caption>
+<caption class="title">Table 158. Configuration Properties for <a href="../api/io/micronaut/langchain4j/neo4j/memory/Neo4jChatMemoryStoreConfigurationProperties.html">Neo4jChatMemoryStoreConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -32778,7 +34011,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.store.memory.chat.neo4j.Neo4jChatMemoryStore$Builder" href="#dev.langchain4j.community.store.memory.chat.neo4j.Neo4jChatMemoryStore$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 152. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/store/memory/chat/neo4j/Neo4jChatMemoryStore.Builder.html">Neo4jChatMemoryStore$Builder</a></caption>
+<caption class="title">Table 159. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/store/memory/chat/neo4j/Neo4jChatMemoryStore.Builder.html">Neo4jChatMemoryStore$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -32862,7 +34095,7 @@
 <h3 id="_micronaut_langchain4j_store_opensearch_config_properties">Micronaut Langchain4j Store Opensearch Config Properties</h3>
 <a id="io.micronaut.langchain4j.opensearch.CommonOpenSearchEmbeddingStoreConfiguration" href="#io.micronaut.langchain4j.opensearch.CommonOpenSearchEmbeddingStoreConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 153. Configuration Properties for <a href="../api/io/micronaut/langchain4j/opensearch/CommonOpenSearchEmbeddingStoreConfiguration.html">CommonOpenSearchEmbeddingStoreConfiguration</a></caption>
+<caption class="title">Table 160. Configuration Properties for <a href="../api/io/micronaut/langchain4j/opensearch/CommonOpenSearchEmbeddingStoreConfiguration.html">CommonOpenSearchEmbeddingStoreConfiguration</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -32901,7 +34134,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.store.embedding.opensearch.OpenSearchEmbeddingStore$Builder" href="#dev.langchain4j.store.embedding.opensearch.OpenSearchEmbeddingStore$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 154. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/opensearch/OpenSearchEmbeddingStore.Builder.html">OpenSearchEmbeddingStore$Builder</a></caption>
+<caption class="title">Table 161. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/opensearch/OpenSearchEmbeddingStore.Builder.html">OpenSearchEmbeddingStore$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -33006,7 +34239,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.store.embedding.opensearch.OpenSearchEmbeddingStore$Builder" href="#dev.langchain4j.store.embedding.opensearch.OpenSearchEmbeddingStore$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 155. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/opensearch/OpenSearchEmbeddingStore.Builder.html">OpenSearchEmbeddingStore$Builder</a></caption>
+<caption class="title">Table 162. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/opensearch/OpenSearchEmbeddingStore.Builder.html">OpenSearchEmbeddingStore$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -33111,7 +34344,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.store.embedding.opensearch.OpenSearchEmbeddingStore$Builder" href="#dev.langchain4j.store.embedding.opensearch.OpenSearchEmbeddingStore$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 156. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/opensearch/OpenSearchEmbeddingStore.Builder.html">OpenSearchEmbeddingStore$Builder</a></caption>
+<caption class="title">Table 163. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/opensearch/OpenSearchEmbeddingStore.Builder.html">OpenSearchEmbeddingStore$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -33216,7 +34449,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.store.embedding.opensearch.OpenSearchEmbeddingStore$Builder" href="#dev.langchain4j.store.embedding.opensearch.OpenSearchEmbeddingStore$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 157. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/opensearch/OpenSearchEmbeddingStore.Builder.html">OpenSearchEmbeddingStore$Builder</a></caption>
+<caption class="title">Table 164. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/opensearch/OpenSearchEmbeddingStore.Builder.html">OpenSearchEmbeddingStore$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -33324,7 +34557,7 @@
 <h3 id="_micronaut_langchain4j_store_oracle_config_properties">Micronaut Langchain4j Store Oracle Config Properties</h3>
 <a id="io.micronaut.langchain4j.oracle.database.OracleEmbeddingStoreConfig" href="#io.micronaut.langchain4j.oracle.database.OracleEmbeddingStoreConfig">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 158. Configuration Properties for <a href="../api/io/micronaut/langchain4j/oracle/database/OracleEmbeddingStoreConfig.html">OracleEmbeddingStoreConfig</a></caption>
+<caption class="title">Table 165. Configuration Properties for <a href="../api/io/micronaut/langchain4j/oracle/database/OracleEmbeddingStoreConfig.html">OracleEmbeddingStoreConfig</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -33351,7 +34584,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.store.embedding.oracle.OracleEmbeddingStore$Builder" href="#dev.langchain4j.store.embedding.oracle.OracleEmbeddingStore$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 159. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/oracle/OracleEmbeddingStore.Builder.html">OracleEmbeddingStore$Builder</a></caption>
+<caption class="title">Table 166. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/oracle/OracleEmbeddingStore.Builder.html">OracleEmbeddingStore$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -33390,7 +34623,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.store.embedding.oracle.OracleEmbeddingStore$Builder" href="#dev.langchain4j.store.embedding.oracle.OracleEmbeddingStore$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 160. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/oracle/OracleEmbeddingStore.Builder.html">OracleEmbeddingStore$Builder</a></caption>
+<caption class="title">Table 167. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/oracle/OracleEmbeddingStore.Builder.html">OracleEmbeddingStore$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -33429,7 +34662,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.store.embedding.oracle.EmbeddingTable$Builder" href="#dev.langchain4j.store.embedding.oracle.EmbeddingTable$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 161. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/oracle/EmbeddingTable.Builder.html">EmbeddingTable$Builder</a></caption>
+<caption class="title">Table 168. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/store/embedding/oracle/EmbeddingTable.Builder.html">EmbeddingTable$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -33489,7 +34722,7 @@
 <h3 id="_micronaut_langchain4j_store_pgvector_config_properties">Micronaut Langchain4j Store Pgvector Config Properties</h3>
 <a id="io.micronaut.langchain4j.pgvector.PgVectorEmbeddingStoreConfig" href="#io.micronaut.langchain4j.pgvector.PgVectorEmbeddingStoreConfig">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 162. Configuration Properties for <a href="../api/io/micronaut/langchain4j/pgvector/PgVectorEmbeddingStoreConfig.html">PgVectorEmbeddingStoreConfig</a></caption>
+<caption class="title">Table 169. Configuration Properties for <a href="../api/io/micronaut/langchain4j/pgvector/PgVectorEmbeddingStoreConfig.html">PgVectorEmbeddingStoreConfig</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -33549,7 +34782,7 @@
 <h3 id="_micronaut_langchain4j_store_qdrant_config_properties">Micronaut Langchain4j Store Qdrant Config Properties</h3>
 <a id="io.micronaut.langchain4j.qdrant.test.QdrantTestResourceConfig" href="#io.micronaut.langchain4j.qdrant.test.QdrantTestResourceConfig">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 163. Configuration Properties for <a href="../api/io/micronaut/langchain4j/qdrant/test/QdrantTestResourceConfig.html">QdrantTestResourceConfig</a></caption>
+<caption class="title">Table 170. Configuration Properties for <a href="../api/io/micronaut/langchain4j/qdrant/test/QdrantTestResourceConfig.html">QdrantTestResourceConfig</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -33585,7 +34818,7 @@
 <h3 id="_micronaut_langchain4j_store_redis_config_properties">Micronaut Langchain4j Store Redis Config Properties</h3>
 <a id="io.micronaut.langchain4j.redis.memory.RedisChatMemoryStoreConfigurationProperties" href="#io.micronaut.langchain4j.redis.memory.RedisChatMemoryStoreConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 164. Configuration Properties for <a href="../api/io/micronaut/langchain4j/redis/memory/RedisChatMemoryStoreConfigurationProperties.html">RedisChatMemoryStoreConfigurationProperties</a></caption>
+<caption class="title">Table 171. Configuration Properties for <a href="../api/io/micronaut/langchain4j/redis/memory/RedisChatMemoryStoreConfigurationProperties.html">RedisChatMemoryStoreConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -33612,7 +34845,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.community.store.memory.chat.redis.RedisChatMemoryStore$Builder" href="#dev.langchain4j.community.store.memory.chat.redis.RedisChatMemoryStore$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 165. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/store/memory/chat/redis/RedisChatMemoryStore.Builder.html">RedisChatMemoryStore$Builder</a></caption>
+<caption class="title">Table 172. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/community/store/memory/chat/redis/RedisChatMemoryStore.Builder.html">RedisChatMemoryStore$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -33664,6 +34897,12 @@
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>langchain4j.chat-memory-store.redis.store-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dev.langchain4j.community.store.memory.chat.redis.StoreType</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
@@ -33672,7 +34911,7 @@
 <h3 id="_micronaut_langchain4j_vertexai_config_properties">Micronaut Langchain4j Vertexai Config Properties</h3>
 <a id="io.micronaut.langchain4j.vertexai.CommonVertexAiChatModelConfiguration" href="#io.micronaut.langchain4j.vertexai.CommonVertexAiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 166. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/CommonVertexAiChatModelConfiguration.html">CommonVertexAiChatModelConfiguration</a></caption>
+<caption class="title">Table 173. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/CommonVertexAiChatModelConfiguration.html">CommonVertexAiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -33735,7 +34974,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.VertexAiChatModel$Builder" href="#dev.langchain4j.model.vertexai.VertexAiChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 167. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiChatModel.Builder.html">VertexAiChatModel$Builder</a></caption>
+<caption class="title">Table 174. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiChatModel.Builder.html">VertexAiChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -33888,7 +35127,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.VertexAiChatModel$Builder" href="#dev.langchain4j.model.vertexai.VertexAiChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 168. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiChatModel.Builder.html">VertexAiChatModel$Builder</a></caption>
+<caption class="title">Table 175. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiChatModel.Builder.html">VertexAiChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -34041,7 +35280,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.VertexAiChatModel$Builder" href="#dev.langchain4j.model.vertexai.VertexAiChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 169. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiChatModel.Builder.html">VertexAiChatModel$Builder</a></caption>
+<caption class="title">Table 176. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiChatModel.Builder.html">VertexAiChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -34194,7 +35433,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.VertexAiChatModel$Builder" href="#dev.langchain4j.model.vertexai.VertexAiChatModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 170. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiChatModel.Builder.html">VertexAiChatModel$Builder</a></caption>
+<caption class="title">Table 177. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiChatModel.Builder.html">VertexAiChatModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -34347,7 +35586,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.VertexAiEmbeddingModel$Builder" href="#dev.langchain4j.model.vertexai.VertexAiEmbeddingModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 171. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiEmbeddingModel.Builder.html">VertexAiEmbeddingModel$Builder</a></caption>
+<caption class="title">Table 178. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiEmbeddingModel.Builder.html">VertexAiEmbeddingModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -34524,7 +35763,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.VertexAiEmbeddingModel$Builder" href="#dev.langchain4j.model.vertexai.VertexAiEmbeddingModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 172. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiEmbeddingModel.Builder.html">VertexAiEmbeddingModel$Builder</a></caption>
+<caption class="title">Table 179. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiEmbeddingModel.Builder.html">VertexAiEmbeddingModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -34701,7 +35940,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.VertexAiEmbeddingModel$Builder" href="#dev.langchain4j.model.vertexai.VertexAiEmbeddingModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 173. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiEmbeddingModel.Builder.html">VertexAiEmbeddingModel$Builder</a></caption>
+<caption class="title">Table 180. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiEmbeddingModel.Builder.html">VertexAiEmbeddingModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -34878,7 +36117,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.VertexAiEmbeddingModel$Builder" href="#dev.langchain4j.model.vertexai.VertexAiEmbeddingModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 174. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiEmbeddingModel.Builder.html">VertexAiEmbeddingModel$Builder</a></caption>
+<caption class="title">Table 181. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiEmbeddingModel.Builder.html">VertexAiEmbeddingModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -35055,7 +36294,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.VertexAiImageModel$Builder" href="#dev.langchain4j.model.vertexai.VertexAiImageModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 175. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiImageModel.Builder.html">VertexAiImageModel$Builder</a></caption>
+<caption class="title">Table 182. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiImageModel.Builder.html">VertexAiImageModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -35328,7 +36567,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.VertexAiImageModel$Builder" href="#dev.langchain4j.model.vertexai.VertexAiImageModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 176. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiImageModel.Builder.html">VertexAiImageModel$Builder</a></caption>
+<caption class="title">Table 183. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiImageModel.Builder.html">VertexAiImageModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -35601,7 +36840,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.VertexAiImageModel$Builder" href="#dev.langchain4j.model.vertexai.VertexAiImageModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 177. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiImageModel.Builder.html">VertexAiImageModel$Builder</a></caption>
+<caption class="title">Table 184. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiImageModel.Builder.html">VertexAiImageModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -35874,7 +37113,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.VertexAiImageModel$Builder" href="#dev.langchain4j.model.vertexai.VertexAiImageModel$Builder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 178. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiImageModel.Builder.html">VertexAiImageModel$Builder</a></caption>
+<caption class="title">Table 185. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/VertexAiImageModel.Builder.html">VertexAiImageModel$Builder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -36150,7 +37389,7 @@
 <h3 id="_micronaut_langchain4j_vertexai_gemini_config_properties">Micronaut Langchain4j Vertexai Gemini Config Properties</h3>
 <a id="io.micronaut.langchain4j.vertexai.gemini.CommonVertexAiGeminiChatModelConfiguration" href="#io.micronaut.langchain4j.vertexai.gemini.CommonVertexAiGeminiChatModelConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 179. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/gemini/CommonVertexAiGeminiChatModelConfiguration.html">CommonVertexAiGeminiChatModelConfiguration</a></caption>
+<caption class="title">Table 186. Configuration Properties for <a href="../api/io/micronaut/langchain4j/vertexai/gemini/CommonVertexAiGeminiChatModelConfiguration.html">CommonVertexAiGeminiChatModelConfiguration</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -36195,7 +37434,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel$VertexAiGeminiChatModelBuilder" href="#dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel$VertexAiGeminiChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 180. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/gemini/VertexAiGeminiChatModel.VertexAiGeminiChatModelBuilder.html">VertexAiGeminiChatModel$VertexAiGeminiChatModelBuilder</a></caption>
+<caption class="title">Table 187. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/gemini/VertexAiGeminiChatModel.VertexAiGeminiChatModelBuilder.html">VertexAiGeminiChatModel$VertexAiGeminiChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -36480,7 +37719,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel$VertexAiGeminiChatModelBuilder" href="#dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel$VertexAiGeminiChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 181. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/gemini/VertexAiGeminiChatModel.VertexAiGeminiChatModelBuilder.html">VertexAiGeminiChatModel$VertexAiGeminiChatModelBuilder</a></caption>
+<caption class="title">Table 188. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/gemini/VertexAiGeminiChatModel.VertexAiGeminiChatModelBuilder.html">VertexAiGeminiChatModel$VertexAiGeminiChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -36765,7 +38004,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel$VertexAiGeminiChatModelBuilder" href="#dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel$VertexAiGeminiChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 182. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/gemini/VertexAiGeminiChatModel.VertexAiGeminiChatModelBuilder.html">VertexAiGeminiChatModel$VertexAiGeminiChatModelBuilder</a></caption>
+<caption class="title">Table 189. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/gemini/VertexAiGeminiChatModel.VertexAiGeminiChatModelBuilder.html">VertexAiGeminiChatModel$VertexAiGeminiChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -37050,7 +38289,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel$VertexAiGeminiChatModelBuilder" href="#dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel$VertexAiGeminiChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 183. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/gemini/VertexAiGeminiChatModel.VertexAiGeminiChatModelBuilder.html">VertexAiGeminiChatModel$VertexAiGeminiChatModelBuilder</a></caption>
+<caption class="title">Table 190. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/gemini/VertexAiGeminiChatModel.VertexAiGeminiChatModelBuilder.html">VertexAiGeminiChatModel$VertexAiGeminiChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -37335,7 +38574,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel$VertexAiGeminiStreamingChatModelBuilder" href="#dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel$VertexAiGeminiStreamingChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 184. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/gemini/VertexAiGeminiStreamingChatModel.VertexAiGeminiStreamingChatModelBuilder.html">VertexAiGeminiStreamingChatModel$VertexAiGeminiStreamingChatModelBuilder</a></caption>
+<caption class="title">Table 191. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/gemini/VertexAiGeminiStreamingChatModel.VertexAiGeminiStreamingChatModelBuilder.html">VertexAiGeminiStreamingChatModel$VertexAiGeminiStreamingChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -37608,7 +38847,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel$VertexAiGeminiStreamingChatModelBuilder" href="#dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel$VertexAiGeminiStreamingChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 185. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/gemini/VertexAiGeminiStreamingChatModel.VertexAiGeminiStreamingChatModelBuilder.html">VertexAiGeminiStreamingChatModel$VertexAiGeminiStreamingChatModelBuilder</a></caption>
+<caption class="title">Table 192. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/gemini/VertexAiGeminiStreamingChatModel.VertexAiGeminiStreamingChatModelBuilder.html">VertexAiGeminiStreamingChatModel$VertexAiGeminiStreamingChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -37881,7 +39120,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel$VertexAiGeminiStreamingChatModelBuilder" href="#dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel$VertexAiGeminiStreamingChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 186. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/gemini/VertexAiGeminiStreamingChatModel.VertexAiGeminiStreamingChatModelBuilder.html">VertexAiGeminiStreamingChatModel$VertexAiGeminiStreamingChatModelBuilder</a></caption>
+<caption class="title">Table 193. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/gemini/VertexAiGeminiStreamingChatModel.VertexAiGeminiStreamingChatModelBuilder.html">VertexAiGeminiStreamingChatModel$VertexAiGeminiStreamingChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -38154,7 +39393,7 @@
 <div style="page-break-after: always;"></div>
 <a id="dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel$VertexAiGeminiStreamingChatModelBuilder" href="#dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel$VertexAiGeminiStreamingChatModelBuilder">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 187. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/gemini/VertexAiGeminiStreamingChatModel.VertexAiGeminiStreamingChatModelBuilder.html">VertexAiGeminiStreamingChatModel$VertexAiGeminiStreamingChatModelBuilder</a></caption>
+<caption class="title">Table 194. Configuration Properties for <a href="../api/io/micronaut/dev/langchain4j/model/vertexai/gemini/VertexAiGeminiStreamingChatModel.VertexAiGeminiStreamingChatModelBuilder.html">VertexAiGeminiStreamingChatModel$VertexAiGeminiStreamingChatModelBuilder</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
