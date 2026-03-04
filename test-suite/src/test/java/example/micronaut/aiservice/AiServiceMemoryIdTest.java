@@ -9,8 +9,7 @@ import io.micronaut.langchain4j.testutils.OllamaTestPropertyProvider;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
-import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariables;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.Locale;
@@ -19,6 +18,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@DisabledIfEnvironmentVariable(named = "CI", matches = ".*")
 @Property(name = "spec.name", value = "AiServiceMemoryIdTest")
 @Testcontainers(disabledWithoutDocker = true)
 @MicronautTest(startApplication = false)

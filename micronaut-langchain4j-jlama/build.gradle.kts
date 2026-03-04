@@ -11,7 +11,7 @@ dependencies {
 }
 
 micronautBuild {
-    javaVersion = 21
+    javaVersion = 25
 }
 
 tasks {

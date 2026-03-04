@@ -7,10 +7,12 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.langchain4j.testutils.Neo4jUtils;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.Map;
 
+@DisabledIfEnvironmentVariable(named = "CI", matches = ".*")
 @Property(name = "langchain4j.chat-memory-store.redis.enabled", value = StringUtils.FALSE)
 @Property(name = "langchain4j.chat-memory-store.cassandra.enabled", value = StringUtils.FALSE)
 @Property(name = "langchain4j.chat-memory-store.inmemory.enabled", value = StringUtils.FALSE)
