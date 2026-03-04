@@ -18,33 +18,47 @@ import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import dev.langchain4j.store.embedding.qdrant.QdrantEmbeddingStore;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Primary;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.langchain4j.aiservices.AiServiceCustomizer;
 import io.micronaut.langchain4j.annotation.AiService;
+import io.micronaut.langchain4j.testresources.qdrant.Qdrant;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import io.micronaut.test.support.TestPropertyProvider;
+import io.qdrant.client.grpc.Collections;
 import jakarta.inject.Singleton;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @MicronautTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @EnabledIfEnvironmentVariable(
     named = "LANGCHAIN4J_OPEN_AI_API_KEY",
     matches = ".+"
 )
-class RAGTest {
+class RAGTest implements TestPropertyProvider {
+    private static final Logger LOG = LoggerFactory.getLogger(RAGTest.class);
     boolean retrieved = false;
 
-    @BeforeAll
+    @Override
+    public @NonNull Map<String, String> getProperties() {
+        return Qdrant.getProperties("mycollection", "384", Collections.Distance.Cosine.name());
+    }
+
     static void init(
         EmbeddingStore<TextSegment> embeddingStore,
         EmbeddingModel embeddingModel) throws IOException {
         assertInstanceOf(QdrantEmbeddingStore.class, embeddingStore);
         assertInstanceOf(E5SmallV2QuantizedEmbeddingModel.class, embeddingModel);
-        System.out.println("Ingesting model");
+        LOG.info("Ingesting model");
         URL url = URI.create("https://github.com/glaforge/gemini-workshop-for-java-developers/raw/main/attention-is-all-you-need.pdf").toURL();
         ApachePdfBoxDocumentParser pdfParser = new ApachePdfBoxDocumentParser();
         Document document = pdfParser.parse(url.openStream());
@@ -55,13 +69,16 @@ class RAGTest {
             .embeddingStore(embeddingStore)
             .build();
         storeIngestor.ingest(document);
-        System.out.println("Model ingested");
+        LOG.info("Model ingested");
     }
 
     @Test
-    void testRAG(LlmExpert expert, EmbeddingModel embeddingModel) {
+    void testRAG(LlmExpert expert,
+                 EmbeddingStore<TextSegment> embeddingStore,
+                 EmbeddingModel embeddingModel) throws IOException {
+        init(embeddingStore, embeddingModel);
         assertInstanceOf(E5SmallV2QuantizedEmbeddingModel.class, embeddingModel);
-        System.out.println("Asking LlmExpert");
+        LOG.info("Asking LlmExpert");
         String result = expert.ask("What neural network architecture can be used for language models?");
         assertNotNull(result);
         assertTrue(retrieved);
@@ -88,7 +105,6 @@ class RAGTest {
                 })
         );
     }
-
 
     @Primary
     @Singleton
