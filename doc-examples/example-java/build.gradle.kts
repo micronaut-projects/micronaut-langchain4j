@@ -22,8 +22,8 @@ dependencies {
     testRuntimeOnly(mnTest.junit.jupiter.engine)
     testImplementation("dev.langchain4j:langchain4j-document-parser-apache-pdfbox")
     testImplementation("dev.langchain4j:langchain4j-embeddings-e5-small-v2-q")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testResourcesService(projects.micronautLangchain4jOllamaTestresource)
+    testRuntimeOnly(mnTest.junit.platform.launcher)
 }
 
 tasks {

@@ -22,7 +22,7 @@ dependencies {
     // Ensure JUnit Platform engine is on the test runtime classpath
     testImplementation(platform(libs.junit.bom))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testRuntimeOnly(mnTest.junit.platform.launcher)
 }
 tasks.withType<Test> {
     useJUnitPlatform()
