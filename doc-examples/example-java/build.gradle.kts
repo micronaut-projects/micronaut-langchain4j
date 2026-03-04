@@ -1,15 +1,7 @@
 plugins {
     id("java")
     id("io.micronaut.build.internal.langchain4j-example")
-    id("io.micronaut.test-resources")
-//    id("org.graalvm.buildtools.native")
 
-}
-
-micronaut {
-    version.set(libs.versions.micronaut.platform.get())
-    runtime("netty")
-    testRuntime("junit5")
 }
 dependencies {
     implementation(platform(libs.langchain4j.bom))
@@ -22,7 +14,6 @@ dependencies {
     testRuntimeOnly(mnTest.junit.jupiter.engine)
     testImplementation("dev.langchain4j:langchain4j-document-parser-apache-pdfbox")
     testImplementation("dev.langchain4j:langchain4j-embeddings-e5-small-v2-q")
-    testResourcesService(projects.micronautLangchain4jOllamaTestresource)
     testRuntimeOnly(mnTest.junit.platform.launcher)
 }
 
