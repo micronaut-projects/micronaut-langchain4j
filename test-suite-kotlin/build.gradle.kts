@@ -21,7 +21,8 @@ dependencies {
     testRuntimeOnly(mnLogging.logback.classic)
     // Ensure JUnit Platform engine is on the test runtime classpath
     testImplementation(platform(libs.junit.bom))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
+    testImplementation(mnTest.junit.jupiter.api)
     testRuntimeOnly(mnTest.junit.platform.launcher)
 }
 tasks.withType<Test> {
