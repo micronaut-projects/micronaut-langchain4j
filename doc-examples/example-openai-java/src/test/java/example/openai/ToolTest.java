@@ -22,7 +22,7 @@ import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 @MicronautTest
 @EnabledIfEnvironmentVariable(
     named = "LANGCHAIN4J_OPEN_AI_API_KEY",
-    matches = "\\.+"
+    matches = ".+"
 )
 public class ToolTest {
     @Inject
