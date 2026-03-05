@@ -10,8 +10,8 @@ ossIndexAudit {
 
 dependencies {
     annotationProcessor(mn.micronaut.inject.java)
-    api(platform(libs.langchain4j.bom))
-    implementation(platform(libs.langchain4j.bom))
+    api(platform(libs.boms.langchain4j))
+    implementation(platform(libs.boms.langchain4j))
     testAnnotationProcessor(mn.micronaut.inject.java)
     testImplementation(mnTest.micronaut.test.junit5)
     testRuntimeOnly(mnLogging.logback.classic)

@@ -111,8 +111,8 @@ astra-db-client = { module = "com.datastax.astra:astra-db-client", version.ref =
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 
 # BOMs
-langchain4j-bom = { module = "dev.langchain4j:langchain4j-bom", version.ref = "managed-langchain4j" }
-langchain4j-community-bom = { module = "dev.langchain4j:langchain4j-community-bom", version.ref = "managed-langchain4j-community" }
+boms-langchain4j = { module = "dev.langchain4j:langchain4j-bom", version.ref = "managed-langchain4j" }
+boms-langchain4j-community = { module = "dev.langchain4j:langchain4j-community-bom", version.ref = "managed-langchain4j-community" }
 
 # Plugins
 gradle-micronaut = { module = "io.micronaut.gradle:micronaut-gradle-plugin", version.ref = "micronaut-gradle-plugin" }

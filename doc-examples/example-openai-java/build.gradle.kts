@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(platform(libs.langchain4j.bom))
+    implementation(platform(libs.boms.langchain4j))
     annotationProcessor(projects.micronautLangchain4jProcessor)
     testAnnotationProcessor(mn.micronaut.inject.java)
     implementation(projects.micronautLangchain4jOpenai)
