@@ -46,7 +46,6 @@ managed-langchain4j = "1.11.0"
 managed-langchain4j-community = "1.11.0-beta19"
 testcontainers-redis = "2.2.4"
 astra-db-client = "1.2.7"
-postgresql = "42.7.9"
 
 [libraries]
 # TODO Remove when non vulnerable versions exist
@@ -108,7 +107,6 @@ testcontainers-cassandra = { module = "org.testcontainers:testcontainers-cassand
 testcontainers-qdrant = { module = "org.testcontainers:testcontainers-qdrant" }
 
 astra-db-client = { module = "com.datastax.astra:astra-db-client", version.ref = "astra-db-client" }
-postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 
 # BOMs
 boms-langchain4j = { module = "dev.langchain4j:langchain4j-bom", version.ref = "managed-langchain4j" }
