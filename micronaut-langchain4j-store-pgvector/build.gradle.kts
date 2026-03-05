@@ -8,7 +8,7 @@ dependencies {
         //TODO remove once langchain4j pgvector depends on a postgresql version without vulnerabilities
         exclude(group = "org.postgresql", module = "postgresql")
     }
-    implementation(libs.postgresql)
+    implementation(mnSql.postgresql)
     api(mnSql.micronaut.jdbc)
     runtimeOnly(mnSql.postgresql)
 
