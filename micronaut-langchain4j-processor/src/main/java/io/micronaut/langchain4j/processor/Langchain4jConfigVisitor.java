@@ -330,9 +330,16 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                         writer -> generator.write(classDef, writer)
                     );
                 } catch (IOException e) {
+                    if (isDuplicateGeneratedSourceError(e.getMessage())) {
+                        return;
+                    }
                     throw new ProcessingException(element, "Error generating " + modelKind + "Configuration: " + e.getMessage());
                 }
             });
+    }
+
+    private static boolean isDuplicateGeneratedSourceError(@Nullable String message) {
+        return message != null && (message.contains("already been opened") || message.contains("Attempt to recreate a file"));
     }
 
     private static ClassDef buildNamedConfigurationDef(String prefix, String configurationClassName, ClassElement model, ClassElement builderType, String[] requiredInjects, String[] optionalInjects, RecordDef commonConfig, MethodElement modelNameMethod, String defaultModelName) {
