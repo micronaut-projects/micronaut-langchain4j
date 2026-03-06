@@ -60,6 +60,7 @@ import jakarta.inject.Inject;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -73,6 +74,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         "StreamingChatLanguageModel", "StreamingChatModel"
     );
     private static final String CTOR_NAME = "<init>";
+    private final Set<String> writtenSourceClasses = new HashSet<>();
 
     @Override
     public VisitorKind getVisitorKind() {
@@ -167,7 +169,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         }
     }
 
-    private static RecordDef buildCommonConfig(ClassElement element, VisitorContext context, List<PropertyConfig> commonProperties, List<AnnotationValue<Model>> providers, String packageName, SourceGenerator generator) {
+    private RecordDef buildCommonConfig(ClassElement element, VisitorContext context, List<PropertyConfig> commonProperties, List<AnnotationValue<Model>> providers, String packageName, SourceGenerator generator) {
         RecordDef commonConfig = null;
         if (!commonProperties.isEmpty() && !providers.isEmpty()) {
             ModelConfig firstConfig = getModelConfig(element, context, providers.iterator().next());
@@ -315,7 +317,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             ).build();
     }
 
-    private static void writeJavaSource(
+    private void writeJavaSource(
         SourceGenerator generator,
         VisitorContext context,
         ClassElement element,
@@ -323,12 +325,17 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         String simpleName,
         ObjectDef classDef,
         String modelKind) {
+        String generatedClassName = StringUtils.isNotEmpty(packageName) ? packageName + "." + simpleName : simpleName;
+        if (writtenSourceClasses.contains(generatedClassName)) {
+            return;
+        }
         context.visitGeneratedSourceFile(packageName, simpleName, element)
             .ifPresent(sourceFile -> {
                 try {
                     sourceFile.write(
                         writer -> generator.write(classDef, writer)
                     );
+                    writtenSourceClasses.add(generatedClassName);
                 } catch (IOException e) {
                     throw new ProcessingException(element, "Error generating " + modelKind + "Configuration: " + e.getMessage());
                 }
