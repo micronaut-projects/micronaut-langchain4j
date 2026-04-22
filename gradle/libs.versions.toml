@@ -33,7 +33,7 @@ micronaut-gradle-plugin = "4.6.2"
 micronaut-sourcegen = "2.0.0-M2"
 micronaut-grpc = "5.0.0-M1"
 micronaut-oraclecloud = "6.0.0-M1"
-micronaut-reactor = "4.0.0-M1"
+micronaut-reactor = "4.0.0-M2"
 awaitility = "4.3.0"
 #TODO remove when non vulnerable versions exists
 commons-compress = "1.28.0"
