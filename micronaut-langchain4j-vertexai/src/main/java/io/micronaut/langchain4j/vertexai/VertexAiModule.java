@@ -41,7 +41,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig;
         )
     },
     properties = {
-        @Property(name = "credentials", injected = true),
+        @Property(name = "credentials", common = true, required = false, injected = true),
         @Property(name = "endpoint", common = true, required = true),
         @Property(name = "modelName", common = true, required = true, defaultValue = "chat-bison"),
         @Property(name = "project", common = true, required = true),

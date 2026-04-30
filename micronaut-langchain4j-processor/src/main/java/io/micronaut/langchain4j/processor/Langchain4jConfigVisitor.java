@@ -54,6 +54,7 @@ import io.micronaut.sourcegen.model.ObjectDef;
 import io.micronaut.sourcegen.model.ParameterDef;
 import io.micronaut.sourcegen.model.PropertyDef;
 import io.micronaut.sourcegen.model.RecordDef;
+import io.micronaut.sourcegen.model.StatementDef;
 import io.micronaut.sourcegen.model.TypeDef;
 import io.micronaut.sourcegen.model.VariableDef;
 import jakarta.inject.Inject;
@@ -544,15 +545,31 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             if (!isRequired) {
                 parameterDefBuilder.addAnnotation(Nullable.class);
             }
+            FieldDef.FieldDefBuilder storedFieldBuilder = FieldDef.builder(methodName).ofType(typeToInject);
+            if (!isRequired) {
+                storedFieldBuilder.addAnnotation(Nullable.class);
+            }
+            FieldDef storedField = storedFieldBuilder.build();
+            classDefBuilder.addField(storedField);
+            String getterName = "get" + Character.toUpperCase(methodName.charAt(0)) + methodName.substring(1);
+            MethodDef.MethodDefBuilder getterBuilder = MethodDef.builder(getterName)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(typeToInject);
+            if (!isRequired) {
+                getterBuilder.addAnnotation(Nullable.class);
+            }
+            classDefBuilder.addMethod(
+                getterBuilder.build((aThis, methodParameters) -> aThis.field(storedField).returning())
+            );
             classDefBuilder.addMethod(
                 MethodDef.builder(methodName)
                     .addModifiers(Modifier.PROTECTED)
                     .returns(void.class)
                     .addParameter(parameterDefBuilder.build())
                     .addAnnotation(Inject.class)
-                    .build((aThis, methodParameters) -> aThis.field(builderField).invoke(
-                        methodElement,
-                        methodParameters
+                    .build((aThis, methodParameters) -> StatementDef.multi(
+                        aThis.field(storedField).assign(methodParameters.get(0)),
+                        aThis.field(builderField).invoke(methodElement, methodParameters)
                     ))
             );
         }
