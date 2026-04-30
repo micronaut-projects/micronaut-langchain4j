@@ -242,16 +242,6 @@ final class MicronautGuardrailServiceBuilder implements GuardrailService.Builder
         return methodKey(executableMethod.getMethodName(), executableMethod.getArgumentTypes());
     }
 
-    private static String methodKey(Object methodKey) {
-        if (methodKey instanceof ExecutableMethod<?, ?> executableMethod) {
-            return methodKey(executableMethod);
-        }
-        if (methodKey instanceof java.lang.reflect.Method method) {
-            return methodKey(method.getName(), method.getParameterTypes());
-        }
-        return String.valueOf(methodKey);
-    }
-
     private static String methodKey(String methodName, Class<?>[] argumentTypes) {
         return methodName + "(" + Arrays.stream(argumentTypes).map(Class::getName).reduce((left, right) -> left + "," + right).orElse("") + ")";
     }
@@ -288,23 +278,33 @@ final class MicronautGuardrailServiceBuilder implements GuardrailService.Builder
             super(aiServiceClass, inputGuardrails, outputGuardrails);
         }
 
+        private static String methodKey(Object methodKey) {
+            if (methodKey instanceof ExecutableMethod<?, ?> executableMethod) {
+                return MicronautGuardrailServiceBuilder.methodKey(executableMethod);
+            }
+            if (methodKey instanceof java.lang.reflect.Method method) {
+                return MicronautGuardrailServiceBuilder.methodKey(method.getName(), method.getParameterTypes());
+            }
+            return String.valueOf(methodKey);
+        }
+
         @Override
-        public <MethodKey> dev.langchain4j.guardrail.InputGuardrailResult executeInputGuardrails(MethodKey method, dev.langchain4j.guardrail.InputGuardrailRequest request) {
+        public <M> dev.langchain4j.guardrail.InputGuardrailResult executeInputGuardrails(M method, dev.langchain4j.guardrail.InputGuardrailRequest request) {
             return super.executeInputGuardrails(methodKey(method), request);
         }
 
         @Override
-        public <MethodKey> dev.langchain4j.guardrail.OutputGuardrailResult executeOutputGuardrails(MethodKey method, dev.langchain4j.guardrail.OutputGuardrailRequest request) {
+        public <M> dev.langchain4j.guardrail.OutputGuardrailResult executeOutputGuardrails(M method, dev.langchain4j.guardrail.OutputGuardrailRequest request) {
             return super.executeOutputGuardrails(methodKey(method), request);
         }
 
         @Override
-        public <MethodKey> boolean hasInputGuardrails(MethodKey method) {
+        public <M> boolean hasInputGuardrails(M method) {
             return super.hasInputGuardrails(methodKey(method));
         }
 
         @Override
-        public <MethodKey> boolean hasOutputGuardrails(MethodKey method) {
+        public <M> boolean hasOutputGuardrails(M method) {
             return super.hasOutputGuardrails(methodKey(method));
         }
     }
