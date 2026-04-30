@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2024 original authors
+ * Copyright 2017-2026 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,6 +57,7 @@ import io.micronaut.sourcegen.model.RecordDef;
 import io.micronaut.sourcegen.model.TypeDef;
 import io.micronaut.sourcegen.model.VariableDef;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
@@ -154,6 +155,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                         ClassDef factoryDef = buildFactory(
                             namedConfigDef,
                             defaultConfigDef,
+                            namedPrefix,
                             modelConfig.builderType,
                             factoryName,
                             modelConfig.languageModel(),
@@ -260,6 +262,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
     private ClassDef buildFactory(
         ClassDef namedConfigDef,
         ClassDef defaultConfigDef,
+        String namedPrefix,
         ClassElement builderType,
         String factoryName,
         ClassElement languageModel,
@@ -290,9 +293,15 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                 MethodDef.builder("primaryBuilder")
                     .addModifiers(Modifier.PROTECTED)
                     .addAnnotation(Bean.class)
+                    .addAnnotation(AnnotationDef.builder(Named.class)
+                        .addMember("value", "default")
+                        .build())
                     .addAnnotation(Primary.class)
                     .addAnnotation(AnnotationDef.builder(Requires.class)
                         .addMember("beans", new VariableDef.StaticField(ClassTypeDef.of(defaultConfigDef.asTypeDef().getCanonicalName()), "class", TypeDef.of(Class.class)))
+                        .build())
+                    .addAnnotation(AnnotationDef.builder(Requires.class)
+                        .addMember("missingProperty", namedPrefix + ".default")
                         .build())
                     .addParameter("config", defaultConfigDef.asTypeDef())
                     .returns(TypeDef.of(builderType))
@@ -365,6 +374,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             .addModifiers(Modifier.PUBLIC)
             .addAnnotation(AnnotationDef.builder(EachProperty.class)
                 .addMember("value", prefix)
+                .addMember("primary", "default")
                 .build()
             )
             .addAnnotation(Context.class)
