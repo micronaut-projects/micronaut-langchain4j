@@ -69,10 +69,14 @@ class MicronautGuardrailServiceBuilderTest {
 
             assertTrue(service.hasInputGuardrails(inputMethod));
             assertTrue(service.hasInputGuardrails(executableInputMethod));
+            assertTrue(service.hasInputGuardrails("input(java.lang.String)"));
             assertFalse(service.hasInputGuardrails(plainMethod));
+            assertFalse(service.hasInputGuardrails("plain(java.lang.String)"));
             assertTrue(service.hasOutputGuardrails(outputMethod));
             assertTrue(service.hasOutputGuardrails(executableOutputMethod));
+            assertTrue(service.hasOutputGuardrails("output(java.lang.String)"));
             assertFalse(service.hasOutputGuardrails(plainMethod));
+            assertFalse(service.hasOutputGuardrails("plain(java.lang.String)"));
 
             InputGuardrailResult inputResult = service.executeInputGuardrails(
                 inputMethod,
@@ -118,6 +122,31 @@ class MicronautGuardrailServiceBuilderTest {
 
             assertEquals(GuardrailResult.Result.SUCCESS, result.result());
             assertEquals(1, tracker.classLevelInputInvocations().get());
+        }
+    }
+
+    @Test
+    void resolvesClassLevelOutputGuardrailsFromBeanDefinition() throws NoSuchMethodException {
+        try (ApplicationContext context = ApplicationContext.run()) {
+            GuardrailInvocationTracker tracker = context.getBean(GuardrailInvocationTracker.class);
+            BeanDefinition<ClassLevelOutputGuardedAssistant> beanDefinition = context.getBeanDefinition(ClassLevelOutputGuardedAssistant.class);
+            GuardrailService service = new MicronautAiServiceContext(ClassLevelOutputGuardedAssistant.class, beanDefinition, context).guardrailService();
+
+            Method method = ClassLevelOutputGuardedAssistant.class.getMethod("chat", String.class);
+
+            assertTrue(service.hasOutputGuardrails(method));
+
+            OutputGuardrailResult result = service.executeOutputGuardrails(
+                method,
+                OutputGuardrailRequest.builder()
+                    .responseFromLLM(ChatResponse.builder().aiMessage(AiMessage.from("pong")).build())
+                    .chatExecutor(chatExecutor())
+                    .requestParams(requestParams(ClassLevelOutputGuardedAssistant.class, "chat"))
+                    .build()
+            );
+
+            assertEquals(GuardrailResult.Result.SUCCESS, result.result());
+            assertEquals(1, tracker.classLevelOutputInvocations().get());
         }
     }
 
@@ -182,6 +211,12 @@ interface ClassLevelGuardedAssistant {
     String chat(String userMessage);
 }
 
+@AiService
+@OutputGuardrails(ClassLevelOutputGuard.class)
+interface ClassLevelOutputGuardedAssistant {
+    String chat(String userMessage);
+}
+
 @Singleton
 final class MethodInputGuard implements InputGuardrail {
     private final GuardrailInvocationTracker tracker;
@@ -228,10 +263,26 @@ final class ClassLevelInputGuard implements InputGuardrail {
 }
 
 @Singleton
+final class ClassLevelOutputGuard implements OutputGuardrail {
+    private final GuardrailInvocationTracker tracker;
+
+    ClassLevelOutputGuard(GuardrailInvocationTracker tracker) {
+        this.tracker = tracker;
+    }
+
+    @Override
+    public OutputGuardrailResult validate(OutputGuardrailRequest request) {
+        tracker.classLevelOutputInvocations().incrementAndGet();
+        return success();
+    }
+}
+
+@Singleton
 final class GuardrailInvocationTracker {
     private final AtomicInteger inputInvocations = new AtomicInteger();
     private final AtomicInteger outputInvocations = new AtomicInteger();
     private final AtomicInteger classLevelInputInvocations = new AtomicInteger();
+    private final AtomicInteger classLevelOutputInvocations = new AtomicInteger();
 
     AtomicInteger inputInvocations() {
         return inputInvocations;
@@ -243,5 +294,9 @@ final class GuardrailInvocationTracker {
 
     AtomicInteger classLevelInputInvocations() {
         return classLevelInputInvocations;
+    }
+
+    AtomicInteger classLevelOutputInvocations() {
+        return classLevelOutputInvocations;
     }
 }
