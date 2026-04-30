@@ -23,6 +23,7 @@ chatModels:
 embeddingStores:
   title: Embedding Stores
   embeddingStoresInMemory: In-Memory
+  chroma: Chroma
   elasticsearch: Elastic Search
   mongodb: MongoDB
   neo4j: Neo4j
@@ -33,4 +34,3 @@ embeddingStores:
   qdrant: Qdrant
 repository: Repository
 releaseHistory: Release History
-
