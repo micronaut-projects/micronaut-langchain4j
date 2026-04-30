@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2024 original authors
+ * Copyright 2017-2026 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig;
         )
     },
     properties = {
+        @Property(name = "credentials", injected = true),
         @Property(name = "endpoint", common = true, required = true),
         @Property(name = "modelName", common = true, required = true, defaultValue = "chat-bison"),
         @Property(name = "project", common = true, required = true),
