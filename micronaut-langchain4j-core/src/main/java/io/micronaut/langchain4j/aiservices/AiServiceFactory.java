@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2024 original authors
+ * Copyright 2017-2026 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@ public class AiServiceFactory {
         String name = serviceDef.name();
 
         AiServices<Object> builder = AiServices
-            .builder(type);
+            .builder(new MicronautAiServiceContext(type, serviceDef.beanDefinition(), beanContext));
 
         AiServiceCustomizer<Object> creationCustomizer = Optional.ofNullable(serviceDef.customizer())
             .flatMap(beanContext::findBean)
