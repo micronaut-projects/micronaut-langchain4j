@@ -23,6 +23,7 @@ import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.EachBean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.jdbc.DataSourceResolver;
+import jakarta.inject.Inject;
 import org.jspecify.annotations.Nullable;
 
 import javax.sql.DataSource;
@@ -34,6 +35,11 @@ import javax.sql.DataSource;
 public class PgVectorEmbeddingStoreFactory {
     private final @Nullable DataSourceResolver dataSourceResolver;
 
+    public PgVectorEmbeddingStoreFactory() {
+        this(null);
+    }
+
+    @Inject
     public PgVectorEmbeddingStoreFactory(@Nullable DataSourceResolver dataSourceResolver) {
         this.dataSourceResolver = dataSourceResolver;
     }

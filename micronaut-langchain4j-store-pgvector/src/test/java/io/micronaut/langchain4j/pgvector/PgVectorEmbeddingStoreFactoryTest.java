@@ -37,6 +37,20 @@ class PgVectorEmbeddingStoreFactoryTest {
         Assertions.assertNotNull(embeddingStore);
     }
 
+    @Test
+    void supportsConstructionWithoutDataSourceResolver() {
+        PgVectorEmbeddingStoreFactory factory = new PgVectorEmbeddingStoreFactory();
+        PgVectorEmbeddingStoreConfig configuration = new PgVectorEmbeddingStoreConfig(new StubDataSource(false), null);
+        configuration.setTable("test");
+        configuration.setDimension(384);
+        configuration.setCreateTable(false);
+        configuration.setDropTableFirst(false);
+
+        PgVectorEmbeddingStore embeddingStore = factory.pgVectorEmbeddingStore(configuration);
+
+        Assertions.assertNotNull(embeddingStore);
+    }
+
     private static final class StubDataSource implements DataSource {
         private final boolean failOnConnection;
 
@@ -57,7 +71,9 @@ class PgVectorEmbeddingStoreFactoryTest {
                                 Statement.class.getClassLoader(),
                                 new Class<?>[] {Statement.class},
                                 (statementProxy, statementMethod, statementArgs) -> switch (statementMethod.getName()) {
-                                    case "execute", "executeUpdate", "close" -> null;
+                                    case "execute" -> false;
+                                    case "executeUpdate" -> 0;
+                                    case "close" -> null;
                                     case "getConnection" -> proxy;
                                     case "unwrap" -> statementArgs[0] == Statement.class ? statementProxy : null;
                                     case "isWrapperFor" -> statementArgs[0] == Statement.class;
