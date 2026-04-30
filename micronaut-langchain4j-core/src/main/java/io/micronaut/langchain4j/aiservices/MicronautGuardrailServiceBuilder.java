@@ -30,9 +30,9 @@ import dev.langchain4j.service.guardrail.InputGuardrails;
 import dev.langchain4j.service.guardrail.OutputGuardrails;
 import io.micronaut.context.BeanContext;
 import io.micronaut.core.annotation.AnnotationMetadataProvider;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.ExecutableMethod;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -225,8 +225,17 @@ final class MicronautGuardrailServiceBuilder implements GuardrailService.Builder
     @SuppressWarnings("unchecked")
     private <P extends GuardrailRequest, R extends GuardrailResult<R>, G extends Guardrail<P, R>> G resolveGuardrail(
         Class<? extends G> guardrailClass) {
-        return (G) beanContext.findBean(guardrailClass)
-            .orElseThrow(() -> new IllegalStateException("No Micronaut bean of type [" + guardrailClass.getName() + "] available for AI service guardrail"));
+        Optional<? extends G> bean = beanContext.findBean(guardrailClass);
+        if (bean.isPresent()) {
+            return bean.get();
+        }
+        try {
+            return guardrailClass.getDeclaredConstructor().newInstance();
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalStateException(
+                "No Micronaut bean of type [" + guardrailClass.getName() + "] found. " +
+                "Register the guardrail class as a Micronaut bean (e.g. annotate it with @Singleton).", e);
+        }
     }
 
     private static String methodKey(ExecutableMethod<?, ?> executableMethod) {

@@ -33,7 +33,14 @@ final class MicronautAiServiceContext extends AiServiceContext {
 
     @Override
     public GuardrailService guardrailService() {
-        return guardrailService.updateAndGet(service ->
-            service != null ? service : micronautGuardrailServiceBuilder.build());
+        GuardrailService service = guardrailService.get();
+        if (service == null) {
+            GuardrailService built = micronautGuardrailServiceBuilder.build();
+            if (guardrailService.compareAndSet(null, built)) {
+                return built;
+            }
+            return guardrailService.get();
+        }
+        return service;
     }
 }
