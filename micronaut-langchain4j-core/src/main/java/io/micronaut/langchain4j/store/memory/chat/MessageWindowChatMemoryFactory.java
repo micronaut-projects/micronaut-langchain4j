@@ -34,6 +34,7 @@ public class MessageWindowChatMemoryFactory {
     /**
      *
      * @param chatMemoryStore Chat Memory Store
+     * @param config Message window chat memory configuration
      * @return An instance of {@link MessageWindowChatMemory.Builder} with maxMessages already set with the value of {@link MessageWindowChatMemoryConfiguration#getMaxMessages()} and the supplied Chat memory store.
      */
     @Prototype
