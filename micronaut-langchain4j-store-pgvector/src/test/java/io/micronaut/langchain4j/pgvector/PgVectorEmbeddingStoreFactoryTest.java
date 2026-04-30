@@ -84,10 +84,12 @@ class PgVectorEmbeddingStoreFactoryTest {
 
         @Override
         public void setLogWriter(PrintWriter out) {
+            // No-op: this test stub does not track mutable log-writer state.
         }
 
         @Override
         public void setLoginTimeout(int seconds) {
+            // No-op: this test stub does not enforce login timeouts.
         }
 
         @Override
