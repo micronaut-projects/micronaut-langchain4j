@@ -160,7 +160,7 @@ public class AiServiceFactory {
 
     private static boolean isStreamingReturnType(ExecutableMethod<?, ?> method) {
         Argument<?> returnType = method.getReturnType().asArgument();
-        if (returnType.getType() == TokenStream.class) {
+        if (TokenStream.class.isAssignableFrom(returnType.getType())) {
             return true;
         }
         for (TokenStreamAdapter tokenStreamAdapter : TOKEN_STREAM_ADAPTERS) {

@@ -59,18 +59,48 @@ class AiServiceFactoryModelSelectionTest {
     void configuresOnlyStreamingChatModelForStreamingServices(StreamingAssistant assistant) throws InterruptedException {
         CountDownLatch completed = new CountDownLatch(1);
         AtomicReference<String> partialResponse = new AtomicReference<>();
+        AtomicReference<Throwable> errorRef = new AtomicReference<>();
 
         assistant.chat("hello")
             .onPartialResponse(partialResponse::set)
             .onCompleteResponse(ignore -> completed.countDown())
             .onError(error -> {
-                throw new AssertionError(error);
+                errorRef.set(error);
+                completed.countDown();
             })
             .start();
 
         assertTrue(completed.await(5, TimeUnit.SECONDS));
+        if (errorRef.get() != null) {
+            throw new AssertionError(errorRef.get());
+        }
         assertEquals("streaming-model", partialResponse.get());
         assertEquals(AiServiceFactory.ModelSelection.STREAMING, AiServiceFactory.selectModels(beanContext.getBeanDefinition(StreamingAssistant.class)));
+    }
+
+    @Test
+    void configuresBothModelsForMixedServices(MixedAssistant assistant) throws InterruptedException {
+        assertEquals("chat-model", assistant.chat("hello"));
+
+        CountDownLatch completed = new CountDownLatch(1);
+        AtomicReference<String> partialResponse = new AtomicReference<>();
+        AtomicReference<Throwable> errorRef = new AtomicReference<>();
+
+        assistant.streamChat("hello")
+            .onPartialResponse(partialResponse::set)
+            .onCompleteResponse(ignore -> completed.countDown())
+            .onError(error -> {
+                errorRef.set(error);
+                completed.countDown();
+            })
+            .start();
+
+        assertTrue(completed.await(5, TimeUnit.SECONDS));
+        if (errorRef.get() != null) {
+            throw new AssertionError(errorRef.get());
+        }
+        assertEquals("streaming-model", partialResponse.get());
+        assertEquals(AiServiceFactory.ModelSelection.BOTH, AiServiceFactory.selectModels(beanContext.getBeanDefinition(MixedAssistant.class)));
     }
 
     @Requires(property = "spec.name", value = SPEC_NAME)
@@ -83,6 +113,13 @@ class AiServiceFactoryModelSelectionTest {
     @AiService
     interface StreamingAssistant {
         TokenStream chat(String userMessage);
+    }
+
+    @Requires(property = "spec.name", value = SPEC_NAME)
+    @AiService
+    interface MixedAssistant {
+        String chat(String userMessage);
+        TokenStream streamChat(String userMessage);
     }
 
     @Factory
