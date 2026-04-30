@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2024 original authors
+ * Copyright 2017-2026 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,9 @@ import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.EachBean;
 import io.micronaut.context.annotation.Factory;
+import io.micronaut.jdbc.DataSourceResolver;
+import org.jspecify.annotations.Nullable;
+
 import javax.sql.DataSource;
 
 /**
@@ -29,12 +32,22 @@ import javax.sql.DataSource;
  */
 @Factory
 public class PgVectorEmbeddingStoreFactory {
+    private final @Nullable DataSourceResolver dataSourceResolver;
+
+    public PgVectorEmbeddingStoreFactory(@Nullable DataSourceResolver dataSourceResolver) {
+        this.dataSourceResolver = dataSourceResolver;
+    }
+
     @EachBean(PgVectorEmbeddingStoreConfig.class)
     @Context
     @Bean(typed = EmbeddingStore.class)
     protected PgVectorEmbeddingStore pgVectorEmbeddingStore(PgVectorEmbeddingStoreConfig configuration) {
+        DataSource dataSource = configuration.getDataSource();
+        if (dataSourceResolver != null) {
+            dataSource = dataSourceResolver.resolve(dataSource);
+        }
         return new DataSourcePgVectorStore(
-                configuration.getDataSource(),
+                dataSource,
                 configuration.getTable(),
                 configuration.getDimension(),
                 configuration.getUseIndex(),
