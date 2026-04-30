@@ -27,6 +27,7 @@ import dev.langchain4j.guardrail.InputGuardrailResult;
 import dev.langchain4j.guardrail.OutputGuardrail;
 import dev.langchain4j.guardrail.OutputGuardrailRequest;
 import dev.langchain4j.guardrail.OutputGuardrailResult;
+import dev.langchain4j.guardrail.config.InputGuardrailsConfig;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.invocation.InvocationContext;
 import dev.langchain4j.invocation.InvocationParameters;
@@ -147,6 +148,35 @@ class MicronautGuardrailServiceBuilderTest {
 
             assertEquals(GuardrailResult.Result.SUCCESS, result.result());
             assertEquals(1, tracker.classLevelOutputInvocations().get());
+        }
+    }
+
+    @Test
+    void appliesBuilderConfiguredInputGuardrailsAcrossMethods() throws NoSuchMethodException {
+        try (ApplicationContext context = ApplicationContext.run()) {
+            GuardrailInvocationTracker tracker = context.getBean(GuardrailInvocationTracker.class);
+            BeanDefinition<MethodGuardedAssistant> beanDefinition = context.getBeanDefinition(MethodGuardedAssistant.class);
+            DirectInputGuard.reset();
+            GuardrailService service = new MicronautGuardrailServiceBuilder(beanDefinition, context)
+                .inputGuardrailsConfig(InputGuardrailsConfig.builder().build())
+                .inputGuardrailClasses(List.of(DirectInputGuard.class))
+                .build();
+
+            Method plainMethod = MethodGuardedAssistant.class.getMethod("plain", String.class);
+
+            assertTrue(service.hasInputGuardrails(plainMethod));
+
+            InputGuardrailResult result = service.executeInputGuardrails(
+                plainMethod,
+                InputGuardrailRequest.builder()
+                    .userMessage(UserMessage.from("hello"))
+                    .commonParams(requestParams(MethodGuardedAssistant.class, "plain"))
+                    .build()
+            );
+
+            assertEquals(GuardrailResult.Result.SUCCESS, result.result());
+            assertEquals(1, DirectInputGuard.invocations().get());
+            assertEquals(0, tracker.inputInvocations().get());
         }
     }
 
@@ -273,6 +303,24 @@ final class ClassLevelOutputGuard implements OutputGuardrail {
     @Override
     public OutputGuardrailResult validate(OutputGuardrailRequest request) {
         tracker.classLevelOutputInvocations().incrementAndGet();
+        return success();
+    }
+}
+
+final class DirectInputGuard implements InputGuardrail {
+    private static final AtomicInteger INVOCATIONS = new AtomicInteger();
+
+    static AtomicInteger invocations() {
+        return INVOCATIONS;
+    }
+
+    static void reset() {
+        INVOCATIONS.set(0);
+    }
+
+    @Override
+    public InputGuardrailResult validate(InputGuardrailRequest request) {
+        INVOCATIONS.incrementAndGet();
         return success();
     }
 }
