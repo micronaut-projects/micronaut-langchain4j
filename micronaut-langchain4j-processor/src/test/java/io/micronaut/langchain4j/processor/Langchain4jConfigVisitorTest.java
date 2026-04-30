@@ -63,7 +63,7 @@ class Langchain4jConfigVisitorTest {
             try {
                 Method method = target.getClass().getMethod(methodName);
                 return method.invoke(target);
-            } catch (NoSuchMethodException ignored) {
+            } catch (NoSuchMethodException _) {
                 // Try the next candidate.
             } catch (IllegalAccessException | InvocationTargetException e) {
                 throw new IllegalStateException("Unable to invoke " + methodName + " on " + target.getClass().getName(), e);

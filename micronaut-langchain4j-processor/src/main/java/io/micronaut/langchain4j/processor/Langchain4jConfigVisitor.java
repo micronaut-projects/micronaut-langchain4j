@@ -75,6 +75,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         "StreamingChatLanguageModel", "StreamingChatModel"
     );
     private static final String CTOR_NAME = "<init>";
+    private static final String GET_BUILDER_METHOD = "getBuilder";
     private final Set<String> writtenSourceClasses = new HashSet<>();
 
     @Override
@@ -265,7 +266,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         MethodDef.MethodBodyBuilder methodBody = (aThis, methodParameters) -> {
             VariableDef.MethodParameter methodParameter = methodParameters.get(0);
             return methodParameter.invoke(
-                MethodDef.builder("getBuilder").returns(TypeDef.of(spec.builderType())).build()
+                MethodDef.builder(GET_BUILDER_METHOD).returns(TypeDef.of(spec.builderType())).build()
             ).returning();
         };
         return ClassDef.builder(spec.factoryName())
@@ -305,7 +306,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                         .addMember("value", new VariableDef.StaticField(ClassTypeDef.of(builderTypeDef.getCanonicalName()), "class", TypeDef.of(Class.class)))
                         .build())
                     .addParameter("builder", builderTypeDef)
-                    .returns(spec.exposed() != null ? ClassTypeDef.of(spec.exposed()) : ClassTypeDef.of(spec.languageModel()))
+                    .returns(resolveFactoryReturnType(spec))
                     .build((aThis, parameters) -> {
                         VariableDef.MethodParameter builder = parameters.get(0);
                         return builder.invoke(MethodDef.builder("build").returns(ClassTypeDef.of(spec.languageModel())).build())
@@ -348,7 +349,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         FieldDef builderField = FieldDef.builder("builder")
             .addAnnotation(AnnotationDef.builder(ConfigurationBuilder.class)
                 .addMember("prefixes", "")
-                .addMember("excludes", Arrays.asList(allExcludes))
+                .addMember("excludes", (Object) Arrays.asList(allExcludes))
                 .build())
             .initializer(
                 ClassTypeDef.of(model.getName()).invokeStatic(
@@ -366,7 +367,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             .addField(
                 builderField
             )
-            .addMethod(MethodDef.builder("getBuilder")
+            .addMethod(MethodDef.builder(GET_BUILDER_METHOD)
                 .returns(TypeDef.of(builderType))
                 .build((aThis, parameters) ->
                     aThis.field("builder", TypeDef.of(builderType)).returning()
@@ -456,6 +457,14 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         };
     }
 
+    private static TypeDef resolveFactoryReturnType(FactoryBuildSpec spec) {
+        ClassElement exposed = spec.exposed();
+        if (exposed != null) {
+            return ClassTypeDef.of(exposed);
+        }
+        return ClassTypeDef.of(spec.languageModel());
+    }
+
     static AnnotationDef defaultNamedAnnotation() {
         return AnnotationDef.builder(Named.class)
             .addMember("value", "default")
@@ -494,7 +503,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         FieldDef builderField = FieldDef.builder("builder")
             .addAnnotation(AnnotationDef.builder(ConfigurationBuilder.class)
                 .addMember("prefixes", "")
-                .addMember("excludes", Arrays.asList(allExcludes))
+                .addMember("excludes", (Object) Arrays.asList(allExcludes))
                 .build())
             .initializer(ClassTypeDef.of(model.getName()).invokeStatic(builderMethod))
             .ofType(TypeDef.of(builderType))
@@ -510,7 +519,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             .addField(
                 builderField
             )
-            .addMethod(MethodDef.builder("getBuilder")
+            .addMethod(MethodDef.builder(GET_BUILDER_METHOD)
                 .returns(TypeDef.of(builderType))
                 .build((aThis, methodParameters) -> aThis.field(builderField).returning()));
 
