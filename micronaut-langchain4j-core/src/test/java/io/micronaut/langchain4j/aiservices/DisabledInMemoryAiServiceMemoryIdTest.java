@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Property(name = "spec.name", value = "DisabledInMemoryAiServiceMemoryIdTest")
 @Property(name = "langchain4j.chat-memory-store.inmemory.enabled", value = StringUtils.FALSE)
@@ -47,8 +48,10 @@ class DisabledInMemoryAiServiceMemoryIdTest {
 
     @Test
     void aiServiceWithMemoryIdFailsWhenInMemoryChatMemoryIsDisabled() {
-        assertThrows(IllegalConfigurationException.class,
+        var ex = assertThrows(IllegalConfigurationException.class,
             () -> assistant.chat(UUID.randomUUID().toString(), "hello"));
+        assertTrue(ex.getMessage().contains("In order to use @MemoryId, please configure the ChatMemoryProvider"),
+            "Expected exception message to mention missing ChatMemoryProvider, but was: " + ex.getMessage());
     }
 
     @Requires(property = "spec.name", value = "DisabledInMemoryAiServiceMemoryIdTest")

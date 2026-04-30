@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Property(name = "langchain4j.chat-memory-store.inmemory.enabled", value = StringUtils.FALSE)
+@Property(name = "spec.name", value = "DisabledInMemoryMessageWindowChatMemoryProviderTest")
 @MicronautTest(startApplication = false)
 class DisabledInMemoryMessageWindowChatMemoryProviderTest {
 
