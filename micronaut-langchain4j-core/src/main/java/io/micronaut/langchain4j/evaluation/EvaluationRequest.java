@@ -42,6 +42,12 @@ public record EvaluationRequest(
     @NonNull String response
 ) {
 
+    public EvaluationRequest {
+        userText = requireText(userText, "userText");
+        response = requireText(response, "response");
+        context = hasText(context) ? context.trim() : null;
+    }
+
     /**
      * Creates an evaluation request from the user text and AI service result.
      *
@@ -72,12 +78,6 @@ public record EvaluationRequest(
     @NonNull
     public static EvaluationRequest from(@NonNull String userText, @NonNull List<Content> sources, @NonNull String response) {
         return new EvaluationRequest(userText, join(sources), response);
-    }
-
-    public EvaluationRequest {
-        userText = requireText(userText, "userText");
-        response = requireText(response, "response");
-        context = hasText(context) ? context.trim() : null;
     }
 
     private static String join(List<Content> sources) {

@@ -33,6 +33,10 @@ public record EvaluationResult(
     @NonNull String feedback
 ) {
 
+    public EvaluationResult {
+        feedback = normalize(feedback);
+    }
+
     /**
      * Creates a passing result with the given feedback.
      *
@@ -55,10 +59,6 @@ public record EvaluationResult(
     @NonNull
     public static EvaluationResult fail(@NonNull String feedback) {
         return new EvaluationResult(false, normalize(feedback));
-    }
-
-    public EvaluationResult {
-        feedback = normalize(feedback);
     }
 
     private static String normalize(String feedback) {
