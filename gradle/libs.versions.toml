@@ -39,7 +39,9 @@ awaitility = "4.3.0"
 commons-compress = "1.28.0"
 commons-lang3 = "3.20.0"
 gson = "2.14.0"
+grpc-netty-shaded = "1.75.0"
 jinjava = "2.8.3"
+tools-jackson-core = "3.1.1"
 
 # Managed versions appear in the BOM
 managed-langchain4j = "1.13.1"
@@ -52,7 +54,9 @@ astra-db-client = "1.2.7"
 commons-compress = { module = 'org.apache.commons:commons-compress', version.ref = 'commons-compress'  }
 commons-lang3 = { module = 'org.apache.commons:commons-lang3', version.ref = 'commons-lang3' }
 gson = { module = 'com.google.code.gson:gson', version.ref = 'gson' }
+grpc-netty-shaded = { module = 'io.grpc:grpc-netty-shaded', version.ref = 'grpc-netty-shaded' }
 jinjava = { module = "com.hubspot.jinjava:jinjava", version.ref = "jinjava"}
+tools-jackson-core = { module = 'tools.jackson.core:jackson-core', version.ref = 'tools-jackson-core' }
 
 # Micronaut BOMS
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut'  }
