@@ -46,7 +46,7 @@ public record EvaluationResult(
      */
     @NonNull
     public static EvaluationResult pass(@NonNull String feedback) {
-        return new EvaluationResult(true, normalize(feedback));
+        return new EvaluationResult(true, feedback);
     }
 
     /**
@@ -58,7 +58,7 @@ public record EvaluationResult(
      */
     @NonNull
     public static EvaluationResult fail(@NonNull String feedback) {
-        return new EvaluationResult(false, normalize(feedback));
+        return new EvaluationResult(false, feedback);
     }
 
     private static String normalize(String feedback) {

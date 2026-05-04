@@ -22,13 +22,14 @@ class PromptBasedEvaluatorTest {
         EvaluationResult result = evaluator.evaluate(new EvaluationRequest(
             "What is Micronaut?",
             "Micronaut is a JVM framework.",
-            "Micronaut is a JVM framework."
+            "Micronaut supports reactive programming."
         ));
 
         assertTrue(result.passing());
         assertEquals("The response answers the user request.", result.feedback());
         assertTrue(model.prompt().contains("What is Micronaut?"));
-        assertTrue(model.prompt().contains("Micronaut is a JVM framework."));
+        assertTrue(model.prompt().contains("Context:\nMicronaut is a JVM framework."));
+        assertTrue(model.prompt().contains("AI response:\nMicronaut supports reactive programming."));
         assertTrue(model.prompt().contains("directly answers the user text"));
     }
 
@@ -83,7 +84,7 @@ class PromptBasedEvaluatorTest {
 
         @Override
         public ChatResponse doChat(ChatRequest chatRequest) {
-            UserMessage userMessage = (UserMessage) chatRequest.messages().getFirst();
+            UserMessage userMessage = (UserMessage) chatRequest.messages().get(0);
             this.prompt = userMessage.singleText();
             return ChatResponse.builder()
                 .aiMessage(new AiMessage(response))
