@@ -67,7 +67,7 @@ class ChromaEmbeddingStoreTest {
     }
 
     private static void handleRequest(HttpExchange exchange, List<String> requests) throws IOException {
-        try (var ignored = exchange.getRequestBody()) {
+        try (var requestBody = exchange.getRequestBody()) {
             String route = exchange.getRequestMethod() + " " + exchange.getRequestURI().getPath();
             requests.add(route);
             switch (route) {
