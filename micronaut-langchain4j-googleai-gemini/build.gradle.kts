@@ -3,5 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.langchain4j.google.ai.gemini)
+    implementation(libs.langchain4j.google.ai.gemini) {
+        exclude(group = "dev.langchain4j", module = "langchain4j-http-client-jdk")
+    }
 }

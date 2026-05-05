@@ -5,7 +5,10 @@ plugins {
 dependencies {
     api(mn.micronaut.context)
     api(libs.langchain4j)
+    api(libs.langchain4j.http.client)
+    implementation(mn.micronaut.http.client)
     testAnnotationProcessor(mn.micronaut.inject.java)
+    testImplementation(mn.micronaut.http.server.netty)
     testImplementation(mn.micronaut.jackson.databind)
     testImplementation(libs.langchain4j.ollama)
     testImplementation(mnTest.micronaut.test.junit5)
