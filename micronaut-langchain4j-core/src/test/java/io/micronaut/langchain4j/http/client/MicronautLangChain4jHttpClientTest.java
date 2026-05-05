@@ -17,14 +17,26 @@ package io.micronaut.langchain4j.http.client;
 
 import com.sun.net.httpserver.HttpServer;
 import dev.langchain4j.exception.HttpException;
+import dev.langchain4j.exception.TimeoutException;
 import dev.langchain4j.http.client.HttpMethod;
 import dev.langchain4j.http.client.HttpRequest;
 import dev.langchain4j.http.client.SuccessfulHttpResponse;
 import dev.langchain4j.http.client.sse.ServerSentEvent;
 import dev.langchain4j.http.client.sse.ServerSentEventContext;
 import dev.langchain4j.http.client.sse.ServerSentEventListener;
+import io.micronaut.core.type.Argument;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.body.CloseableByteBody;
+import io.micronaut.http.client.BlockingHttpClient;
+import io.micronaut.http.client.RawHttpClient;
+import io.micronaut.http.client.exceptions.HttpClientResponseException;
+import io.micronaut.http.client.sse.SseClient;
+import io.micronaut.http.sse.Event;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -37,6 +49,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -74,7 +87,7 @@ class MicronautLangChain4jHttpClientTest {
 
         assertEquals(200, response.statusCode());
         assertEquals("POST:hello", response.body());
-        assertEquals("ok", response.headers().get("X-test").get(0));
+        assertEquals("ok", response.headers().get("x-test").get(0));
     }
 
     @Test
@@ -88,12 +101,14 @@ class MicronautLangChain4jHttpClientTest {
         });
         server.start();
 
-        HttpException exception = assertThrows(HttpException.class, () -> new MicronautLangChain4jHttpClientBuilder()
-            .build()
-            .execute(HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .url(url("/error"))
-                .build()));
+        dev.langchain4j.http.client.HttpClient client = new MicronautLangChain4jHttpClientBuilder()
+            .build();
+        HttpRequest request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .url(url("/error"))
+            .build();
+
+        HttpException exception = assertThrows(HttpException.class, () -> client.execute(request));
 
         assertEquals(400, exception.statusCode());
         assertEquals("bad request", exception.getMessage());
@@ -182,13 +197,273 @@ class MicronautLangChain4jHttpClientTest {
                 });
 
         assertTrue(closedLatch.await(5, TimeUnit.SECONDS));
-        assertEquals(null, error.get());
+        assertNull(error.get());
         assertTrue(opened.get());
         assertTrue(closed.get());
         assertEquals(List.of("hello", "world"), events);
     }
 
+    @Test
+    void parsesServerSentEventsWithoutSseClient() throws Exception {
+        RawOnlyHttpClient rawClient = new RawOnlyHttpClient(single(HttpResponse.ok("""
+            data: micro
+
+            data: naut
+
+            """)));
+        AtomicReference<Throwable> error = new AtomicReference<>();
+        CountDownLatch closedLatch = new CountDownLatch(1);
+        List<String> events = new ArrayList<>();
+
+        client(rawClient, java.time.Duration.ofSeconds(1))
+            .execute(HttpRequest.builder()
+                .method(HttpMethod.GET)
+                .url("http://localhost/sse")
+                .build(), new ServerSentEventListener() {
+                    @Override
+                    public void onEvent(ServerSentEvent event, ServerSentEventContext context) {
+                        events.add(event.data());
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        error.set(throwable);
+                        closedLatch.countDown();
+                    }
+
+                    @Override
+                    public void onClose() {
+                        closedLatch.countDown();
+                    }
+                });
+
+        assertTrue(closedLatch.await(5, TimeUnit.SECONDS));
+        assertNull(error.get());
+        assertEquals(List.of("micro", "naut"), events);
+    }
+
+    @Test
+    void mapsAsyncErrorResponsesWithoutSseClient() throws Exception {
+        RawOnlyHttpClient rawClient = new RawOnlyHttpClient(single(HttpResponse.badRequest("bad request")));
+        AtomicReference<Throwable> error = new AtomicReference<>();
+        CountDownLatch errorLatch = new CountDownLatch(1);
+
+        client(rawClient, java.time.Duration.ofSeconds(1))
+            .execute(HttpRequest.builder()
+                .method(HttpMethod.GET)
+                .url("http://localhost/error")
+                .build(), new ServerSentEventListener() {
+                    @Override
+                    public void onError(Throwable throwable) {
+                        error.set(throwable);
+                        errorLatch.countDown();
+                    }
+                });
+
+        assertTrue(errorLatch.await(5, TimeUnit.SECONDS));
+        assertTrue(error.get() instanceof HttpException);
+        assertEquals(400, ((HttpException) error.get()).statusCode());
+        assertEquals("bad request", error.get().getMessage());
+    }
+
+    @Test
+    void readsByteArrayResponseBodies() {
+        dev.langchain4j.http.client.HttpClient client = client(
+            new RawOnlyHttpClient(single(HttpResponse.ok("bytes".getBytes(StandardCharsets.UTF_8)))),
+            java.time.Duration.ofSeconds(1)
+        );
+        HttpRequest request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .url("http://localhost/bytes")
+            .build();
+
+        SuccessfulHttpResponse response = client.execute(request);
+
+        assertEquals("bytes", response.body());
+    }
+
+    @Test
+    void mapsSseClientErrorsToHttpExceptions() throws Exception {
+        SseHttpClient sseClient = new SseHttpClient(subscriber -> {
+            subscriber.onSubscribe(new EmptySubscription());
+            subscriber.onError(new HttpClientResponseException("Bad Request", HttpResponse.badRequest("bad request")));
+        });
+        AtomicReference<Throwable> error = new AtomicReference<>();
+        CountDownLatch errorLatch = new CountDownLatch(1);
+
+        client(sseClient, java.time.Duration.ofSeconds(1))
+            .execute(HttpRequest.builder()
+                .method(HttpMethod.GET)
+                .url("http://localhost/sse-error")
+                .build(), new ServerSentEventListener() {
+                    @Override
+                    public void onError(Throwable throwable) {
+                        error.set(throwable);
+                        errorLatch.countDown();
+                    }
+                });
+
+        assertTrue(errorLatch.await(5, TimeUnit.SECONDS));
+        assertTrue(error.get() instanceof HttpException);
+        assertEquals(400, ((HttpException) error.get()).statusCode());
+        assertEquals("bad request", error.get().getMessage());
+    }
+
+    @Test
+    void cancelsSseClientSubscriptions() throws Exception {
+        AtomicReference<Subscription> subscription = new AtomicReference<>();
+        AtomicBoolean cancelled = new AtomicBoolean();
+        SseHttpClient sseClient = new SseHttpClient(subscriber -> {
+            subscription.set(new Subscription() {
+                @Override
+                public void request(long n) {
+                    subscriber.onNext(Event.of("stop"));
+                }
+
+                @Override
+                public void cancel() {
+                    cancelled.set(true);
+                }
+            });
+            subscriber.onSubscribe(subscription.get());
+        });
+        CountDownLatch eventLatch = new CountDownLatch(1);
+        AtomicReference<Throwable> error = new AtomicReference<>();
+
+        client(sseClient, java.time.Duration.ofSeconds(1))
+            .execute(HttpRequest.builder()
+                .method(HttpMethod.GET)
+                .url("http://localhost/sse-cancel")
+                .build(), new ServerSentEventListener() {
+                    @Override
+                    public void onEvent(ServerSentEvent event, ServerSentEventContext context) {
+                        context.parsingHandle().cancel();
+                        eventLatch.countDown();
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        error.set(throwable);
+                        eventLatch.countDown();
+                    }
+                });
+
+        assertTrue(eventLatch.await(5, TimeUnit.SECONDS));
+        assertNull(error.get());
+        assertTrue(cancelled.get());
+    }
+
+    @Test
+    void timesOutWaitingForRawResponse() {
+        dev.langchain4j.http.client.HttpClient client = client(
+            new RawOnlyHttpClient(subscriber -> subscriber.onSubscribe(new EmptySubscription())),
+            java.time.Duration.ofMillis(10)
+        );
+        HttpRequest request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .url("http://localhost/never")
+            .build();
+
+        assertThrows(TimeoutException.class, () -> client.execute(request));
+    }
+
     private String url(String path) {
         return "http://localhost:" + server.getAddress().getPort() + path;
+    }
+
+    private static dev.langchain4j.http.client.HttpClient client(RawOnlyHttpClient rawClient, java.time.Duration readTimeout) {
+        return new MicronautLangChain4jHttpClient(
+            () -> rawClient,
+            null,
+            null,
+            null,
+            null,
+            readTimeout
+        );
+    }
+
+    private static <T> Publisher<T> single(T value) {
+        return subscriber -> {
+            subscriber.onSubscribe(new EmptySubscription());
+            subscriber.onNext(value);
+            subscriber.onComplete();
+        };
+    }
+
+    private static final class EmptySubscription implements Subscription {
+        @Override
+        public void request(long n) {
+        }
+
+        @Override
+        public void cancel() {
+        }
+    }
+
+    private static class RawOnlyHttpClient implements io.micronaut.http.client.HttpClient, RawHttpClient {
+        private final Publisher<? extends HttpResponse<?>> responsePublisher;
+
+        private RawOnlyHttpClient(Publisher<? extends HttpResponse<?>> responsePublisher) {
+            this.responsePublisher = responsePublisher;
+        }
+
+        @Override
+        public Publisher<? extends HttpResponse<?>> exchange(
+            io.micronaut.http.HttpRequest<?> request,
+            CloseableByteBody requestBody,
+            Thread blockedThread) {
+            return responsePublisher;
+        }
+
+        @Override
+        public BlockingHttpClient toBlocking() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean isRunning() {
+            return true;
+        }
+
+        @Override
+        public <I, O, E> Publisher<HttpResponse<O>> exchange(
+            io.micronaut.http.HttpRequest<I> request,
+            Argument<O> bodyType,
+            Argument<E> errorType) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void close() {
+        }
+    }
+
+    private static final class SseHttpClient extends RawOnlyHttpClient implements SseClient {
+        private final Publisher<Event<String>> eventPublisher;
+
+        private SseHttpClient(Publisher<Event<String>> eventPublisher) {
+            super(single(HttpResponse.ok()));
+            this.eventPublisher = eventPublisher;
+        }
+
+        @Override
+        public <I> Publisher<Event<io.micronaut.core.io.buffer.ByteBuffer<?>>> eventStream(io.micronaut.http.HttpRequest<I> request) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public <I, B> Publisher<Event<B>> eventStream(io.micronaut.http.HttpRequest<I> request, Argument<B> eventType) {
+            @SuppressWarnings({"unchecked", "rawtypes"})
+            Publisher<Event<B>> publisher = (Publisher) eventPublisher;
+            return publisher;
+        }
+
+        @Override
+        public <I, B> Publisher<Event<B>> eventStream(
+            io.micronaut.http.HttpRequest<I> request,
+            Argument<B> eventType,
+            Argument<?> errorType) {
+            return eventStream(request, eventType);
+        }
     }
 }

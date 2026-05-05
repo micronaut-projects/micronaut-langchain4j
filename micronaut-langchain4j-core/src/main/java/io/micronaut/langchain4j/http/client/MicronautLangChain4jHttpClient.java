@@ -16,6 +16,7 @@
 package io.micronaut.langchain4j.http.client;
 
 import dev.langchain4j.exception.HttpException;
+import dev.langchain4j.exception.LangChain4jException;
 import dev.langchain4j.exception.TimeoutException;
 import dev.langchain4j.http.client.FormDataFile;
 import dev.langchain4j.http.client.HttpRequest;
@@ -58,15 +59,23 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.client.HttpClient {
+    private static final Duration DEFAULT_READ_TIMEOUT = Duration.ofSeconds(60);
+    private static final Executor SSE_EXECUTOR = new BlockingExecutor();
+
     private final @Nullable BeanProvider<io.micronaut.http.client.HttpClient> httpClientProvider;
     private final @Nullable BeanProvider<HttpClientRegistry<io.micronaut.http.client.HttpClient>> httpClientRegistryProvider;
     private final @Nullable BeanProvider<ByteBodyFactory> byteBodyFactoryProvider;
@@ -74,7 +83,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
     private final Duration connectTimeout;
     private final Duration readTimeout;
     private final Map<URI, io.micronaut.http.client.HttpClient> configuredManagedClients = new ConcurrentHashMap<>();
-    private @Nullable ByteBodyFactory fallbackByteBodyFactory;
+    private final AtomicReference<ByteBodyFactory> fallbackByteBodyFactory = new AtomicReference<>();
 
     MicronautLangChain4jHttpClient(
         @Nullable BeanProvider<io.micronaut.http.client.HttpClient> httpClientProvider,
@@ -107,7 +116,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         } catch (ReadTimeoutException e) {
             throw new TimeoutException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new LangChain4jException("Error closing Micronaut HTTP client", e);
         }
     }
 
@@ -136,10 +145,10 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
                 }
             } catch (ReadTimeoutException e) {
                 safeOnError(listener, new TimeoutException(e));
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 safeOnError(listener, e);
             }
-        });
+        }, SSE_EXECUTOR);
     }
 
     private ClientHandle client(String url) {
@@ -177,7 +186,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
                 return null;
             }
             return httpClientProvider.get();
-        } catch (BeanContextException e) {
+        } catch (BeanContextException _) {
             return null;
         }
     }
@@ -191,7 +200,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
                 return null;
             }
             return configuredManagedClients.computeIfAbsent(origin, this::resolveConfiguredManagedRawHttpClient);
-        } catch (BeanContextException | IllegalStateException e) {
+        } catch (BeanContextException | IllegalStateException _) {
             return null;
         }
     }
@@ -222,10 +231,11 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
 
     private io.micronaut.http.HttpResponse<?> rawExchange(RawHttpClient client, HttpRequest request) {
         MutableHttpRequest<Object> micronautRequest = micronautRequest(request);
-        CloseableByteBody requestBody = body(request);
-        Publisher<? extends io.micronaut.http.HttpResponse<?>> responsePublisher =
-            client.exchange(micronautRequest, requestBody, Thread.currentThread());
-        return BlockingSingleSubscriber.get(responsePublisher);
+        try (CloseableByteBody requestBody = body(request)) {
+            Publisher<? extends io.micronaut.http.HttpResponse<?>> responsePublisher =
+                client.exchange(micronautRequest, requestBody, Thread.currentThread());
+            return BlockingSingleSubscriber.get(responsePublisher, readTimeout);
+        }
     }
 
     private io.micronaut.http.HttpResponse<?> standardExchange(io.micronaut.http.client.HttpClient client, HttpRequest request) {
@@ -234,7 +244,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
                 standardRequest(request),
                 Argument.STRING,
                 Argument.STRING
-            ));
+            ), readTimeout);
         } catch (HttpClientResponseException e) {
             return e.getResponse();
         }
@@ -244,7 +254,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         try {
             client.sseClient().eventStream(micronautRequest(request), Argument.STRING)
                 .subscribe(new SseSubscriber(listener, client));
-        } catch (Throwable e) {
+        } catch (RuntimeException e) {
             closeQuietly(client);
             throw e;
         }
@@ -271,7 +281,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         request.headers().forEach((name, values) -> {
             if (values != null) {
                 values.stream()
-                    .filter(value -> value != null)
+                    .filter(Objects::nonNull)
                     .forEach(value -> micronautRequest.getHeaders().add(name, value));
             }
         });
@@ -304,16 +314,13 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
                 if (byteBodyFactoryProvider.isResolvable()) {
                     return byteBodyFactoryProvider.get();
                 }
-            } catch (BeanContextException ignored) {
+            } catch (BeanContextException _) {
                 // Fall back to a standalone factory for manually constructed clients.
             }
         }
-        ByteBodyFactory byteBodyFactory = fallbackByteBodyFactory;
-        if (byteBodyFactory == null) {
-            byteBodyFactory = ByteBodyFactory.createDefault(ByteArrayBufferFactory.INSTANCE);
-            fallbackByteBodyFactory = byteBodyFactory;
-        }
-        return byteBodyFactory;
+        return fallbackByteBodyFactory.updateAndGet(byteBodyFactory ->
+            byteBodyFactory == null ? ByteBodyFactory.createDefault(ByteArrayBufferFactory.INSTANCE) : byteBodyFactory
+        );
     }
 
     private static MultipartBody multipartBody(HttpRequest request) {
@@ -356,7 +363,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
 
     private static Map<String, List<String>> headers(io.micronaut.http.HttpResponse<?> response) {
         Map<String, List<String>> headers = new LinkedHashMap<>();
-        response.getHeaders().forEach((name, values) -> headers.put(name, List.copyOf(values)));
+        response.getHeaders().forEach((name, values) -> headers.put(name.toLowerCase(Locale.ROOT), List.copyOf(values)));
         return headers;
     }
 
@@ -370,9 +377,9 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
                 return buffered.toString(StandardCharsets.UTF_8);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                throw new RuntimeException(e);
+                throw new LangChain4jException("Interrupted while reading response body", e);
             } catch (ExecutionException e) {
-                throw new RuntimeException(e);
+                throw new LangChain4jException("Error reading response body", e);
             }
         }
         if (body instanceof byte[] bytes) {
@@ -390,7 +397,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
             try (InputStream inputStream = byteBody.toInputStream()) {
                 parser.parse(inputStream, listener);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new LangChain4jException("Error reading server-sent event response", e);
             }
         } else if (body != null) {
             parser.parse(new java.io.ByteArrayInputStream(body.toString().getBytes(StandardCharsets.UTF_8)), listener);
@@ -413,7 +420,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
     private static void safeOnOpen(ServerSentEventListener listener, SuccessfulHttpResponse response) {
         try {
             listener.onOpen(response);
-        } catch (Throwable ignored) {
+        } catch (Exception _) {
             // Ignore listener exceptions to match LangChain4j HTTP client behavior.
         }
     }
@@ -421,7 +428,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
     private static void safeOnClose(ServerSentEventListener listener) {
         try {
             listener.onClose();
-        } catch (Throwable ignored) {
+        } catch (Exception _) {
             // Ignore listener exceptions to match LangChain4j HTTP client behavior.
         }
     }
@@ -429,26 +436,27 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
     private static void safeOnError(ServerSentEventListener listener, Throwable throwable) {
         try {
             listener.onError(throwable);
-        } catch (Throwable ignored) {
+        } catch (Exception _) {
             // Ignore listener exceptions to match LangChain4j HTTP client behavior.
         }
-    }
-
-    private static Throwable toHttpException(Throwable throwable) {
-        if (throwable instanceof HttpClientResponseException e) {
-            return new HttpException(e.code(), readBody(e.getResponse()));
-        }
-        if (throwable instanceof ReadTimeoutException e) {
-            return new TimeoutException(e);
-        }
-        return throwable;
     }
 
     private static void closeQuietly(ClientHandle client) {
         try {
             client.close();
-        } catch (IOException ignored) {
+        } catch (IOException _) {
             // Ignore close failures after the response has already completed.
+        }
+    }
+
+    private static final class BlockingExecutor implements Executor {
+        private final AtomicInteger sequence = new AtomicInteger();
+
+        @Override
+        public void execute(Runnable runnable) {
+            Thread thread = new Thread(runnable, "micronaut-langchain4j-sse-" + sequence.incrementAndGet());
+            thread.setDaemon(true);
+            thread.start();
         }
     }
 
@@ -457,7 +465,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         private final ClientHandle client;
         private final AtomicBoolean cancelled = new AtomicBoolean();
         private final ServerSentEventContext context = new ServerSentEventContext(this);
-        private volatile Subscription subscription;
+        private final AtomicReference<Subscription> subscription = new AtomicReference<>();
 
         private SseSubscriber(ServerSentEventListener listener, ClientHandle client) {
             this.listener = listener;
@@ -466,7 +474,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
 
         @Override
         public void onSubscribe(Subscription subscription) {
-            this.subscription = subscription;
+            this.subscription.set(subscription);
             safeOnOpen(listener, SuccessfulHttpResponse.builder()
                 .statusCode(200)
                 .headers(Map.of())
@@ -504,7 +512,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         @Override
         public void cancel() {
             cancelled.set(true);
-            Subscription currentSubscription = subscription;
+            Subscription currentSubscription = subscription.get();
             if (currentSubscription != null) {
                 currentSubscription.cancel();
             }
@@ -515,6 +523,16 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         public boolean isCancelled() {
             return cancelled.get();
         }
+
+        private Throwable toHttpException(Throwable throwable) {
+            if (throwable instanceof HttpClientResponseException e) {
+                return new HttpException(e.code(), readBody(e.getResponse()));
+            }
+            if (throwable instanceof ReadTimeoutException e) {
+                return new TimeoutException(e);
+            }
+            return throwable;
+        }
     }
 
     private static final class BlockingSingleSubscriber<T> implements Subscriber<T> {
@@ -522,21 +540,24 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         private final AtomicReference<T> value = new AtomicReference<>();
         private final AtomicReference<Throwable> error = new AtomicReference<>();
 
-        static <T> T get(Publisher<? extends T> publisher) {
+        static <T> T get(Publisher<? extends T> publisher, @Nullable Duration readTimeout) {
             BlockingSingleSubscriber<T> subscriber = new BlockingSingleSubscriber<>();
             publisher.subscribe(subscriber);
             try {
-                subscriber.latch.await();
+                Duration timeout = readTimeout == null ? DEFAULT_READ_TIMEOUT : readTimeout;
+                if (!subscriber.latch.await(timeout.toNanos(), TimeUnit.NANOSECONDS)) {
+                    throw new TimeoutException("Request timed out after " + timeout);
+                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                throw new RuntimeException(e);
+                throw new TimeoutException("Interrupted while waiting for response", e);
             }
             Throwable throwable = subscriber.error.get();
             if (throwable != null) {
                 if (throwable instanceof RuntimeException runtimeException) {
                     throw runtimeException;
                 }
-                throw new RuntimeException(throwable);
+                throw new LangChain4jException("Error receiving response", throwable);
             }
             return subscriber.value.get();
         }

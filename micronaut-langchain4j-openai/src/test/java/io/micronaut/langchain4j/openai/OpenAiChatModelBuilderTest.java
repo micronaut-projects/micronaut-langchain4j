@@ -30,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @MicronautTest(startApplication = false)
@@ -82,7 +83,7 @@ public class OpenAiChatModelBuilderTest {
         });
 
         assertTrue(complete.await(5, TimeUnit.SECONDS));
-        assertEquals(null, error.get());
+        assertNull(error.get());
         assertEquals("micronaut", partials.toString());
     }
 
