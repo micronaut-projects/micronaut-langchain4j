@@ -1,0 +1,134 @@
+:langchain4j: https://docs.langchain4j.dev/apidocs
+
+== Agentic Service
+
+Micronaut lets you declare LangChain4j Agentic services and have concrete agents generated at runtime.
+
+Add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-agentic[]
+
+Annotate an interface with api:io.micronaut.langchain4j.agentic.annotation.AgenticService[] and declare methods using LangChain4j Agentic annotations.
+The integration interprets your annotations and uses Micronaut DI to wire the underlying LangChain4j builders.
+It supports:
+
+- Typed agents built via `AgenticServices.agentBuilder(Class)` with `@Agent` methods.
+- Declarative workflow agents via `AgenticServices.createAgenticSystem(...)`.
+- Micronaut model, memory, RAG, tool, and lifecycle integration for each generated agent builder.
+
+=== Quick start
+
+snippet::example.micronaut.agentic.GreeterAgent[source=main]
+
+==== Usage in tests
+
+snippet::example.micronaut.agentic.AgenticServiceTest[source=test]
+
+
+=== Declarative workflows
+
+You can build workflows using LangChain4j's declarative annotations. The integration routes construction through Micronaut DI so that supported workflow builders are Micronaut-managed beans (allowing listeners and customization).
+
+Supported patterns:
+
+- link:{langchain4j}/dev/langchain4j/agentic/declarative/SequenceAgent.html[SequenceAgent]
+- link:{langchain4j}/dev/langchain4j/agentic/declarative/ParallelAgent.html[ParallelAgent]
+- link:{langchain4j}/dev/langchain4j/agentic/declarative/ParallelMapperAgent.html[ParallelMapperAgent]
+- link:{langchain4j}/dev/langchain4j/agentic/declarative/ConditionalAgent.html[ConditionalAgent]
+- link:{langchain4j}/dev/langchain4j/agentic/declarative/LoopAgent.html[LoopAgent]
+
+Supervisor-style and planner-style agents can still be modeled using LangChain4j typed agents or composed workflows, but the Micronaut-managed workflow builder lifecycle currently applies to the workflow types listed above.
+
+Example: an evening planner (Sequence)
+
+snippet::example.micronaut.agentic.EveningPlannerAgent[source=main]
+
+Parallel workflow example
+
+snippet::example.micronaut.agentic.ParallelPlanningAgentTest[source=test]
+
+Loop example with customization via a listener
+
+snippet::example.micronaut.agentic.LoopingPlannerAgent[source=main]
+
+=== Configuration
+
+You can select which `ChatModel` bean to use per agent via configuration. The agent id is derived from the interface name by:
+
+- stripping a trailing "Agent" suffix
+- converting UpperCamel to lower-kebab (e.g. CreativeWriterAgent -> creative-writer)
+
+[source]
+----
+langchain4j.agentic.agents.<agent-id>.chat-model
+----
+
+Examples
+
+[configuration]
+----
+langchain4j:
+  agentic:
+    agents:
+      greeter:
+        chat-model: friendly-chat-model
+      creative-writer:
+        chat-model: creative-chat-model
+----
+
+If the property is not set and there is exactly one ChatModel bean in the context, it will be used automatically.
+
+==== Memory
+
+By default, agentic services reuse the core `MessageWindowChatMemory` built from the configured `ChatMemoryStore`. The core module publishes a `MessageWindowChatMemory.Builder` per available `ChatMemoryStore` (via `@EachBean(ChatMemoryStore)`), so agents automatically use the default builder when a single memory store is configured.
+
+You can optionally override memory per agent:
+
+[source]
+----
+langchain4j.agentic.agents.<agent-id>.memory.store
+
+langchain4j.agentic.agents.<agent-id>.memory.max-messages
+----
+
+Notes:
+- If `memory.store` is not set, the default `MessageWindowChatMemory.Builder` is used (as resolved by Micronaut DI).
+- If multiple memory stores are available, set `memory.store` to select the store for an agent.
+- If `memory.max-messages` is not set, the global core setting `langchain4j.chat-memory-store.message-window.max-messages` applies.
+
+Examples
+
+[configuration]
+----
+langchain4j:
+  agentic:
+    agents:
+      greeter:
+        memory:
+          store: redis
+      creative-writer:
+        memory:
+          max-messages: 50
+----
+
+
+=== Tools
+
+You can request specific tool beans to be registered with the agent builder using the `tools` attribute.
+Tool classes should be Micronaut beans containing methods annotated with `dev.langchain4j.agent.tool.Tool`.
+
+=== Customization
+
+You can customize builders using Micronaut lifecycle listeners. Because workflow builders are created as Micronaut beans during declarative system construction, your listeners can adjust names, exit conditions, parallelism, etc., before the system executes.
+
+Typed agents can also be customized via `BeanCreatedEventListener<AgentBuilder<?, ?>>`; the `LoopingPlannerAgent` snippet above shows the same Micronaut lifecycle technique applied to `LoopAgentService`.
+
+For example, this listener customizes every generated declarative agent builder before LangChain4j builds the agentic system:
+
+snippet::example.micronaut.agentic.SupportAgentBuilderListener[source=main]
+
+Workflow builders can be customized the same way. This example changes the loop exit condition for all `LoopAgentService` builders created by the agentic integration:
+
+snippet::example.micronaut.agentic.LoopAgentServiceListener[source=main]
+
+The same approach applies to Micronaut-managed workflow services: `SequentialAgentService`, `ParallelAgentService`, `ParallelMapperService`, `ConditionalAgentService`, and `LoopAgentService`.
