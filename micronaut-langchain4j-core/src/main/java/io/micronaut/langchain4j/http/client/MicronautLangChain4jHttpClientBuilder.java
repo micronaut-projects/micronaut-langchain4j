@@ -27,10 +27,13 @@ import io.micronaut.core.annotation.Internal;
 import io.micronaut.http.body.ByteBodyFactory;
 import io.micronaut.http.client.HttpClientRegistry;
 import io.micronaut.http.client.RawHttpClient;
+import io.micronaut.scheduling.TaskExecutors;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import org.jspecify.annotations.Nullable;
 
 import java.time.Duration;
+import java.util.concurrent.ExecutorService;
 
 /**
  * Builds LangChain4j HTTP clients backed by Micronaut HTTP Client.
@@ -44,12 +47,13 @@ final class MicronautLangChain4jHttpClientBuilder implements HttpClientBuilder {
     private final @Nullable BeanProvider<io.micronaut.http.client.HttpClient> httpClientProvider;
     private final @Nullable BeanProvider<HttpClientRegistry<io.micronaut.http.client.HttpClient>> httpClientRegistryProvider;
     private final @Nullable BeanProvider<ByteBodyFactory> byteBodyFactoryProvider;
+    private final @Nullable BeanProvider<ExecutorService> blockingExecutorProvider;
     private final @Nullable BeanContext beanContext;
     private Duration connectTimeout;
     private Duration readTimeout;
 
     MicronautLangChain4jHttpClientBuilder() {
-        this(null, null, null, null);
+        this(null, null, null, null, null);
     }
 
     @Inject
@@ -57,10 +61,12 @@ final class MicronautLangChain4jHttpClientBuilder implements HttpClientBuilder {
         @Nullable BeanProvider<io.micronaut.http.client.HttpClient> httpClientProvider,
         @Nullable BeanProvider<HttpClientRegistry<io.micronaut.http.client.HttpClient>> httpClientRegistryProvider,
         @Nullable BeanProvider<ByteBodyFactory> byteBodyFactoryProvider,
+        @Named(TaskExecutors.BLOCKING) @Nullable BeanProvider<ExecutorService> blockingExecutorProvider,
         @Nullable BeanContext beanContext) {
         this.httpClientProvider = httpClientProvider;
         this.httpClientRegistryProvider = httpClientRegistryProvider;
         this.byteBodyFactoryProvider = byteBodyFactoryProvider;
+        this.blockingExecutorProvider = blockingExecutorProvider;
         this.beanContext = beanContext;
     }
 
@@ -92,6 +98,7 @@ final class MicronautLangChain4jHttpClientBuilder implements HttpClientBuilder {
             httpClientProvider,
             httpClientRegistryProvider,
             byteBodyFactoryProvider,
+            blockingExecutorProvider,
             beanContext,
             connectTimeout,
             readTimeout

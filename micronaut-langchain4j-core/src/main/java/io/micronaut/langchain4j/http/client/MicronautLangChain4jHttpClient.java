@@ -67,6 +67,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -74,11 +75,17 @@ import java.util.concurrent.atomic.AtomicReference;
 
 final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.client.HttpClient {
     private static final Duration DEFAULT_READ_TIMEOUT = Duration.ofSeconds(60);
-    private static final Executor SSE_EXECUTOR = new BlockingExecutor();
+    private static final AtomicInteger FALLBACK_EXECUTOR_SEQUENCE = new AtomicInteger();
+    private static final Executor FALLBACK_SSE_EXECUTOR = runnable -> {
+        Thread thread = new Thread(runnable, "micronaut-langchain4j-sse-" + FALLBACK_EXECUTOR_SEQUENCE.incrementAndGet());
+        thread.setDaemon(true);
+        thread.start();
+    };
 
     private final @Nullable BeanProvider<io.micronaut.http.client.HttpClient> httpClientProvider;
     private final @Nullable BeanProvider<HttpClientRegistry<io.micronaut.http.client.HttpClient>> httpClientRegistryProvider;
     private final @Nullable BeanProvider<ByteBodyFactory> byteBodyFactoryProvider;
+    private final @Nullable BeanProvider<ExecutorService> blockingExecutorProvider;
     private final @Nullable BeanContext beanContext;
     private final Duration connectTimeout;
     private final Duration readTimeout;
@@ -89,12 +96,14 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         @Nullable BeanProvider<io.micronaut.http.client.HttpClient> httpClientProvider,
         @Nullable BeanProvider<HttpClientRegistry<io.micronaut.http.client.HttpClient>> httpClientRegistryProvider,
         @Nullable BeanProvider<ByteBodyFactory> byteBodyFactoryProvider,
+        @Nullable BeanProvider<ExecutorService> blockingExecutorProvider,
         @Nullable BeanContext beanContext,
         Duration connectTimeout,
         Duration readTimeout) {
         this.httpClientProvider = httpClientProvider;
         this.httpClientRegistryProvider = httpClientRegistryProvider;
         this.byteBodyFactoryProvider = byteBodyFactoryProvider;
+        this.blockingExecutorProvider = blockingExecutorProvider;
         this.beanContext = beanContext;
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
@@ -148,7 +157,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
             } catch (Exception e) {
                 safeOnError(listener, e);
             }
-        }, SSE_EXECUTOR);
+        }, sseExecutor());
     }
 
     private ClientHandle client(String url) {
@@ -323,6 +332,19 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         );
     }
 
+    private Executor sseExecutor() {
+        if (blockingExecutorProvider != null) {
+            try {
+                if (blockingExecutorProvider.isResolvable()) {
+                    return blockingExecutorProvider.get();
+                }
+            } catch (BeanContextException _) {
+                // Fall back for manually constructed clients or contexts without the blocking executor.
+            }
+        }
+        return FALLBACK_SSE_EXECUTOR;
+    }
+
     private static MultipartBody multipartBody(HttpRequest request) {
         MultipartBody.Builder builder = MultipartBody.builder();
         for (Map.Entry<String, String> entry : request.formDataFields().entrySet()) {
@@ -446,17 +468,6 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
             client.close();
         } catch (IOException _) {
             // Ignore close failures after the response has already completed.
-        }
-    }
-
-    private static final class BlockingExecutor implements Executor {
-        private final AtomicInteger sequence = new AtomicInteger();
-
-        @Override
-        public void execute(Runnable runnable) {
-            Thread thread = new Thread(runnable, "micronaut-langchain4j-sse-" + sequence.incrementAndGet());
-            thread.setDaemon(true);
-            thread.start();
         }
     }
 

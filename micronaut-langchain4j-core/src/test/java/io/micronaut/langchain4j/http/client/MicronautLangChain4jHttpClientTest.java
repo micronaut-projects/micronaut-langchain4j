@@ -44,6 +44,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -367,6 +369,52 @@ class MicronautLangChain4jHttpClientTest {
         assertThrows(TimeoutException.class, () -> client.execute(request));
     }
 
+    @Test
+    void usesInjectedBlockingExecutorForServerSentEventFallback() throws Exception {
+        ExecutorService executorService = Executors.newSingleThreadExecutor(runnable -> new Thread(runnable, "test-blocking-executor"));
+        try {
+            RawOnlyHttpClient rawClient = new RawOnlyHttpClient(single(HttpResponse.ok("""
+                data: executor
+
+                """)));
+            AtomicReference<String> threadName = new AtomicReference<>();
+            CountDownLatch closedLatch = new CountDownLatch(1);
+
+            new MicronautLangChain4jHttpClient(
+                () -> rawClient,
+                null,
+                null,
+                () -> executorService,
+                null,
+                null,
+                java.time.Duration.ofSeconds(1)
+            ).execute(HttpRequest.builder()
+                .method(HttpMethod.GET)
+                .url("http://localhost/sse")
+                .build(), new ServerSentEventListener() {
+                    @Override
+                    public void onEvent(ServerSentEvent event, ServerSentEventContext context) {
+                        threadName.set(Thread.currentThread().getName());
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        closedLatch.countDown();
+                    }
+
+                    @Override
+                    public void onClose() {
+                        closedLatch.countDown();
+                    }
+                });
+
+            assertTrue(closedLatch.await(5, TimeUnit.SECONDS));
+            assertEquals("test-blocking-executor", threadName.get());
+        } finally {
+            executorService.shutdownNow();
+        }
+    }
+
     private String url(String path) {
         return "http://localhost:" + server.getAddress().getPort() + path;
     }
@@ -374,6 +422,7 @@ class MicronautLangChain4jHttpClientTest {
     private static dev.langchain4j.http.client.HttpClient client(RawOnlyHttpClient rawClient, java.time.Duration readTimeout) {
         return new MicronautLangChain4jHttpClient(
             () -> rawClient,
+            null,
             null,
             null,
             null,
