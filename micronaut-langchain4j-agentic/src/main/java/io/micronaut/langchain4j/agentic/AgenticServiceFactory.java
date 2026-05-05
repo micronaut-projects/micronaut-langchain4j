@@ -63,7 +63,6 @@ import io.micronaut.langchain4j.tools.ToolRegistry;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
@@ -224,7 +223,7 @@ public final class AgenticServiceFactory {
         Integer maxMessages = memoryConfiguration != null ? memoryConfiguration.getMaxMessages() : null;
         boolean memoryConfigured = storeName != null && !storeName.isBlank() || maxMessages != null;
         if (memoryConfigured || findChatMemoryBuilder(beanContext, null) != null) {
-            agentBuilder.chatMemoryProvider(memoryId -> buildChatMemory(beanContext, storeName, maxMessages));
+            agentBuilder.chatMemoryProvider(memoryId -> buildChatMemory(beanContext, storeName, maxMessages, memoryId));
             return;
         }
         lookupByNameOrDefault(beanContext, agentName, ChatMemoryProvider.class, agentBuilder::chatMemoryProvider);
@@ -232,8 +231,10 @@ public final class AgenticServiceFactory {
 
     private static MessageWindowChatMemory buildChatMemory(BeanContext beanContext,
                                                            @Nullable String storeName,
-                                                           @Nullable Integer maxMessages) {
+                                                           @Nullable Integer maxMessages,
+                                                           @Nullable Object memoryId) {
         MessageWindowChatMemory.Builder builder = resolveChatMemoryBuilder(beanContext, storeName);
+        builder.id(memoryId);
         if (maxMessages != null) {
             builder.maxMessages(maxMessages);
         }
@@ -344,9 +345,12 @@ public final class AgenticServiceFactory {
                                                 Argument<T> beanType) {
         Qualifier<T> qualifier = name != null ? Qualifiers.byName(name) : null;
         BeanProvider<T> provider = beanContext.getProvider(beanType);
-        AtomicReference<T> ref = new AtomicReference<>();
-        provider.find(qualifier).ifPresentOrElse(ref::set, () -> provider.ifPresent(ref::set));
-        return ref.get();
+        try {
+            T qualified = provider.find(qualifier).orElse(null);
+            return qualified != null ? qualified : provider.find(null).orElse(null);
+        } catch (NonUniqueBeanException _) {
+            return null;
+        }
     }
 
     private static <T> void lookupByNameOrDefault(BeanContext beanContext,

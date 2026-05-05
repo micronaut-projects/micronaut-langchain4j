@@ -17,11 +17,11 @@ package io.micronaut.langchain4j.agentic;
 
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import jakarta.inject.Singleton;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 
 /**
  * Registry caching built agent proxies per agent interface.
@@ -33,23 +33,13 @@ public final class AgentRegistry {
     private final Map<Class<?>, Object> cachedAgents = new ConcurrentHashMap<>();
 
     /**
-     * Cache the built agent proxy for the given agent interface.
+     * Retrieve a cached agent proxy by agent interface type, building and caching it atomically when absent.
      *
      * @param beanType the agent interface type
-     * @param agent the agent proxy instance
+     * @param agentSupplier the agent proxy supplier
+     * @return the cached or newly created agent proxy instance
      */
-    public void putAgent(@NonNull Class<?> beanType, @NonNull Object agent) {
-        cachedAgents.put(beanType, agent);
-    }
-
-    /**
-     * Retrieve a cached agent proxy by agent interface type.
-     *
-     * @param beanType the agent interface type
-     * @return the agent proxy instance if present, otherwise {@code null}
-     */
-    @Nullable
-    public Object getAgent(@NonNull Class<?> beanType) {
-        return cachedAgents.get(beanType);
+    public Object getOrCreateAgent(@NonNull Class<?> beanType, @NonNull Supplier<Object> agentSupplier) {
+        return cachedAgents.computeIfAbsent(beanType, ignored -> agentSupplier.get());
     }
 }

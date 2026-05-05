@@ -23,6 +23,9 @@ import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Singleton
@@ -32,14 +35,18 @@ final class CountingChatMemoryStore implements ChatMemoryStore {
 
     private final ChatMemoryStore delegate = new InMemoryChatMemoryStore();
     private final AtomicInteger updates = new AtomicInteger();
+    private final AtomicBoolean nullMemoryIdSeen = new AtomicBoolean();
+    private final Set<Object> memoryIds = ConcurrentHashMap.newKeySet();
 
     @Override
     public List<ChatMessage> getMessages(Object memoryId) {
+        recordMemoryId(memoryId);
         return delegate.getMessages(memoryId);
     }
 
     @Override
     public void updateMessages(Object memoryId, List<ChatMessage> messages) {
+        recordMemoryId(memoryId);
         updates.incrementAndGet();
         delegate.updateMessages(memoryId, messages);
     }
@@ -51,5 +58,21 @@ final class CountingChatMemoryStore implements ChatMemoryStore {
 
     int getUpdates() {
         return updates.get();
+    }
+
+    Set<Object> getMemoryIds() {
+        return memoryIds;
+    }
+
+    boolean isNullMemoryIdSeen() {
+        return nullMemoryIdSeen.get();
+    }
+
+    private void recordMemoryId(Object memoryId) {
+        if (memoryId == null) {
+            nullMemoryIdSeen.set(true);
+        } else {
+            memoryIds.add(memoryId);
+        }
     }
 }

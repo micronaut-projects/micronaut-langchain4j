@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -67,10 +67,10 @@ class ParallelPlanningAgentTest {
         )
         String plan(@V("style") String style, @V("mood") String mood);
 
-        // Configure a small thread pool for parallel execution
+        // Use a shared executor for parallel execution
         @ParallelExecutor
         static Executor executor() {
-            return Executors.newFixedThreadPool(2);
+            return ForkJoinPool.commonPool();
         }
 
         // Aggregate the parallel outputs into a single "plan" string

@@ -88,6 +88,8 @@ class AgenticServiceMemoryIntegrationTest {
 
             var store = ctx.getBean(CountingChatMemoryStore.class);
             assertTrue(store.getUpdates() >= 1, "Named ChatMemoryStore should receive memory updates");
+            assertFalse(store.isNullMemoryIdSeen(), "Chat memory should be bound to the provider memory id");
+            assertFalse(store.getMemoryIds().isEmpty(), "Chat memory store should observe the provider memory id");
         }
     }
 }

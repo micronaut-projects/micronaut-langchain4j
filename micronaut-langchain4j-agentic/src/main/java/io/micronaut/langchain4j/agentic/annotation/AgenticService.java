@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
 /**
  * Registers a LangChain4j declarative agentic service using AgenticServices.createAgenticSystem(Class, ...).
  *
- * Apply on an interface that declares methods annotated with dev.langchain4j.agentic.annotations.Agent
+ * Apply on an interface that declares methods annotated with dev.langchain4j.agentic.Agent
  * (and optionally @UserMessage, @V) and workflow annotations as described in LangChain4j Agentic docs.
  * Chat models, memory and tools are wired via Micronaut DI; no sub-agent array is required.
  */

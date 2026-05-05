@@ -59,12 +59,9 @@ public final class AgenticServiceInterceptor implements MethodInterceptor<Object
 
     private Object cachedAgent(MethodInvocationContext<Object, Object> context) {
         var declaringType = context.getDeclaringType();
-        var target = agentRegistry.getAgent(declaringType);
-        if (target != null) {
-            return target;
-        }
+        var iface = resolveAgentInterface(declaringType);
         var annotation = context.getAnnotation(AgenticService.class);
-        return resolveAgent(annotation, declaringType);
+        return agentRegistry.getOrCreateAgent(iface, () -> resolveAgent(annotation, declaringType));
     }
 
     private Object resolveAgent(AnnotationValue<AgenticService> annotation,
@@ -86,12 +83,7 @@ public final class AgenticServiceInterceptor implements MethodInterceptor<Object
             outputKey
         );
 
-        var iface = resolveAgentInterface(declaringType);
-
-        Object agent = agenticServiceFactory.buildAgenticService(beanContext, def);
-
-        agentRegistry.putAgent(iface, agent);
-        return agent;
+        return agenticServiceFactory.buildAgenticService(beanContext, def);
     }
 
     /**

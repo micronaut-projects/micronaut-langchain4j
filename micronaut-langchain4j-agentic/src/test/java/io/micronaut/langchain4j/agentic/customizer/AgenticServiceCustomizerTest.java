@@ -44,7 +44,24 @@ final class AgenticServiceCustomizerTest {
             var out = agent.greet("Bob");
             assertTrue(out.startsWith("[friendly] "), "Expected friendly chat model to be selected");
 
-            assertTrue(tracker.get() >= 1, "Customizer should be invoked at least once");
+            var initialCustomizerInvocations = tracker.get();
+            assertTrue(initialCustomizerInvocations >= 1, "Customizer should be invoked at least once");
+
+            agent.greet("Alice");
+            assertEquals(initialCustomizerInvocations, tracker.get(), "Agent should be cached after first creation");
+        }
+    }
+
+    @Test
+    @DisplayName("Multiple optional providers do not prevent agent creation")
+    void multipleOptionalProvidersDoNotPreventAgentCreation() {
+        Map<String, Object> props = Map.of(
+            "langchain4j.agentic.agents.customized-greeter.chat-model", "friendlyChatModel"
+        );
+        try (var ctx = ApplicationContext.run(props, "alternate", "multiple-tool-providers")) {
+            var agent = ctx.getBean(CustomizedGreeterAgent.class);
+            var out = agent.greet("Bob");
+            assertTrue(out.startsWith("[friendly] "), "Expected friendly chat model to be selected");
         }
     }
 
