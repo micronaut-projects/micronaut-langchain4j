@@ -24,8 +24,13 @@ import dev.langchain4j.http.client.SuccessfulHttpResponse;
 import dev.langchain4j.http.client.sse.ServerSentEvent;
 import dev.langchain4j.http.client.sse.ServerSentEventContext;
 import dev.langchain4j.http.client.sse.ServerSentEventListener;
+import io.micronaut.core.io.buffer.ByteArrayBufferFactory;
 import io.micronaut.core.type.Argument;
+import io.micronaut.http.ByteBodyHttpResponse;
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpResponseWrapper;
+import io.micronaut.http.body.ByteBody;
+import io.micronaut.http.body.ByteBodyFactory;
 import io.micronaut.http.body.CloseableByteBody;
 import io.micronaut.http.client.BlockingHttpClient;
 import io.micronaut.http.client.RawHttpClient;
@@ -35,7 +40,6 @@ import io.micronaut.http.sse.Event;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
 import java.io.IOException;
@@ -49,8 +53,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -139,6 +145,29 @@ class MicronautLangChain4jHttpClientTest {
                 .url(url("/multipart"))
                 .addFormDataField("purpose", "fine-tune")
                 .addFormDataFile("file", "sample.txt", "text/plain", "sample content".getBytes(StandardCharsets.UTF_8))
+                .build());
+
+        assertEquals(204, response.statusCode());
+    }
+
+    @Test
+    void sendsMultipartFilesWithoutContentType() throws IOException {
+        server = HttpServer.create(new InetSocketAddress(0), 0);
+        server.createContext("/multipart", exchange -> {
+            String requestBody = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
+            assertTrue(requestBody.contains("filename=\"sample.bin\""));
+            assertTrue(requestBody.contains("sample content"));
+            exchange.sendResponseHeaders(204, -1);
+            exchange.close();
+        });
+        server.start();
+
+        SuccessfulHttpResponse response = new MicronautLangChain4jHttpClientBuilder()
+            .build()
+            .execute(HttpRequest.builder()
+                .method(HttpMethod.POST)
+                .url(url("/multipart"))
+                .addFormDataFile("file", "sample.bin", null, "sample content".getBytes(StandardCharsets.UTF_8))
                 .build());
 
         assertEquals(204, response.statusCode());
@@ -245,6 +274,98 @@ class MicronautLangChain4jHttpClientTest {
     }
 
     @Test
+    void parsesServerSentEventsFromByteBodyResponsesWithoutSseClient() throws Exception {
+        AtomicBoolean closed = new AtomicBoolean();
+        CountDownLatch responseClosedLatch = new CountDownLatch(1);
+        RawOnlyHttpClient rawClient = new RawOnlyHttpClient(single(byteBodyResponse("""
+            data: byte
+
+            data: body
+
+            """, closed, responseClosedLatch)));
+        AtomicReference<Throwable> error = new AtomicReference<>();
+        CountDownLatch closedLatch = new CountDownLatch(1);
+        List<String> events = new ArrayList<>();
+
+        client(rawClient, java.time.Duration.ofSeconds(1))
+            .execute(HttpRequest.builder()
+                .method(HttpMethod.GET)
+                .url("http://localhost/sse")
+                .build(), new ServerSentEventListener() {
+                    @Override
+                    public void onEvent(ServerSentEvent event, ServerSentEventContext context) {
+                        events.add(event.data());
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        error.set(throwable);
+                        closedLatch.countDown();
+                    }
+
+                    @Override
+                    public void onClose() {
+                        closedLatch.countDown();
+                    }
+                });
+
+        assertTrue(closedLatch.await(5, TimeUnit.SECONDS));
+        assertNull(error.get());
+        assertEquals(List.of("byte", "body"), events);
+        assertTrue(responseClosedLatch.await(5, TimeUnit.SECONDS));
+        assertTrue(closed.get());
+    }
+
+    @Test
+    void ignoresFallbackServerSentEventOpenAndCloseListenerExceptions() throws Exception {
+        RawOnlyHttpClient rawClient = new RawOnlyHttpClient(single(HttpResponse.ok("""
+            data: tolerated
+
+            """)));
+        AtomicReference<Throwable> error = new AtomicReference<>();
+        CountDownLatch errorLatch = new CountDownLatch(1);
+        CountDownLatch eventLatch = new CountDownLatch(1);
+        CountDownLatch closeLatch = new CountDownLatch(1);
+        List<String> events = new ArrayList<>();
+
+        client(rawClient, java.time.Duration.ofSeconds(1))
+            .execute(HttpRequest.builder()
+                .method(HttpMethod.GET)
+                .url("http://localhost/sse")
+                .build(), new ServerSentEventListener() {
+                    @Override
+                    public void onOpen(SuccessfulHttpResponse response) {
+                        throw new IllegalStateException("open");
+                    }
+
+                    @Override
+                    public void onEvent(ServerSentEvent event, ServerSentEventContext context) {
+                        events.add(event.data());
+                        eventLatch.countDown();
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        error.set(throwable);
+                        errorLatch.countDown();
+                        eventLatch.countDown();
+                    }
+
+                    @Override
+                    public void onClose() {
+                        closeLatch.countDown();
+                        throw new IllegalStateException("close");
+                    }
+                });
+
+        assertTrue(eventLatch.await(5, TimeUnit.SECONDS));
+        assertTrue(closeLatch.await(5, TimeUnit.SECONDS));
+        assertFalse(errorLatch.await(100, TimeUnit.MILLISECONDS));
+        assertNull(error.get());
+        assertEquals(List.of("tolerated"), events);
+    }
+
+    @Test
     void mapsAsyncErrorResponsesWithoutSseClient() throws Exception {
         RawOnlyHttpClient rawClient = new RawOnlyHttpClient(single(HttpResponse.badRequest("bad request")));
         AtomicReference<Throwable> error = new AtomicReference<>();
@@ -259,6 +380,7 @@ class MicronautLangChain4jHttpClientTest {
                     public void onError(Throwable throwable) {
                         error.set(throwable);
                         errorLatch.countDown();
+                        throw new IllegalStateException("ignored");
                     }
                 });
 
@@ -282,6 +404,65 @@ class MicronautLangChain4jHttpClientTest {
         SuccessfulHttpResponse response = client.execute(request);
 
         assertEquals("bytes", response.body());
+    }
+
+    @Test
+    void readsByteBodyResponseBodiesAndClosesResponses() {
+        AtomicBoolean closed = new AtomicBoolean();
+        dev.langchain4j.http.client.HttpClient client = client(
+            new RawOnlyHttpClient(single(byteBodyResponse("byte-body", closed))),
+            java.time.Duration.ofSeconds(1)
+        );
+        HttpRequest request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .url("http://localhost/byte-body")
+            .build();
+
+        SuccessfulHttpResponse response = client.execute(request);
+
+        assertEquals("byte-body", response.body());
+        assertTrue(closed.get());
+    }
+
+    @Test
+    void executesRequestsWithStandardHttpClients() {
+        AtomicReference<io.micronaut.http.HttpRequest<?>> received = new AtomicReference<>();
+        StandardOnlyHttpClient standardClient = new StandardOnlyHttpClient(request -> {
+            received.set(request);
+            return single(HttpResponse.ok("standard").header("X-Test", "ok"));
+        });
+        dev.langchain4j.http.client.HttpClient client = client(standardClient, java.time.Duration.ofSeconds(1));
+        HttpRequest request = HttpRequest.builder()
+            .method(HttpMethod.POST)
+            .url("http://localhost/standard")
+            .addHeader("X-Input", "present")
+            .body("payload")
+            .build();
+
+        SuccessfulHttpResponse response = client.execute(request);
+
+        assertEquals(200, response.statusCode());
+        assertEquals("standard", response.body());
+        assertEquals("ok", response.headers().get("x-test").get(0));
+        assertEquals("present", received.get().getHeaders().get("X-Input"));
+        assertEquals("payload", received.get().getBody(String.class).orElseThrow());
+    }
+
+    @Test
+    void mapsStandardClientErrorResponsesToLangChain4jHttpException() {
+        StandardOnlyHttpClient standardClient = new StandardOnlyHttpClient(_ -> {
+            throw new HttpClientResponseException("Bad Request", HttpResponse.badRequest("bad request"));
+        });
+        dev.langchain4j.http.client.HttpClient client = client(standardClient, java.time.Duration.ofSeconds(1));
+        HttpRequest request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .url("http://localhost/error")
+            .build();
+
+        HttpException exception = assertThrows(HttpException.class, () -> client.execute(request));
+
+        assertEquals(400, exception.statusCode());
+        assertEquals("bad request", exception.getMessage());
     }
 
     @Test
@@ -371,8 +552,7 @@ class MicronautLangChain4jHttpClientTest {
 
     @Test
     void usesInjectedBlockingExecutorForServerSentEventFallback() throws Exception {
-        ExecutorService executorService = Executors.newSingleThreadExecutor(runnable -> new Thread(runnable, "test-blocking-executor"));
-        try {
+        try (ExecutorService executorService = Executors.newSingleThreadExecutor(runnable -> new Thread(runnable, "test-blocking-executor"))) {
             RawOnlyHttpClient rawClient = new RawOnlyHttpClient(single(HttpResponse.ok("""
                 data: executor
 
@@ -410,8 +590,6 @@ class MicronautLangChain4jHttpClientTest {
 
             assertTrue(closedLatch.await(5, TimeUnit.SECONDS));
             assertEquals("test-blocking-executor", threadName.get());
-        } finally {
-            executorService.shutdownNow();
         }
     }
 
@@ -420,8 +598,14 @@ class MicronautLangChain4jHttpClientTest {
     }
 
     private static dev.langchain4j.http.client.HttpClient client(RawOnlyHttpClient rawClient, java.time.Duration readTimeout) {
+        return client((io.micronaut.http.client.HttpClient) rawClient, readTimeout);
+    }
+
+    private static dev.langchain4j.http.client.HttpClient client(
+        io.micronaut.http.client.HttpClient httpClient,
+        java.time.Duration readTimeout) {
         return new MicronautLangChain4jHttpClient(
-            () -> rawClient,
+            () -> httpClient,
             null,
             null,
             null,
@@ -429,6 +613,19 @@ class MicronautLangChain4jHttpClientTest {
             null,
             readTimeout
         );
+    }
+
+    private static ByteBodyHttpResponse<Object> byteBodyResponse(String value, AtomicBoolean closed) {
+        return byteBodyResponse(value, closed, new CountDownLatch(0));
+    }
+
+    private static ByteBodyHttpResponse<Object> byteBodyResponse(
+        String value,
+        AtomicBoolean closed,
+        CountDownLatch closedLatch) {
+        ByteBody byteBody = ByteBodyFactory.createDefault(ByteArrayBufferFactory.INSTANCE)
+            .copyOf(value, StandardCharsets.UTF_8);
+        return new TestByteBodyResponse(HttpResponse.ok(), byteBody, closed, closedLatch);
     }
 
     private static <T> Publisher<T> single(T value) {
@@ -442,10 +639,12 @@ class MicronautLangChain4jHttpClientTest {
     private static final class EmptySubscription implements Subscription {
         @Override
         public void request(long n) {
+            // Test publishers emit synchronously and do not need demand tracking.
         }
 
         @Override
         public void cancel() {
+            // Cancellation has no observable effect for the immediate test publishers.
         }
     }
 
@@ -484,6 +683,68 @@ class MicronautLangChain4jHttpClientTest {
 
         @Override
         public void close() {
+            // The test double does not own any external resources.
+        }
+    }
+
+    private static final class StandardOnlyHttpClient implements io.micronaut.http.client.HttpClient {
+        private final Function<io.micronaut.http.HttpRequest<?>, Publisher<? extends HttpResponse<?>>> responsePublisher;
+
+        private StandardOnlyHttpClient(Function<io.micronaut.http.HttpRequest<?>, Publisher<? extends HttpResponse<?>>> responsePublisher) {
+            this.responsePublisher = responsePublisher;
+        }
+
+        @Override
+        public BlockingHttpClient toBlocking() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean isRunning() {
+            return true;
+        }
+
+        @Override
+        public <I, O, E> Publisher<HttpResponse<O>> exchange(
+            io.micronaut.http.HttpRequest<I> request,
+            Argument<O> bodyType,
+            Argument<E> errorType) {
+            @SuppressWarnings({"unchecked", "rawtypes"})
+            Publisher<HttpResponse<O>> publisher = (Publisher) responsePublisher.apply(request);
+            return publisher;
+        }
+
+        @Override
+        public void close() {
+            // The test double does not own any external resources.
+        }
+    }
+
+    private static final class TestByteBodyResponse extends HttpResponseWrapper<Object> implements ByteBodyHttpResponse<Object> {
+        private final ByteBody byteBody;
+        private final AtomicBoolean closed;
+        private final CountDownLatch closedLatch;
+
+        private TestByteBodyResponse(
+            HttpResponse<Object> delegate,
+            ByteBody byteBody,
+            AtomicBoolean closed,
+            CountDownLatch closedLatch) {
+            super(delegate);
+            this.byteBody = byteBody;
+            this.closed = closed;
+            this.closedLatch = closedLatch;
+        }
+
+        @Override
+        public ByteBody byteBody() {
+            return byteBody;
+        }
+
+        @Override
+        public void close() {
+            closed.set(true);
+            closedLatch.countDown();
         }
     }
 

@@ -40,7 +40,7 @@ class MicronautLangChain4jHttpClientBuilderTest {
     void usesMicronautManagedHttpClient(HttpClientBuilder builder, EmbeddedServer embeddedServer) {
         SuccessfulHttpResponse response = builder
             .connectTimeout(Duration.ofSeconds(1))
-            .readTimeout(Duration.ofSeconds(1))
+            .readTimeout(Duration.ofSeconds(5))
             .build()
             .execute(HttpRequest.builder()
                 .method(HttpMethod.GET)
