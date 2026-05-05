@@ -1,17 +1,14 @@
 package example.micronaut.agentic;
 
-import io.micronaut.langchain4j.testutils.OllamaTestPropertyProvider;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@Testcontainers(disabledWithoutDocker = true)
-@MicronautTest(startApplication = false)
+@MicronautTest(startApplication = false, environments = "agentic-test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SequenceAgentTest implements OllamaTestPropertyProvider {
+class SequenceAgentTest {
 
     @Test
     void testManualCoordination(TravelRecommenderAgent travelRecommenderAgent, RecipeAdvisorAgent recipeAdvisorAgent) {

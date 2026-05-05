@@ -7,11 +7,9 @@ import dev.langchain4j.agentic.declarative.ParallelExecutor;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
 import io.micronaut.langchain4j.agentic.annotation.AgenticService;
-import io.micronaut.langchain4j.testutils.OllamaTestPropertyProvider;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -22,10 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  * Validates declarative ParallelAgent workflow wiring through @AgenticService.
  * Ensures Micronaut DI correctly builds the agentic system and executes the parallel plan.
  */
-@Testcontainers(disabledWithoutDocker = true)
-@MicronautTest(startApplication = false)
+@MicronautTest(startApplication = false, environments = "agentic-test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class ParallelPlanningAgentTest implements OllamaTestPropertyProvider {
+class ParallelPlanningAgentTest {
 
     @Test
     void testDeclarativeParallel(EveningPlanner agent) {

@@ -1,20 +1,17 @@
 package example.micronaut.agentic;
 
-import io.micronaut.langchain4j.testutils.OllamaTestPropertyProvider;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * Validates declarative ConditionalAgent workflow wiring through @AgenticService.
  */
-@Testcontainers(disabledWithoutDocker = true)
-@MicronautTest(startApplication = false)
+@MicronautTest(startApplication = false, environments = "agentic-test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class ConditionalRouterAgentTest implements OllamaTestPropertyProvider {
+class ConditionalRouterAgentTest {
 
     @Test
     void testFoodBranch(ConditionalRouterAgent agent) {

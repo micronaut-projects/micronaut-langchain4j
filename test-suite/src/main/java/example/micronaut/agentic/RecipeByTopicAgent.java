@@ -6,10 +6,10 @@ import dev.langchain4j.service.V;
 import io.micronaut.langchain4j.agentic.annotation.AgenticService;
 
 /**
- * Suggests a recipe given a topic/mood (topic-based to be usable in Parallel/Conditional flows).
+ * Suggests a recipe given a topic/mood (topic-based to be usable in Conditional flows).
  * Derived agent id: "recipe-by-topic".
  */
-@AgenticService(outputKey = "recipe")
+@AgenticService(outputKey = "response")
 public interface RecipeByTopicAgent {
 
     @UserMessage("""
