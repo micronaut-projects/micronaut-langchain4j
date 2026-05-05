@@ -127,9 +127,9 @@ public final class AgenticServiceFactory {
 
     private static void callBeanCreatedEventListener(BeanContext beanContext,
                                                      AgenticServices.DeclarativeAgentCreationContext<?> ctx,
-                                                     BeanCreatedEventListener<?> beanCreatedEventListener) {
+                                                     BeanCreatedEventListener beanCreatedEventListener) {
         @SuppressWarnings({"rawtypes", "unchecked"})
-        BeanCreatedEventListener listener = (BeanCreatedEventListener) beanCreatedEventListener;
+        BeanCreatedEventListener listener = beanCreatedEventListener;
         listener.onCreated(new BeanCreatedEvent(
             beanContext,
             new RuntimeBeanDefinition<AgentBuilder>() {
@@ -261,7 +261,7 @@ public final class AgenticServiceFactory {
                 return provider.find(Qualifiers.byName(storeName)).orElse(null);
             }
             return provider.find(null).orElse(null);
-        } catch (NonUniqueBeanException e) {
+        } catch (NonUniqueBeanException _) {
             return null;
         }
     }
@@ -326,7 +326,7 @@ public final class AgenticServiceFactory {
         }
         try {
             return provider.find(null).orElse(null);
-        } catch (NonUniqueBeanException e) {
+        } catch (NonUniqueBeanException _) {
             return null;
         }
     }
@@ -371,37 +371,37 @@ public final class AgenticServiceFactory {
 
     @Bean
     @SuppressWarnings({"rawtypes", "unchecked"})
-    protected AgentBuilder<?, ?> agentBuilder(@Parameter Class<?> agentServiceClass) {
+    protected AgentBuilder agentBuilder(@Parameter Class<?> agentServiceClass) {
         return AgenticServices.agentBuilder((Class) agentServiceClass);
     }
 
     @Bean
     @SuppressWarnings({"rawtypes", "unchecked"})
-    protected SequentialAgentService<?> sequentialAgentService(@Nullable @Parameter Class<?> agentServiceClass) {
+    protected SequentialAgentService sequentialAgentService(@Nullable @Parameter Class<?> agentServiceClass) {
         return agentServiceClass == null ? SequentialAgentServiceImpl.builder() : SequentialAgentServiceImpl.builder(agentServiceClass);
     }
 
     @Bean
     @SuppressWarnings({"rawtypes", "unchecked"})
-    protected ParallelAgentService<?> parallelAgentService(@Nullable @Parameter Class<?> agentServiceClass) {
+    protected ParallelAgentService parallelAgentService(@Nullable @Parameter Class<?> agentServiceClass) {
         return agentServiceClass == null ? ParallelAgentServiceImpl.builder() : ParallelAgentServiceImpl.builder(agentServiceClass);
     }
 
     @Bean
     @SuppressWarnings({"rawtypes", "unchecked"})
-    protected ParallelMapperService<?> parallelMapperService(@Nullable @Parameter Class<?> agentServiceClass) {
+    protected ParallelMapperService parallelMapperService(@Nullable @Parameter Class<?> agentServiceClass) {
         return agentServiceClass == null ? ParallelMapperServiceImpl.builder() : ParallelMapperServiceImpl.builder(agentServiceClass);
     }
 
     @Bean
     @SuppressWarnings({"rawtypes", "unchecked"})
-    protected LoopAgentService<?> loopAgentService(@Nullable @Parameter Class<?> agentServiceClass) {
+    protected LoopAgentService loopAgentService(@Nullable @Parameter Class<?> agentServiceClass) {
         return agentServiceClass == null ? LoopAgentServiceImpl.builder() : LoopAgentServiceImpl.builder(agentServiceClass);
     }
 
     @Bean
     @SuppressWarnings({"rawtypes", "unchecked"})
-    protected ConditionalAgentService<?> conditionalAgentService(@Nullable @Parameter Class<?> agentServiceClass) {
+    protected ConditionalAgentService conditionalAgentService(@Nullable @Parameter Class<?> agentServiceClass) {
         return agentServiceClass == null ? ConditionalAgentServiceImpl.builder() : ConditionalAgentServiceImpl.builder(agentServiceClass);
     }
 
@@ -418,61 +418,66 @@ public final class AgenticServiceFactory {
         @SuppressWarnings("unchecked")
         @Override
         public SequentialAgentService<UntypedAgent> sequenceBuilder() {
-            return (SequentialAgentService<UntypedAgent>) beanContext.createBean(SequentialAgentService.class, (Class<?>) null);
+            return createWorkflowBean(SequentialAgentService.class, null);
         }
 
         @SuppressWarnings("unchecked")
         @Override
         public <T> SequentialAgentService<T> sequenceBuilder(Class<T> agentServiceClass) {
-            return (SequentialAgentService<T>) beanContext.createBean(SequentialAgentService.class, agentServiceClass);
+            return createWorkflowBean(SequentialAgentService.class, agentServiceClass);
         }
 
         @SuppressWarnings("unchecked")
         @Override
         public ParallelAgentService<UntypedAgent> parallelBuilder() {
-            return (ParallelAgentService<UntypedAgent>) beanContext.createBean(ParallelAgentService.class, (Class<?>) null);
+            return createWorkflowBean(ParallelAgentService.class, null);
         }
 
         @SuppressWarnings("unchecked")
         @Override
         public <T> ParallelAgentService<T> parallelBuilder(Class<T> agentServiceClass) {
-            return (ParallelAgentService<T>) beanContext.createBean(ParallelAgentService.class, agentServiceClass);
+            return createWorkflowBean(ParallelAgentService.class, agentServiceClass);
         }
 
         @SuppressWarnings("unchecked")
         @Override
         public ParallelMapperService<UntypedAgent> parallelMapperBuilder() {
-            return (ParallelMapperService<UntypedAgent>) beanContext.createBean(ParallelMapperService.class, (Class<?>) null);
+            return createWorkflowBean(ParallelMapperService.class, null);
         }
 
         @SuppressWarnings("unchecked")
         @Override
         public <T> ParallelMapperService<T> parallelMapperBuilder(Class<T> agentServiceClass) {
-            return (ParallelMapperService<T>) beanContext.createBean(ParallelMapperService.class, agentServiceClass);
+            return createWorkflowBean(ParallelMapperService.class, agentServiceClass);
         }
 
         @SuppressWarnings("unchecked")
         @Override
         public LoopAgentService<UntypedAgent> loopBuilder() {
-            return (LoopAgentService<UntypedAgent>) beanContext.createBean(LoopAgentService.class, (Class<?>) null);
+            return createWorkflowBean(LoopAgentService.class, null);
         }
 
         @SuppressWarnings("unchecked")
         @Override
         public <T> LoopAgentService<T> loopBuilder(Class<T> agentServiceClass) {
-            return (LoopAgentService<T>) beanContext.createBean(LoopAgentService.class, agentServiceClass);
+            return createWorkflowBean(LoopAgentService.class, agentServiceClass);
         }
 
         @SuppressWarnings("unchecked")
         @Override
         public ConditionalAgentService<UntypedAgent> conditionalBuilder() {
-            return (ConditionalAgentService<UntypedAgent>) beanContext.createBean(ConditionalAgentService.class, (Class<?>) null);
+            return createWorkflowBean(ConditionalAgentService.class, null);
         }
 
         @SuppressWarnings("unchecked")
         @Override
         public <T> ConditionalAgentService<T> conditionalBuilder(Class<T> agentServiceClass) {
-            return (ConditionalAgentService<T>) beanContext.createBean(ConditionalAgentService.class, agentServiceClass);
+            return createWorkflowBean(ConditionalAgentService.class, agentServiceClass);
+        }
+
+        @SuppressWarnings({"unchecked", "rawtypes"})
+        private <S> S createWorkflowBean(Class<?> beanType, @Nullable Class<?> agentServiceClass) {
+            return (S) beanContext.createBean((Class) beanType, agentServiceClass);
         }
     }
 }

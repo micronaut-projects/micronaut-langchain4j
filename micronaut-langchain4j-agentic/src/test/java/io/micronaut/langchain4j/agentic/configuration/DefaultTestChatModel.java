@@ -71,7 +71,7 @@ final class DefaultTestChatModel implements ChatModel {
                     }
                     sb.append(v);
                 }
-            } catch (Exception ignore) {
+            } catch (Exception _) {
                 if (!sb.isEmpty()) {
                     sb.append('\n');
                 }

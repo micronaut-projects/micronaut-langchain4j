@@ -95,23 +95,13 @@ public abstract class ConfigurableChatModel implements ChatModel {
         for (var m : messages) {
             var t = messageText(m);
             if (t != null && !t.isEmpty()) {
-                if (sb.length() > 0) {
+                if (!sb.isEmpty()) {
                     sb.append('\n');
                 }
                 sb.append(t);
             }
         }
         return sb.toString();
-    }
-
-    private static String lastUserText(List<ChatMessage> messages) {
-        for (var i = messages.size() - 1; i >= 0; i--) {
-            var t = messageText(messages.get(i));
-            if (t != null && !t.isEmpty()) {
-                return t;
-            }
-        }
-        return messageText(messages.get(messages.size() - 1));
     }
 
     private static String messageText(ChatMessage message) {
@@ -121,7 +111,7 @@ public abstract class ConfigurableChatModel implements ChatModel {
             if (v != null) {
                 return v.toString();
             }
-        } catch (Exception ignore) {
+        } catch (Exception _) {
             // Fall through to toString()
         }
         return message.toString();

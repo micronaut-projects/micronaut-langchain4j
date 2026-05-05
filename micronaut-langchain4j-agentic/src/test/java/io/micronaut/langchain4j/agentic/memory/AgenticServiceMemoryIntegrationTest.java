@@ -72,4 +72,22 @@ class AgenticServiceMemoryIntegrationTest {
             assertTrue(store.getUpdates() >= 2, "Configured ChatMemoryStore should receive memory updates");
         }
     }
+
+    @Test
+    void namedMemoryStoreAndMaxMessagesAreApplied() {
+        var props = Map.<String, Object>of(
+            "langchain4j.chat-memory-store.inmemory.enabled", false,
+            AGENTIC_CONFIG_PREFIX + "memoryful.chat-model", "memory-aware-chat-model",
+            AGENTIC_CONFIG_PREFIX + "memoryful.memory.store", "counting",
+            AGENTIC_CONFIG_PREFIX + "memoryful.memory.max-messages", 1
+        );
+        try (var ctx = ApplicationContext.run(props, "alternate", "custom-memory")) {
+            var agent = ctx.getBean(MemoryfulAgent.class);
+
+            assertTrue(agent.say("named builder turn").contains("[mem]"));
+
+            var store = ctx.getBean(CountingChatMemoryStore.class);
+            assertTrue(store.getUpdates() >= 1, "Named ChatMemoryStore should receive memory updates");
+        }
+    }
 }

@@ -60,7 +60,7 @@ final class AgenticServiceCustomizerTest {
             tracker.reset();
 
             var agent = ctx.getBean(CustomizedSequenceAgent.class);
-            var result = agent.howManyLetters("simple plan");
+            agent.howManyLetters("simple plan");
             assertEquals(3, tracker.get(), "Customizer should be invoked on the sequence builder and for sub-agents");
         }
     }

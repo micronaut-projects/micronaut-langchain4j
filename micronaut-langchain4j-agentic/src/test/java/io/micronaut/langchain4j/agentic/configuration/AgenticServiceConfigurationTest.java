@@ -57,6 +57,12 @@ class AgenticServiceConfigurationTest {
     }
 
     @Test
+    void namedAttributeSelectsRootChatModel(NamedRootModelAgent namedRootModelAgent) {
+        var answer = namedRootModelAgent.greet("Alex");
+        assertTrue(answer.startsWith("[friendly]"), "Expected named root model prefix in response, got: " + answer);
+    }
+
+    @Test
     @Property(name = AGENTIC_CONFIG_PREFIX + "supervisor.chat-model", value = "friendly-chat-model")
     @Property(name = AGENTIC_CONFIG_PREFIX + "supervisor.sub-agents", value = "greeter,creative-writer")
     void demonstratesSupervisorConfiguration(SupervisorAgent supervisorAgent) {
@@ -84,8 +90,6 @@ class AgenticServiceConfigurationTest {
             return maybeJson;
         }
         try {
-            // Parse with minimal logic (no dependencies)
-            // Support for e.g. {"type":"agent_invocation_result","arguments":{"final_result":"[friendly] ..."}}
             var iArgs = maybeJson.indexOf("\"arguments\"");
             if (iArgs >= 0) {
                 var brace = maybeJson.indexOf("{", iArgs);
@@ -108,7 +112,8 @@ class AgenticServiceConfigurationTest {
                     }
                 }
             }
-        } catch (Exception ignore) {}
+        } catch (Exception _) {
+        }
         return null;
     }
 
@@ -125,6 +130,5 @@ class AgenticServiceConfigurationTest {
             assertTrue(answer.startsWith("[unit]"), "Expected default single-candidate ChatModel to be used, got: " + answer);
         }
     }
-
 
 }
