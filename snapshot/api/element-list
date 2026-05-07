@@ -4,7 +4,6 @@ io.micronaut.langchain4j.cassandra.memory
 io.micronaut.langchain4j.chatmodels.tck
 io.micronaut.langchain4j.chatmodels.tck.tests
 io.micronaut.langchain4j.embedding
-io.micronaut.langchain4j.info
 io.micronaut.langchain4j.interceptor
 io.micronaut.langchain4j.mongodb.atlas
 io.micronaut.langchain4j.neo4j.memory
