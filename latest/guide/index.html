@@ -15,7 +15,7 @@
     <script>hljs.initHighlightingOnLoad();</script>
     <link rel="stylesheet" href="../css/multi-language-sample.css"/>
     <script src="../js/docs.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
     <script type="text/javascript">
         function addJsClass(el) {
             var classes = document.body.className.split(" ");
@@ -23,7 +23,9 @@
             document.body.className = classes.join(" ");
         }
     </script>
-
+    <style type="text/css">
+        .lang-java { display: block }; .lang-python { display: block }; .lang-kotlin { display: block }; .lang-groovy { display: block }; 
+    </style>
 </head>
 
 <body class="body" id="docs" onload="addJsClass();" onhashchange="highlightMenu()">
@@ -48,17 +50,19 @@
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#quickStart"><strong>2</strong><span>Quick Start</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#aiService"><strong>3</strong><span>AI Service</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#responseStreaming"><strong>3</strong><span>Response Streaming</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#tools"><strong>4</strong><span>Tools</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#aiService"><strong>4</strong><span>AI Service</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#chatModels"><strong>5</strong><span>Chat Language Models</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#tools"><strong>5</strong><span>Tools</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#embeddingStores"><strong>6</strong><span>Embedding Stores</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#chatModels"><strong>6</strong><span>Chat Language Models</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>7</strong><span>Repository</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#embeddingStores"><strong>7</strong><span>Embedding Stores</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#releaseHistory"><strong>8</strong><span>Release History</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>8</strong><span>Repository</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#releaseHistory"><strong>9</strong><span>Release History</span></a></div>
                                 
                             </div>
                         </div>
@@ -93,59 +97,63 @@
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-quickStart"><a href="#quickStart"><strong>2</strong><span>Quick Start</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-aiService"><a href="#aiService"><strong>3</strong><span>AI Service</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-responseStreaming"><a href="#responseStreaming"><strong>3</strong><span>Response Streaming</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-tools"><a href="#tools"><strong>4</strong><span>Tools</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-aiService"><a href="#aiService"><strong>4</strong><span>AI Service</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-chatModels"><a href="#chatModels"><strong>5</strong><span>Chat Language Models</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-tools"><a href="#tools"><strong>5</strong><span>Tools</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-chatModelExample"><a href="#chatModelExample"><strong>5.1</strong><span>ChatModel Example</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-chatModels"><a href="#chatModels"><strong>6</strong><span>Chat Language Models</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-chatMemory"><a href="#chatMemory"><strong>5.2</strong><span>Chat Memory</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-chatModelExample"><a href="#chatModelExample"><strong>6.1</strong><span>ChatModel Example</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-anthropic"><a href="#anthropic"><strong>5.3</strong><span>Anthropic</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-chatMemory"><a href="#chatMemory"><strong>6.2</strong><span>Chat Memory</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-azure"><a href="#azure"><strong>5.4</strong><span>Azure</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-anthropic"><a href="#anthropic"><strong>6.3</strong><span>Anthropic</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-bedrock"><a href="#bedrock"><strong>5.5</strong><span>Bedrock</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-azure"><a href="#azure"><strong>6.4</strong><span>Azure</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-hugging-face"><a href="#hugging-face"><strong>5.6</strong><span>HuggingFace</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-bedrock"><a href="#bedrock"><strong>6.5</strong><span>Bedrock</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-mistralai"><a href="#mistralai"><strong>5.7</strong><span>MistralAi</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-hugging-face"><a href="#hugging-face"><strong>6.6</strong><span>HuggingFace</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-ollama"><a href="#ollama"><strong>5.8</strong><span>Ollama</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-mistralai"><a href="#mistralai"><strong>6.7</strong><span>MistralAi</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-oci-genai"><a href="#oci-genai"><strong>5.9</strong><span>Oracle Cloud GenAI</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-ollama"><a href="#ollama"><strong>6.8</strong><span>Ollama</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-openai"><a href="#openai"><strong>5.10</strong><span>OpenAi</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-oci-genai"><a href="#oci-genai"><strong>6.9</strong><span>Oracle Cloud GenAI</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-googleai-gemini"><a href="#googleai-gemini"><strong>5.11</strong><span>Google AI Gemini</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-openai"><a href="#openai"><strong>6.10</strong><span>OpenAi</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-vertexai"><a href="#vertexai"><strong>5.12</strong><span>VertexAi</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-googleai-gemini"><a href="#googleai-gemini"><strong>6.11</strong><span>Google AI Gemini</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-vertexai-gemini"><a href="#vertexai-gemini"><strong>5.13</strong><span>VertexAi Gemini</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-vertexai"><a href="#vertexai"><strong>6.12</strong><span>VertexAi</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-embeddingStores"><a href="#embeddingStores"><strong>6</strong><span>Embedding Stores</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-vertexai-gemini"><a href="#vertexai-gemini"><strong>6.13</strong><span>VertexAi Gemini</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-elasticsearch"><a href="#elasticsearch"><strong>6.1</strong><span>Elastic Search</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-embeddingStores"><a href="#embeddingStores"><strong>7</strong><span>Embedding Stores</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-mongodb"><a href="#mongodb"><strong>6.2</strong><span>MongoDB</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-embeddingStoresInMemory"><a href="#embeddingStoresInMemory"><strong>7.1</strong><span>In-Memory</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-neo4j"><a href="#neo4j"><strong>6.3</strong><span>Neo4j</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-elasticsearch"><a href="#elasticsearch"><strong>7.2</strong><span>Elastic Search</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-oracledb"><a href="#oracledb"><strong>6.4</strong><span>Oracle</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-mongodb"><a href="#mongodb"><strong>7.3</strong><span>MongoDB</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-opensearch"><a href="#opensearch"><strong>6.5</strong><span>Open Search</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-neo4j"><a href="#neo4j"><strong>7.4</strong><span>Neo4j</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-pgvector"><a href="#pgvector"><strong>6.6</strong><span>PGVector</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-oracledb"><a href="#oracledb"><strong>7.5</strong><span>Oracle</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-redis"><a href="#redis"><strong>6.7</strong><span>Redis</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-opensearch"><a href="#opensearch"><strong>7.6</strong><span>Open Search</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-qdrant"><a href="#qdrant"><strong>6.8</strong><span>Qdrant</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-pgvector"><a href="#pgvector"><strong>7.7</strong><span>PGVector</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>7</strong><span>Repository</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-redis"><a href="#redis"><strong>7.8</strong><span>Redis</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-releaseHistory"><a href="#releaseHistory"><strong>8</strong><span>Release History</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-qdrant"><a href="#qdrant"><strong>7.9</strong><span>Qdrant</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>8</strong><span>Repository</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-releaseHistory"><a href="#releaseHistory"><strong>9</strong><span>Release History</span></a></div>
         
         </div>
     </div>
@@ -155,13 +163,13 @@
         <h1>Micronaut LangChain4j</h1>
         <p></p>
         <p>Integration between Micronaut and Langchain4j</p>
-        <p><strong>Version:</strong> 1.3.0 </p>
+        <p><strong>Version:</strong> 2.0.0 </p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/introduction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/introduction.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -189,7 +197,7 @@ This module is regarded as experimental and subject to change since the underlyi
 <h1 id="quickStart"><a class="anchor" href="#quickStart"></a>2 Quick Start</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/quickStart.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/quickStart.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -215,7 +223,8 @@ This module is regarded as experimental and subject to change since the underlyi
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then the core module:</p>
@@ -234,7 +243,8 @@ This module is regarded as experimental and subject to change since the underlyi
     &lt;artifactId&gt;micronaut-langchain4j-core&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>You are now ready to configure one of the <a href="#chatModels">Chat Language Models</a>, for the quick start we will use <a href="#ollama">Ollama</a>:</p>
@@ -253,7 +263,8 @@ This module is regarded as experimental and subject to change since the underlyi
     &lt;artifactId&gt;micronaut-langchain4j-ollama&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>To test the integration add the test resources integration to your <a href="https://micronaut-projects.github.io/micronaut-maven-plugin/latest/examples/test-resources.html">Maven build</a> or <a href="https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/#_the_test_resources_plugin">Gradle build</a>.</p>
@@ -273,7 +284,8 @@ This module is regarded as experimental and subject to change since the underlyi
     &lt;scope&gt;testResourcesService&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -330,10 +342,130 @@ For Maven see <a href="https://micronaut-projects.github.io/micronaut-maven-plug
 </div>
 </div>
 
-<h1 id="aiService"><a class="anchor" href="#aiService"></a>3 AI Service</h1>
+<h1 id="responseStreaming"><a class="anchor" href="#responseStreaming"></a>3 Response Streaming</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/aiService.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/responseStreaming.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>It is possible to use <a href="https://docs.langchain4j.dev/tutorials/response-streaming/">response streaming</a>.
+First, you need to configure a streaming chat model with <code>langchain4j.*.streaming-chat-model.*</code>. For example, with <a href="#openai">OpenAI</a>:</p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.open-ai.api-key=${OPENAI_API_KEY}
+langchain4j.open-ai.streaming-chat-model.model-name=gpt-4o
+langchain4j.open-ai.streaming-chat-model.log-requests=true
+langchain4j.open-ai.streaming-chat-model.log-responses=true</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">langchain4j:
+  open-ai:
+    api-key: ${OPENAI_API_KEY}
+    streaming-chat-model:
+      model-name: gpt-4o
+      log-requests: true
+      log-responses: true</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[langchain4j]
+  [langchain4j.open-ai]
+    api-key="${OPENAI_API_KEY}"
+    [langchain4j.open-ai.streaming-chat-model]
+      model-name="gpt-4o"
+      log-requests=true
+      log-responses=true</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j {
+  openAi {
+    apiKey = "${OPENAI_API_KEY}"
+    streamingChatModel {
+      modelName = "gpt-4o"
+      logRequests = true
+      logResponses = true
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  langchain4j {
+    open-ai {
+      api-key = "${OPENAI_API_KEY}"
+      streaming-chat-model {
+        model-name = "gpt-4o"
+        log-requests = true
+        log-responses = true
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j": {
+    "open-ai": {
+      "api-key": "${OPENAI_API_KEY}",
+      "streaming-chat-model": {
+        "model-name": "gpt-4o",
+        "log-requests": true,
+        "log-responses": true
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, you will be able to inject a bean of type <code>dev.langchain4j.model.chat.StreamingChatModel</code>.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, you can use an <a href="#aiService">AI Service</a> with a method whose return type uses Project Reactor.
+For example, an <code>@AIService</code> interface with a method whose return type is <code>Flux&lt;String&gt;</code>.
+In order to do this, you will need to add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"dev.langchain4j:langchain4j-reactor")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;dev.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;langchain4j-reactor&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+
+<h1 id="aiService"><a class="anchor" href="#aiService"></a>4 AI Service</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/aiService.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -361,21 +493,6 @@ public interface Friend {
 <div class="listingblock multi-language-sample">
 <div class="title">Defining <code>@AiService</code> interfaces</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package example.micronaut.aiservice
-
-import dev.langchain4j.service.SystemMessage
-import io.micronaut.langchain4j.annotation.AiService
-
-@AiService // <b class="conum">(1)</b>
-interface Friend {
-    @SystemMessage("You are a good friend of mine. Answer using slang.") // <b class="conum">(2)</b>
-    String chat(String userMessage)
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">Defining <code>@AiService</code> interfaces</div>
-<div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example.micronaut.aiservice
 
 import dev.langchain4j.service.SystemMessage
@@ -385,6 +502,21 @@ import io.micronaut.langchain4j.annotation.AiService
 interface Friend {
     @SystemMessage("You are a good friend of mine. Answer using slang.") // <b class="conum">(2)</b>
     fun chat(userMessage: String): String
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Defining <code>@AiService</code> interfaces</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package example.micronaut.aiservice
+
+import dev.langchain4j.service.SystemMessage
+import io.micronaut.langchain4j.annotation.AiService
+
+@AiService // <b class="conum">(1)</b>
+interface Friend {
+    @SystemMessage("You are a good friend of mine. Answer using slang.") // <b class="conum">(2)</b>
+    String chat(String userMessage)
 }</code></pre>
 </div>
 </div>
@@ -415,8 +547,10 @@ import io.micronaut.langchain4j.testutils.OllamaTestPropertyProvider;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+@DisabledIfEnvironmentVariable(named = "CI", matches = ".*")
 @Testcontainers(disabledWithoutDocker = true)
 @MicronautTest(startApplication = false)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -434,33 +568,6 @@ class AiServiceTest implements OllamaTestPropertyProvider {
 <div class="listingblock multi-language-sample">
 <div class="title">Calling <code>@AiService</code> definitions</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package example.micronaut.aiservice
-
-import dev.langchain4j.model.chat.ChatModel
-import io.micronaut.langchain4j.testutils.OllamaTestPropertyProvider
-import io.micronaut.test.extensions.junit5.annotation.MicronautTest
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
-import org.testcontainers.junit.jupiter.Testcontainers
-
-import static org.junit.jupiter.api.Assertions.assertNotNull
-
-@Testcontainers(disabledWithoutDocker = true)
-@MicronautTest(startApplication = false)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class AiServiceTest implements OllamaTestPropertyProvider {
-    @Test
-    void testAiService(Friend friend, ChatModel languageModel) {
-        String result = friend.chat("Hello")
-        assertNotNull(result)
-        assertNotNull(languageModel)
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">Calling <code>@AiService</code> definitions</div>
-<div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example.micronaut.aiservice
 
 import dev.langchain4j.model.chat.ChatModel
@@ -469,8 +576,10 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable
 import org.testcontainers.junit.jupiter.Testcontainers
 
+@DisabledIfEnvironmentVariable(named = "CI", matches = ".*")
 @Testcontainers(disabledWithoutDocker = true)
 @MicronautTest(startApplication = false)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -484,11 +593,40 @@ internal class AiServiceTest : OllamaTestPropertyProvider {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">Calling <code>@AiService</code> definitions</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package example.micronaut.aiservice
 
-<h1 id="tools"><a class="anchor" href="#tools"></a>4 Tools</h1>
+import dev.langchain4j.model.chat.ChatModel
+import io.micronaut.langchain4j.testutils.OllamaTestPropertyProvider
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable
+import org.testcontainers.junit.jupiter.Testcontainers
+
+import static org.junit.jupiter.api.Assertions.assertNotNull
+
+@DisabledIfEnvironmentVariable(named = "CI", matches = ".*")
+@Testcontainers(disabledWithoutDocker = true)
+@MicronautTest(startApplication = false)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class AiServiceTest implements OllamaTestPropertyProvider {
+    @Test
+    void testAiService(Friend friend, ChatModel languageModel) {
+        String result = friend.chat("Hello")
+        assertNotNull(result)
+        assertNotNull(languageModel)
+    }
+}</code></pre>
+</div>
+</div>
+
+<h1 id="tools"><a class="anchor" href="#tools"></a>5 Tools</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/tools.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/tools.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -517,6 +655,21 @@ public class LegalDocumentTools {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example.micronaut.aiservice.tools
+
+import dev.langchain4j.agent.tool.Tool
+import jakarta.inject.Singleton
+import java.time.LocalDate
+
+@Singleton // <b class="conum">(1)</b>
+class LegalDocumentTools {
+    @Tool("Returns the last time the PRIVACY document was updated") // <b class="conum">(2)</b>
+    fun lastUpdatePrivacy(): LocalDate = LocalDate.of(2013, 3, 9) // <b class="conum">(3)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package example.micronaut.aiservice.tools
 
 import dev.langchain4j.agent.tool.Tool
@@ -532,21 +685,6 @@ class LegalDocumentTools {
     LocalDate lastUpdatePrivacy() {
         return LocalDate.of(2013, 3, 9) // <b class="conum">(3)</b>
     }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example.micronaut.aiservice.tools
-
-import dev.langchain4j.agent.tool.Tool
-import jakarta.inject.Singleton
-import java.time.LocalDate
-
-@Singleton // <b class="conum">(1)</b>
-class LegalDocumentTools {
-    @Tool("Returns the last time the PRIVACY document was updated") // <b class="conum">(2)</b>
-    fun lastUpdatePrivacy(): LocalDate = LocalDate.of(2013, 3, 9) // <b class="conum">(3)</b>
 }</code></pre>
 </div>
 </div>
@@ -584,18 +722,6 @@ public interface CompanyBot {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package example.micronaut.aiservice.tools
-
-import io.micronaut.langchain4j.annotation.AiService
-
-@AiService(tools = LegalDocumentTools.class)
-interface CompanyBot {
-    String ask(String question)
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example.micronaut.aiservice.tools
 
 import io.micronaut.langchain4j.annotation.AiService
@@ -606,11 +732,23 @@ interface CompanyBot {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package example.micronaut.aiservice.tools
 
-<h1 id="chatModels"><a class="anchor" href="#chatModels"></a>5 Chat Language Models</h1>
+import io.micronaut.langchain4j.annotation.AiService
+
+@AiService(tools = LegalDocumentTools.class)
+interface CompanyBot {
+    String ask(String question)
+}</code></pre>
+</div>
+</div>
+
+<h1 id="chatModels"><a class="anchor" href="#chatModels"></a>6 Chat Language Models</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/chatModels.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -623,10 +761,10 @@ interface CompanyBot {
 <p>Each module configures one or more <a href="https://docs.langchain4j.dev/apidocs/dev/langchain4j/model/chat/ChatLanguageModel.html">ChatLanguageModel</a> beans, making them available for dependency injection based on configuration.</p>
 </div>
 
-<h2 id="chatModelExample"><a class="anchor" href="#chatModelExample"></a>5.1 ChatModel Example</h2>
+<h2 id="chatModelExample"><a class="anchor" href="#chatModelExample"></a>6.1 ChatModel Example</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/chatModels/chatModelExample.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/chatModelExample.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -679,6 +817,46 @@ public class MusicianAssistant {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example.micronaut
+
+import dev.langchain4j.data.message.ChatMessage
+import dev.langchain4j.data.message.SystemMessage
+import dev.langchain4j.data.message.UserMessage
+import dev.langchain4j.model.chat.ChatModel
+import jakarta.inject.Singleton
+
+@Singleton
+class MusicianAssistant(private val model: ChatModel) { // <b class="conum">(1)</b>
+    fun generateTopThreeAlbums(name: String): Musician {
+        val messages = generateTopThreeAlbumsMessages(name)
+        val albums = model.chat(messages)
+        val topThreeAlbums = albums.aiMessage().text()
+        return Musician(name, topThreeAlbums)
+    }
+
+    private fun generateTopThreeAlbumsMessages(name: String): List&lt;ChatMessage&gt; {
+        return listOf(
+            SYSTEM_MSG, UserMessage.from(
+                String.format("Only list the top 3 albums of %s", name)
+            )
+        )
+    }
+
+    companion object {
+        private val SYSTEM_MSG: SystemMessage = SystemMessage.from(
+            """
+          You are an expert in Jazz music.
+          Reply with only the names of the artists, albums, etc.
+          Be very concise.
+          If a list is given, separate the items with commas.
+          """.trimIndent()
+        )
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package example.micronaut
 
 import dev.langchain4j.data.message.ChatMessage
@@ -719,46 +897,6 @@ If a list is given, separate the items with commas.""")
 }</code></pre>
 </div>
 </div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example.micronaut
-
-import dev.langchain4j.data.message.ChatMessage
-import dev.langchain4j.data.message.SystemMessage
-import dev.langchain4j.data.message.UserMessage
-import dev.langchain4j.model.chat.ChatModel
-import jakarta.inject.Singleton
-
-@Singleton
-class MusicianAssistant(private val model: ChatModel) { // <b class="conum">(1)</b>
-    fun generateTopThreeAlbums(name: String): Musician {
-        val messages = generateTopThreeAlbumsMessages(name)
-        val albums = model.chat(messages)
-        val topThreeAlbums = albums.aiMessage().text()
-        return Musician(name, topThreeAlbums)
-    }
-
-    private fun generateTopThreeAlbumsMessages(name: String): List&lt;ChatMessage&gt; {
-        return listOf(
-            SYSTEM_MSG, UserMessage.from(
-                String.format("Only list the top 3 albums of %s", name)
-            )
-        )
-    }
-
-    companion object {
-        private val SYSTEM_MSG: SystemMessage = SystemMessage.from(
-            """
-          You are an expert in Jazz music.
-          Reply with only the names of the artists, albums, etc.
-          Be very concise.
-          If a list is given, separate the items with commas.
-          """.trimIndent()
-        )
-    }
-}</code></pre>
-</div>
-</div>
 <div class="colist arabic">
 <table>
 <tr>
@@ -777,6 +915,13 @@ public record Musician(String name, String albums) {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example.micronaut
+
+data class Musician(val name: String, val albums: String)</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package example.micronaut
 
 import groovy.transform.CompileStatic
@@ -786,13 +931,6 @@ class Musician {
     String name
     String albums
 }</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example.micronaut
-
-data class Musician(val name: String, val albums: String)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -835,7 +973,7 @@ langchain4j.ollama.chat-model.log-responses=true</code></pre>
 import dev.langchain4j.model.ollama.OllamaChatModel;
 import io.micronaut.context.event.BeanCreatedEvent;
 import io.micronaut.context.event.BeanCreatedEventListener;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -853,12 +991,32 @@ class OllamaChatModelBuilderListener
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example.micronaut
+
+import dev.langchain4j.model.ollama.OllamaChatModel.OllamaChatModelBuilder
+import io.micronaut.context.event.BeanCreatedEvent
+import io.micronaut.context.event.BeanCreatedEventListener
+import org.jspecify.annotations.NonNull
+import jakarta.inject.Singleton
+
+@Singleton
+class OllamaChatModelBuilderListener : BeanCreatedEventListener&lt;OllamaChatModelBuilder&gt; {
+    override fun onCreated(event: @NonNull BeanCreatedEvent&lt;OllamaChatModelBuilder&gt;): OllamaChatModelBuilder {
+        val builder = event.bean
+        builder.temperature(0.0)
+        return builder
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package example.micronaut
 
 import dev.langchain4j.model.ollama.OllamaChatModel
 import io.micronaut.context.event.BeanCreatedEvent
 import io.micronaut.context.event.BeanCreatedEventListener
-import io.micronaut.core.annotation.NonNull
+import org.jspecify.annotations.NonNull
 import jakarta.inject.Singleton
 
 @Singleton
@@ -874,31 +1032,11 @@ class OllamaChatModelBuilderListener
 }</code></pre>
 </div>
 </div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example.micronaut
 
-import dev.langchain4j.model.ollama.OllamaChatModel.OllamaChatModelBuilder
-import io.micronaut.context.event.BeanCreatedEvent
-import io.micronaut.context.event.BeanCreatedEventListener
-import io.micronaut.core.annotation.NonNull
-import jakarta.inject.Singleton
-
-@Singleton
-class OllamaChatModelBuilderListener : BeanCreatedEventListener&lt;OllamaChatModelBuilder&gt; {
-    override fun onCreated(event: @NonNull BeanCreatedEvent&lt;OllamaChatModelBuilder&gt;): OllamaChatModelBuilder {
-        val builder = event.bean
-        builder.temperature(0.0)
-        return builder
-    }
-}</code></pre>
-</div>
-</div>
-
-<h2 id="chatMemory"><a class="anchor" href="#chatMemory"></a>5.2 Chat Memory</h2>
+<h2 id="chatMemory"><a class="anchor" href="#chatMemory"></a>6.2 Chat Memory</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/chatModels/chatMemory.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/chatMemory.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -932,7 +1070,8 @@ it relies on you to include the relevant messages in each request for coherent a
     &lt;artifactId&gt;micronaut-langchain4j-store-redis&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>To use the Neo4J implementation <code>dev.langchain4j.community.store.memory.chat.neo4j.Neo4jChatMemoryStore</code>, add the following dependency:</p>
@@ -951,7 +1090,8 @@ it relies on you to include the relevant messages in each request for coherent a
     &lt;artifactId&gt;micronaut-langchain4j-store-neo4j&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>To use the Cassandra implementation <code>dev.langchain4j.store.memory.chat.cassandra.CassandraChatMemoryStore</code>, add the following dependency:</p>
@@ -970,7 +1110,8 @@ it relies on you to include the relevant messages in each request for coherent a
     &lt;artifactId&gt;micronaut-langchain4j-cassandra&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>The following example shows how to use the <code>ChatMemory</code>:</p>
@@ -1040,6 +1181,59 @@ public class AssistantWithMemory {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example.micronaut
+
+import dev.langchain4j.data.message.UserMessage
+import dev.langchain4j.memory.ChatMemory
+import dev.langchain4j.memory.chat.MessageWindowChatMemory
+import dev.langchain4j.model.chat.ChatModel
+import jakarta.inject.Singleton
+import java.util.*
+import java.util.concurrent.ConcurrentHashMap
+
+@Singleton
+class AssistantWithMemory(
+    val messageWindowChatMemoryBuilder: MessageWindowChatMemory.Builder,
+    val model: ChatModel) {
+    private val conversations: MutableMap&lt;String, ChatMemory&gt; = ConcurrentHashMap&lt;String, ChatMemory&gt;()
+
+    fun chat(conversationId: String, message: String): MemoryIdAndResponse {
+        val chatMemory = requireNotNull(this.conversations[conversationId]) {
+            "Unknown conversation: $conversationId"
+        }
+        chatMemory.add(UserMessage.from(message))
+        val chatResponse = model.chat(chatMemory.messages())
+        val aiMessage = chatResponse.aiMessage()
+        chatMemory.add(aiMessage)
+        return MemoryIdAndResponse(conversationId, aiMessage.text())
+    }
+
+    fun chat(message: String): MemoryIdAndResponse {
+        val conversationId = startConversation()
+        return chat(conversationId, message)
+    }
+
+    private fun startConversation(): String {
+        val memoryId = generateChatMemoryId()
+        val chatMemory = generateChatMemory(memoryId)
+        conversations.putIfAbsent(memoryId, chatMemory)
+        return memoryId
+    }
+
+    private fun generateChatMemoryId(): String {
+        return UUID.randomUUID().toString()
+    }
+
+    private fun generateChatMemory(memoryId: String): ChatMemory {
+        return messageWindowChatMemoryBuilder
+            .id(memoryId)
+            .build()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package example.micronaut
 
 import dev.langchain4j.data.message.AiMessage
@@ -1100,59 +1294,6 @@ class AssistantWithMemory {
 }</code></pre>
 </div>
 </div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example.micronaut
-
-import dev.langchain4j.data.message.UserMessage
-import dev.langchain4j.memory.ChatMemory
-import dev.langchain4j.memory.chat.MessageWindowChatMemory
-import dev.langchain4j.model.chat.ChatModel
-import jakarta.inject.Singleton
-import java.util.*
-import java.util.concurrent.ConcurrentHashMap
-
-@Singleton
-class AssistantWithMemory(
-    val messageWindowChatMemoryBuilder: MessageWindowChatMemory.Builder,
-    val model: ChatModel) {
-    private val conversations: MutableMap&lt;String, ChatMemory&gt; = ConcurrentHashMap&lt;String, ChatMemory&gt;()
-
-    fun chat(conversationId: String, message: String): MemoryIdAndResponse {
-        val chatMemory = requireNotNull(this.conversations[conversationId]) {
-            "Unknown conversation: $conversationId"
-        }
-        chatMemory.add(UserMessage.from(message))
-        val chatResponse = model.chat(chatMemory.messages())
-        val aiMessage = chatResponse.aiMessage()
-        chatMemory.add(aiMessage)
-        return MemoryIdAndResponse(conversationId, aiMessage.text())
-    }
-
-    fun chat(message: String): MemoryIdAndResponse {
-        val conversationId = startConversation()
-        return chat(conversationId, message)
-    }
-
-    private fun startConversation(): String {
-        val memoryId = generateChatMemoryId()
-        val chatMemory = generateChatMemory(memoryId)
-        conversations.putIfAbsent(memoryId, chatMemory)
-        return memoryId
-    }
-
-    private fun generateChatMemoryId(): String {
-        return UUID.randomUUID().toString()
-    }
-
-    private fun generateChatMemory(memoryId: String): ChatMemory {
-        return messageWindowChatMemoryBuilder
-            .id(memoryId)
-            .build()
-    }
-}</code></pre>
-</div>
-</div>
 <div class="paragraph">
 <p>You could invoke the previous class as illustrated in the following test:</p>
 </div>
@@ -1175,23 +1316,6 @@ class AssistantWithMemory(
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">    @Test
-    void chatWithMemory(AssistantWithMemory assistant) {
-        MemoryIdAndResponse johnConversation = assistant.chat("Let me introduce myself. My name is John")
-        String johnConversationId = johnConversation.memoryId
-        assertNotNull(johnConversationId)
-        MemoryIdAndResponse aegonConversation = assistant.chat("Let me introduce myself. My name is Dan")
-        String aegonConversationId = aegonConversation.memoryId
-        assertNotNull(aegonConversationId)
-        MemoryIdAndResponse answer = assistant.chat(johnConversationId, "What's my name?")
-        assertTrue(answer.response.toLowerCase().contains("john"), answer.response)
-        answer = assistant.chat(aegonConversationId, "What's my name?")
-        assertTrue(answer.response.toLowerCase().contains("dan"), answer.response)
-    }</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">    @Test
     fun chatWithMemory(assistant: AssistantWithMemory) {
         val johnConversation = assistant.chat("Let me introduce myself. My name is John")
@@ -1207,11 +1331,28 @@ class AssistantWithMemory(
     }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">    @Test
+    void chatWithMemory(AssistantWithMemory assistant) {
+        MemoryIdAndResponse johnConversation = assistant.chat("Let me introduce myself. My name is John")
+        String johnConversationId = johnConversation.memoryId
+        assertNotNull(johnConversationId)
+        MemoryIdAndResponse aegonConversation = assistant.chat("Let me introduce myself. My name is Dan")
+        String aegonConversationId = aegonConversation.memoryId
+        assertNotNull(aegonConversationId)
+        MemoryIdAndResponse answer = assistant.chat(johnConversationId, "What's my name?")
+        assertTrue(answer.response.toLowerCase().contains("john"), answer.response)
+        answer = assistant.chat(aegonConversationId, "What's my name?")
+        assertTrue(answer.response.toLowerCase().contains("dan"), answer.response)
+    }</code></pre>
+</div>
+</div>
 
-<h2 id="anthropic"><a class="anchor" href="#anthropic"></a>5.3 Anthropic</h2>
+<h2 id="anthropic"><a class="anchor" href="#anthropic"></a>6.3 Anthropic</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/chatModels/anthropic.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/anthropic.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1234,7 +1375,8 @@ class AssistantWithMemory(
     &lt;artifactId&gt;micronaut-langchain4j-anthropic&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.anthropic.CommonAnthropicChatModelConfiguration">necessary configuration</a>.</p>
@@ -1279,10 +1421,10 @@ class AssistantWithMemory(
 </div>
 </div>
 
-<h2 id="azure"><a class="anchor" href="#azure"></a>5.4 Azure</h2>
+<h2 id="azure"><a class="anchor" href="#azure"></a>6.4 Azure</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/chatModels/azure.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/azure.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1305,7 +1447,8 @@ class AssistantWithMemory(
     &lt;artifactId&gt;micronaut-langchain4j-azure&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.azure.CommonAzureOpenAiChatModelConfiguration">necessary configuration</a>.</p>
@@ -1362,10 +1505,10 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 <p>One way to do this is to include the <a href="https://micronaut-projects.github.io/micronaut-azure/latest/guide/#azureSdk">Azure SDK module</a>.</p>
 </div>
 
-<h2 id="bedrock"><a class="anchor" href="#bedrock"></a>5.5 Bedrock</h2>
+<h2 id="bedrock"><a class="anchor" href="#bedrock"></a>6.5 Bedrock</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/chatModels/bedrock.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/bedrock.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1388,7 +1531,8 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-bedrock&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.bedrock.CommonBedrockLlamaChatModelConfiguration">necessary configuration</a>.</p>
@@ -1439,10 +1583,10 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 <p>One way to do this is to include the <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/#sdkv2">AWS SDK module</a>.</p>
 </div>
 
-<h2 id="hugging-face"><a class="anchor" href="#hugging-face"></a>5.6 HuggingFace</h2>
+<h2 id="hugging-face"><a class="anchor" href="#hugging-face"></a>6.6 HuggingFace</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/chatModels/hugging-face.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/hugging-face.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1465,7 +1609,8 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-hugging-face&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.huggingface.CommonHuggingFaceChatModelConfiguration">necessary configuration</a>.</p>
@@ -1510,10 +1655,10 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 </div>
 </div>
 
-<h2 id="mistralai"><a class="anchor" href="#mistralai"></a>5.7 MistralAi</h2>
+<h2 id="mistralai"><a class="anchor" href="#mistralai"></a>6.7 MistralAi</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/chatModels/mistralai.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/mistralai.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1536,7 +1681,8 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-mistralai&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.mistralai.CommonMistralAiChatModelConfiguration">necessary configuration</a>.</p>
@@ -1581,10 +1727,10 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 </div>
 </div>
 
-<h2 id="ollama"><a class="anchor" href="#ollama"></a>5.8 Ollama</h2>
+<h2 id="ollama"><a class="anchor" href="#ollama"></a>6.8 Ollama</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/chatModels/ollama.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/ollama.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1607,7 +1753,8 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-ollama&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.ollama.CommonOllamaChatModelConfiguration">necessary configuration</a>.</p>
@@ -1652,10 +1799,10 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 </div>
 </div>
 
-<h2 id="oci-genai"><a class="anchor" href="#oci-genai"></a>5.9 Oracle Cloud GenAI</h2>
+<h2 id="oci-genai"><a class="anchor" href="#oci-genai"></a>6.9 Oracle Cloud GenAI</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/chatModels/oci-genai.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/oci-genai.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1678,7 +1825,8 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-oci-genai&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Setup a supported <a href="https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#quickStart">OCI authentication method</a>.</p>
@@ -1732,10 +1880,10 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
 </div>
 </div>
 
-<h2 id="openai"><a class="anchor" href="#openai"></a>5.10 OpenAi</h2>
+<h2 id="openai"><a class="anchor" href="#openai"></a>6.10 OpenAi</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/chatModels/openai.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/openai.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1758,7 +1906,8 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-openai&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.openai.CommonOpenAiChatModelConfiguration">necessary configuration</a>.</p>
@@ -1803,10 +1952,10 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
 </div>
 </div>
 
-<h2 id="googleai-gemini"><a class="anchor" href="#googleai-gemini"></a>5.11 Google AI Gemini</h2>
+<h2 id="googleai-gemini"><a class="anchor" href="#googleai-gemini"></a>6.11 Google AI Gemini</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/chatModels/googleai-gemini.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/googleai-gemini.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1829,7 +1978,8 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-googleai-gemini&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.googleaigemini.CommonGoogleAiGeminiChatModelConfiguration">necessary configuration</a>.</p>
@@ -1874,10 +2024,10 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
 </div>
 </div>
 
-<h2 id="vertexai"><a class="anchor" href="#vertexai"></a>5.12 VertexAi</h2>
+<h2 id="vertexai"><a class="anchor" href="#vertexai"></a>6.12 VertexAi</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/chatModels/vertexai.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/vertexai.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1900,7 +2050,8 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-vertexai&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.vertexai.CommonVertexAiChatModelConfiguration">necessary configuration</a>.</p>
@@ -1969,10 +2120,10 @@ langchain4j.vertexAi.publisher = "YOUR_PUBLISHER"</code></pre>
 </div>
 </div>
 
-<h2 id="vertexai-gemini"><a class="anchor" href="#vertexai-gemini"></a>5.13 VertexAi Gemini</h2>
+<h2 id="vertexai-gemini"><a class="anchor" href="#vertexai-gemini"></a>6.13 VertexAi Gemini</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/chatModels/vertexai-gemini.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/vertexai-gemini.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1995,7 +2146,8 @@ langchain4j.vertexAi.publisher = "YOUR_PUBLISHER"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-vertexai-gemini&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.vertexai.gemini.CommonVertexAiGeminiChatModelConfiguration">necessary configuration</a>.</p>
@@ -2052,10 +2204,10 @@ langchain4j.vertexAiGemini.location = "YOUR_LOCATION"</code></pre>
 </div>
 </div>
 
-<h1 id="embeddingStores"><a class="anchor" href="#embeddingStores"></a>6 Embedding Stores</h1>
+<h1 id="embeddingStores"><a class="anchor" href="#embeddingStores"></a>7 Embedding Stores</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/embeddingStores.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2063,10 +2215,24 @@ langchain4j.vertexAiGemini.location = "YOUR_LOCATION"</code></pre>
 
 
 
-<h2 id="elasticsearch"><a class="anchor" href="#elasticsearch"></a>6.1 Elastic Search</h2>
+<h2 id="embeddingStoresInMemory"><a class="anchor" href="#embeddingStoresInMemory"></a>7.1 In-Memory</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/embeddingStores/elasticsearch.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/embeddingStoresInMemory.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>An in-memory embedding store is enable by default, set the following property
+<code>langchain4j.in-memory.embedding-store.enabled</code> with value <code>false</code> to disable it.</p>
+</div>
+
+<h2 id="elasticsearch"><a class="anchor" href="#elasticsearch"></a>7.2 Elastic Search</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/elasticsearch.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2089,7 +2255,8 @@ langchain4j.vertexAiGemini.location = "YOUR_LOCATION"</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-store-elasticsearch&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then <a href="https://micronaut-projects.github.io/micronaut-elasticsearch/latest/guide/#configuration">configure the Elasticsearch client</a>.</p>
@@ -2140,10 +2307,10 @@ langchain4j.elasticsearch.embeddingStores.default.dimension = 384</code></pre>
 </div>
 </div>
 
-<h2 id="mongodb"><a class="anchor" href="#mongodb"></a>6.2 MongoDB</h2>
+<h2 id="mongodb"><a class="anchor" href="#mongodb"></a>7.3 MongoDB</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/embeddingStores/mongodb.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/mongodb.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2166,7 +2333,8 @@ langchain4j.elasticsearch.embeddingStores.default.dimension = 384</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-store-mongodb-atlas&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="listingblock">
 <div class="title">Configuring a MongoDB server</div>
@@ -2226,10 +2394,10 @@ langchain4j.mongodbAtlas.embeddingStores.default.indexName = "testindex"</code><
 </div>
 </div>
 
-<h2 id="neo4j"><a class="anchor" href="#neo4j"></a>6.3 Neo4j</h2>
+<h2 id="neo4j"><a class="anchor" href="#neo4j"></a>7.4 Neo4j</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/embeddingStores/neo4j.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/neo4j.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2252,7 +2420,8 @@ langchain4j.mongodbAtlas.embeddingStores.default.indexName = "testindex"</code><
     &lt;artifactId&gt;micronaut-langchain4j-store-neo4j&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then <a href="https://micronaut-projects.github.io/micronaut-neo4j/latest/guide/#setup">configure the Neo4j driver</a>.</p>
@@ -2303,10 +2472,10 @@ langchain4j.neo4j.embeddingStores.default.dimension = 384</code></pre>
 </div>
 </div>
 
-<h2 id="oracledb"><a class="anchor" href="#oracledb"></a>6.4 Oracle</h2>
+<h2 id="oracledb"><a class="anchor" href="#oracledb"></a>7.5 Oracle</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/embeddingStores/oracledb.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/oracledb.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2329,7 +2498,8 @@ langchain4j.neo4j.embeddingStores.default.dimension = 384</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-store-oracle&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then add one of the <a href="https://micronaut-projects.github.io/micronaut-sql/latest/guide/#jdbc">supported JDBC connection pools</a>, for example Hikari:</p>
@@ -2349,7 +2519,8 @@ langchain4j.neo4j.embeddingStores.default.dimension = 384</code></pre>
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="openblock">
 <div class="title">Example Configuration</div>
@@ -2403,10 +2574,10 @@ langchain4j.oracle.embeddingStores.default.table.createOption = "create_if_not_e
 </div>
 </div>
 
-<h2 id="opensearch"><a class="anchor" href="#opensearch"></a>6.5 Open Search</h2>
+<h2 id="opensearch"><a class="anchor" href="#opensearch"></a>7.6 Open Search</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/embeddingStores/opensearch.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/opensearch.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2429,7 +2600,8 @@ langchain4j.oracle.embeddingStores.default.table.createOption = "create_if_not_e
     &lt;artifactId&gt;micronaut-langchain4j-store-opensearch&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then <a href="https://micronaut-projects.github.io/micronaut-opensearch/latest/guide/#openSearchRestClient">configure the OpenSearch client</a>.</p>
@@ -2480,10 +2652,10 @@ langchain4j.opensearch.embeddingStores.default.dimension = 384</code></pre>
 </div>
 </div>
 
-<h2 id="pgvector"><a class="anchor" href="#pgvector"></a>6.6 PGVector</h2>
+<h2 id="pgvector"><a class="anchor" href="#pgvector"></a>7.7 PGVector</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/embeddingStores/pgvector.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/pgvector.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2506,7 +2678,8 @@ langchain4j.opensearch.embeddingStores.default.dimension = 384</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-store-pgvector&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then add one of the <a href="https://micronaut-projects.github.io/micronaut-sql/latest/guide/#jdbc">supported JDBC connection pools</a>, for example Hikari:</p>
@@ -2526,7 +2699,8 @@ langchain4j.opensearch.embeddingStores.default.dimension = 384</code></pre>
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="openblock">
 <div class="title">Example Configuration</div>
@@ -2588,10 +2762,10 @@ testResources.containers.postgres.imageName = "pgvector/pgvector:pg16"</code></p
 </div>
 </div>
 
-<h2 id="redis"><a class="anchor" href="#redis"></a>6.7 Redis</h2>
+<h2 id="redis"><a class="anchor" href="#redis"></a>7.8 Redis</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/embeddingStores/redis.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/redis.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2614,7 +2788,8 @@ testResources.containers.postgres.imageName = "pgvector/pgvector:pg16"</code></p
     &lt;artifactId&gt;micronaut-langchain4j-store-redis&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="openblock">
 <div class="title">Example Configuration</div>
@@ -2668,10 +2843,10 @@ langchain4j.redis.embeddingStores.default.dimension = 384</code></pre>
 </div>
 </div>
 
-<h2 id="qdrant"><a class="anchor" href="#qdrant"></a>6.8 Qdrant</h2>
+<h2 id="qdrant"><a class="anchor" href="#qdrant"></a>7.9 Qdrant</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/embeddingStores/qdrant.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/qdrant.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2694,7 +2869,8 @@ langchain4j.redis.embeddingStores.default.dimension = 384</code></pre>
     &lt;artifactId&gt;micronaut-langchain4j-store-qdrant&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>To use Testcontainers &amp; Test Resources add the following dependency:</p>
@@ -2714,7 +2890,8 @@ langchain4j.redis.embeddingStores.default.dimension = 384</code></pre>
     &lt;scope&gt;testResourcesService&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2783,10 +2960,10 @@ langchain4j.qdrant.embeddingStore.collectionName = "mycollection"</code></pre>
 </div>
 </div>
 
-<h1 id="repository"><a class="anchor" href="#repository"></a>7 Repository</h1>
+<h1 id="repository"><a class="anchor" href="#repository"></a>8 Repository</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/repository.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/repository.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2799,10 +2976,10 @@ langchain4j.qdrant.embeddingStore.collectionName = "mycollection"</code></pre>
 <p><a href="https://github.com/micronaut-projects/micronaut-langchain4j">https://github.com/micronaut-projects/micronaut-langchain4j</a></p>
 </div>
 
-<h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>8 Release History</h1>
+<h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>9 Release History</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/1.3.x/src/main/docs/guide/releaseHistory.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/releaseHistory.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>

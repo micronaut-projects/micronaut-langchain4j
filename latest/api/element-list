@@ -1,7 +1,10 @@
 io.micronaut.langchain4j.aiservices
 io.micronaut.langchain4j.annotation
 io.micronaut.langchain4j.cassandra.memory
+io.micronaut.langchain4j.chatmodels.tck
+io.micronaut.langchain4j.chatmodels.tck.tests
 io.micronaut.langchain4j.embedding
+io.micronaut.langchain4j.info
 io.micronaut.langchain4j.interceptor
 io.micronaut.langchain4j.mongodb.atlas
 io.micronaut.langchain4j.neo4j.memory
@@ -13,4 +16,6 @@ io.micronaut.langchain4j.store.memory.chat
 io.micronaut.langchain4j.store.memory.chat.inmemory
 io.micronaut.langchain4j.testresources.ollama
 io.micronaut.langchain4j.testresources.qdrant
+io.micronaut.langchain4j.testutils
 io.micronaut.langchain4j.tools
+io.micronaut.langchain4j.utils
