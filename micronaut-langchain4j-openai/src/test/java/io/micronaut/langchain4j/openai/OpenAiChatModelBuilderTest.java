@@ -19,6 +19,11 @@ import io.micronaut.http.client.HttpClientRegistry;
 import io.micronaut.http.client.LoadBalancer;
 import jakarta.inject.Singleton;
 import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import io.micronaut.context.annotation.Property;
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 import org.reactivestreams.Publisher;
 
@@ -31,11 +36,15 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class OpenAiChatModelBuilderTest {
+@MicronautTest(startApplication = false)
+@Property(name = "langchain4j.open-ai.api-key", value = "blah")
+@Property(name = "langchain4j.open-ai.organization-id", value = "blah")
+@Property(name = "langchain4j.open-ai.chat-models.default.model-name", value = "gpt-4.1")
+@Property(name = "langchain4j.open-ai.chat-models.pirate.model-name", value = "gpt-4o-mini")
+@Property(name = "langchain4j.open-ai.chat-models.poet.model-name", value = "gpt-4.1-mini")
+class OpenAiChatModelBuilderTest {
     private static URI serverUri;
     private HttpServer server;
 
