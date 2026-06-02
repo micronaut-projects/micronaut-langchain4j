@@ -16,7 +16,7 @@
 # a managed version (a version which alias starts with "managed-"
 
 [versions]
-micronaut = "5.0.0"
+micronaut = "5.0.1"
 micronaut-platform = "5.0.0-RC1"
 micronaut-groovy = "5.0.0"
 micronaut-kotlin = "5.0.0"
@@ -29,7 +29,7 @@ micronaut-elasticsearch = "6.0.0"
 micronaut-redis = "7.0.0"
 micronaut-test-resources = "4.0.0"
 micronaut-logging = "2.0.0"
-micronaut-gradle-plugin = "5.0.0-M1"
+micronaut-gradle-plugin = "5.0.0"
 micronaut-sourcegen = "2.0.0"
 micronaut-grpc = "5.0.0"
 micronaut-oraclecloud = "6.0.0"
@@ -122,4 +122,4 @@ gradle-micronaut = { module = "io.micronaut.gradle:micronaut-gradle-plugin", ver
 [bundles]
 
 [plugins]
-micronaut-build-shared-settings = { id = "io.micronaut.build.shared.settings", version = "8.0.0-M18" }
+micronaut-build-shared-settings = { id = "io.micronaut.build.shared.settings", version = "8.0.0" }
