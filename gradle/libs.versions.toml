@@ -44,7 +44,7 @@ jinjava = "2.8.3"
 tools-jackson-core = "3.1.3"
 
 # Managed versions appear in the BOM
-managed-langchain4j = "1.15.0"
+managed-langchain4j = "1.15.1"
 managed-langchain4j-community = "1.15.0-beta25"
 testcontainers-redis = "2.2.4"
 astra-db-client = "1.2.7"
