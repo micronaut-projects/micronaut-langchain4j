@@ -34,11 +34,13 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig;
         ,
         @Model(
             kind = ImageModel.class,
-            impl = VertexAiImageModel.class
+            impl = VertexAiImageModel.class,
+            configRequired = true
         ),
         @Model(
             kind = EmbeddingModel.class,
-            impl = VertexAiEmbeddingModel.class
+            impl = VertexAiEmbeddingModel.class,
+            configRequired = true
         )
     },
     properties = {
