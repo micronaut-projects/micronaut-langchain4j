@@ -14,6 +14,8 @@ public final class CassandraUtils {
     static final String CASSANDRA_IMAGE = "cassandra:5.0";
     private static final String DATACENTER = "datacenter1";
     private static final String KEYSPACE = "langchain4j";
+    private static final String MAX_HEAP_SIZE = "512M";
+    private static final String MAX_DIRECT_MEMORY_SIZE = "256M";
     private static CassandraContainer container;
     private static InetSocketAddress contactPoint;
     private CassandraUtils() {
@@ -28,7 +30,10 @@ public final class CassandraUtils {
 
     public static Map<String, Object> getProperties() throws InterruptedException {
         if (container == null) {
-            container = new CassandraContainer(DockerImageName.parse(CASSANDRA_IMAGE));
+            container = new CassandraContainer(DockerImageName.parse(CASSANDRA_IMAGE))
+                .withEnv("MAX_HEAP_SIZE", MAX_HEAP_SIZE)
+                .withEnv("MAX_DIRECT_MEMORY_SIZE", MAX_DIRECT_MEMORY_SIZE)
+                .withEnv("HEAP_NEWSIZE", "");
             container.start();
             do {
                 LOG.info("Waiting for Cassandra container to be ready...");
