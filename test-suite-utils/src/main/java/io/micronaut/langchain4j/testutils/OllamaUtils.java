@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 public final class OllamaUtils {
-    private static Logger LOG = LoggerFactory.getLogger(OllamaUtils.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OllamaUtils.class);
     public static final String CHAT_MODEL_NAME = "tinyllama";
     public static final String TOOL_MODEL_NAME = "qwen2.5:0.5b";
     public static final String EMBEDDING_MODEL_NAME = "all-minilm";
