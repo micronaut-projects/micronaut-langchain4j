@@ -13,9 +13,8 @@ public interface OllamaTestPropertyProvider extends TestPropertyProvider {
     default Map<String, String> getProperties() {
         Map<String, String> result = new HashMap<>();
         try {
-            result.put("langchain4j.ollama.base-url", OllamaUtils.ollamaContainerBaseUrl());
         } catch (Exception e) {
-            throw new ConfigurationException("Could not set Ollama base URL", e);
+            throw new ConfigurationException("Could not set Ollama test properties", e);
         }
         return result;
     }
