@@ -18,6 +18,21 @@ To use the Cassandra implementation `dev.langchain4j.store.memory.chat.cassandra
 
 dependency:micronaut-langchain4j-cassandra[groupId=io.micronaut.langchain4j]
 
+To use the Oracle implementation `dev.langchain4j.store.memory.chat.oracle.OracleChatMemoryStore`, add the following dependency:
+
+dependency:micronaut-langchain4j-store-oracle[groupId=io.micronaut.langchain4j]
+
+Then configure a JDBC datasource and the chat memory store properties, for example:
+
+[configuration]
+----
+datasources.default.dialect: oracle
+langchain4j.chat-memory-store.oracle.enabled: true
+langchain4j.chat-memory-store.oracle.table-name: CHAT_MEMORY
+----
+
+The table must already exist. By default, the expected schema is `CHAT_MEMORY(MEMORY_ID, CONTENT)`.
+
 The following example shows how to use the `ChatMemory`:
 
 snippet::example.micronaut.AssistantWithMemory[source=main]
