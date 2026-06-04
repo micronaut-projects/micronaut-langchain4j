@@ -20,18 +20,15 @@ import io.micronaut.context.annotation.EachBean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.Internal;
-import jakarta.inject.Named;
 import jakarta.inject.Singleton;
-
-import javax.sql.DataSource;
 
 @Factory
 @Internal
 class OracleChatMemoryStoreFactory {
-    @Named("oracle")
     @Prototype
-    OracleChatMemoryStore.Builder createOracleChatMemoryStoreBuilder(OracleChatMemoryStoreConfiguration config, DataSource dataSource) {
-        return config.getBuilder().dataSource(dataSource);
+    @EachBean(OracleChatMemoryStoreConfigurationProperties.class)
+    OracleChatMemoryStore.Builder createOracleChatMemoryStoreBuilder(OracleChatMemoryStoreConfiguration config) {
+        return config.getBuilder();
     }
 
     @Singleton

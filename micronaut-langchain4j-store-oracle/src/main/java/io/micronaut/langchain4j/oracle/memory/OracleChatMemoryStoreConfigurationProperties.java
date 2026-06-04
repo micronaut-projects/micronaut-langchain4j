@@ -17,20 +17,28 @@ package io.micronaut.langchain4j.oracle.memory;
 
 import dev.langchain4j.store.memory.chat.oracle.OracleChatMemoryStore;
 import io.micronaut.context.annotation.ConfigurationBuilder;
-import io.micronaut.context.annotation.ConfigurationProperties;
+import io.micronaut.context.annotation.EachProperty;
+import io.micronaut.context.annotation.Parameter;
 import io.micronaut.core.annotation.Internal;
 import org.jspecify.annotations.NonNull;
 
+import javax.sql.DataSource;
+
 /**
- * {@link ConfigurationProperties} implementation for {@link OracleChatMemoryStoreConfiguration}.
+ * {@link EachProperty} implementation for {@link OracleChatMemoryStoreConfiguration}.
  */
 @Internal
-@ConfigurationProperties(OracleChatMemoryStoreConfiguration.PREFIX)
+@EachProperty(value = OracleChatMemoryStoreConfiguration.PREFIX, primary = "default")
 class OracleChatMemoryStoreConfigurationProperties implements OracleChatMemoryStoreConfiguration {
     private boolean enabled = DEFAULT_ENABLED;
 
     @ConfigurationBuilder(prefixes = "", excludes = "dataSource")
-    private OracleChatMemoryStore.@NonNull Builder builder = OracleChatMemoryStore.builder();
+    private OracleChatMemoryStore.@NonNull Builder builder;
+
+    OracleChatMemoryStoreConfigurationProperties(@Parameter DataSource dataSource) {
+        this.builder = OracleChatMemoryStore.builder()
+            .dataSource(dataSource);
+    }
 
     /**
      * Whether Oracle ChatMemory store is enabled. Default value true
