@@ -17,7 +17,7 @@
  * Oracle {@link dev.langchain4j.store.memory.chat.ChatMemoryStore} implementation related classes.
  */
 @Configuration
-@Requires(property = OracleChatMemoryStoreConfiguration.PROPERTY_ENABLED, value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
+@Requires(property = OracleChatMemoryStoreConfiguration.PREFIX + ".default.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Requires(classes = OracleChatMemoryStore.class)
 @Requires(beans = DataSource.class)
 package io.micronaut.langchain4j.oracle.memory;
