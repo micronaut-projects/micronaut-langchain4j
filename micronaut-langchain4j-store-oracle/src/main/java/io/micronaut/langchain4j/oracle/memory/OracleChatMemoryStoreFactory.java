@@ -19,6 +19,7 @@ import dev.langchain4j.store.memory.chat.oracle.OracleChatMemoryStore;
 import io.micronaut.context.annotation.EachBean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Prototype;
+import io.micronaut.context.exceptions.DisabledBeanException;
 import io.micronaut.core.annotation.Internal;
 import jakarta.inject.Singleton;
 
@@ -28,6 +29,9 @@ class OracleChatMemoryStoreFactory {
     @Prototype
     @EachBean(OracleChatMemoryStoreConfigurationProperties.class)
     OracleChatMemoryStore.Builder createOracleChatMemoryStoreBuilder(OracleChatMemoryStoreConfiguration config) {
+        if (!config.isEnabled()) {
+            throw new DisabledBeanException("enabled is set to false");
+        }
         return config.getBuilder();
     }
 

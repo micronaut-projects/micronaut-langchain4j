@@ -34,7 +34,7 @@ public interface OracleChatMemoryStoreConfiguration extends Toggleable {
     /**
      * OracleChatMemoryStore enabled configuration prefix.
      */
-    String PROPERTY_ENABLED = PREFIX + ".enabled";
+    String PROPERTY_ENABLED = PREFIX + ".default.enabled";
 
     @Override
     default boolean isEnabled() {

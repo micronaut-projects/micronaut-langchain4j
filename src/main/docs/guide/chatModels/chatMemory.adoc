@@ -27,11 +27,17 @@ Then configure a JDBC datasource and the chat memory store properties, for examp
 [configuration]
 ----
 datasources.default.dialect: oracle
-langchain4j.chat-memory-store.oracle.enabled: true
-langchain4j.chat-memory-store.oracle.table-name: CHAT_MEMORY
+langchain4j.chat-memory-store.oracle.default.enabled: true
+langchain4j.chat-memory-store.oracle.default.table-name: CHAT_MEMORY
+langchain4j.chat-memory-store.oracle.default.memory-id-column-name: MEMORY_ID
+langchain4j.chat-memory-store.oracle.default.content-column-name: CONTENT
 ----
 
 The table must already exist. By default, the expected schema is `CHAT_MEMORY(MEMORY_ID, CONTENT)`.
+
+The segment under `oracle` (for example `default`) maps to the datasource name.
+For multiple datasources, configure multiple entries such as
+`langchain4j.chat-memory-store.oracle.reporting.*`.
 
 The following example shows how to use the `ChatMemory`:
 
