@@ -49,8 +49,8 @@ final class MicronautLangChain4jHttpClientBuilder implements HttpClientBuilder {
     private final @Nullable BeanProvider<ByteBodyFactory> byteBodyFactoryProvider;
     private final @Nullable BeanProvider<ExecutorService> blockingExecutorProvider;
     private final @Nullable BeanContext beanContext;
-    private Duration connectTimeout;
-    private Duration readTimeout;
+    private @Nullable Duration connectTimeout;
+    private @Nullable Duration readTimeout;
 
     MicronautLangChain4jHttpClientBuilder() {
         this(null, null, null, null, null);
@@ -71,23 +71,23 @@ final class MicronautLangChain4jHttpClientBuilder implements HttpClientBuilder {
     }
 
     @Override
-    public Duration connectTimeout() {
+    public @Nullable Duration connectTimeout() {
         return connectTimeout;
     }
 
     @Override
-    public MicronautLangChain4jHttpClientBuilder connectTimeout(Duration connectTimeout) {
+    public MicronautLangChain4jHttpClientBuilder connectTimeout(@Nullable Duration connectTimeout) {
         this.connectTimeout = connectTimeout;
         return this;
     }
 
     @Override
-    public Duration readTimeout() {
+    public @Nullable Duration readTimeout() {
         return readTimeout;
     }
 
     @Override
-    public MicronautLangChain4jHttpClientBuilder readTimeout(Duration readTimeout) {
+    public MicronautLangChain4jHttpClientBuilder readTimeout(@Nullable Duration readTimeout) {
         this.readTimeout = readTimeout;
         return this;
     }

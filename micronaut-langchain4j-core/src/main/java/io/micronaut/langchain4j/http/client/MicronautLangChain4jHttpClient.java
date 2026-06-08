@@ -86,8 +86,8 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
     private final @Nullable BeanProvider<ByteBodyFactory> byteBodyFactoryProvider;
     private final @Nullable BeanProvider<ExecutorService> blockingExecutorProvider;
     private final @Nullable BeanContext beanContext;
-    private final Duration connectTimeout;
-    private final Duration readTimeout;
+    private final @Nullable Duration connectTimeout;
+    private final @Nullable Duration readTimeout;
     private final Map<URI, io.micronaut.http.client.HttpClient> configuredManagedClients = new ConcurrentHashMap<>();
     private final AtomicReference<ByteBodyFactory> fallbackByteBodyFactory = new AtomicReference<>();
 
@@ -97,8 +97,8 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         @Nullable BeanProvider<ByteBodyFactory> byteBodyFactoryProvider,
         @Nullable BeanProvider<ExecutorService> blockingExecutorProvider,
         @Nullable BeanContext beanContext,
-        Duration connectTimeout,
-        Duration readTimeout) {
+        @Nullable Duration connectTimeout,
+        @Nullable Duration readTimeout) {
         this.httpClientProvider = httpClientProvider;
         this.httpClientRegistryProvider = httpClientRegistryProvider;
         this.byteBodyFactoryProvider = byteBodyFactoryProvider;
@@ -309,7 +309,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         return micronautRequest;
     }
 
-    private CloseableByteBody body(HttpRequest request) {
+    private @Nullable CloseableByteBody body(HttpRequest request) {
         if (request.body() == null) {
             return null;
         }
@@ -374,7 +374,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         return statusCode >= 200 && statusCode < 300;
     }
 
-    private static SuccessfulHttpResponse successfulResponse(io.micronaut.http.HttpResponse<?> response, String body) {
+    private static SuccessfulHttpResponse successfulResponse(io.micronaut.http.HttpResponse<?> response, @Nullable String body) {
         return SuccessfulHttpResponse.builder()
             .statusCode(response.code())
             .headers(headers(response))
@@ -388,7 +388,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         return headers;
     }
 
-    private static String readBody(io.micronaut.http.HttpResponse<?> response) {
+    private static @Nullable String readBody(io.micronaut.http.HttpResponse<?> response) {
         Object body = body(response);
         if (body == null) {
             return null;
@@ -470,7 +470,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         }
     }
 
-    private static <T> T block(Publisher<? extends T> publisher, @Nullable Duration readTimeout) {
+    private static <T> @Nullable T block(Publisher<? extends T> publisher, @Nullable Duration readTimeout) {
         Duration timeout = readTimeout == null ? DEFAULT_READ_TIMEOUT : readTimeout;
         try {
             return Mono.from(publisher).block(timeout);
