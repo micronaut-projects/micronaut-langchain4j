@@ -231,10 +231,11 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
     }
 
     private io.micronaut.http.HttpResponse<?> exchange(ClientHandle client, HttpRequest request) {
-        if (isMultipart(request) || client.rawHttpClient() == null) {
+        RawHttpClient rawHttpClient = client.rawHttpClient();
+        if (isMultipart(request) || rawHttpClient == null) {
             return standardExchange(client.httpClient(), request);
         }
-        return rawExchange(client.rawHttpClient(), request);
+        return rawExchange(rawHttpClient, request);
     }
 
     private io.micronaut.http.HttpResponse<?> rawExchange(RawHttpClient client, HttpRequest request) {
@@ -389,7 +390,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
     }
 
     private static @Nullable String readBody(io.micronaut.http.HttpResponse<?> response) {
-        Object body = body(response);
+        @Nullable Object body = body(response);
         if (body == null) {
             return null;
         }
@@ -413,7 +414,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         io.micronaut.http.HttpResponse<?> response,
         ServerSentEventParser parser,
         ServerSentEventListener listener) {
-        Object body = body(response);
+        @Nullable Object body = body(response);
         if (body instanceof ByteBody byteBody) {
             try (InputStream inputStream = byteBody.toInputStream()) {
                 parser.parse(inputStream, listener);
@@ -425,7 +426,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         }
     }
 
-    private static Object body(io.micronaut.http.HttpResponse<?> response) {
+    private static @Nullable Object body(io.micronaut.http.HttpResponse<?> response) {
         if (response instanceof ByteBodyHttpResponse<?> byteBodyHttpResponse) {
             return byteBodyHttpResponse.byteBody();
         }
@@ -470,10 +471,10 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         }
     }
 
-    private static <T> @Nullable T block(Publisher<? extends T> publisher, @Nullable Duration readTimeout) {
+    private static <T> T block(Publisher<? extends T> publisher, @Nullable Duration readTimeout) {
         Duration timeout = readTimeout == null ? DEFAULT_READ_TIMEOUT : readTimeout;
         try {
-            return Mono.from(publisher).block(timeout);
+            return Objects.requireNonNull(Mono.from(publisher).block(timeout), "HTTP client completed without response");
         } catch (IllegalStateException e) {
             if (e.getMessage() != null && e.getMessage().contains("Timeout on blocking read")) {
                 throw new TimeoutException("Request timed out after " + timeout, e);

@@ -15,6 +15,8 @@ import io.micronaut.http.MutableHttpRequest;
 import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.filter.ClientFilterChain;
 import io.micronaut.http.filter.HttpClientFilter;
+import io.micronaut.http.client.HttpClientRegistry;
+import io.micronaut.http.client.LoadBalancer;
 import jakarta.inject.Singleton;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +24,7 @@ import org.reactivestreams.Publisher;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.URL;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -34,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class OpenAiChatModelBuilderTest {
-    private static URL serverUrl;
+    private static URI serverUri;
     private HttpServer server;
 
     @AfterEach
@@ -122,7 +124,7 @@ public class OpenAiChatModelBuilderTest {
             exchange.close();
         });
         server.start();
-        serverUrl = new URL(url("/"));
+        serverUri = URI.create(url("/"));
     }
 
     private String url(String path) {
@@ -185,8 +187,10 @@ public class OpenAiChatModelBuilderTest {
         @Bean
         @Primary
         @Singleton
-        io.micronaut.http.client.HttpClient httpClient(BeanContext beanContext) {
-            return beanContext.createBean(io.micronaut.http.client.HttpClient.class, serverUrl);
+        io.micronaut.http.client.HttpClient httpClient(
+            BeanContext beanContext,
+            HttpClientRegistry<io.micronaut.http.client.HttpClient> httpClientRegistry) {
+            return httpClientRegistry.resolveClient(null, LoadBalancer.fixed(serverUri), null, beanContext);
         }
     }
 }
