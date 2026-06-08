@@ -1,29 +1,29 @@
 package io.micronaut.langchain4j.openai;
 
-import dev.langchain4j.exception.HttpException;
-import dev.langchain4j.http.client.HttpClient;
-import dev.langchain4j.http.client.HttpClientBuilder;
-import dev.langchain4j.http.client.HttpRequest;
-import dev.langchain4j.http.client.SuccessfulHttpResponse;
-import dev.langchain4j.http.client.sse.ServerSentEventListener;
-import dev.langchain4j.http.client.sse.ServerSentEventParser;
+import com.sun.net.httpserver.HttpServer;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.chat.response.StreamingChatResponseHandler;
 import dev.langchain4j.model.openai.OpenAiChatModel;
+import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Primary;
-import io.micronaut.context.annotation.Property;
-import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import jakarta.inject.Inject;
+import io.micronaut.http.MutableHttpRequest;
+import io.micronaut.http.annotation.Filter;
+import io.micronaut.http.filter.ClientFilterChain;
+import io.micronaut.http.filter.HttpClientFilter;
+import jakarta.inject.Singleton;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.reactivestreams.Publisher;
 
-import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -33,151 +33,160 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@MicronautTest(startApplication = false)
-@Property(name = "langchain4j.open-ai.api-key", value = "blah")
-@Property(name = "langchain4j.open-ai.organization-id", value = "blah")
 public class OpenAiChatModelBuilderTest {
+    private static URL serverUrl;
+    private HttpServer server;
 
-    @Inject
-    BeanContext beanContext;
-
-    @Inject
-    ChatModel chatModel;
-
-    @Inject
-    StreamingChatModel streamingChatModel;
-
-    @Test
-    void openAiChatModelBuilder() {
-        assertTrue(beanContext.containsBean(ChatModel.class));
-        assertTrue(beanContext.containsBean(OpenAiChatModel.OpenAiChatModelBuilder.class));
+    @AfterEach
+    void stopServer() {
+        if (server != null) {
+            server.stop(0);
+        }
     }
 
     @Test
-    void openAiChatModelUsesInjectedHttpClientBuilder() {
-        assertEquals("micronaut", chatModel.chat("Which client is active?"));
+    void openAiChatModelBuilder() throws IOException {
+        startOpenAiServer();
+
+        try (ApplicationContext context = context()) {
+            assertTrue(context.containsBean(ChatModel.class));
+            assertTrue(context.containsBean(OpenAiChatModel.OpenAiChatModelBuilder.class));
+        }
     }
 
     @Test
-    void openAiStreamingChatModelUsesInjectedHttpClientBuilder() throws InterruptedException {
-        StringBuilder partials = new StringBuilder();
-        AtomicReference<Throwable> error = new AtomicReference<>();
-        CountDownLatch complete = new CountDownLatch(1);
+    void openAiChatModelUsesInjectedHttpClientBuilder() throws IOException {
+        startOpenAiServer();
 
-        streamingChatModel.chat("Which client is active?", new StreamingChatResponseHandler() {
-            @Override
-            public void onPartialResponse(String partialResponsePart) {
-                partials.append(partialResponsePart);
-            }
+        try (ApplicationContext context = context()) {
+            assertEquals("micronaut", context.getBean(ChatModel.class).chat("Which client is active?"));
+        }
+    }
 
-            @Override
-            public void onCompleteResponse(ChatResponse completeResponse) {
-                complete.countDown();
-            }
+    @Test
+    void openAiStreamingChatModelUsesInjectedHttpClientBuilder() throws IOException, InterruptedException {
+        startOpenAiServer();
 
-            @Override
-            public void onError(Throwable throwable) {
-                error.set(throwable);
-                complete.countDown();
-            }
+        try (ApplicationContext context = context()) {
+            StringBuilder partials = new StringBuilder();
+            AtomicReference<Throwable> error = new AtomicReference<>();
+            CountDownLatch complete = new CountDownLatch(1);
+
+            context.getBean(StreamingChatModel.class).chat("Which client is active?", new StreamingChatResponseHandler() {
+                @Override
+                public void onPartialResponse(String partialResponsePart) {
+                    partials.append(partialResponsePart);
+                }
+
+                @Override
+                public void onCompleteResponse(ChatResponse completeResponse) {
+                    complete.countDown();
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+                    error.set(throwable);
+                    complete.countDown();
+                }
+            });
+
+            assertTrue(complete.await(5, TimeUnit.SECONDS));
+            assertNull(error.get());
+            assertEquals("micronaut", partials.toString());
+        }
+    }
+
+    private ApplicationContext context() {
+        return ApplicationContext.run(Map.of(
+            "langchain4j.open-ai.api-key", "blah",
+            "langchain4j.open-ai.organization-id", "blah",
+            "langchain4j.open-ai.base-url", url("/")
+        ));
+    }
+
+    private void startOpenAiServer() throws IOException {
+        server = HttpServer.create(new InetSocketAddress(0), 0);
+        server.createContext("/chat/completions", exchange -> {
+            assertEquals("filtered", exchange.getRequestHeaders().getFirst("X-Micronaut-Client"));
+            String requestBody = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
+            String accept = exchange.getRequestHeaders().getFirst("Accept");
+            boolean stream = accept != null && accept.contains("text/event-stream") ||
+                requestBody.contains("\"stream\"") && requestBody.contains("true");
+            byte[] response = stream ? streamingResponse() : chatResponse();
+            exchange.getResponseHeaders().add(
+                "Content-Type",
+                stream ? "text/event-stream" : "application/json"
+            );
+            exchange.sendResponseHeaders(200, response.length);
+            exchange.getResponseBody().write(response);
+            exchange.close();
         });
+        server.start();
+        serverUrl = new URL(url("/"));
+    }
 
-        assertTrue(complete.await(5, TimeUnit.SECONDS));
-        assertNull(error.get());
-        assertEquals("micronaut", partials.toString());
+    private String url(String path) {
+        return "http://localhost:" + server.getAddress().getPort() + path;
+    }
+
+    private static byte[] chatResponse() {
+        return """
+            {
+              "id": "chatcmpl-test",
+              "object": "chat.completion",
+              "created": 0,
+              "model": "gpt-3.5-turbo",
+              "choices": [
+                {
+                  "index": 0,
+                  "message": {
+                    "role": "assistant",
+                    "content": "micronaut"
+                  },
+                  "finish_reason": "stop"
+                }
+              ],
+              "usage": {
+                "prompt_tokens": 1,
+                "completion_tokens": 1,
+                "total_tokens": 2
+              }
+            }
+            """.getBytes(StandardCharsets.UTF_8);
+    }
+
+    private static byte[] streamingResponse() {
+        return """
+            event: message
+            data: {"id":"chatcmpl-test","object":"chat.completion.chunk","created":0,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{"role":"assistant","content":"micro"},"finish_reason":null}]}
+
+            event: message
+            data: {"id":"chatcmpl-test","object":"chat.completion.chunk","created":0,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{"content":"naut"},"finish_reason":"stop"}],"usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2}}
+
+            event: message
+            data: [DONE]
+
+            """.getBytes(StandardCharsets.UTF_8);
+    }
+
+    @Filter("/chat/completions")
+    static class TestClientFilter implements HttpClientFilter {
+        @Override
+        public Publisher<? extends io.micronaut.http.HttpResponse<?>> doFilter(
+            MutableHttpRequest<?> request,
+            ClientFilterChain chain) {
+            request.header("X-Micronaut-Client", "filtered");
+            return chain.proceed(request);
+        }
     }
 
     @Factory
-    static class StubHttpClientBuilderFactory {
+    static class TestHttpClientFactory {
         @Bean
         @Primary
-        HttpClientBuilder httpClientBuilder() {
-            return new StubHttpClientBuilder();
+        @Singleton
+        io.micronaut.http.client.HttpClient httpClient(BeanContext beanContext) {
+            return beanContext.createBean(io.micronaut.http.client.HttpClient.class, serverUrl);
         }
     }
-
-    static final class StubHttpClientBuilder implements HttpClientBuilder {
-        private Duration connectTimeout;
-        private Duration readTimeout;
-
-        @Override
-        public Duration connectTimeout() {
-            return connectTimeout;
-        }
-
-        @Override
-        public HttpClientBuilder connectTimeout(Duration connectTimeout) {
-            this.connectTimeout = connectTimeout;
-            return this;
-        }
-
-        @Override
-        public Duration readTimeout() {
-            return readTimeout;
-        }
-
-        @Override
-        public HttpClientBuilder readTimeout(Duration readTimeout) {
-            this.readTimeout = readTimeout;
-            return this;
-        }
-
-        @Override
-        public HttpClient build() {
-            return new StubHttpClient();
-        }
-    }
-
-    static final class StubHttpClient implements HttpClient {
-        @Override
-        public SuccessfulHttpResponse execute(HttpRequest request) throws HttpException, RuntimeException {
-            assertEquals("https://api.openai.com/v1/chat/completions", request.url());
-            return SuccessfulHttpResponse.builder()
-                .statusCode(200)
-                .headers(Map.of())
-                .body("""
-                    {
-                      "id": "chatcmpl-test",
-                      "object": "chat.completion",
-                      "created": 0,
-                      "model": "gpt-3.5-turbo",
-                      "choices": [
-                        {
-                          "index": 0,
-                          "message": {
-                            "role": "assistant",
-                            "content": "micronaut"
-                          },
-                          "finish_reason": "stop"
-                        }
-                      ],
-                      "usage": {
-                        "prompt_tokens": 1,
-                        "completion_tokens": 1,
-                        "total_tokens": 2
-                      }
-                    }
-                    """)
-                .build();
-        }
-
-        @Override
-        public void execute(HttpRequest request, ServerSentEventParser parser, ServerSentEventListener listener) {
-            assertEquals("https://api.openai.com/v1/chat/completions", request.url());
-            listener.onOpen(SuccessfulHttpResponse.builder()
-                .statusCode(200)
-                .headers(Map.of())
-                .build());
-            parser.parse(new ByteArrayInputStream("""
-                data: {"id":"chatcmpl-test","object":"chat.completion.chunk","created":0,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{"role":"assistant","content":"micro"},"finish_reason":null}]}
-
-                data: {"id":"chatcmpl-test","object":"chat.completion.chunk","created":0,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{"content":"naut"},"finish_reason":"stop"}],"usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2}}
-
-                data: [DONE]
-
-                """.getBytes(StandardCharsets.UTF_8)), listener);
-            listener.onClose();
-        }
-    }
-
 }

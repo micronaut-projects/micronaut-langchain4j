@@ -50,6 +50,7 @@ import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 import org.jspecify.annotations.Nullable;
+import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,11 +65,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -243,13 +242,13 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         try (CloseableByteBody requestBody = body(request)) {
             Publisher<? extends io.micronaut.http.HttpResponse<?>> responsePublisher =
                 client.exchange(micronautRequest, requestBody, Thread.currentThread());
-            return BlockingSingleSubscriber.get(responsePublisher, readTimeout);
+            return block(responsePublisher, readTimeout);
         }
     }
 
     private io.micronaut.http.HttpResponse<?> standardExchange(io.micronaut.http.client.HttpClient client, HttpRequest request) {
         try {
-            return BlockingSingleSubscriber.get(client.exchange(
+            return block(client.exchange(
                 standardRequest(request),
                 Argument.STRING,
                 Argument.STRING
@@ -471,6 +470,18 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         }
     }
 
+    private static <T> T block(Publisher<? extends T> publisher, @Nullable Duration readTimeout) {
+        Duration timeout = readTimeout == null ? DEFAULT_READ_TIMEOUT : readTimeout;
+        try {
+            return Mono.from(publisher).block(timeout);
+        } catch (IllegalStateException e) {
+            if (e.getMessage() != null && e.getMessage().contains("Timeout on blocking read")) {
+                throw new TimeoutException("Request timed out after " + timeout, e);
+            }
+            throw e;
+        }
+    }
+
     private static final class SseSubscriber implements Subscriber<Event<String>>, ServerSentEventParsingHandle {
         private final ServerSentEventListener listener;
         private final ClientHandle client;
@@ -543,55 +554,6 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
                 return new TimeoutException(e);
             }
             return throwable;
-        }
-    }
-
-    private static final class BlockingSingleSubscriber<T> implements Subscriber<T> {
-        private final CountDownLatch latch = new CountDownLatch(1);
-        private final AtomicReference<T> value = new AtomicReference<>();
-        private final AtomicReference<Throwable> error = new AtomicReference<>();
-
-        static <T> T get(Publisher<? extends T> publisher, @Nullable Duration readTimeout) {
-            BlockingSingleSubscriber<T> subscriber = new BlockingSingleSubscriber<>();
-            publisher.subscribe(subscriber);
-            try {
-                Duration timeout = readTimeout == null ? DEFAULT_READ_TIMEOUT : readTimeout;
-                if (!subscriber.latch.await(timeout.toNanos(), TimeUnit.NANOSECONDS)) {
-                    throw new TimeoutException("Request timed out after " + timeout);
-                }
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                throw new TimeoutException("Interrupted while waiting for response", e);
-            }
-            Throwable throwable = subscriber.error.get();
-            if (throwable != null) {
-                if (throwable instanceof RuntimeException runtimeException) {
-                    throw runtimeException;
-                }
-                throw new LangChain4jException("Error receiving response", throwable);
-            }
-            return subscriber.value.get();
-        }
-
-        @Override
-        public void onSubscribe(Subscription subscription) {
-            subscription.request(1);
-        }
-
-        @Override
-        public void onNext(T value) {
-            this.value.set(value);
-        }
-
-        @Override
-        public void onError(Throwable throwable) {
-            error.set(throwable);
-            latch.countDown();
-        }
-
-        @Override
-        public void onComplete() {
-            latch.countDown();
         }
     }
 
