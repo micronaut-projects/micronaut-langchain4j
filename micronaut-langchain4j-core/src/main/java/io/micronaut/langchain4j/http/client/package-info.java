@@ -13,6 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * LangChain4j HTTP client adapter backed by Micronaut HTTP Client.
+ */
 @NullMarked
 package io.micronaut.langchain4j.http.client;
 
