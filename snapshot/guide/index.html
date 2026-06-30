@@ -1910,6 +1910,49 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
 </p>
 </div>
 <div class="paragraph">
+<p>Provider modules use Micronaut&#8217;s HTTP client API and exclude LangChain4j&#8217;s JDK HTTP client.
+Add a concrete Micronaut HTTP client implementation to your application, for example the default Netty implementation:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtimeOnly(<span class="hljs-string">"io.micronaut:micronaut-http-client")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-http-client&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>For tests that instantiate OpenAI models, add the same implementation to the test runtime classpath:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">testRuntimeOnly(<span class="hljs-string">"io.micronaut:micronaut-http-client")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-http-client&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.openai.CommonOpenAiChatModelConfiguration">necessary configuration</a>.</p>
 </div>
 <div class="openblock">
