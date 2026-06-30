@@ -45,6 +45,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
         )
     },
     properties = {
+        @Property(name = "httpClientBuilder", injected = true),
         @Property(name = "baseUrl", common = true, required = true),
         @Property(name = "modelName", common = true, required = true, defaultValue = "llama3"),
         @Property(name = "timeout", common = true),

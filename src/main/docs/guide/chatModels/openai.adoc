@@ -2,6 +2,15 @@ Add the following dependency:
 
 dependency:io.micronaut.langchain4j:micronaut-langchain4j-openai[]
 
+Provider modules use Micronaut's HTTP client API and exclude LangChain4j's JDK HTTP client.
+Add a concrete Micronaut HTTP client implementation to your application, for example the default Netty implementation:
+
+dependency:micronaut-http-client[groupId="io.micronaut", scope="runtimeOnly"]
+
+For tests that instantiate OpenAI models, add the same implementation to the test runtime classpath:
+
+dependency:micronaut-http-client[groupId="io.micronaut", scope="testRuntimeOnly"]
+
 Then add the link:configurationreference.html#io.micronaut.langchain4j.openai.CommonOpenAiChatModelConfiguration[necessary configuration].
 
 .Example Configuration
