@@ -6,6 +6,7 @@ import io.micronaut.context.annotation.Property;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +19,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @MicronautTest(startApplication = false)
 class OracleChatMemoryStoreConfigurationTest {
 
+    @Inject
+    BeanContext beanContext;
+
     @Test
     void oracleChatMemoryConfiguration(@Named("default") OracleChatMemoryStoreConfiguration config,
                                        @Named("default") OracleChatMemoryStore chatMemoryStore) {
@@ -28,7 +32,7 @@ class OracleChatMemoryStoreConfigurationTest {
 
     @Property(name = "langchain4j.chat-memory-store.oracle.reporting.enabled", value = StringUtils.FALSE)
     @Test
-    void disabledOracleChatMemoryConfigurationDoesNotCreateStore(BeanContext beanContext) {
+    void disabledOracleChatMemoryConfigurationDoesNotCreateStore() {
         assertTrue(beanContext.containsBean(OracleChatMemoryStore.class, Qualifiers.byName("default")));
         assertTrue(beanContext.containsBean(OracleChatMemoryStoreConfiguration.class, Qualifiers.byName("reporting")));
         assertTrue(beanContext.containsBean(OracleChatMemoryStoreConfiguration.class, Qualifiers.byName("default")));
