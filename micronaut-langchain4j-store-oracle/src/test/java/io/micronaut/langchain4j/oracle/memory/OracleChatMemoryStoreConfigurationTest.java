@@ -30,13 +30,11 @@ class OracleChatMemoryStoreConfigurationTest {
         assertNotNull(chatMemoryStore);
     }
 
-    @Property(name = "langchain4j.chat-memory-store.oracle.reporting.enabled", value = StringUtils.FALSE)
+    @Property(name = "langchain4j.chat-memory-store.oracle.default.enabled", value = StringUtils.FALSE)
     @Test
     void disabledOracleChatMemoryConfigurationDoesNotCreateStore() {
-        assertTrue(beanContext.containsBean(OracleChatMemoryStore.class, Qualifiers.byName("default")));
-        assertTrue(beanContext.containsBean(OracleChatMemoryStoreConfiguration.class, Qualifiers.byName("reporting")));
         assertTrue(beanContext.containsBean(OracleChatMemoryStoreConfiguration.class, Qualifiers.byName("default")));
-        assertFalse(beanContext.getBean(OracleChatMemoryStoreConfiguration.class, Qualifiers.byName("reporting")).isEnabled());
-        assertFalse(beanContext.containsBean(OracleChatMemoryStore.class, Qualifiers.byName("reporting")));
+        assertFalse(beanContext.getBean(OracleChatMemoryStoreConfiguration.class, Qualifiers.byName("default")).isEnabled());
+        assertFalse(beanContext.containsBean(OracleChatMemoryStore.class, Qualifiers.byName("default")));
     }
 }
