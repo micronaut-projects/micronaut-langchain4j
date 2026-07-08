@@ -39,7 +39,7 @@ awaitility = "4.3.0"
 commons-compress = "1.28.0"
 commons-lang3 = "3.20.0"
 gson = "2.14.0"
-grpc-netty-shaded = "1.75.0"
+grpc-netty-shaded = "1.82.1"
 jinjava = "2.8.3"
 tools-jackson-core = "3.1.4"
 
