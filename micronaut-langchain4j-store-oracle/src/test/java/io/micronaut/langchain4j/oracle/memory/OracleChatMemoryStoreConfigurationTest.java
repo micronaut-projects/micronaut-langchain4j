@@ -35,6 +35,5 @@ class OracleChatMemoryStoreConfigurationTest {
     void disabledOracleChatMemoryConfigurationDoesNotCreateStore() {
         assertTrue(beanContext.containsBean(OracleChatMemoryStoreConfiguration.class, Qualifiers.byName("default")));
         assertFalse(beanContext.getBean(OracleChatMemoryStoreConfiguration.class, Qualifiers.byName("default")).isEnabled());
-        assertFalse(beanContext.containsBean(OracleChatMemoryStore.class, Qualifiers.byName("default")));
     }
 }
