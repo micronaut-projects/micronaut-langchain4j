@@ -1114,6 +1114,99 @@ it relies on you to include the relevant messages in each request for coherent a
 </p>
 </div>
 <div class="paragraph">
+<p>To use the Oracle implementation <code>dev.langchain4j.store.memory.chat.oracle.OracleChatMemoryStore</code>, add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-store-oracle")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-store-oracle&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>Then configure a JDBC datasource and the chat memory store properties, for example:</p>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">datasources.default.dialect=oracle
+langchain4j.chat-memory-store.oracle.default.enabled=true
+langchain4j.chat-memory-store.oracle.default.table-name=CHAT_MEMORY
+langchain4j.chat-memory-store.oracle.default.memory-id-column-name=MEMORY_ID
+langchain4j.chat-memory-store.oracle.default.content-column-name=CONTENT</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">datasources.default.dialect: oracle
+langchain4j.chat-memory-store.oracle.default.enabled: true
+langchain4j.chat-memory-store.oracle.default.table-name: CHAT_MEMORY
+langchain4j.chat-memory-store.oracle.default.memory-id-column-name: MEMORY_ID
+langchain4j.chat-memory-store.oracle.default.content-column-name: CONTENT</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"datasources.default.dialect"="oracle"
+"langchain4j.chat-memory-store.oracle.default.enabled"=true
+"langchain4j.chat-memory-store.oracle.default.table-name"="CHAT_MEMORY"
+"langchain4j.chat-memory-store.oracle.default.memory-id-column-name"="MEMORY_ID"
+"langchain4j.chat-memory-store.oracle.default.content-column-name"="CONTENT"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">datasources.default.dialect = "oracle"
+langchain4j.chatMemoryStore.oracle.default.enabled = true
+langchain4j.chatMemoryStore.oracle.default.tableName = "CHAT_MEMORY"
+langchain4j.chatMemoryStore.oracle.default.memoryIdColumnName = "MEMORY_ID"
+langchain4j.chatMemoryStore.oracle.default.contentColumnName = "CONTENT"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "datasources.default.dialect" = "oracle"
+  "langchain4j.chat-memory-store.oracle.default.enabled" = true
+  "langchain4j.chat-memory-store.oracle.default.table-name" = "CHAT_MEMORY"
+  "langchain4j.chat-memory-store.oracle.default.memory-id-column-name" = "MEMORY_ID"
+  "langchain4j.chat-memory-store.oracle.default.content-column-name" = "CONTENT"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "datasources.default.dialect": "oracle",
+  "langchain4j.chat-memory-store.oracle.default.enabled": true,
+  "langchain4j.chat-memory-store.oracle.default.table-name": "CHAT_MEMORY",
+  "langchain4j.chat-memory-store.oracle.default.memory-id-column-name": "MEMORY_ID",
+  "langchain4j.chat-memory-store.oracle.default.content-column-name": "CONTENT"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The table must already exist. By default, the expected schema is <code>CHAT_MEMORY(MEMORY_ID, CONTENT)</code>.</p>
+</div>
+<div class="paragraph">
+<p>The segment under <code>oracle</code> (for example <code>default</code>) maps to the datasource name.
+For multiple datasources, configure multiple entries such as
+<code>langchain4j.chat-memory-store.oracle.reporting.*</code>.</p>
+</div>
+<div class="paragraph">
 <p>The following example shows how to use the <code>ChatMemory</code>:</p>
 </div>
 <div class="listingblock multi-language-sample">
