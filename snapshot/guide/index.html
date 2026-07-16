@@ -317,7 +317,7 @@ For Maven see <a href="https://micronaut-projects.github.io/micronaut-maven-plug
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.ollama.model-name"="orca-mini"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.ollama.model-name" = "orca-mini"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -379,13 +379,7 @@ langchain4j.open-ai.streaming-chat-model.log-responses=true</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[langchain4j]
-  [langchain4j.open-ai]
-    api-key="${OPENAI_API_KEY}"
-    [langchain4j.open-ai.streaming-chat-model]
-      model-name="gpt-4o"
-      log-requests=true
-      log-responses=true</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">langchain4j = {open-ai = {api-key = "${OPENAI_API_KEY}", streaming-chat-model = {model-name = "gpt-4o", log-requests = true, log-responses = true}}}</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1158,11 +1152,11 @@ langchain4j.chat-memory-store.oracle.default.content-column-name: CONTENT</code>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"datasources.default.dialect"="oracle"
-"langchain4j.chat-memory-store.oracle.default.enabled"=true
-"langchain4j.chat-memory-store.oracle.default.table-name"="CHAT_MEMORY"
-"langchain4j.chat-memory-store.oracle.default.memory-id-column-name"="MEMORY_ID"
-"langchain4j.chat-memory-store.oracle.default.content-column-name"="CONTENT"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"datasources.default.dialect" = "oracle"
+"langchain4j.chat-memory-store.oracle.default.enabled" = true
+"langchain4j.chat-memory-store.oracle.default.table-name" = "CHAT_MEMORY"
+"langchain4j.chat-memory-store.oracle.default.memory-id-column-name" = "MEMORY_ID"
+"langchain4j.chat-memory-store.oracle.default.content-column-name" = "CONTENT"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1489,7 +1483,7 @@ class AssistantWithMemory {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.anthropic.api-key"="YOUR_KEY"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.anthropic.api-key" = "YOUR_KEY"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1563,8 +1557,8 @@ langchain4j.azure-open-ai.endpoint: YOUR_ENDPOINT</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.azure-open-ai.api-key"="YOUR_KEY"
-"langchain4j.azure-open-ai.endpoint"="YOUR_ENDPOINT"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.azure-open-ai.api-key" = "YOUR_KEY"
+"langchain4j.azure-open-ai.endpoint" = "YOUR_ENDPOINT"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1645,7 +1639,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.bedrock-llama.api-key"="YOUR_KEY"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.bedrock-llama.api-key" = "YOUR_KEY"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1723,7 +1717,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.hugging-face.access-token"="YOUR_ACCESS_TOKEN"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.hugging-face.access-token" = "YOUR_ACCESS_TOKEN"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1795,7 +1789,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.mistral-ai.api-key"="YOUR_KEY"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.mistral-ai.api-key" = "YOUR_KEY"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1867,7 +1861,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.ollama.base-url"="YOUR_URL"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.ollama.base-url" = "YOUR_URL"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1944,8 +1938,8 @@ langchain4j.oci-gen-ai.compartment-id: your-compartment</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.oci-gen-ai.chat-model.model-name"="orca-mini"
-"langchain4j.oci-gen-ai.compartment-id"="your-compartment"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.oci-gen-ai.chat-model.model-name" = "orca-mini"
+"langchain4j.oci-gen-ai.compartment-id" = "your-compartment"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2063,7 +2057,7 @@ Add a concrete Micronaut HTTP client implementation to your application, for exa
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.open-ai.api-key"="YOUR_KEY"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.open-ai.api-key" = "YOUR_KEY"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2135,7 +2129,7 @@ Add a concrete Micronaut HTTP client implementation to your application, for exa
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.google-ai-gemini.api-key"="YOUR_API_KEY"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.google-ai-gemini.api-key" = "YOUR_API_KEY"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2215,11 +2209,11 @@ langchain4j.vertex-ai.publisher: YOUR_PUBLISHER</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.vertex-ai.endpoint"="YOUR_ENDPOINT"
-"langchain4j.vertex-ai.model-name"="YOUR_MODEL"
-"langchain4j.vertex-ai.project"="YOUR_PROJECT"
-"langchain4j.vertex-ai.location"="YOUR_LOCATION"
-"langchain4j.vertex-ai.publisher"="YOUR_PUBLISHER"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.vertex-ai.endpoint" = "YOUR_ENDPOINT"
+"langchain4j.vertex-ai.model-name" = "YOUR_MODEL"
+"langchain4j.vertex-ai.project" = "YOUR_PROJECT"
+"langchain4j.vertex-ai.location" = "YOUR_LOCATION"
+"langchain4j.vertex-ai.publisher" = "YOUR_PUBLISHER"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2307,9 +2301,9 @@ langchain4j.vertex-ai-gemini.location: YOUR_LOCATION</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.vertex-ai-gemini.model-name"="YOUR_MODEL"
-"langchain4j.vertex-ai-gemini.project"="YOUR_PROJECT"
-"langchain4j.vertex-ai-gemini.location"="YOUR_LOCATION"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.vertex-ai-gemini.model-name" = "YOUR_MODEL"
+"langchain4j.vertex-ai-gemini.project" = "YOUR_PROJECT"
+"langchain4j.vertex-ai-gemini.location" = "YOUR_LOCATION"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2414,8 +2408,8 @@ langchain4j.elasticsearch.embedding-stores.default.dimension: 384</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"elasticsearch.httpHosts"="http://localhost:9200,http://127.0.0.2:9200"
-"langchain4j.elasticsearch.embedding-stores.default.dimension"=384</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"elasticsearch.httpHosts" = "http://localhost:9200,http://127.0.0.2:9200"
+"langchain4j.elasticsearch.embedding-stores.default.dimension" = 384</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2497,9 +2491,9 @@ langchain4j.mongodb-atlas.embedding-stores.default.index-name: testindex</code><
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.mongodb-atlas.embedding-stores.default.database-name"="testdb"
-"langchain4j.mongodb-atlas.embedding-stores.default.collection-name"="testcol"
-"langchain4j.mongodb-atlas.embedding-stores.default.index-name"="testindex"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.mongodb-atlas.embedding-stores.default.database-name" = "testdb"
+"langchain4j.mongodb-atlas.embedding-stores.default.collection-name" = "testcol"
+"langchain4j.mongodb-atlas.embedding-stores.default.index-name" = "testindex"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2579,8 +2573,8 @@ langchain4j.neo4j.embedding-stores.default.dimension: 384</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"neo4j.uri"="bolt://localhost"
-"langchain4j.neo4j.embedding-stores.default.dimension"=384</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"neo4j.uri" = "bolt://localhost"
+"langchain4j.neo4j.embedding-stores.default.dimension" = 384</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2677,9 +2671,9 @@ langchain4j.oracle.embedding-stores.default.table.create-option: create_if_not_e
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"datasources.default.dialect"="oracle"
-"langchain4j.oracle.embedding-stores.default.table"="test"
-"langchain4j.oracle.embedding-stores.default.table.create-option"="create_if_not_exists"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"datasources.default.dialect" = "oracle"
+"langchain4j.oracle.embedding-stores.default.table" = "test"
+"langchain4j.oracle.embedding-stores.default.table.create-option" = "create_if_not_exists"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2759,8 +2753,8 @@ langchain4j.opensearch.embedding-stores.default.dimension: 384</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"micronaut.opensearch.rest-client.http-hosts"="http://localhost:9200,http://127.0.0.2:9200"
-"langchain4j.opensearch.embedding-stores.default.dimension"=384</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"micronaut.opensearch.rest-client.http-hosts" = "http://localhost:9200,http://127.0.0.2:9200"
+"langchain4j.opensearch.embedding-stores.default.dimension" = 384</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2861,10 +2855,10 @@ test-resources.containers.postgres.image-name: pgvector/pgvector:pg16</code></pr
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"datasources.default.dialect"="postgres"
-"langchain4j.pgvector.embedding-stores.default.table"="mytable"
-"langchain4j.pgvector.embedding-stores.default.dimension"=384
-"test-resources.containers.postgres.image-name"="pgvector/pgvector:pg16"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"datasources.default.dialect" = "postgres"
+"langchain4j.pgvector.embedding-stores.default.table" = "mytable"
+"langchain4j.pgvector.embedding-stores.default.dimension" = 384
+"test-resources.containers.postgres.image-name" = "pgvector/pgvector:pg16"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2946,9 +2940,9 @@ langchain4j.redis.embedding-stores.default.dimension: 384</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.redis.embedding-store.host"="localhost"
-"langchain4j.redis.embedding-store.port"=6379
-"langchain4j.redis.embedding-stores.default.dimension"=384</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.redis.embedding-store.host" = "localhost"
+"langchain4j.redis.embedding-store.port" = 6379
+"langchain4j.redis.embedding-stores.default.dimension" = 384</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -3063,9 +3057,9 @@ langchain4j.qdrant.embedding-store.collection-name: mycollection</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.qdrant.embedding-store.host"="localhost"
-"langchain4j.qdrant.embedding-store.port"=6334
-"langchain4j.qdrant.embedding-store.collection-name"="mycollection"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.qdrant.embedding-store.host" = "localhost"
+"langchain4j.qdrant.embedding-store.port" = 6334
+"langchain4j.qdrant.embedding-store.collection-name" = "mycollection"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
