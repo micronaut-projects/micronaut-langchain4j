@@ -12,10 +12,13 @@ import java.io.IOException;
 import java.util.List;
 
 public final class OllamaUtils {
-    private static Logger LOG = LoggerFactory.getLogger(OllamaUtils.class);
-    private static String MODEL_NAME = "tinyllama";
-    private static String IMAGE_NAME = "ollama/ollama:latest";
-    private static String NEW_IMAGE_NAME = "ollama/ollama-tinyllama";
+    private static final Logger LOG = LoggerFactory.getLogger(OllamaUtils.class);
+    public static final String CHAT_MODEL_NAME = "tinyllama";
+    public static final String TOOL_MODEL_NAME = "qwen2.5:0.5b";
+    public static final String EMBEDDING_MODEL_NAME = "all-minilm";
+    private static final String IMAGE_NAME = "ollama/ollama:latest";
+    // The cached image includes the Ollama server binary as well as the downloaded models.
+    private static final String NEW_IMAGE_NAME = "ollama/ollama-tinyllama-qwen2.5-0.5b-all-minilm-v2";
     private static OllamaContainer container;
 
     private OllamaUtils() {
@@ -35,6 +38,10 @@ public final class OllamaUtils {
         return String.format("http://%s:%d", container.getHost(), container.getFirstMappedPort());
     }
 
+    public static String ollamaEmbeddingModelName() {
+        return EMBEDDING_MODEL_NAME;
+    }
+
     private static void createAndStartContainer() throws InterruptedException, IOException {
         container = createContainer();
         container.start();
@@ -49,11 +56,11 @@ public final class OllamaUtils {
         DockerClient dockerClient = DockerClientFactory.lazyClient();
         List<Image> ollamaDockerImages = dockerClient
             .listImagesCmd()
-            .withImageNameFilter(NEW_IMAGE_NAME)
+            .withFilter("reference", List.of(NEW_IMAGE_NAME))
             .exec();
 
         if (ollamaDockerImages.isEmpty()) {
-            return createOllamaContainerAndPullModel(IMAGE_NAME, MODEL_NAME, NEW_IMAGE_NAME);
+            return createOllamaContainerAndPullModels(IMAGE_NAME, NEW_IMAGE_NAME, CHAT_MODEL_NAME, TOOL_MODEL_NAME, EMBEDDING_MODEL_NAME);
         } else {
             LOG.info("Using existing Ollama container with model image...");
             return new OllamaContainer(
@@ -61,13 +68,17 @@ public final class OllamaUtils {
         }
     }
 
-    private static OllamaContainer createOllamaContainerAndPullModel(String image, String model, String newImage) throws IOException, InterruptedException {
+    private static OllamaContainer createOllamaContainerAndPullModels(String image, String newImage, String... models) throws IOException, InterruptedException {
         LOG.info("Creating a new Ollama container...");
         OllamaContainer ollama = new OllamaContainer(image);
         ollama.start();
-        LOG.info("Executing an 'ollama pull' command...");
-        ollama.execInContainer("ollama", "pull", model);
+        for (String model : models) {
+            LOG.info("Executing an 'ollama pull' command for model '{}'...", model);
+            ollama.execInContainer("ollama", "pull", model);
+        }
         ollama.commitToImage(newImage);
-        return ollama;
+        ollama.stop();
+        return new OllamaContainer(
+            DockerImageName.parse(newImage).asCompatibleSubstituteFor("ollama/ollama"));
     }
 }

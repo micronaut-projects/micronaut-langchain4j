@@ -39,6 +39,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
         )
     },
     properties = {
+        @Property(name = "httpClientBuilder", injected = true),
         @Property(name = "baseUrl", common = true, required = true, defaultValue = "https://api.anthropic.com/v1/"),
         @Property(name = "modelName", common = true, required = true, defaultValue = "claude-3-haiku-20240307"),
         @Property(name = "apiKey", common = true, required = true),
