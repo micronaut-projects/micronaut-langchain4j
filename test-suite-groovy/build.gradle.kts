@@ -23,6 +23,10 @@ dependencies {
     testRuntimeOnly(mnTest.junit.jupiter.engine)
     testImplementation(mnTest.junit.jupiter.api)
     testRuntimeOnly(mnTest.junit.platform.launcher)
+
+    testRuntimeOnly(mn.micronaut.http.client)
+    testAnnotationProcessor(mnSerde.micronaut.serde.processor)
+    testImplementation(mnSerde.micronaut.serde.jackson)
 }
 tasks.withType<Test> {
     useJUnitPlatform()
