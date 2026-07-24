@@ -2180,6 +2180,9 @@ Add a concrete Micronaut HTTP client implementation to your application, for exa
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.vertexai.CommonVertexAiChatModelConfiguration">necessary configuration</a>.</p>
 </div>
+<div class="paragraph">
+<p>To provide explicit Google Cloud credentials, register a <code>GoogleCredentials</code> bean. When no such bean is present, the Vertex AI client uses Application Default Credentials.</p>
+</div>
 <div class="openblock">
 <div class="title">Example Configuration</div>
 <div class="content">
@@ -2275,6 +2278,9 @@ langchain4j.vertexAi.publisher = "YOUR_PUBLISHER"</code></pre>
 </div>
 <div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.vertexai.gemini.CommonVertexAiGeminiChatModelConfiguration">necessary configuration</a>.</p>
+</div>
+<div class="paragraph">
+<p>To provide explicit Google Cloud credentials, register a <code>GoogleCredentials</code> bean. When no such bean is present, the Vertex AI Gemini client uses Application Default Credentials.</p>
 </div>
 <div class="openblock">
 <div class="title">Example Configuration</div>
