@@ -48,7 +48,7 @@ public class OracleEmbeddingStoreConfig {
     }
 
     /**
-     * The table name
+     * The table name.
      * @param table The table.
      */
     public void setTable(String table) {

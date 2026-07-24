@@ -3,5 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.langchain4j.mistral.ai)
+    implementation(libs.langchain4j.mistral.ai) {
+        exclude(group = "dev.langchain4j", module = "langchain4j-http-client-jdk")
+    }
 }

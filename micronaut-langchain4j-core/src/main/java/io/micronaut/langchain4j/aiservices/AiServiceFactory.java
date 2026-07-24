@@ -22,6 +22,9 @@ import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.moderation.ModerationModel;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.service.AiServices;
+import dev.langchain4j.service.TokenStream;
+import dev.langchain4j.spi.ServiceHelper;
+import dev.langchain4j.spi.services.TokenStreamAdapter;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.BeanProvider;
@@ -32,8 +35,11 @@ import io.micronaut.context.annotation.Parameter;
 import org.jspecify.annotations.Nullable;
 import io.micronaut.core.type.Argument;
 import io.micronaut.core.util.CollectionUtils;
+import io.micronaut.inject.BeanDefinition;
+import io.micronaut.inject.ExecutableMethod;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.langchain4j.tools.ToolRegistry;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
@@ -44,6 +50,7 @@ import java.util.function.Consumer;
  */
 @Factory
 public class AiServiceFactory {
+    private static final Collection<TokenStreamAdapter> TOKEN_STREAM_ADAPTERS = ServiceHelper.loadFactories(TokenStreamAdapter.class);
 
     private final BeanContext beanContext;
     private final ToolRegistry toolRegistry;
@@ -83,9 +90,13 @@ public class AiServiceFactory {
             builder.tools(toolsTyped);
         }
 
-        lookupByNameOrDefault(name, ChatModel.class, builder::chatModel);
-
-        lookupByNameOrDefault(name, StreamingChatModel.class, builder::streamingChatModel);
+        ModelSelection modelSelection = selectModels(serviceDef.beanDefinition());
+        if (modelSelection.chatModel()) {
+            lookupByNameOrDefault(name, ChatModel.class, builder::chatModel);
+        }
+        if (modelSelection.streamingChatModel()) {
+            lookupByNameOrDefault(name, StreamingChatModel.class, builder::streamingChatModel);
+        }
 
         lookupByNameOrDefault(name, ModerationModel.class, builder::moderationModel);
 
@@ -123,5 +134,62 @@ public class AiServiceFactory {
 
         provider.find(qualifier).ifPresentOrElse(configurer,
             () -> provider.ifPresent(configurer));
+    }
+
+    static ModelSelection selectModels(BeanDefinition<?> beanDefinition) {
+        boolean hasStreamingMethods = false;
+        boolean hasNonStreamingMethods = false;
+        for (ExecutableMethod<?, ?> method : beanDefinition.getExecutableMethods()) {
+            if (method.getDeclaringType() == Object.class) {
+                continue;
+            }
+            if (isStreamingReturnType(method)) {
+                hasStreamingMethods = true;
+            } else {
+                hasNonStreamingMethods = true;
+            }
+        }
+        if (!hasStreamingMethods) {
+            return ModelSelection.CHAT;
+        }
+        if (!hasNonStreamingMethods) {
+            return ModelSelection.STREAMING;
+        }
+        return ModelSelection.BOTH;
+    }
+
+    private static boolean isStreamingReturnType(ExecutableMethod<?, ?> method) {
+        Argument<?> returnType = method.getReturnType().asArgument();
+        if (TokenStream.class.isAssignableFrom(returnType.getType())) {
+            return true;
+        }
+        for (TokenStreamAdapter tokenStreamAdapter : TOKEN_STREAM_ADAPTERS) {
+            if (tokenStreamAdapter.canAdaptTokenStreamTo(returnType.getType())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    enum ModelSelection {
+        CHAT(true, false),
+        STREAMING(false, true),
+        BOTH(true, true);
+
+        private final boolean chatModel;
+        private final boolean streamingChatModel;
+
+        ModelSelection(boolean chatModel, boolean streamingChatModel) {
+            this.chatModel = chatModel;
+            this.streamingChatModel = streamingChatModel;
+        }
+
+        boolean chatModel() {
+            return chatModel;
+        }
+
+        boolean streamingChatModel() {
+            return streamingChatModel;
+        }
     }
 }

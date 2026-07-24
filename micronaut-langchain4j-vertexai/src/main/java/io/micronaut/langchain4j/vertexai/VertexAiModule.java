@@ -15,7 +15,8 @@
  */
 package io.micronaut.langchain4j.vertexai;
 
-import static io.micronaut.langchain4j.annotation.Lang4jConfig.*;
+import static io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
+import static io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
 
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
@@ -33,11 +34,13 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig;
         ,
         @Model(
             kind = ImageModel.class,
-            impl = VertexAiImageModel.class
+            impl = VertexAiImageModel.class,
+            configRequired = true
         ),
         @Model(
             kind = EmbeddingModel.class,
-            impl = VertexAiEmbeddingModel.class
+            impl = VertexAiEmbeddingModel.class,
+            configRequired = true
         )
     },
     properties = {
