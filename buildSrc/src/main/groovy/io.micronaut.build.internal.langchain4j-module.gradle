@@ -8,10 +8,6 @@ ossIndexAudit {
     ]
 }
 
-micronautBuild {
-    binaryCompatibility.baselineVersion = '2.1.1'
-}
-
 dependencies {
     annotationProcessor(mn.micronaut.inject.java)
     api(platform(libs.boms.langchain4j))
