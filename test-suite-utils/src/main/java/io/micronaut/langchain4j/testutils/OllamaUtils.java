@@ -17,7 +17,8 @@ public final class OllamaUtils {
     public static final String TOOL_MODEL_NAME = "qwen2.5:0.5b";
     public static final String EMBEDDING_MODEL_NAME = "all-minilm";
     private static final String IMAGE_NAME = "ollama/ollama:latest";
-    private static final String NEW_IMAGE_NAME = "ollama/ollama-tinyllama-qwen2.5-0.5b-all-minilm";
+    // The cached image includes the Ollama server binary as well as the downloaded models.
+    private static final String NEW_IMAGE_NAME = "ollama/ollama-tinyllama-qwen2.5-0.5b-all-minilm-v2";
     private static OllamaContainer container;
 
     private OllamaUtils() {
@@ -76,6 +77,8 @@ public final class OllamaUtils {
             ollama.execInContainer("ollama", "pull", model);
         }
         ollama.commitToImage(newImage);
-        return ollama;
+        ollama.stop();
+        return new OllamaContainer(
+            DockerImageName.parse(newImage).asCompatibleSubstituteFor("ollama/ollama"));
     }
 }
