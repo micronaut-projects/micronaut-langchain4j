@@ -5,6 +5,7 @@ import dev.langchain4j.agentic.declarative.LoopAgent;
 import dev.langchain4j.agentic.workflow.LoopAgentService;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.event.BeanCreatedEvent;
 import io.micronaut.context.event.BeanCreatedEventListener;
 import io.micronaut.core.annotation.NonNull;
@@ -39,6 +40,7 @@ public interface LoopingPlannerAgent {
     }
 
     @Singleton
+    @Requires(property = "spec.name", value = "LoopingPlannerAgentTest")
     class LoopBuilderListener implements BeanCreatedEventListener<LoopAgentService<?>> {
 
         @Override
