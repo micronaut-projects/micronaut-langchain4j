@@ -67,13 +67,15 @@ class ChromaEmbeddingStoreTest {
     }
 
     private static void handleRequest(HttpExchange exchange, List<String> requests) throws IOException {
-        try (var requestBody = exchange.getRequestBody()) {
+        try (exchange; var _ = exchange.getRequestBody()) {
             String route = exchange.getRequestMethod() + " " + exchange.getRequestURI().getPath();
             requests.add(route);
             switch (route) {
-                case "GET /api/v2/tenants/tenant" -> sendResponse(exchange, 404, "{\"error\":\"missing tenant\"}");
+                case "GET /api/v2/tenants/tenant" ->
+                    sendResponse(exchange, 404, "{\"error\":\"missing tenant\"}");
                 case "POST /api/v2/tenants" -> sendResponse(exchange, 200, "");
-                case "GET /api/v2/tenants/tenant/databases/database" -> sendResponse(exchange, 404, "{\"error\":\"missing database\"}");
+                case "GET /api/v2/tenants/tenant/databases/database" ->
+                    sendResponse(exchange, 404, "{\"error\":\"missing database\"}");
                 case "POST /api/v2/tenants/tenant/databases" -> sendResponse(exchange, 200, "");
                 case "GET /api/v2/tenants/tenant/databases/database/collections/documents" ->
                     sendResponse(exchange, 404, "{\"error\":\"missing collection\"}");
@@ -81,8 +83,6 @@ class ChromaEmbeddingStoreTest {
                     sendResponse(exchange, 200, "{\"id\":\"collection-1\",\"name\":\"documents\",\"metadata\":{\"hnsw:space\":\"cosine\"}}");
                 default -> sendResponse(exchange, 500, "{\"error\":\"unexpected request\"}");
             }
-        } finally {
-            exchange.close();
         }
     }
 
