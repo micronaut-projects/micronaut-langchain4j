@@ -5,6 +5,7 @@ quickStart:
 responseStreaming: Response Streaming
 aiService: AI Service
 agenticService: Agentic Service
+testing: Testing
 tools: Tools
 chatModels:
   title: Chat Language Models
@@ -24,6 +25,7 @@ chatModels:
 embeddingStores:
   title: Embedding Stores
   embeddingStoresInMemory: In-Memory
+  chroma: Chroma
   elasticsearch: Elastic Search
   mongodb: MongoDB
   neo4j: Neo4j

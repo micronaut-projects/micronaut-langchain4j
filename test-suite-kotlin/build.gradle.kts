@@ -20,6 +20,10 @@ dependencies {
     testImplementation(mnTest.junit.jupiter.engine)
     testImplementation(libs.testcontainers.junit.jupiter)
     testRuntimeOnly(mnLogging.logback.classic)
+    testRuntimeOnly(mn.micronaut.http.client)
+    testAnnotationProcessor(mnSerde.micronaut.serde.processor)
+    testImplementation(mnSerde.micronaut.serde.jackson)
+
     testRuntimeOnly(mnTest.junit.jupiter.engine)
     testImplementation(mnTest.junit.jupiter.api)
     testRuntimeOnly(mnTest.junit.platform.launcher)

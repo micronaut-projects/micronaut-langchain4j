@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2024 original authors
+ * Copyright 2017-2026 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,8 @@
  */
 package io.micronaut.langchain4j.vertexai;
 
-import static io.micronaut.langchain4j.annotation.Lang4jConfig.*;
+import static io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
+import static io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
 
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
@@ -33,14 +34,17 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig;
         ,
         @Model(
             kind = ImageModel.class,
-            impl = VertexAiImageModel.class
+            impl = VertexAiImageModel.class,
+            configRequired = true
         ),
         @Model(
             kind = EmbeddingModel.class,
-            impl = VertexAiEmbeddingModel.class
+            impl = VertexAiEmbeddingModel.class,
+            configRequired = true
         )
     },
     properties = {
+        @Property(name = "credentials", common = true, required = false, injected = true),
         @Property(name = "endpoint", common = true, required = true),
         @Property(name = "modelName", common = true, required = true, defaultValue = "chat-bison"),
         @Property(name = "project", common = true, required = true),

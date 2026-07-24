@@ -6,7 +6,7 @@ pluginManagement {
 }
 
 plugins {
-    id("io.micronaut.build.shared.settings") version "8.0.0-M18"
+    id("io.micronaut.build.shared.settings") version "8.0.1"
 }
 
 dependencyResolutionManagement {
@@ -39,6 +39,7 @@ include("micronaut-langchain4j-vertexai-gemini")
 include("micronaut-langchain4j-ollama-testresource")
 include("micronaut-langchain4j-qdrant-testresource")
 include("micronaut-langchain4j-store-elasticsearch")
+include("micronaut-langchain4j-store-chroma")
 include("micronaut-langchain4j-store-opensearch")
 include("micronaut-langchain4j-store-mongodb")
 include("micronaut-langchain4j-store-neo4j")
