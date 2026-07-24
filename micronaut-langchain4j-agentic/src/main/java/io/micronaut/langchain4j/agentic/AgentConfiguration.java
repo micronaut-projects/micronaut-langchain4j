@@ -18,12 +18,14 @@ package io.micronaut.langchain4j.agentic;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.context.annotation.EachProperty;
 import io.micronaut.context.annotation.Parameter;
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Nullable;
 
 /**
  * Configuration for a named agentic service agent.
  */
 @EachProperty(AgentConfiguration.PREFIX)
+@Experimental
 public final class AgentConfiguration {
 
     public static final String PREFIX = "langchain4j.agentic.agents";

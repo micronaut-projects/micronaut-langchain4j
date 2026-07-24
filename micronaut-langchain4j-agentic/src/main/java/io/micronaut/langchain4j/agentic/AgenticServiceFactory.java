@@ -51,6 +51,7 @@ import io.micronaut.context.event.BeanCreatedEvent;
 import io.micronaut.context.event.BeanCreatedEventListener;
 import io.micronaut.context.exceptions.BeanInstantiationException;
 import io.micronaut.context.exceptions.NonUniqueBeanException;
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.naming.NameUtils;
@@ -73,6 +74,7 @@ import static io.micronaut.langchain4j.agentic.AgenticServiceInterceptor.resolve
  * Factory for building LangChain4j agentic service proxies.
  */
 @Factory
+@Experimental
 public final class AgenticServiceFactory {
 
     public static final String AGENTIC_CONFIG_PREFIX = AgentConfiguration.PREFIX + '.';

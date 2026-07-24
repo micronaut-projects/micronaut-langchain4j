@@ -15,6 +15,7 @@
  */
 package io.micronaut.langchain4j.agentic;
 
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.inject.BeanDefinition;
 
@@ -29,6 +30,7 @@ import java.util.Set;
  * @param outputKey The optional agent output key
  * @param <T> The agent service type
  */
+@Experimental
 public record AgenticServiceInfo<T>(
     BeanDefinition<T> beanDefinition,
     Class<T> type,

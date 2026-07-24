@@ -20,6 +20,7 @@ import io.micronaut.aop.MethodInterceptor;
 import io.micronaut.aop.MethodInvocationContext;
 import io.micronaut.context.BeanContext;
 import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.langchain4j.agentic.annotation.AgenticService;
 
@@ -33,6 +34,7 @@ import java.util.Set;
  * which delegates to LangChain4j's declarative API (AgenticServices.createAgenticSystem).
  */
 @InterceptorBean(AgenticService.class)
+@Experimental
 public final class AgenticServiceInterceptor implements MethodInterceptor<Object, Object> {
 
     public static final String TOOLS_MEMBER = "tools";
