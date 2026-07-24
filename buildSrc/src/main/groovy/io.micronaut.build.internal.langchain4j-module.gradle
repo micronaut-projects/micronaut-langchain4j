@@ -9,7 +9,7 @@ ossIndexAudit {
 }
 
 micronautBuild {
-    binaryCompatibility.baselineVersion = '2.0.0-M1'
+    binaryCompatibility.baselineVersion = '2.1.1'
 }
 
 dependencies {
