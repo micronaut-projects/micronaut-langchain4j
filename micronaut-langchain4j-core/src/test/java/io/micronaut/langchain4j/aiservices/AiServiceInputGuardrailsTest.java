@@ -26,6 +26,8 @@ import dev.langchain4j.service.guardrail.InputGuardrails;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Primary;
+import io.micronaut.context.annotation.Property;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.langchain4j.annotation.AiService;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
@@ -36,8 +38,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Property(name = "spec.name", value = AiServiceInputGuardrailsTest.SPEC_NAME)
 @MicronautTest(startApplication = false, transactional = false)
 class AiServiceInputGuardrailsTest {
+
+    static final String SPEC_NAME = "AiServiceInputGuardrailsTest";
 
     @Inject
     GuardedAssistant assistant;
@@ -52,6 +57,7 @@ class AiServiceInputGuardrailsTest {
     }
 
     @Factory
+    @Requires(property = "spec.name", value = SPEC_NAME)
     static final class TestFactory {
         @Bean
         @Primary
@@ -68,6 +74,7 @@ class AiServiceInputGuardrailsTest {
     }
 }
 
+@Requires(property = "spec.name", value = AiServiceInputGuardrailsTest.SPEC_NAME)
 @AiService
 interface GuardedAssistant {
     @InputGuardrails(PromptInjectionGuard.class)
@@ -75,6 +82,7 @@ interface GuardedAssistant {
 }
 
 @Singleton
+@Requires(property = "spec.name", value = AiServiceInputGuardrailsTest.SPEC_NAME)
 final class PromptInjectionGuard implements InputGuardrail {
     private final GuardInvocationCounter counter;
 
@@ -90,6 +98,7 @@ final class PromptInjectionGuard implements InputGuardrail {
 }
 
 @Singleton
+@Requires(property = "spec.name", value = AiServiceInputGuardrailsTest.SPEC_NAME)
 final class GuardInvocationCounter {
     private final AtomicInteger invocations = new AtomicInteger();
 

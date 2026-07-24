@@ -36,6 +36,7 @@ import dev.langchain4j.service.guardrail.GuardrailService;
 import dev.langchain4j.service.guardrail.InputGuardrails;
 import dev.langchain4j.service.guardrail.OutputGuardrails;
 import io.micronaut.context.ApplicationContext;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.ExecutableMethod;
 import io.micronaut.langchain4j.annotation.AiService;
@@ -56,9 +57,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MicronautGuardrailServiceBuilderTest {
 
+    static final String SPEC_NAME = "MicronautGuardrailServiceBuilderTest";
+
     @Test
     void resolvesMethodGuardrailsForMethodAndExecutableMethodKeys() throws NoSuchMethodException {
-        try (ApplicationContext context = ApplicationContext.run()) {
+        try (ApplicationContext context = applicationContext()) {
             GuardrailInvocationTracker tracker = context.getBean(GuardrailInvocationTracker.class);
             BeanDefinition<MethodGuardedAssistant> beanDefinition = context.getBeanDefinition(MethodGuardedAssistant.class);
             GuardrailService service = new MicronautAiServiceContext(MethodGuardedAssistant.class, beanDefinition, context).guardrailService();
@@ -105,7 +108,7 @@ class MicronautGuardrailServiceBuilderTest {
 
     @Test
     void resolvesClassLevelInputGuardrailsFromBeanDefinition() throws NoSuchMethodException {
-        try (ApplicationContext context = ApplicationContext.run()) {
+        try (ApplicationContext context = applicationContext()) {
             GuardrailInvocationTracker tracker = context.getBean(GuardrailInvocationTracker.class);
             BeanDefinition<ClassLevelGuardedAssistant> beanDefinition = context.getBeanDefinition(ClassLevelGuardedAssistant.class);
             GuardrailService service = new MicronautAiServiceContext(ClassLevelGuardedAssistant.class, beanDefinition, context).guardrailService();
@@ -129,7 +132,7 @@ class MicronautGuardrailServiceBuilderTest {
 
     @Test
     void resolvesClassLevelOutputGuardrailsFromBeanDefinition() throws NoSuchMethodException {
-        try (ApplicationContext context = ApplicationContext.run()) {
+        try (ApplicationContext context = applicationContext()) {
             GuardrailInvocationTracker tracker = context.getBean(GuardrailInvocationTracker.class);
             BeanDefinition<ClassLevelOutputGuardedAssistant> beanDefinition = context.getBeanDefinition(ClassLevelOutputGuardedAssistant.class);
             GuardrailService service = new MicronautAiServiceContext(ClassLevelOutputGuardedAssistant.class, beanDefinition, context).guardrailService();
@@ -154,7 +157,7 @@ class MicronautGuardrailServiceBuilderTest {
 
     @Test
     void appliesBuilderConfiguredInputGuardrailsAcrossMethods() throws NoSuchMethodException {
-        try (ApplicationContext context = ApplicationContext.run()) {
+        try (ApplicationContext context = applicationContext()) {
             GuardrailInvocationTracker tracker = context.getBean(GuardrailInvocationTracker.class);
             BeanDefinition<MethodGuardedAssistant> beanDefinition = context.getBeanDefinition(MethodGuardedAssistant.class);
             DirectInputGuard.reset();
@@ -183,7 +186,7 @@ class MicronautGuardrailServiceBuilderTest {
 
     @Test
     void appliesBuilderConfiguredOutputGuardrailsAcrossMethods() throws NoSuchMethodException {
-        try (ApplicationContext context = ApplicationContext.run()) {
+        try (ApplicationContext context = applicationContext()) {
             GuardrailInvocationTracker tracker = context.getBean(GuardrailInvocationTracker.class);
             BeanDefinition<MethodGuardedAssistant> beanDefinition = context.getBeanDefinition(MethodGuardedAssistant.class);
             DirectOutputGuard.reset();
@@ -213,7 +216,7 @@ class MicronautGuardrailServiceBuilderTest {
 
     @Test
     void reusesBuiltGuardrailService() {
-        try (ApplicationContext context = ApplicationContext.run()) {
+        try (ApplicationContext context = applicationContext()) {
             BeanDefinition<MethodGuardedAssistant> beanDefinition = context.getBeanDefinition(MethodGuardedAssistant.class);
             MicronautAiServiceContext aiServiceContext = new MicronautAiServiceContext(MethodGuardedAssistant.class, beanDefinition, context);
 
@@ -240,6 +243,10 @@ class MicronautGuardrailServiceBuilderTest {
             .build();
     }
 
+    private static ApplicationContext applicationContext() {
+        return ApplicationContext.run(Map.of("spec.name", SPEC_NAME));
+    }
+
     private static ChatExecutor chatExecutor() {
         return new ChatExecutor() {
             @Override
@@ -255,6 +262,7 @@ class MicronautGuardrailServiceBuilderTest {
     }
 }
 
+@Requires(property = "spec.name", value = MicronautGuardrailServiceBuilderTest.SPEC_NAME)
 @AiService
 interface MethodGuardedAssistant {
     @InputGuardrails(MethodInputGuard.class)
@@ -266,12 +274,14 @@ interface MethodGuardedAssistant {
     String plain(String userMessage);
 }
 
+@Requires(property = "spec.name", value = MicronautGuardrailServiceBuilderTest.SPEC_NAME)
 @AiService
 @InputGuardrails(ClassLevelInputGuard.class)
 interface ClassLevelGuardedAssistant {
     String chat(String userMessage);
 }
 
+@Requires(property = "spec.name", value = MicronautGuardrailServiceBuilderTest.SPEC_NAME)
 @AiService
 @OutputGuardrails(ClassLevelOutputGuard.class)
 interface ClassLevelOutputGuardedAssistant {
@@ -279,6 +289,7 @@ interface ClassLevelOutputGuardedAssistant {
 }
 
 @Singleton
+@Requires(property = "spec.name", value = MicronautGuardrailServiceBuilderTest.SPEC_NAME)
 final class MethodInputGuard implements InputGuardrail {
     private final GuardrailInvocationTracker tracker;
 
@@ -294,6 +305,7 @@ final class MethodInputGuard implements InputGuardrail {
 }
 
 @Singleton
+@Requires(property = "spec.name", value = MicronautGuardrailServiceBuilderTest.SPEC_NAME)
 final class MethodOutputGuard implements OutputGuardrail {
     private final GuardrailInvocationTracker tracker;
 
@@ -309,6 +321,7 @@ final class MethodOutputGuard implements OutputGuardrail {
 }
 
 @Singleton
+@Requires(property = "spec.name", value = MicronautGuardrailServiceBuilderTest.SPEC_NAME)
 final class ClassLevelInputGuard implements InputGuardrail {
     private final GuardrailInvocationTracker tracker;
 
@@ -324,6 +337,7 @@ final class ClassLevelInputGuard implements InputGuardrail {
 }
 
 @Singleton
+@Requires(property = "spec.name", value = MicronautGuardrailServiceBuilderTest.SPEC_NAME)
 final class ClassLevelOutputGuard implements OutputGuardrail {
     private final GuardrailInvocationTracker tracker;
 
@@ -375,6 +389,7 @@ final class DirectOutputGuard implements OutputGuardrail {
 }
 
 @Singleton
+@Requires(property = "spec.name", value = MicronautGuardrailServiceBuilderTest.SPEC_NAME)
 final class GuardrailInvocationTracker {
     private final AtomicInteger inputInvocations = new AtomicInteger();
     private final AtomicInteger outputInvocations = new AtomicInteger();
