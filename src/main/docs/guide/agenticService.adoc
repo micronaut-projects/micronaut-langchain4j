@@ -6,7 +6,7 @@ Micronaut lets you declare LangChain4j Agentic services and have concrete agents
 
 Add the following dependency:
 
-dependency:io.micronaut.langchain4j:micronaut-langchain4j-agentic[]
+dependency:micronaut-langchain4j-agentic[groupId=io.micronaut.langchain4j]
 
 Annotate an interface with api:io.micronaut.langchain4j.agentic.annotation.AgenticService[] and declare methods using LangChain4j Agentic annotations.
 The integration interprets your annotations and uses Micronaut DI to wire the underlying LangChain4j builders.
