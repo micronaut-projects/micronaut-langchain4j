@@ -99,6 +99,7 @@ langchain4j-pgvector = { module = 'dev.langchain4j:langchain4j-pgvector' }
 langchain4j-qdrant = { module = 'dev.langchain4j:langchain4j-qdrant' }
 langchain4j-google-ai-gemini = { module = 'dev.langchain4j:langchain4j-google-ai-gemini' }
 langchain4j-cassandra = { module = 'dev.langchain4j:langchain4j-cassandra' }
+langchain4j-chroma = { module = 'dev.langchain4j:langchain4j-chroma' }
 langchain4j-embeddings-all-minilm-l6-v2 = { module = 'dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2' }
 langchain4j-reactor = { module = "dev.langchain4j:langchain4j-reactor" }
 reactor-core = { module = "io.projectreactor:reactor-core" }
