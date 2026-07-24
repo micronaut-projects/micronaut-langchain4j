@@ -11,11 +11,11 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-@DisabledIfEnvironmentVariable(named = "CI", matches = ".*")
 @Property(name = "langchain4j.ollama.model-name", value = OllamaUtils.TOOL_MODEL_NAME)
 @Testcontainers(disabledWithoutDocker = true)
 @MicronautTest(startApplication = false)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DisabledIfEnvironmentVariable(named = "CI", matches = ".*")
 class OllamaToolTest implements OllamaTestPropertyProvider {
     @Test
     void testInjectTools(CompanyBot bot) {
