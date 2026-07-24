@@ -104,10 +104,14 @@ public final class AgenticServiceFactory {
             AgenticServices.setWorkflowAgentsBuilder(new MicronautWorkflowAgentsBuilder(beanContext));
             try {
                 @SuppressWarnings({"rawtypes", "unchecked"})
-                Object agent = AgenticServices.createAgenticSystem((Class) iface, chatModel, ctx -> {
-                    applyBuilderConfig(beanContext, serviceDef, iface, ctx);
-                    fireAgentBuilderListeners(beanContext, ctx);
-                });
+                Object agent = AgenticServices.createAgenticSystem(
+                    (Class) iface,
+                    chatModel,
+                    new AgenticServices.AgentConfigurator(ctx -> {
+                        applyBuilderConfig(beanContext, serviceDef, iface, ctx);
+                        fireAgentBuilderListeners(beanContext, ctx);
+                    }, null, null)
+                );
                 return agent;
             } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException("AgenticServices.createAgenticSystem failed for " + iface.getName(), e);

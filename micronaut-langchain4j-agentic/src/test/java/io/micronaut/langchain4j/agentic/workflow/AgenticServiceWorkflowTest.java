@@ -58,7 +58,7 @@ class AgenticServiceWorkflowTest {
 
     @Test
     void loopWorkflowUsesMicronautWorkflowBuilder(LoopWorkflow workflow) {
-        assertEquals("go!!!", workflow.repeat("go"));
+        assertEquals("go!!", workflow.repeat("go"));
     }
 
     @AgenticService(outputKey = "recipe")
