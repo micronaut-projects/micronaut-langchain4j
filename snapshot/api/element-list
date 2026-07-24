@@ -9,7 +9,6 @@ io.micronaut.langchain4j.interceptor
 io.micronaut.langchain4j.mongodb.atlas
 io.micronaut.langchain4j.neo4j.memory
 io.micronaut.langchain4j.oracle.database
-io.micronaut.langchain4j.oracle.memory
 io.micronaut.langchain4j.pgvector
 io.micronaut.langchain4j.processor
 io.micronaut.langchain4j.redis.memory
