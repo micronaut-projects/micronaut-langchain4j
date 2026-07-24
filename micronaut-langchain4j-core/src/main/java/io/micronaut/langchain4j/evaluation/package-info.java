@@ -18,4 +18,7 @@
  *
  * @since 2.1.1
  */
+@NullMarked
 package io.micronaut.langchain4j.evaluation;
+
+import org.jspecify.annotations.NullMarked;
