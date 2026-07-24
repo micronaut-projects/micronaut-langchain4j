@@ -16,6 +16,6 @@
 /**
  * Evaluation utilities for testing AI responses.
  *
- * @since 2.0.0
+ * @since 2.1.1
  */
 package io.micronaut.langchain4j.evaluation;

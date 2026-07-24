@@ -21,13 +21,13 @@ import org.jspecify.annotations.NonNull;
 /**
  * Evaluates whether the generated response is grounded in the supplied context.
  *
- * @since 2.0.0
+ * @since 2.1.1
  */
 public final class FactCheckingEvaluator extends PromptBasedEvaluator {
 
     /**
      * @param chatModel The judge model
-     * @since 2.0.0
+     * @since 2.1.1
      */
     public FactCheckingEvaluator(@NonNull ChatModel chatModel) {
         super(chatModel);

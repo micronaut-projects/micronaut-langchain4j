@@ -23,7 +23,7 @@ import java.util.Objects;
 /**
  * Base class for evaluators that use a judge model.
  *
- * @since 2.0.0
+ * @since 2.1.1
  */
 public abstract class PromptBasedEvaluator implements Evaluator {
     private final ChatModel chatModel;

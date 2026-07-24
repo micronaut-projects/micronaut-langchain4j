@@ -20,7 +20,7 @@ import org.jspecify.annotations.NonNull;
 /**
  * Evaluates an AI response against a request.
  *
- * @since 2.0.0
+ * @since 2.1.1
  */
 @FunctionalInterface
 public interface Evaluator {
@@ -30,7 +30,7 @@ public interface Evaluator {
      *
      * @param request The request to evaluate
      * @return The evaluation result
-     * @since 2.0.0
+     * @since 2.1.1
      */
     @NonNull
     EvaluationResult evaluate(@NonNull EvaluationRequest request);

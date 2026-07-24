@@ -33,7 +33,7 @@ import static io.micronaut.core.util.StringUtils.hasText;
  * @param userText The original user text
  * @param context The optional grounding context
  * @param response The generated response
- * @since 2.0.0
+ * @since 2.1.1
  */
 @Introspected
 public record EvaluationRequest(
@@ -54,7 +54,7 @@ public record EvaluationRequest(
      * @param userText The original user text
      * @param result The AI service result
      * @return The evaluation request
-     * @since 2.0.0
+     * @since 2.1.1
      */
     @NonNull
     public static EvaluationRequest from(@NonNull String userText, @NonNull Result<?> result) {
@@ -73,7 +73,7 @@ public record EvaluationRequest(
      * @param sources The retrieved sources
      * @param response The generated response
      * @return The evaluation request
-     * @since 2.0.0
+     * @since 2.1.1
      */
     @NonNull
     public static EvaluationRequest from(@NonNull String userText, @NonNull List<Content> sources, @NonNull String response) {

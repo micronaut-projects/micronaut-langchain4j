@@ -21,13 +21,13 @@ import org.jspecify.annotations.NonNull;
 /**
  * Evaluates whether the generated response is relevant to the user request.
  *
- * @since 2.0.0
+ * @since 2.1.1
  */
 public final class RelevancyEvaluator extends PromptBasedEvaluator {
 
     /**
      * @param chatModel The judge model
-     * @since 2.0.0
+     * @since 2.1.1
      */
     public RelevancyEvaluator(@NonNull ChatModel chatModel) {
         super(chatModel);

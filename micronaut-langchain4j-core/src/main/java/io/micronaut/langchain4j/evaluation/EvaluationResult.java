@@ -25,7 +25,7 @@ import static io.micronaut.core.util.StringUtils.hasText;
  *
  * @param passing Whether the evaluation passed
  * @param feedback Short feedback from the evaluator
- * @since 2.0.0
+ * @since 2.1.1
  */
 @Introspected
 public record EvaluationResult(
@@ -42,7 +42,7 @@ public record EvaluationResult(
      *
      * @param feedback The feedback
      * @return The result
-     * @since 2.0.0
+     * @since 2.1.1
      */
     @NonNull
     public static EvaluationResult pass(@NonNull String feedback) {
@@ -54,7 +54,7 @@ public record EvaluationResult(
      *
      * @param feedback The feedback
      * @return The result
-     * @since 2.0.0
+     * @since 2.1.1
      */
     @NonNull
     public static EvaluationResult fail(@NonNull String feedback) {
