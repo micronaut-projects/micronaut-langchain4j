@@ -163,13 +163,13 @@
         <h1>Micronaut LangChain4j</h1>
         <p></p>
         <p>Integration between Micronaut and Langchain4j</p>
-        <p><strong>Version:</strong> 2.0.2-SNAPSHOT </p>
+        <p><strong>Version:</strong> 2.1.1-SNAPSHOT </p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/introduction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/introduction.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -197,7 +197,7 @@ This module is regarded as experimental and subject to change since the underlyi
 <h1 id="quickStart"><a class="anchor" href="#quickStart"></a>2 Quick Start</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/quickStart.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/quickStart.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -317,7 +317,7 @@ For Maven see <a href="https://micronaut-projects.github.io/micronaut-maven-plug
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.ollama.model-name"="orca-mini"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.ollama.model-name" = "orca-mini"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -345,7 +345,7 @@ For Maven see <a href="https://micronaut-projects.github.io/micronaut-maven-plug
 <h1 id="responseStreaming"><a class="anchor" href="#responseStreaming"></a>3 Response Streaming</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/responseStreaming.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/responseStreaming.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -379,13 +379,7 @@ langchain4j.open-ai.streaming-chat-model.log-responses=true</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[langchain4j]
-  [langchain4j.open-ai]
-    api-key="${OPENAI_API_KEY}"
-    [langchain4j.open-ai.streaming-chat-model]
-      model-name="gpt-4o"
-      log-requests=true
-      log-responses=true</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">langchain4j = {open-ai = {api-key = "${OPENAI_API_KEY}", streaming-chat-model = {model-name = "gpt-4o", log-requests = true, log-responses = true}}}</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -465,7 +459,7 @@ In order to do this, you will need to add the following dependency:</p>
 <h1 id="aiService"><a class="anchor" href="#aiService"></a>4 AI Service</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/aiService.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/aiService.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -626,7 +620,7 @@ class AiServiceTest implements OllamaTestPropertyProvider {
 <h1 id="tools"><a class="anchor" href="#tools"></a>5 Tools</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/tools.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/tools.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -748,7 +742,7 @@ interface CompanyBot {
 <h1 id="chatModels"><a class="anchor" href="#chatModels"></a>6 Chat Language Models</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/chatModels.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -764,7 +758,7 @@ interface CompanyBot {
 <h2 id="chatModelExample"><a class="anchor" href="#chatModelExample"></a>6.1 ChatModel Example</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/chatModelExample.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/chatModels/chatModelExample.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1036,7 +1030,7 @@ class OllamaChatModelBuilderListener
 <h2 id="chatMemory"><a class="anchor" href="#chatMemory"></a>6.2 Chat Memory</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/chatMemory.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/chatModels/chatMemory.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1112,6 +1106,99 @@ it relies on you to include the relevant messages in each request for coherent a
 </div>
 </div>
 </p>
+</div>
+<div class="paragraph">
+<p>To use the Oracle implementation <code>dev.langchain4j.store.memory.chat.oracle.OracleChatMemoryStore</code>, add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-store-oracle")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-store-oracle&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>Then configure a JDBC datasource and the chat memory store properties, for example:</p>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">datasources.default.dialect=oracle
+langchain4j.chat-memory-store.oracle.default.enabled=true
+langchain4j.chat-memory-store.oracle.default.table-name=CHAT_MEMORY
+langchain4j.chat-memory-store.oracle.default.memory-id-column-name=MEMORY_ID
+langchain4j.chat-memory-store.oracle.default.content-column-name=CONTENT</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">datasources.default.dialect: oracle
+langchain4j.chat-memory-store.oracle.default.enabled: true
+langchain4j.chat-memory-store.oracle.default.table-name: CHAT_MEMORY
+langchain4j.chat-memory-store.oracle.default.memory-id-column-name: MEMORY_ID
+langchain4j.chat-memory-store.oracle.default.content-column-name: CONTENT</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"datasources.default.dialect" = "oracle"
+"langchain4j.chat-memory-store.oracle.default.enabled" = true
+"langchain4j.chat-memory-store.oracle.default.table-name" = "CHAT_MEMORY"
+"langchain4j.chat-memory-store.oracle.default.memory-id-column-name" = "MEMORY_ID"
+"langchain4j.chat-memory-store.oracle.default.content-column-name" = "CONTENT"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">datasources.default.dialect = "oracle"
+langchain4j.chatMemoryStore.oracle.default.enabled = true
+langchain4j.chatMemoryStore.oracle.default.tableName = "CHAT_MEMORY"
+langchain4j.chatMemoryStore.oracle.default.memoryIdColumnName = "MEMORY_ID"
+langchain4j.chatMemoryStore.oracle.default.contentColumnName = "CONTENT"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "datasources.default.dialect" = "oracle"
+  "langchain4j.chat-memory-store.oracle.default.enabled" = true
+  "langchain4j.chat-memory-store.oracle.default.table-name" = "CHAT_MEMORY"
+  "langchain4j.chat-memory-store.oracle.default.memory-id-column-name" = "MEMORY_ID"
+  "langchain4j.chat-memory-store.oracle.default.content-column-name" = "CONTENT"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "datasources.default.dialect": "oracle",
+  "langchain4j.chat-memory-store.oracle.default.enabled": true,
+  "langchain4j.chat-memory-store.oracle.default.table-name": "CHAT_MEMORY",
+  "langchain4j.chat-memory-store.oracle.default.memory-id-column-name": "MEMORY_ID",
+  "langchain4j.chat-memory-store.oracle.default.content-column-name": "CONTENT"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The table must already exist. By default, the expected schema is <code>CHAT_MEMORY(MEMORY_ID, CONTENT)</code>.</p>
+</div>
+<div class="paragraph">
+<p>The segment under <code>oracle</code> (for example <code>default</code>) maps to the datasource name.
+For multiple datasources, configure multiple entries such as
+<code>langchain4j.chat-memory-store.oracle.reporting.*</code>.</p>
 </div>
 <div class="paragraph">
 <p>The following example shows how to use the <code>ChatMemory</code>:</p>
@@ -1352,7 +1439,7 @@ class AssistantWithMemory {
 <h2 id="anthropic"><a class="anchor" href="#anthropic"></a>6.3 Anthropic</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/anthropic.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/chatModels/anthropic.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1396,7 +1483,7 @@ class AssistantWithMemory {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.anthropic.api-key"="YOUR_KEY"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.anthropic.api-key" = "YOUR_KEY"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1424,7 +1511,7 @@ class AssistantWithMemory {
 <h2 id="azure"><a class="anchor" href="#azure"></a>6.4 Azure</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/azure.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/chatModels/azure.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1470,8 +1557,8 @@ langchain4j.azure-open-ai.endpoint: YOUR_ENDPOINT</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.azure-open-ai.api-key"="YOUR_KEY"
-"langchain4j.azure-open-ai.endpoint"="YOUR_ENDPOINT"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.azure-open-ai.api-key" = "YOUR_KEY"
+"langchain4j.azure-open-ai.endpoint" = "YOUR_ENDPOINT"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1508,7 +1595,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 <h2 id="bedrock"><a class="anchor" href="#bedrock"></a>6.5 Bedrock</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/bedrock.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/chatModels/bedrock.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1552,7 +1639,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.bedrock-llama.api-key"="YOUR_KEY"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.bedrock-llama.api-key" = "YOUR_KEY"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1586,7 +1673,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 <h2 id="hugging-face"><a class="anchor" href="#hugging-face"></a>6.6 HuggingFace</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/hugging-face.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/chatModels/hugging-face.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1630,7 +1717,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.hugging-face.access-token"="YOUR_ACCESS_TOKEN"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.hugging-face.access-token" = "YOUR_ACCESS_TOKEN"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1658,7 +1745,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 <h2 id="mistralai"><a class="anchor" href="#mistralai"></a>6.7 MistralAi</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/mistralai.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/chatModels/mistralai.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1702,7 +1789,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.mistral-ai.api-key"="YOUR_KEY"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.mistral-ai.api-key" = "YOUR_KEY"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1730,7 +1817,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 <h2 id="ollama"><a class="anchor" href="#ollama"></a>6.8 Ollama</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/ollama.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/chatModels/ollama.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1774,7 +1861,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.ollama.base-url"="YOUR_URL"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.ollama.base-url" = "YOUR_URL"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1802,7 +1889,7 @@ langchain4j.azureOpenAi.endpoint = "YOUR_ENDPOINT"</code></pre>
 <h2 id="oci-genai"><a class="anchor" href="#oci-genai"></a>6.9 Oracle Cloud GenAI</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/oci-genai.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/chatModels/oci-genai.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1851,8 +1938,8 @@ langchain4j.oci-gen-ai.compartment-id: your-compartment</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.oci-gen-ai.chat-model.model-name"="orca-mini"
-"langchain4j.oci-gen-ai.compartment-id"="your-compartment"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.oci-gen-ai.chat-model.model-name" = "orca-mini"
+"langchain4j.oci-gen-ai.compartment-id" = "your-compartment"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1883,7 +1970,7 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
 <h2 id="openai"><a class="anchor" href="#openai"></a>6.10 OpenAi</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/openai.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/chatModels/openai.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1910,6 +1997,49 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
 </p>
 </div>
 <div class="paragraph">
+<p>Provider modules use Micronaut&#8217;s HTTP client API and exclude LangChain4j&#8217;s JDK HTTP client.
+Add a concrete Micronaut HTTP client implementation to your application, for example the default Netty implementation:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtimeOnly(<span class="hljs-string">"io.micronaut:micronaut-http-client")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-http-client&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>For tests that instantiate OpenAI models, add the same implementation to the test runtime classpath:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">testRuntimeOnly(<span class="hljs-string">"io.micronaut:micronaut-http-client")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-http-client&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
 <p>Then add the <a href="configurationreference.html#io.micronaut.langchain4j.openai.CommonOpenAiChatModelConfiguration">necessary configuration</a>.</p>
 </div>
 <div class="openblock">
@@ -1927,7 +2057,7 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.open-ai.api-key"="YOUR_KEY"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.open-ai.api-key" = "YOUR_KEY"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1955,7 +2085,7 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
 <h2 id="googleai-gemini"><a class="anchor" href="#googleai-gemini"></a>6.11 Google AI Gemini</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/googleai-gemini.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/chatModels/googleai-gemini.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1999,7 +2129,7 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.google-ai-gemini.api-key"="YOUR_API_KEY"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.google-ai-gemini.api-key" = "YOUR_API_KEY"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2027,7 +2157,7 @@ langchain4j.ociGenAi.compartmentId = "your-compartment"</code></pre>
 <h2 id="vertexai"><a class="anchor" href="#vertexai"></a>6.12 VertexAi</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/vertexai.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/chatModels/vertexai.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2079,11 +2209,11 @@ langchain4j.vertex-ai.publisher: YOUR_PUBLISHER</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.vertex-ai.endpoint"="YOUR_ENDPOINT"
-"langchain4j.vertex-ai.model-name"="YOUR_MODEL"
-"langchain4j.vertex-ai.project"="YOUR_PROJECT"
-"langchain4j.vertex-ai.location"="YOUR_LOCATION"
-"langchain4j.vertex-ai.publisher"="YOUR_PUBLISHER"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.vertex-ai.endpoint" = "YOUR_ENDPOINT"
+"langchain4j.vertex-ai.model-name" = "YOUR_MODEL"
+"langchain4j.vertex-ai.project" = "YOUR_PROJECT"
+"langchain4j.vertex-ai.location" = "YOUR_LOCATION"
+"langchain4j.vertex-ai.publisher" = "YOUR_PUBLISHER"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2123,7 +2253,7 @@ langchain4j.vertexAi.publisher = "YOUR_PUBLISHER"</code></pre>
 <h2 id="vertexai-gemini"><a class="anchor" href="#vertexai-gemini"></a>6.13 VertexAi Gemini</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/chatModels/vertexai-gemini.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/chatModels/vertexai-gemini.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2171,9 +2301,9 @@ langchain4j.vertex-ai-gemini.location: YOUR_LOCATION</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.vertex-ai-gemini.model-name"="YOUR_MODEL"
-"langchain4j.vertex-ai-gemini.project"="YOUR_PROJECT"
-"langchain4j.vertex-ai-gemini.location"="YOUR_LOCATION"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.vertex-ai-gemini.model-name" = "YOUR_MODEL"
+"langchain4j.vertex-ai-gemini.project" = "YOUR_PROJECT"
+"langchain4j.vertex-ai-gemini.location" = "YOUR_LOCATION"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2207,7 +2337,7 @@ langchain4j.vertexAiGemini.location = "YOUR_LOCATION"</code></pre>
 <h1 id="embeddingStores"><a class="anchor" href="#embeddingStores"></a>7 Embedding Stores</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/embeddingStores.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2218,7 +2348,7 @@ langchain4j.vertexAiGemini.location = "YOUR_LOCATION"</code></pre>
 <h2 id="embeddingStoresInMemory"><a class="anchor" href="#embeddingStoresInMemory"></a>7.1 In-Memory</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/embeddingStoresInMemory.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/embeddingStores/embeddingStoresInMemory.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2232,7 +2362,7 @@ langchain4j.vertexAiGemini.location = "YOUR_LOCATION"</code></pre>
 <h2 id="elasticsearch"><a class="anchor" href="#elasticsearch"></a>7.2 Elastic Search</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/elasticsearch.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/embeddingStores/elasticsearch.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2278,8 +2408,8 @@ langchain4j.elasticsearch.embedding-stores.default.dimension: 384</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"elasticsearch.httpHosts"="http://localhost:9200,http://127.0.0.2:9200"
-"langchain4j.elasticsearch.embedding-stores.default.dimension"=384</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"elasticsearch.httpHosts" = "http://localhost:9200,http://127.0.0.2:9200"
+"langchain4j.elasticsearch.embedding-stores.default.dimension" = 384</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2310,7 +2440,7 @@ langchain4j.elasticsearch.embeddingStores.default.dimension = 384</code></pre>
 <h2 id="mongodb"><a class="anchor" href="#mongodb"></a>7.3 MongoDB</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/mongodb.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/embeddingStores/mongodb.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2361,9 +2491,9 @@ langchain4j.mongodb-atlas.embedding-stores.default.index-name: testindex</code><
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.mongodb-atlas.embedding-stores.default.database-name"="testdb"
-"langchain4j.mongodb-atlas.embedding-stores.default.collection-name"="testcol"
-"langchain4j.mongodb-atlas.embedding-stores.default.index-name"="testindex"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.mongodb-atlas.embedding-stores.default.database-name" = "testdb"
+"langchain4j.mongodb-atlas.embedding-stores.default.collection-name" = "testcol"
+"langchain4j.mongodb-atlas.embedding-stores.default.index-name" = "testindex"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2397,7 +2527,7 @@ langchain4j.mongodbAtlas.embeddingStores.default.indexName = "testindex"</code><
 <h2 id="neo4j"><a class="anchor" href="#neo4j"></a>7.4 Neo4j</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/neo4j.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/embeddingStores/neo4j.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2443,8 +2573,8 @@ langchain4j.neo4j.embedding-stores.default.dimension: 384</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"neo4j.uri"="bolt://localhost"
-"langchain4j.neo4j.embedding-stores.default.dimension"=384</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"neo4j.uri" = "bolt://localhost"
+"langchain4j.neo4j.embedding-stores.default.dimension" = 384</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2475,7 +2605,7 @@ langchain4j.neo4j.embeddingStores.default.dimension = 384</code></pre>
 <h2 id="oracledb"><a class="anchor" href="#oracledb"></a>7.5 Oracle</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/oracledb.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/embeddingStores/oracledb.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2541,9 +2671,9 @@ langchain4j.oracle.embedding-stores.default.table.create-option: create_if_not_e
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"datasources.default.dialect"="oracle"
-"langchain4j.oracle.embedding-stores.default.table"="test"
-"langchain4j.oracle.embedding-stores.default.table.create-option"="create_if_not_exists"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"datasources.default.dialect" = "oracle"
+"langchain4j.oracle.embedding-stores.default.table" = "test"
+"langchain4j.oracle.embedding-stores.default.table.create-option" = "create_if_not_exists"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2577,7 +2707,7 @@ langchain4j.oracle.embeddingStores.default.table.createOption = "create_if_not_e
 <h2 id="opensearch"><a class="anchor" href="#opensearch"></a>7.6 Open Search</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/opensearch.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/embeddingStores/opensearch.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2623,8 +2753,8 @@ langchain4j.opensearch.embedding-stores.default.dimension: 384</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"micronaut.opensearch.rest-client.http-hosts"="http://localhost:9200,http://127.0.0.2:9200"
-"langchain4j.opensearch.embedding-stores.default.dimension"=384</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"micronaut.opensearch.rest-client.http-hosts" = "http://localhost:9200,http://127.0.0.2:9200"
+"langchain4j.opensearch.embedding-stores.default.dimension" = 384</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2655,7 +2785,7 @@ langchain4j.opensearch.embeddingStores.default.dimension = 384</code></pre>
 <h2 id="pgvector"><a class="anchor" href="#pgvector"></a>7.7 PGVector</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/pgvector.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/embeddingStores/pgvector.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2725,10 +2855,10 @@ test-resources.containers.postgres.image-name: pgvector/pgvector:pg16</code></pr
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"datasources.default.dialect"="postgres"
-"langchain4j.pgvector.embedding-stores.default.table"="mytable"
-"langchain4j.pgvector.embedding-stores.default.dimension"=384
-"test-resources.containers.postgres.image-name"="pgvector/pgvector:pg16"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"datasources.default.dialect" = "postgres"
+"langchain4j.pgvector.embedding-stores.default.table" = "mytable"
+"langchain4j.pgvector.embedding-stores.default.dimension" = 384
+"test-resources.containers.postgres.image-name" = "pgvector/pgvector:pg16"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2765,7 +2895,7 @@ testResources.containers.postgres.imageName = "pgvector/pgvector:pg16"</code></p
 <h2 id="redis"><a class="anchor" href="#redis"></a>7.8 Redis</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/redis.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/embeddingStores/redis.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2810,9 +2940,9 @@ langchain4j.redis.embedding-stores.default.dimension: 384</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.redis.embedding-store.host"="localhost"
-"langchain4j.redis.embedding-store.port"=6379
-"langchain4j.redis.embedding-stores.default.dimension"=384</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.redis.embedding-store.host" = "localhost"
+"langchain4j.redis.embedding-store.port" = 6379
+"langchain4j.redis.embedding-stores.default.dimension" = 384</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2846,7 +2976,7 @@ langchain4j.redis.embeddingStores.default.dimension = 384</code></pre>
 <h2 id="qdrant"><a class="anchor" href="#qdrant"></a>7.9 Qdrant</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/embeddingStores/qdrant.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/embeddingStores/qdrant.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2927,9 +3057,9 @@ langchain4j.qdrant.embedding-store.collection-name: mycollection</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.qdrant.embedding-store.host"="localhost"
-"langchain4j.qdrant.embedding-store.port"=6334
-"langchain4j.qdrant.embedding-store.collection-name"="mycollection"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.qdrant.embedding-store.host" = "localhost"
+"langchain4j.qdrant.embedding-store.port" = 6334
+"langchain4j.qdrant.embedding-store.collection-name" = "mycollection"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2963,7 +3093,7 @@ langchain4j.qdrant.embeddingStore.collectionName = "mycollection"</code></pre>
 <h1 id="repository"><a class="anchor" href="#repository"></a>8 Repository</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/repository.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/repository.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2979,7 +3109,7 @@ langchain4j.qdrant.embeddingStore.collectionName = "mycollection"</code></pre>
 <h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>9 Release History</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.0.x/src/main/docs/guide/releaseHistory.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.1.x/src/main/docs/guide/releaseHistory.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
