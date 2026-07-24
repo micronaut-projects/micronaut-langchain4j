@@ -1,3 +1,5 @@
+io.micronaut.langchain4j.agentic
+io.micronaut.langchain4j.agentic.annotation
 io.micronaut.langchain4j.aiservices
 io.micronaut.langchain4j.annotation
 io.micronaut.langchain4j.cassandra.memory

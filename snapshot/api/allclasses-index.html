@@ -55,116 +55,147 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab6"><a href="io/micronaut/langchain4j/annotation/AiService.html" title="annotation interface in io.micronaut.langchain4j.annotation">AiService</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/agentic/AgentConfiguration.html" title="class in io.micronaut.langchain4j.agentic">AgentConfiguration</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Configuration for a named agentic service agent.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/agentic/AgentConfiguration.MemoryConfiguration.html" title="class in io.micronaut.langchain4j.agentic">AgentConfiguration.MemoryConfiguration</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Configuration for agent chat memory.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab6"><a href="io/micronaut/langchain4j/agentic/annotation/AgenticService.html" title="annotation interface in io.micronaut.langchain4j.agentic.annotation">AgenticService</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab6">
+<div class="block">Registers a LangChain4j declarative agentic service using AgenticServices.createAgenticSystem(Class, ...).</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/agentic/AgenticServiceFactory.html" title="class in io.micronaut.langchain4j.agentic">AgenticServiceFactory</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Factory for building LangChain4j agentic service proxies.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab4"><a href="io/micronaut/langchain4j/agentic/AgenticServiceInfo.html" title="class in io.micronaut.langchain4j.agentic">AgenticServiceInfo&lt;T&gt;</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab4">
+<div class="block">Definition of an Agentic service (typed agent) to be created.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/agentic/AgenticServiceInterceptor.html" title="class in io.micronaut.langchain4j.agentic">AgenticServiceInterceptor</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Interceptor that builds and caches a LangChain4j declarative agentic service instance
+from an interface annotated with <a href="io/micronaut/langchain4j/agentic/annotation/AgenticService.html" title="annotation interface in io.micronaut.langchain4j.agentic.annotation"><code>AgenticService</code></a>.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/agentic/AgentRegistry.html" title="class in io.micronaut.langchain4j.agentic">AgentRegistry</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Registry caching built agent proxies per agent interface.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab6"><a href="io/micronaut/langchain4j/annotation/AiService.html" title="annotation interface in io.micronaut.langchain4j.annotation">AiService</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab6">
 <div class="block">Registers an AI service.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/annotation/AiService.NoOpCustomizer.html" title="class in io.micronaut.langchain4j.annotation">AiService.NoOpCustomizer</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/annotation/AiService.NoOpCustomizer.html" title="class in io.micronaut.langchain4j.annotation">AiService.NoOpCustomizer</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">The default no-op customizer.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab4"><a href="io/micronaut/langchain4j/aiservices/AiServiceCreationContext.html" title="class in io.micronaut.langchain4j.aiservices">AiServiceCreationContext&lt;T&gt;</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab4">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab4"><a href="io/micronaut/langchain4j/aiservices/AiServiceCreationContext.html" title="class in io.micronaut.langchain4j.aiservices">AiServiceCreationContext&lt;T&gt;</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab4">
 <div class="block">A context object when an AiService is created.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/aiservices/AiServiceCustomizer.html" title="interface in io.micronaut.langchain4j.aiservices">AiServiceCustomizer&lt;T&gt;</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/aiservices/AiServiceCustomizer.html" title="interface in io.micronaut.langchain4j.aiservices">AiServiceCustomizer&lt;T&gt;</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Interface that allows customization the creation of <code>AiServices</code>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab4"><a href="io/micronaut/langchain4j/aiservices/AiServiceDef.html" title="class in io.micronaut.langchain4j.aiservices">AiServiceDef&lt;T&gt;</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab4">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab4"><a href="io/micronaut/langchain4j/aiservices/AiServiceDef.html" title="class in io.micronaut.langchain4j.aiservices">AiServiceDef&lt;T&gt;</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab4">
 <div class="block">Models a AiService definition.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/aiservices/AiServiceFactory.html" title="class in io.micronaut.langchain4j.aiservices">AiServiceFactory</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/aiservices/AiServiceFactory.html" title="class in io.micronaut.langchain4j.aiservices">AiServiceFactory</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">An AI services factory.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/chatmodels/tck/tests/AiServiceFluxTest.html" title="class in io.micronaut.langchain4j.chatmodels.tck.tests">AiServiceFluxTest</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/interceptor/AiServiceInterceptor.html" title="class in io.micronaut.langchain4j.interceptor">AiServiceInterceptor</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/chatmodels/tck/tests/AiServiceFluxTest.html" title="class in io.micronaut.langchain4j.chatmodels.tck.tests">AiServiceFluxTest</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/interceptor/AiServiceInterceptor.html" title="class in io.micronaut.langchain4j.interceptor">AiServiceInterceptor</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Interceptor implementation for register AI service.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/chatmodels/tck/tests/AiServiceTest.html" title="class in io.micronaut.langchain4j.chatmodels.tck.tests">AiServiceTest</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/chatmodels/tck/tests/BeanOfTypeChatLanguageModelExistsTest.html" title="class in io.micronaut.langchain4j.chatmodels.tck.tests">BeanOfTypeChatLanguageModelExistsTest</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/chatmodels/tck/tests/AiServiceTest.html" title="class in io.micronaut.langchain4j.chatmodels.tck.tests">AiServiceTest</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/cassandra/memory/CassandraChatMemoryStoreConfiguration.html" title="interface in io.micronaut.langchain4j.cassandra.memory">CassandraChatMemoryStoreConfiguration</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/chatmodels/tck/tests/BeanOfTypeChatLanguageModelExistsTest.html" title="class in io.micronaut.langchain4j.chatmodels.tck.tests">BeanOfTypeChatLanguageModelExistsTest</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/cassandra/memory/CassandraChatMemoryStoreConfiguration.html" title="interface in io.micronaut.langchain4j.cassandra.memory">CassandraChatMemoryStoreConfiguration</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Configuration for <code>CassandraChatMemoryStore.Builder</code>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/testutils/CassandraUtils.html" title="class in io.micronaut.langchain4j.testutils">CassandraUtils</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/chatmodels/tck/DefaultLangchain4jProviderEnabled.html" title="class in io.micronaut.langchain4j.chatmodels.tck">DefaultLangchain4jProviderEnabled</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/testutils/CassandraUtils.html" title="class in io.micronaut.langchain4j.testutils">CassandraUtils</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab4"><a href="io/micronaut/langchain4j/evaluation/EvaluationRequest.html" title="class in io.micronaut.langchain4j.evaluation">EvaluationRequest</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab4">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/chatmodels/tck/DefaultLangchain4jProviderEnabled.html" title="class in io.micronaut.langchain4j.chatmodels.tck">DefaultLangchain4jProviderEnabled</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab4"><a href="io/micronaut/langchain4j/evaluation/EvaluationRequest.html" title="class in io.micronaut.langchain4j.evaluation">EvaluationRequest</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab4">
 <div class="block">Captures the prompt, optional context, and generated response for an evaluation.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab4"><a href="io/micronaut/langchain4j/evaluation/EvaluationResult.html" title="class in io.micronaut.langchain4j.evaluation">EvaluationResult</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab4">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab4"><a href="io/micronaut/langchain4j/evaluation/EvaluationResult.html" title="class in io.micronaut.langchain4j.evaluation">EvaluationResult</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab4">
 <div class="block">Represents the result of an evaluation.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/evaluation/Evaluator.html" title="interface in io.micronaut.langchain4j.evaluation">Evaluator</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/evaluation/Evaluator.html" title="interface in io.micronaut.langchain4j.evaluation">Evaluator</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Evaluates an AI response against a request.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/evaluation/FactCheckingEvaluator.html" title="class in io.micronaut.langchain4j.evaluation">FactCheckingEvaluator</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/evaluation/FactCheckingEvaluator.html" title="class in io.micronaut.langchain4j.evaluation">FactCheckingEvaluator</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Evaluates whether the generated response is grounded in the supplied context.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/chatmodels/tck/tests/FluxFriend.html" title="interface in io.micronaut.langchain4j.chatmodels.tck.tests">FluxFriend</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/chatmodels/tck/tests/Friend.html" title="interface in io.micronaut.langchain4j.chatmodels.tck.tests">Friend</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/chatmodels/tck/tests/FluxFriend.html" title="interface in io.micronaut.langchain4j.chatmodels.tck.tests">FluxFriend</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/testutils/GlobalTestLifecycle.html" title="class in io.micronaut.langchain4j.testutils">GlobalTestLifecycle</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/utils/ImageContentUtils.html" title="class in io.micronaut.langchain4j.utils">ImageContentUtils</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/chatmodels/tck/tests/Friend.html" title="interface in io.micronaut.langchain4j.chatmodels.tck.tests">Friend</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/testutils/GlobalTestLifecycle.html" title="class in io.micronaut.langchain4j.testutils">GlobalTestLifecycle</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/utils/ImageContentUtils.html" title="class in io.micronaut.langchain4j.utils">ImageContentUtils</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Utility class to create <code>ImageContent</code> instances.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/store/memory/chat/inmemory/InMemoryChatMemoryConfiguration.html" title="interface in io.micronaut.langchain4j.store.memory.chat.inmemory">InMemoryChatMemoryConfiguration</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/store/memory/chat/inmemory/InMemoryChatMemoryConfiguration.html" title="interface in io.micronaut.langchain4j.store.memory.chat.inmemory">InMemoryChatMemoryConfiguration</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Configuration for the creation of <code>InMemoryChatMemoryStore</code> instances.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab4"><a href="io/micronaut/langchain4j/embedding/InMemoryEmbeddingStoreConfig.html" title="class in io.micronaut.langchain4j.embedding">InMemoryEmbeddingStoreConfig</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab4">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab4"><a href="io/micronaut/langchain4j/embedding/InMemoryEmbeddingStoreConfig.html" title="class in io.micronaut.langchain4j.embedding">InMemoryEmbeddingStoreConfig</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab4">
 <div class="block">Configuration for in-memory stores.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/embedding/InMemoryEmbeddingStoreFactory.html" title="class in io.micronaut.langchain4j.embedding">InMemoryEmbeddingStoreFactory</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/embedding/InMemoryEmbeddingStoreFactory.html" title="class in io.micronaut.langchain4j.embedding">InMemoryEmbeddingStoreFactory</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Factory for in-memory stores.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/chatmodels/tck/tests/JokeGenerator.html" title="interface in io.micronaut.langchain4j.chatmodels.tck.tests">JokeGenerator</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab6"><a href="io/micronaut/langchain4j/annotation/Lang4jConfig.html" title="annotation interface in io.micronaut.langchain4j.annotation">Lang4jConfig</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab6">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/chatmodels/tck/tests/JokeGenerator.html" title="interface in io.micronaut.langchain4j.chatmodels.tck.tests">JokeGenerator</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab6"><a href="io/micronaut/langchain4j/annotation/Lang4jConfig.html" title="annotation interface in io.micronaut.langchain4j.annotation">Lang4jConfig</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab6">
 <div class="block">Generates the code necessary to integrate a ChatLanguageModel provider.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab6"><a href="io/micronaut/langchain4j/annotation/Lang4jConfig.Model.html" title="annotation interface in io.micronaut.langchain4j.annotation">Lang4jConfig.Model</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab6">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab6"><a href="io/micronaut/langchain4j/annotation/Lang4jConfig.Model.html" title="annotation interface in io.micronaut.langchain4j.annotation">Lang4jConfig.Model</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab6">
 <div class="block">Add configuration for the given model.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab6"><a href="io/micronaut/langchain4j/annotation/Lang4jConfig.Property.html" title="annotation interface in io.micronaut.langchain4j.annotation">Lang4jConfig.Property</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab6">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab6"><a href="io/micronaut/langchain4j/annotation/Lang4jConfig.Property.html" title="annotation interface in io.micronaut.langchain4j.annotation">Lang4jConfig.Property</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab6">
 <div class="block">Configuration for an individual property.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/processor/Langchain4jConfigVisitor.html" title="class in io.micronaut.langchain4j.processor">Langchain4jConfigVisitor</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/chatmodels/tck/Langchain4jProviderEnabled.html" title="interface in io.micronaut.langchain4j.chatmodels.tck">Langchain4jProviderEnabled</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/store/memory/chat/MessageWindowChatMemoryConfiguration.html" title="interface in io.micronaut.langchain4j.store.memory.chat">MessageWindowChatMemoryConfiguration</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/processor/Langchain4jConfigVisitor.html" title="class in io.micronaut.langchain4j.processor">Langchain4jConfigVisitor</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/chatmodels/tck/Langchain4jProviderEnabled.html" title="interface in io.micronaut.langchain4j.chatmodels.tck">Langchain4jProviderEnabled</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="io/micronaut/langchain4j/store/memory/chat/MessageWindowChatMemoryConfiguration.html" title="interface in io.micronaut.langchain4j.store.memory.chat">MessageWindowChatMemoryConfiguration</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Configuration for <code>MessageWindowChatMemory</code>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/store/memory/chat/MessageWindowChatMemoryConfigurationProperties.html" title="class in io.micronaut.langchain4j.store.memory.chat">MessageWindowChatMemoryConfigurationProperties</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/store/memory/chat/MessageWindowChatMemoryConfigurationProperties.html" title="class in io.micronaut.langchain4j.store.memory.chat">MessageWindowChatMemoryConfigurationProperties</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block"><code>ConfigurationProperties</code> for <a href="io/micronaut/langchain4j/store/memory/chat/MessageWindowChatMemoryConfiguration.html" title="interface in io.micronaut.langchain4j.store.memory.chat"><code>MessageWindowChatMemoryConfiguration</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/store/memory/chat/MessageWindowChatMemoryFactory.html" title="class in io.micronaut.langchain4j.store.memory.chat">MessageWindowChatMemoryFactory</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/store/memory/chat/MessageWindowChatMemoryFactory.html" title="class in io.micronaut.langchain4j.store.memory.chat">MessageWindowChatMemoryFactory</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Utility class to obtain instances of <code>MessageWindowChatMemory.Builder</code>.</div>
 </div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/info/MicronautLangchain4jAgenticModuleInfo.html" title="class in io.micronaut.langchain4j.info">MicronautLangchain4jAgenticModuleInfo</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/info/MicronautLangchain4jAnthropicModuleInfo.html" title="class in io.micronaut.langchain4j.info">MicronautLangchain4jAnthropicModuleInfo</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="io/micronaut/langchain4j/info/MicronautLangchain4jAzureModuleInfo.html" title="class in io.micronaut.langchain4j.info">MicronautLangchain4jAzureModuleInfo</a></div>
