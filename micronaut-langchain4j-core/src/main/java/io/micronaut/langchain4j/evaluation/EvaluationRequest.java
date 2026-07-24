@@ -17,6 +17,7 @@ package io.micronaut.langchain4j.evaluation;
 
 import dev.langchain4j.rag.content.Content;
 import dev.langchain4j.service.Result;
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Introspected;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -36,6 +37,7 @@ import static io.micronaut.core.util.StringUtils.hasText;
  * @since 2.1.1
  */
 @Introspected
+@Experimental
 public record EvaluationRequest(
     @NonNull String userText,
     @Nullable String context,

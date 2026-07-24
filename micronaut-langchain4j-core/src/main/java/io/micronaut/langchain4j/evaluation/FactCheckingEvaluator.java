@@ -16,6 +16,7 @@
 package io.micronaut.langchain4j.evaluation;
 
 import dev.langchain4j.model.chat.ChatModel;
+import io.micronaut.core.annotation.Experimental;
 import org.jspecify.annotations.NonNull;
 
 /**
@@ -23,6 +24,7 @@ import org.jspecify.annotations.NonNull;
  *
  * @since 2.1.1
  */
+@Experimental
 public final class FactCheckingEvaluator extends PromptBasedEvaluator {
 
     /**

@@ -16,6 +16,7 @@
 package io.micronaut.langchain4j.evaluation;
 
 import io.micronaut.core.annotation.Introspected;
+import io.micronaut.core.annotation.Experimental;
 import org.jspecify.annotations.NonNull;
 
 import static io.micronaut.core.util.StringUtils.hasText;
@@ -28,6 +29,7 @@ import static io.micronaut.core.util.StringUtils.hasText;
  * @since 2.1.1
  */
 @Introspected
+@Experimental
 public record EvaluationResult(
     boolean passing,
     @NonNull String feedback
