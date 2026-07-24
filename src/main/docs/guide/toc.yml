@@ -4,6 +4,7 @@ quickStart:
   title: Quick Start
 responseStreaming: Response Streaming
 aiService: AI Service
+testing: Testing
 tools: Tools
 chatModels:
   title: Chat Language Models
@@ -33,4 +34,3 @@ embeddingStores:
   qdrant: Qdrant
 repository: Repository
 releaseHistory: Release History
-
