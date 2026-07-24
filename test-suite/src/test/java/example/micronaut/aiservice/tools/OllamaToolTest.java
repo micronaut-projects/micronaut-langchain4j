@@ -8,10 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-@DisabledIfEnvironmentVariable(named = "CI", matches = ".*")
 @Property(name = "langchain4j.ollama.model-name", value = OllamaUtils.TOOL_MODEL_NAME)
 @Testcontainers(disabledWithoutDocker = true)
 @MicronautTest(startApplication = false)
