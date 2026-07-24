@@ -18,12 +18,14 @@ dependencies {
     testImplementation(projects.micronautLangchain4jStoreNeo4j)
     testImplementation(projects.micronautLangchain4jCassandra)
     testImplementation(mnTest.micronaut.test.junit5)
-    testImplementation(mnTest.junit.jupiter.engine)
     testImplementation(libs.testcontainers.junit.jupiter)
     testRuntimeOnly(mnLogging.logback.classic)
     testRuntimeOnly(mnTest.junit.jupiter.engine)
     testImplementation(mnTest.junit.jupiter.api)
     testRuntimeOnly(mnTest.junit.platform.launcher)
+    testRuntimeOnly(mn.micronaut.http.client)
+    testAnnotationProcessor(mnSerde.micronaut.serde.processor)
+    testImplementation(mnSerde.micronaut.serde.jackson)
 }
 tasks.withType<Test> {
     useJUnitPlatform()
