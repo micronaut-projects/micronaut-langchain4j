@@ -32,7 +32,7 @@ public abstract class PromptBasedEvaluator implements Evaluator {
 
     /**
      * @param chatModel The judge model
-     * @since 2.0.0
+     * @since 2.1.1
      */
     protected PromptBasedEvaluator(@NonNull ChatModel chatModel) {
         this.chatModel = Objects.requireNonNull(chatModel, "chatModel");
@@ -47,14 +47,14 @@ public abstract class PromptBasedEvaluator implements Evaluator {
 
     /**
      * @return The evaluation name shown to the judge model
-     * @since 2.0.0
+     * @since 2.1.1
      */
     @NonNull
     protected abstract String evaluationName();
 
     /**
      * @return The evaluation criteria shown to the judge model
-     * @since 2.0.0
+     * @since 2.1.1
      */
     @NonNull
     protected abstract String evaluationCriteria();
@@ -63,7 +63,7 @@ public abstract class PromptBasedEvaluator implements Evaluator {
      * Allows subclasses to validate the request before evaluation.
      *
      * @param request The request
-     * @since 2.0.0
+     * @since 2.1.1
      */
     protected void validate(@NonNull EvaluationRequest request) {
         // no-op
