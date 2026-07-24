@@ -135,21 +135,23 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-embeddingStoresInMemory"><a href="#embeddingStoresInMemory"><strong>7.1</strong><span>In-Memory</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-elasticsearch"><a href="#elasticsearch"><strong>7.2</strong><span>Elastic Search</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-chroma"><a href="#chroma"><strong>7.2</strong><span>Chroma</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-mongodb"><a href="#mongodb"><strong>7.3</strong><span>MongoDB</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-elasticsearch"><a href="#elasticsearch"><strong>7.3</strong><span>Elastic Search</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-neo4j"><a href="#neo4j"><strong>7.4</strong><span>Neo4j</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-mongodb"><a href="#mongodb"><strong>7.4</strong><span>MongoDB</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-oracledb"><a href="#oracledb"><strong>7.5</strong><span>Oracle</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-neo4j"><a href="#neo4j"><strong>7.5</strong><span>Neo4j</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-opensearch"><a href="#opensearch"><strong>7.6</strong><span>Open Search</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-oracledb"><a href="#oracledb"><strong>7.6</strong><span>Oracle</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-pgvector"><a href="#pgvector"><strong>7.7</strong><span>PGVector</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-opensearch"><a href="#opensearch"><strong>7.7</strong><span>Open Search</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-redis"><a href="#redis"><strong>7.8</strong><span>Redis</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-pgvector"><a href="#pgvector"><strong>7.8</strong><span>PGVector</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-qdrant"><a href="#qdrant"><strong>7.9</strong><span>Qdrant</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-redis"><a href="#redis"><strong>7.9</strong><span>Redis</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-qdrant"><a href="#qdrant"><strong>7.10</strong><span>Qdrant</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>8</strong><span>Repository</span></a></div>
         
@@ -2359,7 +2361,88 @@ langchain4j.vertexAiGemini.location = "YOUR_LOCATION"</code></pre>
 <code>langchain4j.in-memory.embedding-store.enabled</code> with value <code>false</code> to disable it.</p>
 </div>
 
-<h2 id="elasticsearch"><a class="anchor" href="#elasticsearch"></a>7.2 Elastic Search</h2>
+<h2 id="chroma"><a class="anchor" href="#chroma"></a>7.2 Chroma</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.2.x/src/main/docs/guide/embeddingStores/chroma.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.langchain4j:micronaut-langchain4j-store-chroma")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.langchain4j&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-langchain4j-store-chroma&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="openblock">
+<div class="title">Example Configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">langchain4j.chroma.embedding-store.base-url=http://localhost:8000
+langchain4j.chroma.embedding-store.collection-name=documents
+langchain4j.chroma.embedding-store.api-version=V2</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">langchain4j.chroma.embedding-store.base-url: http://localhost:8000
+langchain4j.chroma.embedding-store.collection-name: documents
+langchain4j.chroma.embedding-store.api-version: V2</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">"langchain4j.chroma.embedding-store.base-url" = "http://localhost:8000"
+"langchain4j.chroma.embedding-store.collection-name" = "documents"
+"langchain4j.chroma.embedding-store.api-version" = "V2"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">langchain4j.chroma.embeddingStore.baseUrl = "http://localhost:8000"
+langchain4j.chroma.embeddingStore.collectionName = "documents"
+langchain4j.chroma.embeddingStore.apiVersion = "V2"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  "langchain4j.chroma.embedding-store.base-url" = "http://localhost:8000"
+  "langchain4j.chroma.embedding-store.collection-name" = "documents"
+  "langchain4j.chroma.embedding-store.api-version" = "V2"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "langchain4j.chroma.embedding-store.base-url": "http://localhost:8000",
+  "langchain4j.chroma.embedding-store.collection-name": "documents",
+  "langchain4j.chroma.embedding-store.api-version": "V2"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h2 id="elasticsearch"><a class="anchor" href="#elasticsearch"></a>7.3 Elastic Search</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.2.x/src/main/docs/guide/embeddingStores/elasticsearch.adoc"'>
@@ -2437,7 +2520,7 @@ langchain4j.elasticsearch.embeddingStores.default.dimension = 384</code></pre>
 </div>
 </div>
 
-<h2 id="mongodb"><a class="anchor" href="#mongodb"></a>7.3 MongoDB</h2>
+<h2 id="mongodb"><a class="anchor" href="#mongodb"></a>7.4 MongoDB</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.2.x/src/main/docs/guide/embeddingStores/mongodb.adoc"'>
@@ -2524,7 +2607,7 @@ langchain4j.mongodbAtlas.embeddingStores.default.indexName = "testindex"</code><
 </div>
 </div>
 
-<h2 id="neo4j"><a class="anchor" href="#neo4j"></a>7.4 Neo4j</h2>
+<h2 id="neo4j"><a class="anchor" href="#neo4j"></a>7.5 Neo4j</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.2.x/src/main/docs/guide/embeddingStores/neo4j.adoc"'>
@@ -2602,7 +2685,7 @@ langchain4j.neo4j.embeddingStores.default.dimension = 384</code></pre>
 </div>
 </div>
 
-<h2 id="oracledb"><a class="anchor" href="#oracledb"></a>7.5 Oracle</h2>
+<h2 id="oracledb"><a class="anchor" href="#oracledb"></a>7.6 Oracle</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.2.x/src/main/docs/guide/embeddingStores/oracledb.adoc"'>
@@ -2704,7 +2787,7 @@ langchain4j.oracle.embeddingStores.default.table.createOption = "create_if_not_e
 </div>
 </div>
 
-<h2 id="opensearch"><a class="anchor" href="#opensearch"></a>7.6 Open Search</h2>
+<h2 id="opensearch"><a class="anchor" href="#opensearch"></a>7.7 Open Search</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.2.x/src/main/docs/guide/embeddingStores/opensearch.adoc"'>
@@ -2782,7 +2865,7 @@ langchain4j.opensearch.embeddingStores.default.dimension = 384</code></pre>
 </div>
 </div>
 
-<h2 id="pgvector"><a class="anchor" href="#pgvector"></a>7.7 PGVector</h2>
+<h2 id="pgvector"><a class="anchor" href="#pgvector"></a>7.8 PGVector</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.2.x/src/main/docs/guide/embeddingStores/pgvector.adoc"'>
@@ -2892,7 +2975,7 @@ testResources.containers.postgres.imageName = "pgvector/pgvector:pg16"</code></p
 </div>
 </div>
 
-<h2 id="redis"><a class="anchor" href="#redis"></a>7.8 Redis</h2>
+<h2 id="redis"><a class="anchor" href="#redis"></a>7.9 Redis</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.2.x/src/main/docs/guide/embeddingStores/redis.adoc"'>
@@ -2973,7 +3056,7 @@ langchain4j.redis.embeddingStores.default.dimension = 384</code></pre>
 </div>
 </div>
 
-<h2 id="qdrant"><a class="anchor" href="#qdrant"></a>7.9 Qdrant</h2>
+<h2 id="qdrant"><a class="anchor" href="#qdrant"></a>7.10 Qdrant</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-langchain4j/edit/2.2.x/src/main/docs/guide/embeddingStores/qdrant.adoc"'>
