@@ -77,6 +77,7 @@ micronaut-oraclecloud-bmc-generativeaiinference = { module = 'io.micronaut.oracl
 micronaut-sourcegen = { module = 'io.micronaut.sourcegen:micronaut-sourcegen-bom', version.ref = 'micronaut-sourcegen' }
 micronaut-test-resources = { module = 'io.micronaut.testresources:micronaut-test-resources-bom', version.ref = 'micronaut-test-resources' }
 langchain4j = { module = 'dev.langchain4j:langchain4j' }
+langchain4j-agentic = { module = 'dev.langchain4j:langchain4j-agentic' }
 langchain4j-http-client = { module = 'dev.langchain4j:langchain4j-http-client' }
 langchain4j-jlama = { module = 'dev.langchain4j:langchain4j-jlama' }
 langchain4j-ollama = { module = 'dev.langchain4j:langchain4j-ollama' }

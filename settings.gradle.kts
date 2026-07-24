@@ -22,6 +22,7 @@ rootProject.name = "micronaut-langchain4j-parent"
 include("micronaut-langchain4j-bom")
 include("micronaut-langchain4j-processor")
 include("micronaut-langchain4j-core")
+include("micronaut-langchain4j-agentic")
 include("micronaut-langchain4j-cassandra")
 include("micronaut-langchain4j-jlama")
 include("micronaut-langchain4j-googleai-gemini")

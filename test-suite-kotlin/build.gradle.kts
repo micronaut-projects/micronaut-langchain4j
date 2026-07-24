@@ -11,6 +11,7 @@ dependencies {
     implementation(mnKotlin.micronaut.kotlin.runtime)
     ksp(project(":micronaut-langchain4j-processor"))
     implementation(project(":micronaut-langchain4j-core"))
+    implementation(project(":micronaut-langchain4j-agentic"))
     implementation(project(":micronaut-langchain4j-openai"))
     testImplementation(project(":micronaut-langchain4j-ollama"))
     testImplementation(project(":test-suite-utils"))

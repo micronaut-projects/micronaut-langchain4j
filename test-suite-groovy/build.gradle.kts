@@ -10,6 +10,7 @@ dependencies {
     implementation(mnGroovy.micronaut.runtime.groovy)
     compileOnly(project(":micronaut-langchain4j-processor"))
     implementation(project(":micronaut-langchain4j-core"))
+    implementation(project(":micronaut-langchain4j-agentic"))
     implementation(project(":micronaut-langchain4j-openai"))
     testImplementation(project(":micronaut-langchain4j-ollama"))
 
