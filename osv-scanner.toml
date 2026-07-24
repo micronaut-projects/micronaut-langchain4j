@@ -1,6 +1,0 @@
-[[IgnoredVulns]]
-id = "GHSA-rcgg-9c38-7xpx"
-reason = "io.opentelemetry:opentelemetry-api:1.37.0 vulnerable"
-[[IgnoredVulns]]
-id = "GHSA-4q2v-9p7v-3v22"
-reason = "CVE-2025-22227 in reactor-netty-http - upgrading from 1.0.x to 1.2.x would break azure-core-http-netty API compatibility. Also excluded from ossIndexAudit."

@@ -15,7 +15,6 @@
  */
 package io.micronaut.langchain4j.openai;
 
-
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
@@ -70,6 +69,10 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
         ),
         @Lang4jConfig.Property(
             name = "tokenizer",
+            injected = true
+        ),
+        @Lang4jConfig.Property(
+            name = "httpClientBuilder",
             injected = true
         ),
         @Lang4jConfig.Property(name = "baseUrl", common = true, required = true, defaultValue = "https://api.openai.com/v1/"),

@@ -3,5 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.langchain4j.anthropic)
+    implementation(libs.langchain4j.anthropic) {
+        exclude(group = "dev.langchain4j", module = "langchain4j-http-client-jdk")
+    }
 }

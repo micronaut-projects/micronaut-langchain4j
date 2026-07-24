@@ -19,4 +19,3 @@ dependencies {
     testImplementation(platform(mnTest.boms.testcontainers))
     testImplementation(libs.junit.platform.engine)
 }
-
