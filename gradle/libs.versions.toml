@@ -41,7 +41,7 @@ commons-lang3 = "3.20.0"
 gson = "2.14.0"
 grpc-netty-shaded = "1.82.2"
 jinjava = "2.8.4"
-tools-jackson-core = "3.2.1"
+tools-jackson-core = "3.2.2"
 # Transitive dependencies of third-party clients upgraded to fix known vulnerabilities
 apache-httpclient5 = "5.6.4"
 apache-httpcore5 = "5.4.3"
