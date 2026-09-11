@@ -16,13 +16,13 @@
 # a managed version (a version which alias starts with "managed-"
 
 [versions]
-micronaut = "5.1.10"
+micronaut = "5.1.14"
 micronaut-platform = "5.0.0-RC1"
 micronaut-groovy = "5.1.0"
 micronaut-kotlin = "5.1.0"
 micronaut-serde = "3.1.0"
 micronaut-sql = "7.1.0"
-micronaut-opensearch = "2.1.0"
+micronaut-opensearch = "2.1.1"
 micronaut-neo4j = "8.1.0"
 micronaut-mongodb = "6.1.0"
 micronaut-elasticsearch = "6.1.0"
@@ -42,6 +42,10 @@ gson = "2.14.0"
 grpc-netty-shaded = "1.82.2"
 jinjava = "2.8.4"
 tools-jackson-core = "3.2.1"
+# Transitive dependencies of third-party clients upgraded to fix known vulnerabilities
+apache-httpclient5 = "5.6.4"
+apache-httpcore5 = "5.4.3"
+jsoup = "1.23.2"
 
 # Managed versions appear in the BOM
 managed-langchain4j = "1.18.0"
@@ -57,6 +61,10 @@ gson = { module = 'com.google.code.gson:gson', version.ref = 'gson' }
 grpc-netty-shaded = { module = 'io.grpc:grpc-netty-shaded', version.ref = 'grpc-netty-shaded' }
 jinjava = { module = "com.hubspot.jinjava:jinjava", version.ref = "jinjava"}
 tools-jackson-core = { module = 'tools.jackson.core:jackson-core', version.ref = 'tools-jackson-core' }
+apache-httpclient5 = { module = 'org.apache.httpcomponents.client5:httpclient5', version.ref = 'apache-httpclient5' }
+apache-httpcore5 = { module = 'org.apache.httpcomponents.core5:httpcore5', version.ref = 'apache-httpcore5' }
+apache-httpcore5-h2 = { module = 'org.apache.httpcomponents.core5:httpcore5-h2', version.ref = 'apache-httpcore5' }
+jsoup = { module = 'org.jsoup:jsoup', version.ref = 'jsoup' }
 
 # Micronaut BOMS
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut'  }
