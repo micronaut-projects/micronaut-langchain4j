@@ -16,9 +16,11 @@ public final class OllamaUtils {
     public static final String CHAT_MODEL_NAME = "tinyllama";
     public static final String TOOL_MODEL_NAME = "qwen2.5:0.5b";
     public static final String EMBEDDING_MODEL_NAME = "all-minilm";
-    private static final String IMAGE_NAME = "ollama/ollama:latest";
+    // Pinned: server defaults change between releases and alter what the small test models answer.
+    private static final String OLLAMA_VERSION = "0.34.0";
+    private static final String IMAGE_NAME = "ollama/ollama:" + OLLAMA_VERSION;
     // The cached image includes the Ollama server binary as well as the downloaded models.
-    private static final String NEW_IMAGE_NAME = "ollama/ollama-tinyllama-qwen2.5-0.5b-all-minilm-v2";
+    private static final String NEW_IMAGE_NAME = "ollama/ollama-" + OLLAMA_VERSION + "-tinyllama-qwen2.5-0.5b-all-minilm";
     private static OllamaContainer container;
 
     private OllamaUtils() {
