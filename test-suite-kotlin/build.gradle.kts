@@ -6,10 +6,11 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    ksp("io.micronaut:micronaut-inject-kotlin")
-    kspTest("io.micronaut:micronaut-inject-kotlin")
+    ksp(mn.micronaut.inject.kotlin)
+    kspTest(mn.micronaut.inject.kotlin)
     implementation(mnKotlin.micronaut.kotlin.runtime)
     ksp(project(":micronaut-langchain4j-processor"))
+    kspTest(project(":micronaut-langchain4j-processor"))
     implementation(project(":micronaut-langchain4j-core"))
     implementation(project(":micronaut-langchain4j-agentic"))
     implementation(project(":micronaut-langchain4j-openai"))

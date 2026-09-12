@@ -16,6 +16,8 @@ if (System.getenv("SONAR_TOKEN") != null) {
     configure<SonarExtension> {
         properties {
             property("sonar.exclusions", "**/example/**")
+            // test-suite-utils is test infrastructure in a main source set, only exercised by other modules' tests
+            property("sonar.coverage.exclusions", "**/testutils/**")
         }
     }
 }
