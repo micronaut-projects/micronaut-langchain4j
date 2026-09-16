@@ -134,4 +134,4 @@ gradle-micronaut = { module = "io.micronaut.gradle:micronaut-gradle-plugin", ver
 [bundles]
 
 [plugins]
-micronaut-build-shared-settings = { id = "io.micronaut.build.shared.settings", version = "8.0.2" }
+micronaut-build-shared-settings = { id = "io.micronaut.build.shared.settings", version = "8.1.1" }

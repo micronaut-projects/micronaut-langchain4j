@@ -6,6 +6,12 @@ snippet::example.micronaut.aiservice.Friend[source="main"]
 <1> Define an interface annotated with ann:langchain4j.annotation.AiService[]
 <2> Use Langchain4j annotations like `@SystemMessage`
 
+[.lang-python]
+NOTE: In Python an AI service is an abstract class (`abc.ABC`) whose methods are declared with `...` bodies; the decorators mirror the LangChain4j annotations.
+
+[.lang-python]
+WARNING: The Python compiler turns a Python `@AiService` into a Micronaut bean, but LangChain4j builds the service implementation reflectively from the Java interface, which the generated Python bean does not expose yet. Python AI services therefore cannot be invoked at runtime with the current Python compiler release; the Python snippets document the intended programming model.
+
 You can now inject the `@AiService` definition into any Micronaut component including tests:
 
 .Calling `@AiService` definitions
