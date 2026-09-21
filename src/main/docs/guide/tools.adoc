@@ -12,4 +12,4 @@ You can supply the tools to use to an `@AiService`:
 snippet::example.micronaut.aiservice.tools.CompanyBot[source="main"]
 
 [.lang-python]
-WARNING: LangChain4j discovers `@Tool` methods reflectively on the Java class of the tool bean, which the bean generated for a Python class does not expose yet, so Python tools (like Python AI services) cannot be used at runtime with the current Python compiler release.
+NOTE: LangChain4j discovers `@Tool` methods reflectively on the Java class of the tool bean, so the annotations of Python tool classes and AI services must be copied onto the generated Java classes: declare the `@AllowsReflection` hint (`micronaut.core.annotation`) on them, or name their packages in the `micronaut.introspection.allow-reflection` compiler option (`micronautBuild.python.compilerArgs.add("-Amicronaut.introspection.allowReflection=example.micronaut.*")` in the Gradle build, as the examples of this guide do). The tool is registered under the method name, which the model sees, so the Python example keeps the Java name `lastUpdatePrivacy`.

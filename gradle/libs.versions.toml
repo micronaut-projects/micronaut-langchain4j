@@ -16,7 +16,7 @@
 # a managed version (a version which alias starts with "managed-"
 
 [versions]
-micronaut = "5.2.2"
+micronaut = "5.2.3"
 micronaut-platform = "5.0.0-RC1"
 micronaut-groovy = "5.1.0"
 micronaut-kotlin = "5.1.0"
@@ -134,4 +134,4 @@ gradle-micronaut = { module = "io.micronaut.gradle:micronaut-gradle-plugin", ver
 [bundles]
 
 [plugins]
-micronaut-build-shared-settings = { id = "io.micronaut.build.shared.settings", version = "8.1.1" }
+micronaut-build-shared-settings = { id = "io.micronaut.build.shared.settings", version = "8.1.2" }

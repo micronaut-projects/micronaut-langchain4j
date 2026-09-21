@@ -8,7 +8,7 @@ from jakarta.inject import Inject
 from java.util.concurrent import Executor, ForkJoinPool
 from micronaut.langchain4j.agentic.annotation import AgenticService
 from micronaut.test.extensions.junit5.annotation import MicronautTest
-from org.junit.jupiter.api import Disabled, Test
+from org.junit.jupiter.api import Test
 
 
 @AgenticService
@@ -74,7 +74,6 @@ class EveningPlanner(ABC):
 
 # Validates declarative ParallelAgent workflow wiring through @AgenticService.
 # Ensures Micronaut DI correctly builds the agentic system and executes the parallel plan.
-@Disabled("TODO(python): LangChain4j builds agentic services reflectively from the Java interface")
 @MicronautTest(startApplication=False, environments=["agentic-test"])
 class ParallelPlanningAgentTest:
     agent: Annotated[EveningPlanner, Inject]

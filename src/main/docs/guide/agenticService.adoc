@@ -14,7 +14,7 @@ Annotate an interface with api:io.micronaut.langchain4j.agentic.annotation.Agent
 NOTE: In Python an agentic service is an abstract class (`abc.ABC`) whose methods are declared with `...` bodies; the decorators mirror the LangChain4j annotations.
 
 [.lang-python]
-WARNING: The Python compiler turns a Python `@AgenticService` into a Micronaut bean, but LangChain4j builds the agents reflectively from the Java interface, which the generated Python bean does not expose yet. Python agentic services therefore cannot be invoked at runtime with the current Python compiler release; the Python snippets document the intended programming model.
+NOTE: LangChain4j builds the agents reflectively from the Java interface generated for the Python class and reads the `@Agent`, `@UserMessage`, `@SequenceAgent`, ... annotations from it, so the annotations must be copied onto the generated interface: declare the `@AllowsReflection` hint (`micronaut.core.annotation`) on the agentic service, or name its package in the `micronaut.introspection.allow-reflection` compiler option (`micronautBuild.python.compilerArgs.add("-Amicronaut.introspection.allowReflection=example.micronaut.*")` in the Gradle build, as the examples of this guide do).
 
 The integration interprets your annotations and uses Micronaut DI to wire the underlying LangChain4j builders.
 It supports:

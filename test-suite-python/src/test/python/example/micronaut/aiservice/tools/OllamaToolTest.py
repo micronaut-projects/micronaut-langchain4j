@@ -3,12 +3,11 @@ from typing import Annotated
 from jakarta.inject import Inject
 from micronaut.context.annotation import Property
 from micronaut.test.extensions.junit5.annotation import MicronautTest
-from org.junit.jupiter.api import Disabled, Test
+from org.junit.jupiter.api import Test
 
 from example.micronaut.aiservice.tools.CompanyBot import CompanyBot
 
 
-@Disabled("TODO(python): LangChain4j builds AI services reflectively from the Java interface")
 @Property(name="langchain4j.ollama.model-name", value="qwen2.5:0.5b")
 @MicronautTest(startApplication=False, environments=["ollama"])
 class OllamaToolTest:
