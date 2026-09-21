@@ -3,10 +3,13 @@ Tools allow AI models to request specific actions that extends beyond their buil
 snippet::example.micronaut.aiservice.tools.LegalDocumentTools[source="main"]
 
 <1> You should annotate the classes with `@Tool` methods with `@Singleton`.
-<2> The `@Tool` value specifies the description of the tool. The `lastUpdatePrivacy()` method returns date when a company PRIVACY document was last updated.
+<2> The `@Tool` value specifies the description of the tool. The annotated method returns the date when a company PRIVACY document was last updated.
 A model would have no way to know the last date when the PRIVACY document was updated. Hence, it is a good candidate for a tool.
 <3> The dates are harcoded for the purpose of this example, but they could have been retrieved from a database or external API.
 
 You can supply the tools to use to an `@AiService`:
 
 snippet::example.micronaut.aiservice.tools.CompanyBot[source="main"]
+
+[.lang-python]
+NOTE: LangChain4j discovers `@Tool` methods reflectively on the Java class of the tool bean, so the annotations of Python tool classes and AI services must be copied onto the generated Java classes: declare the `@AllowsReflection` hint (`micronaut.core.annotation`) on them, or name their packages in the `micronaut.introspection.allow-reflection` compiler option (`micronautBuild.python.compilerArgs.add("-Amicronaut.introspection.allowReflection=example.micronaut.*")` in the Gradle build, as the examples of this guide do). The tool is registered under the method name, which the model sees, so the Python example keeps the Java name `lastUpdatePrivacy`.
