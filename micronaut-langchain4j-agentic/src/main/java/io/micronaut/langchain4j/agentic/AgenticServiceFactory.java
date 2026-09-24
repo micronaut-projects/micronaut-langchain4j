@@ -29,16 +29,10 @@ import dev.langchain4j.agentic.workflow.impl.LoopAgentServiceImpl;
 import dev.langchain4j.agentic.workflow.impl.ParallelAgentServiceImpl;
 import dev.langchain4j.agentic.workflow.impl.ParallelMapperServiceImpl;
 import dev.langchain4j.agentic.workflow.impl.SequentialAgentServiceImpl;
-import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.memory.chat.ChatMemoryProvider;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
-import dev.langchain4j.model.embedding.EmbeddingModel;
-import dev.langchain4j.rag.RetrievalAugmentor;
-import dev.langchain4j.rag.content.retriever.ContentRetriever;
-import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.service.tool.ToolProvider;
-import dev.langchain4j.store.embedding.EmbeddingStore;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.BeanProvider;
 import io.micronaut.context.BeanResolutionContext;
@@ -61,6 +55,7 @@ import io.micronaut.inject.BeanIdentifier;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.langchain4j.agentic.annotation.AgenticService;
 import io.micronaut.langchain4j.tools.ToolRegistry;
+import io.micronaut.langchain4j.utils.RetrievalUtils;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -276,21 +271,7 @@ public final class AgenticServiceFactory {
     private static void configureRag(BeanContext beanContext,
                                      String agentName,
                                      AgentBuilder<?, ?> agentBuilder) {
-        lookupByNameOrDefault(beanContext, agentName, RetrievalAugmentor.class, agentBuilder::retrievalAugmentor);
-        ContentRetriever contentRetriever = resolveByNameOrDefault(beanContext, agentName, ContentRetriever.class);
-        if (contentRetriever != null) {
-            agentBuilder.contentRetriever(contentRetriever);
-            return;
-        }
-        EmbeddingModel embeddingModel = resolveByNameOrDefault(beanContext, agentName, EmbeddingModel.class);
-        EmbeddingStore<TextSegment> embeddingStore = resolveByNameOrDefault(
-            beanContext,
-            agentName,
-            Argument.of(EmbeddingStore.class, TextSegment.class)
-        );
-        if (embeddingModel != null && embeddingStore != null) {
-            agentBuilder.contentRetriever(new EmbeddingStoreContentRetriever(embeddingStore, embeddingModel));
-        }
+        RetrievalUtils.configureRetrieval(beanContext, agentName, agentBuilder::retrievalAugmentor, agentBuilder::contentRetriever);
     }
 
     @Nullable

@@ -112,6 +112,10 @@ langchain4j:
 ----
 
 
+==== Retrieval
+
+Retrieval is opt-in. An agent performs retrieval augmented generation only when the application declares a `dev.langchain4j.rag.RetrievalAugmentor` bean or a `dev.langchain4j.rag.content.retriever.ContentRetriever` bean. A `RetrievalAugmentor` takes precedence over a `ContentRetriever`. For either type, a bean `@Named` after the agent id (for example `@Named("greeter")` for `GreeterAgent`) is preferred over the default bean. Embedding model and embedding store beans are never paired automatically.
+
 === Tools
 
 You can request specific tool beans to be registered with the agent builder using the `tools` attribute.
