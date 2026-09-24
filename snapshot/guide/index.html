@@ -620,6 +620,328 @@ class AiServiceTest implements OllamaTestPropertyProvider {
 }</code></pre>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_retrieval_augmented_generation">Retrieval Augmented Generation</h3>
+<div class="paragraph">
+<p>Retrieval is opt-in. An <code>@AiService</code> performs retrieval augmented generation (RAG) only when the application declares one of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a <code>dev.langchain4j.rag.RetrievalAugmentor</code> bean, or</p>
+</li>
+<li>
+<p>a <code>dev.langchain4j.rag.content.retriever.ContentRetriever</code> bean, which LangChain4j wraps in a <code>DefaultRetrievalAugmentor</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A <code>RetrievalAugmentor</code> bean takes precedence over a <code>ContentRetriever</code> bean. For either type, a bean <code>@Named</code> after the service (for example <code>@Named("expert")</code> for <code>@AiService("expert")</code>) is preferred over the default bean. If several candidates exist and none is named after the service or marked <code>@Primary</code>, no retrieval is configured.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Defining an <code>@AiService</code> that returns <code>Result&lt;String&gt;</code></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package example.micronaut.aiservice.rag;
+
+import dev.langchain4j.service.Result;
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.langchain4j.annotation.AiService;
+
+@Requires(property = "spec.name", value = "RagTest")
+@AiService // <b class="conum">(1)</b>
+public interface Expert {
+    Result&lt;String&gt; ask(String question); // <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Defining an <code>@AiService</code> that returns <code>Result&lt;String&gt;</code></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example.micronaut.aiservice.rag
+
+import dev.langchain4j.service.Result
+import io.micronaut.context.annotation.Requires
+import io.micronaut.langchain4j.annotation.AiService
+
+@Requires(property = "spec.name", value = "RagTest")
+@AiService // <b class="conum">(1)</b>
+interface Expert {
+    fun ask(question: String): Result&lt;String&gt; // <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Defining an <code>@AiService</code> that returns <code>Result&lt;String&gt;</code></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package example.micronaut.aiservice.rag
+
+import dev.langchain4j.service.Result
+import io.micronaut.context.annotation.Requires
+import io.micronaut.langchain4j.annotation.AiService
+
+@Requires(property = "spec.name", value = "RagTest")
+@AiService // <b class="conum">(1)</b>
+interface Expert {
+    Result&lt;String&gt; ask(String question) // <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A plain <code>@AiService</code>; nothing on the interface refers to retrieval.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Returning <code>dev.langchain4j.service.Result</code> exposes the retrieved sources alongside the answer.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Declaring a <code>ContentRetriever</code> bean</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package example.micronaut.aiservice.rag;
+
+import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.rag.content.retriever.ContentRetriever;
+import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
+import dev.langchain4j.store.embedding.EmbeddingStore;
+import io.micronaut.context.annotation.Factory;
+import io.micronaut.context.annotation.Requires;
+import jakarta.inject.Singleton;
+
+@Requires(property = "spec.name", value = "RagTest")
+@Factory
+class RetrievalFactory {
+
+    @Singleton // <b class="conum">(1)</b>
+    ContentRetriever contentRetriever(EmbeddingStore&lt;TextSegment&gt; embeddingStore, EmbeddingModel embeddingModel) { // <b class="conum">(2)</b>
+        return EmbeddingStoreContentRetriever.builder()
+            .embeddingStore(embeddingStore)
+            .embeddingModel(embeddingModel)
+            .maxResults(3)
+            .build();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Declaring a <code>ContentRetriever</code> bean</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example.micronaut.aiservice.rag
+
+import dev.langchain4j.data.segment.TextSegment
+import dev.langchain4j.model.embedding.EmbeddingModel
+import dev.langchain4j.rag.content.retriever.ContentRetriever
+import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever
+import dev.langchain4j.store.embedding.EmbeddingStore
+import io.micronaut.context.annotation.Factory
+import io.micronaut.context.annotation.Requires
+import jakarta.inject.Singleton
+
+@Requires(property = "spec.name", value = "RagTest")
+@Factory
+internal class RetrievalFactory {
+
+    @Singleton // <b class="conum">(1)</b>
+    fun contentRetriever(embeddingStore: EmbeddingStore&lt;TextSegment&gt;, embeddingModel: EmbeddingModel): ContentRetriever = // <b class="conum">(2)</b>
+        EmbeddingStoreContentRetriever.builder()
+            .embeddingStore(embeddingStore)
+            .embeddingModel(embeddingModel)
+            .maxResults(3)
+            .build()
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Declaring a <code>ContentRetriever</code> bean</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package example.micronaut.aiservice.rag
+
+import dev.langchain4j.data.segment.TextSegment
+import dev.langchain4j.model.embedding.EmbeddingModel
+import dev.langchain4j.rag.content.retriever.ContentRetriever
+import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever
+import dev.langchain4j.store.embedding.EmbeddingStore
+import groovy.transform.CompileStatic
+import io.micronaut.context.annotation.Factory
+import io.micronaut.context.annotation.Requires
+import jakarta.inject.Singleton
+
+@Requires(property = "spec.name", value = "RagTest")
+@Factory
+@CompileStatic
+class RetrievalFactory {
+
+    @Singleton // <b class="conum">(1)</b>
+    ContentRetriever contentRetriever(EmbeddingStore&lt;TextSegment&gt; embeddingStore, EmbeddingModel embeddingModel) { // <b class="conum">(2)</b>
+        EmbeddingStoreContentRetriever.builder()
+            .embeddingStore(embeddingStore)
+            .embeddingModel(embeddingModel)
+            .maxResults(3)
+            .build()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The bean is picked up by every <code>@AiService</code> that has no bean named after it. Add <code>@Named</code> to target one service.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Build the retriever from the configured <code>EmbeddingStore</code> and <code>EmbeddingModel</code>.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Retrieved content reaches the model and the result</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package example.micronaut.aiservice.rag;
+
+import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.service.Result;
+import dev.langchain4j.store.embedding.EmbeddingStore;
+import io.micronaut.context.annotation.Property;
+import io.micronaut.langchain4j.testutils.OllamaTestPropertyProvider;
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.testcontainers.junit.jupiter.Testcontainers;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@Property(name = "spec.name", value = "RagTest")
+@Testcontainers(disabledWithoutDocker = true)
+@MicronautTest(startApplication = false)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class RagTest implements OllamaTestPropertyProvider {
+
+    @Test
+    void retrievedContentIsPassedToTheModel(Expert expert, EmbeddingStore&lt;TextSegment&gt; embeddingStore, EmbeddingModel embeddingModel) {
+        TextSegment fact = TextSegment.from("Micronaut LangChain4j integrates LangChain4j with the Micronaut framework.");
+        embeddingStore.add(embeddingModel.embed(fact).content(), fact); // <b class="conum">(1)</b>
+
+        Result&lt;String&gt; result = expert.ask("What does Micronaut LangChain4j do?"); // <b class="conum">(2)</b>
+
+        assertNotNull(result.content());
+        assertTrue(result.sources().stream().anyMatch(content -&gt; content.textSegment().text().equals(fact.text()))); // <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Retrieved content reaches the model and the result</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example.micronaut.aiservice.rag
+
+import dev.langchain4j.data.segment.TextSegment
+import dev.langchain4j.model.embedding.EmbeddingModel
+import dev.langchain4j.store.embedding.EmbeddingStore
+import io.micronaut.context.annotation.Property
+import io.micronaut.langchain4j.testutils.OllamaTestPropertyProvider
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
+import org.testcontainers.junit.jupiter.Testcontainers
+
+@Property(name = "spec.name", value = "RagTest")
+@Testcontainers(disabledWithoutDocker = true)
+@MicronautTest(startApplication = false)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+internal class RagTest : OllamaTestPropertyProvider {
+
+    @Test
+    fun retrievedContentIsPassedToTheModel(expert: Expert, embeddingStore: EmbeddingStore&lt;TextSegment&gt;, embeddingModel: EmbeddingModel) {
+        val fact = TextSegment.from("Micronaut LangChain4j integrates LangChain4j with the Micronaut framework.")
+        embeddingStore.add(embeddingModel.embed(fact).content(), fact) // <b class="conum">(1)</b>
+
+        val result = expert.ask("What does Micronaut LangChain4j do?") // <b class="conum">(2)</b>
+
+        assertNotNull(result.content())
+        assertTrue(result.sources().any { it.textSegment().text() == fact.text() }) // <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Retrieved content reaches the model and the result</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package example.micronaut.aiservice.rag
+
+import dev.langchain4j.data.segment.TextSegment
+import dev.langchain4j.model.embedding.EmbeddingModel
+import dev.langchain4j.service.Result
+import dev.langchain4j.store.embedding.EmbeddingStore
+import io.micronaut.context.annotation.Property
+import io.micronaut.langchain4j.testutils.OllamaTestPropertyProvider
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
+import org.testcontainers.junit.jupiter.Testcontainers
+
+import static org.junit.jupiter.api.Assertions.assertNotNull
+import static org.junit.jupiter.api.Assertions.assertTrue
+
+@Property(name = "spec.name", value = "RagTest")
+@Testcontainers(disabledWithoutDocker = true)
+@MicronautTest(startApplication = false)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class RagTest implements OllamaTestPropertyProvider {
+
+    @Test
+    void retrievedContentIsPassedToTheModel(Expert expert, EmbeddingStore&lt;TextSegment&gt; embeddingStore, EmbeddingModel embeddingModel) {
+        TextSegment fact = TextSegment.from("Micronaut LangChain4j integrates LangChain4j with the Micronaut framework.")
+        embeddingStore.add(embeddingModel.embed(fact).content(), fact) // <b class="conum">(1)</b>
+
+        Result&lt;String&gt; result = expert.ask("What does Micronaut LangChain4j do?") // <b class="conum">(2)</b>
+
+        assertNotNull(result.content())
+        assertTrue(result.sources().any { it.textSegment().text() == fact.text() }) // <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Ingest a segment into the embedding store.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Call the service as usual.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The retrieved segment is available as a source of the result.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To configure a single service, declare an <a href="../api/io/micronaut/langchain4j/aiservices/AiServiceCustomizer.html">AiServiceCustomizer</a> bean for it and call <code>contentRetriever(&#8230;&#8203;)</code> or <code>retrievalAugmentor(&#8230;&#8203;)</code> on <code>AiServiceCreationContext.aiServices()</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Before 2.3.0 an <code>EmbeddingStoreContentRetriever</code> was attached to every <code>@AiService</code> automatically whenever an <code>EmbeddingModel</code> bean and an <code>EmbeddingStore</code> bean existed. Because provider modules expose an embedding model and the in-memory embedding store is enabled by default, that was the case in most applications, causing an embedding round trip on every call and failures against models without embedding support. Declare a <code>ContentRetriever</code> bean as shown above to restore the previous behaviour.
+</td>
+</tr>
+</table>
+</div>
+</div>
 
 <h1 id="agenticService"><a class="anchor" href="#agenticService"></a>5 Agentic Service</h1>
 
@@ -1165,6 +1487,12 @@ langchain4j.agentic.agents.creative-writer.memory.max-messages=50</code></pre>
 </div>
 </div>
 </div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_retrieval">Retrieval</h4>
+<div class="paragraph">
+<p>Retrieval is opt-in. An agent performs retrieval augmented generation only when the application declares a <code>dev.langchain4j.rag.RetrievalAugmentor</code> bean or a <code>dev.langchain4j.rag.content.retriever.ContentRetriever</code> bean. A <code>RetrievalAugmentor</code> takes precedence over a <code>ContentRetriever</code>. For either type, a bean <code>@Named</code> after the agent id (for example <code>@Named("greeter")</code> for <code>GreeterAgent</code>) is preferred over the default bean. Embedding model and embedding store beans are never paired automatically.</p>
 </div>
 </div>
 </div>
@@ -3177,8 +3505,11 @@ langchain4j.vertexAiGemini.location = "YOUR_LOCATION"</code></pre>
 
 
 <div class="paragraph">
-<p>An in-memory embedding store is enable by default, set the following property
+<p>An in-memory embedding store is enabled by default, set the following property
 <code>langchain4j.in-memory.embedding-store.enabled</code> with value <code>false</code> to disable it.</p>
+</div>
+<div class="paragraph">
+<p>The store is not attached to AI services automatically. See the Retrieval Augmented Generation section of the AI Service guide to declare a <code>ContentRetriever</code> bean.</p>
 </div>
 
 <h2 id="chroma"><a class="anchor" href="#chroma"></a>9.2 Chroma</h2>
