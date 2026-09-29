@@ -18,14 +18,11 @@ package io.micronaut.langchain4j.aiservices;
 import dev.langchain4j.memory.chat.ChatMemoryProvider;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
-import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.moderation.ModerationModel;
-import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.service.TokenStream;
 import dev.langchain4j.spi.ServiceHelper;
 import dev.langchain4j.spi.services.TokenStreamAdapter;
-import dev.langchain4j.store.embedding.EmbeddingStore;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.BeanProvider;
 import io.micronaut.context.Qualifier;
@@ -39,6 +36,7 @@ import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.ExecutableMethod;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.langchain4j.tools.ToolRegistry;
+import io.micronaut.langchain4j.utils.RetrievalUtils;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -64,6 +62,9 @@ public class AiServiceFactory {
      * Creates instances of {@link AiServices}.
      *
      * <p>A {@link io.micronaut.context.event.BeanCreatedEventListener} can be registered to intercept creation.</p>
+     *
+     * <p>Retrieval is configured only when a {@link dev.langchain4j.rag.RetrievalAugmentor} bean or a
+     * {@link dev.langchain4j.rag.content.retriever.ContentRetriever} bean exists, see {@link RetrievalUtils}.</p>
      *
      * @param serviceDef The service definition
      * @return The AI services.
@@ -102,9 +103,7 @@ public class AiServiceFactory {
 
         lookupByNameOrDefault(name, ChatMemoryProvider.class, builder::chatMemoryProvider);
 
-        lookupByNameOrDefault(name, EmbeddingModel.class, null, embeddingModel ->
-            lookupByNameOrDefault(name, EmbeddingStore.class, null, embeddingStore ->
-                builder.contentRetriever(new EmbeddingStoreContentRetriever(embeddingStore, embeddingModel))));
+        RetrievalUtils.configureRetrieval(beanContext, name, builder::retrievalAugmentor, builder::contentRetriever);
         if (creationCustomizer != null) {
             creationCustomizer.customize(new AiServiceCreationContext<>(
                 serviceDef,
@@ -112,10 +111,6 @@ public class AiServiceFactory {
             ));
         }
         return builder;
-    }
-
-    private <T> void lookupByNameOrDefault(String name, Class<T> beanType, @Nullable T defaultValue, Consumer<T> configurer) {
-        lookupByNameOrDefault(name, Argument.of(beanType), defaultValue, configurer);
     }
 
     private <T> void lookupByNameOrDefault(String name, Class<T> beanType, Consumer<T> configurer) {

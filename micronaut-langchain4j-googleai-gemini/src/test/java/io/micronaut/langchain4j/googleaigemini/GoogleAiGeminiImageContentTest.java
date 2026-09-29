@@ -4,7 +4,6 @@ import dev.langchain4j.data.message.ImageContent;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
-import dev.langchain4j.store.embedding.EmbeddingStore;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Requires;
@@ -22,7 +21,6 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @EnabledIfEnvironmentVariable(
@@ -40,7 +38,6 @@ class GoogleAiGeminiImageContentTest {
     @Test
     void testImage(ChatService chatService) throws IOException {
         assertTrue(beanContext.containsBean(ChatModel.class));
-        assertFalse(beanContext.containsBean(EmbeddingStore.class));
         try (InputStream is = getClass().getClassLoader().getResourceAsStream("cat.jpg")) {
             if (is == null) {
                 throw new IllegalStateException("Resource cat.jpg not found");

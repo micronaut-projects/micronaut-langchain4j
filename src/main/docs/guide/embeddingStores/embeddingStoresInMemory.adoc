@@ -1,3 +1,4 @@
-An in-memory embedding store is enable by default, set the following property
+An in-memory embedding store is enabled by default, set the following property
 `langchain4j.in-memory.embedding-store.enabled` with value `false` to disable it.
 
+The store is not attached to AI services automatically. See the Retrieval Augmented Generation section of the AI Service guide to declare a `ContentRetriever` bean.
