@@ -45,6 +45,7 @@ tools-jackson-core = "3.2.1"
 # Transitive dependencies of third-party clients upgraded to fix known vulnerabilities
 apache-httpclient5 = "5.6.4"
 apache-httpcore5 = "5.4.3"
+jackson-databind = "2.22.3"
 jsoup = "1.23.2"
 
 # Managed versions appear in the BOM
@@ -64,6 +65,7 @@ tools-jackson-core = { module = 'tools.jackson.core:jackson-core', version.ref =
 apache-httpclient5 = { module = 'org.apache.httpcomponents.client5:httpclient5', version.ref = 'apache-httpclient5' }
 apache-httpcore5 = { module = 'org.apache.httpcomponents.core5:httpcore5', version.ref = 'apache-httpcore5' }
 apache-httpcore5-h2 = { module = 'org.apache.httpcomponents.core5:httpcore5-h2', version.ref = 'apache-httpcore5' }
+jackson-databind = { module = 'com.fasterxml.jackson.core:jackson-databind', version.ref = 'jackson-databind' }
 jsoup = { module = 'org.jsoup:jsoup', version.ref = 'jsoup' }
 
 # Micronaut BOMS
