@@ -12,6 +12,13 @@ dependencies {
     annotationProcessor(mn.micronaut.inject.java)
     api(platform(libs.boms.langchain4j))
     implementation(platform(libs.boms.langchain4j))
+    constraints {
+        // TODO: remove when langchain4j depends on jackson-databind 2.22.2 or later (1.20.2 still
+        // depends on 2.22.1) and micronaut-oraclecloud stops managing 2.22.1 (6.1.3 is the latest)
+        api(libs.jackson.databind) {
+            because('GHSA-gx83-3vf8-gh7j, GHSA-q4xh-88c3-wmh7, GHSA-wjgm-6hv5-3cvf: langchain4j 1.20.x, micronaut-oraclecloud 6.1.3, the Elasticsearch/OpenSearch Java clients and the OCI SDK bring jackson-databind 2.22.1 or older')
+        }
+    }
     testAnnotationProcessor(mn.micronaut.inject.java)
     testImplementation(mnTest.micronaut.test.junit5)
     testRuntimeOnly(mnLogging.logback.classic)
