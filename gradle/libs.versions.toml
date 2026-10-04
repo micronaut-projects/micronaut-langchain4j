@@ -52,6 +52,7 @@ jsoup = "1.23.2"
 managed-langchain4j = "1.21.0"
 managed-langchain4j-community = "1.16.0-beta26"
 testcontainers-redis = "2.2.4"
+testcontainers-infinispan = "16.2.3"
 astra-db-client = "1.2.7"
 
 [libraries]
@@ -125,6 +126,7 @@ testcontainers-neo4j = { module = "org.testcontainers:testcontainers-neo4j" }
 testcontainers-ollama = { module = "org.testcontainers:testcontainers-ollama" }
 testcontainers-cassandra = { module = "org.testcontainers:testcontainers-cassandra" }
 testcontainers-qdrant = { module = "org.testcontainers:testcontainers-qdrant" }
+testcontainers-infinispan = { module = "org.infinispan:testcontainers-infinispan", version.ref = "testcontainers-infinispan" }
 
 astra-db-client = { module = "com.datastax.astra:astra-db-client", version.ref = "astra-db-client" }
 

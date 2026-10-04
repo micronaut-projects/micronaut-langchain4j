@@ -17,6 +17,7 @@ package io.micronaut.langchain4j.testresources.infinispan;
 
 import io.micronaut.core.io.socket.SocketUtils;
 import java.util.Map;
+import org.infinispan.testcontainers.InfinispanContainer;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.utility.DockerImageName;
 
@@ -42,10 +43,13 @@ public final class Infinispan {
      * @return The configured container
      */
     public static GenericContainer<?> createContainer(DockerImageName imageName) {
-        return new GenericContainer<>(imageName)
-            .withEnv("USER", "admin")
-            .withEnv("PASS", "password")
-            .withExposedPorts(HOTROD_PORT);
+        return createInfinispanContainer(imageName);
+    }
+
+    static InfinispanContainer createInfinispanContainer(DockerImageName imageName) {
+        return new InfinispanContainer(imageName)
+            .withUser("admin")
+            .withPassword("password");
     }
 
     /**

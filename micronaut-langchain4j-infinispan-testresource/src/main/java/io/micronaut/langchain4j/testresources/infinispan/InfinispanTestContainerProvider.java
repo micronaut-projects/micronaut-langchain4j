@@ -20,13 +20,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import org.testcontainers.containers.GenericContainer;
+import org.infinispan.testcontainers.InfinispanContainer;
 import org.testcontainers.utility.DockerImageName;
 
 /**
  * Starts Infinispan when the Infinispan embedding-store configuration is requested.
  */
-public final class InfinispanTestContainerProvider extends AbstractTestContainersProvider<GenericContainer<?>> {
+public final class InfinispanTestContainerProvider extends AbstractTestContainersProvider<InfinispanContainer> {
     private static final String CACHE_NAME = Infinispan.PREFIX + ".embedding-store.cache-name";
 
     @Override
@@ -40,16 +40,16 @@ public final class InfinispanTestContainerProvider extends AbstractTestContainer
     }
 
     @Override
-    protected GenericContainer<?> createContainer(
+    protected InfinispanContainer createContainer(
         DockerImageName imageName,
         Map<String, Object> requestedProperties,
         Map<String, Object> testResourcesConfig
     ) {
-        return Infinispan.createContainer(imageName);
+        return Infinispan.createInfinispanContainer(imageName);
     }
 
     @Override
-    protected Optional<String> resolveProperty(String propertyName, GenericContainer<?> container) {
+    protected Optional<String> resolveProperty(String propertyName, InfinispanContainer container) {
         return Optional.ofNullable(Infinispan.getProperties(container).get(propertyName));
     }
 

@@ -11,6 +11,7 @@ dependencies {
     api(mnTestResources.micronaut.test.resources.testcontainers)
     implementation(platform(mnTest.boms.testcontainers))
     implementation(libs.testcontainers)
+    implementation(libs.testcontainers.infinispan)
     testRuntimeOnly(mnTestResources.micronaut.test.resources.embedded)
     testRuntimeOnly(mnTest.junit.jupiter.engine)
 }
