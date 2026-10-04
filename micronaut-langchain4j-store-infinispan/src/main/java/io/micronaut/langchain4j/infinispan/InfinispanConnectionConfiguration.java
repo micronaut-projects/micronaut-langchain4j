@@ -17,6 +17,7 @@ package io.micronaut.langchain4j.infinispan;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.annotation.Internal;
+import org.infinispan.client.hotrod.configuration.ClientIntelligence;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -27,6 +28,7 @@ import org.jspecify.annotations.Nullable;
 class InfinispanConnectionConfiguration {
     private String host = "localhost";
     private int port = 11222;
+    private ClientIntelligence clientIntelligence = ClientIntelligence.HASH_DISTRIBUTION_AWARE;
     private @Nullable String username;
     private @Nullable String password;
 
@@ -44,6 +46,14 @@ class InfinispanConnectionConfiguration {
 
     public void setPort(int port) {
         this.port = port;
+    }
+
+    public ClientIntelligence getClientIntelligence() {
+        return clientIntelligence;
+    }
+
+    public void setClientIntelligence(ClientIntelligence clientIntelligence) {
+        this.clientIntelligence = clientIntelligence;
     }
 
     public @Nullable String getUsername() {

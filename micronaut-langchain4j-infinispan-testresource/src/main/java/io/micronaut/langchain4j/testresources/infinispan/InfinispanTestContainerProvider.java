@@ -58,7 +58,13 @@ public final class InfinispanTestContainerProvider extends AbstractTestContainer
         Map<String, Collection<String>> propertyEntries,
         Map<String, Object> testResourcesConfig
     ) {
-        return List.of(Infinispan.HOST, Infinispan.PORT, Infinispan.USERNAME, Infinispan.PASSWORD);
+        return List.of(
+            Infinispan.HOST,
+            Infinispan.PORT,
+            Infinispan.CLIENT_INTELLIGENCE,
+            Infinispan.USERNAME,
+            Infinispan.PASSWORD
+        );
     }
 
     @Override

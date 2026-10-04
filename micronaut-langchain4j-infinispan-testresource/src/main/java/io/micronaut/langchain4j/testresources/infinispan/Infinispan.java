@@ -25,12 +25,37 @@ import org.testcontainers.utility.DockerImageName;
  * Infinispan test container utilities.
  */
 public final class Infinispan {
+    /**
+     * The configuration property prefix.
+     */
     public static final String PREFIX = "langchain4j.infinispan";
+    /**
+     * The Infinispan host configuration property.
+     */
     public static final String HOST = PREFIX + ".host";
+    /**
+     * The Infinispan Hot Rod port configuration property.
+     */
     public static final String PORT = PREFIX + ".port";
+    /**
+     * The Hot Rod client intelligence configuration property.
+     */
+    public static final String CLIENT_INTELLIGENCE = PREFIX + ".client-intelligence";
+    /**
+     * The Infinispan username configuration property.
+     */
     public static final String USERNAME = PREFIX + ".username";
+    /**
+     * The Infinispan password configuration property.
+     */
     public static final String PASSWORD = PREFIX + ".password";
+    /**
+     * The Infinispan Hot Rod port.
+     */
     public static final int HOTROD_PORT = 11222;
+    /**
+     * The default Infinispan Server image.
+     */
     public static final String DEFAULT_IMAGE = "quay.io/infinispan/server:16.2";
     private static final String DEFAULT_USERNAME = "admin";
     private static final String DEFAULT_PASSWORD = "admin";
@@ -62,6 +87,7 @@ public final class Infinispan {
         return Map.of(
             HOST, SocketUtils.LOCALHOST,
             PORT, String.valueOf(container.getMappedPort(HOTROD_PORT)),
+            CLIENT_INTELLIGENCE, "BASIC",
             USERNAME, DEFAULT_USERNAME,
             PASSWORD, DEFAULT_PASSWORD
         );
