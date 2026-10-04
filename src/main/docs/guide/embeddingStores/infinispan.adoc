@@ -1,0 +1,50 @@
+Add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-store-infinispan[]
+
+The Infinispan embedding store connects to Infinispan Server through the Hot Rod
+client. Configure the connection and the store separately:
+
+.Example Configuration
+[configuration]
+----
+langchain4j:
+  infinispan:
+    host: localhost
+    port: 11222
+    username: ${INFINISPAN_USERNAME:}
+    password: ${INFINISPAN_PASSWORD:}
+    embedding-store:
+      cache-name: embeddings
+      dimension: 384
+----
+
+`host` and `port` default to `localhost` and `11222`. `username` and `password`
+are optional. When `username` is non-empty, both values are passed to the Hot
+Rod authentication configuration; validation of a missing or invalid password
+is left to the Hot Rod client/server. A password without a username does not
+enable authentication. Provide credentials through environment variables or
+another external configuration source; do not store real credentials in
+application files.
+
+`embedding-store.cache-name` and `embedding-store.dimension` are required. The
+dimension must match the dimension returned by the embedding model used by the
+application. The module provides a Hot Rod `ConfigurationBuilder` bean from
+these connection properties. An application can replace that bean to customize
+the Hot Rod connection. LangChain4j creates the cache and registers the
+Protostream schema by default; set `embedding-store.create-cache` or
+`embedding-store.register-schema` to `false` when the server is provisioned
+separately.
+
+Metadata filtering requires Infinispan Server 15.2 or newer.
+
+To use Micronaut Test Resources for integration tests, add the test-resource
+module to the test resources service classpath:
+
+[source,groovy]
+----
+testResourcesService("io.micronaut.langchain4j:micronaut-langchain4j-infinispan-testresource")
+----
+
+It starts Infinispan Server 15.2 and supplies the mapped Hot Rod host, port,
+and example test credentials. Do not use these test credentials outside tests.

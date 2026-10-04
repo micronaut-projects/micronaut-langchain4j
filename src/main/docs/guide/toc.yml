@@ -27,6 +27,7 @@ embeddingStores:
   embeddingStoresInMemory: In-Memory
   chroma: Chroma
   elasticsearch: Elastic Search
+  infinispan: Infinispan
   mongodb: MongoDB
   neo4j: Neo4j
   oracledb: Oracle
