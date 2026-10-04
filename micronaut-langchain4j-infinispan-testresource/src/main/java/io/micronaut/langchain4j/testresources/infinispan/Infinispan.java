@@ -40,7 +40,7 @@ public final class Infinispan {
 
     /**
      * Create the Infinispan server container used by Micronaut Test Resources.
-     * The caller owns and closes the returned container.
+     * Micronaut Test Resources registers and manages the returned container.
      *
      * @param imageName The Infinispan image
      * @return The configured container
