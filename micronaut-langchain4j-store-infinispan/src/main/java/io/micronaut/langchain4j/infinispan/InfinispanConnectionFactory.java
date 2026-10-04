@@ -20,6 +20,7 @@ import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.util.StringUtils;
+import org.infinispan.client.hotrod.configuration.ClientIntelligence;
 import org.infinispan.client.hotrod.configuration.ConfigurationBuilder;
 
 @Internal
@@ -33,6 +34,7 @@ final class InfinispanConnectionFactory {
         builder.addServer()
             .host(configuration.getHost())
             .port(configuration.getPort());
+        builder.clientIntelligence(ClientIntelligence.BASIC);
 
         if (StringUtils.isNotEmpty(configuration.getUsername())) {
             builder.security()

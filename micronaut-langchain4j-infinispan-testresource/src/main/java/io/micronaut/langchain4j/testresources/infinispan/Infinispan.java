@@ -31,25 +31,25 @@ public final class Infinispan {
     public static final String USERNAME = PREFIX + ".username";
     public static final String PASSWORD = PREFIX + ".password";
     public static final int HOTROD_PORT = 11222;
-    public static final String DEFAULT_IMAGE = "quay.io/infinispan/server:15.2";
+    public static final String DEFAULT_IMAGE = "quay.io/infinispan/server:16.2";
+    private static final String DEFAULT_USERNAME = "admin";
+    private static final String DEFAULT_PASSWORD = "admin";
 
     private Infinispan() {
     }
 
     /**
      * Create the Infinispan server container used by Micronaut Test Resources.
+     * The caller owns and closes the returned container.
      *
      * @param imageName The Infinispan image
      * @return The configured container
      */
-    public static GenericContainer<?> createContainer(DockerImageName imageName) {
-        return createInfinispanContainer(imageName);
-    }
-
-    static InfinispanContainer createInfinispanContainer(DockerImageName imageName) {
+    @SuppressWarnings("resource")
+    public static InfinispanContainer createContainer(DockerImageName imageName) {
         return new InfinispanContainer(imageName)
-            .withUser("admin")
-            .withPassword("password");
+            .withUser(DEFAULT_USERNAME)
+            .withPassword(DEFAULT_PASSWORD);
     }
 
     /**
@@ -62,8 +62,8 @@ public final class Infinispan {
         return Map.of(
             HOST, SocketUtils.LOCALHOST,
             PORT, String.valueOf(container.getMappedPort(HOTROD_PORT)),
-            USERNAME, "admin",
-            PASSWORD, "password"
+            USERNAME, DEFAULT_USERNAME,
+            PASSWORD, DEFAULT_PASSWORD
         );
     }
 }

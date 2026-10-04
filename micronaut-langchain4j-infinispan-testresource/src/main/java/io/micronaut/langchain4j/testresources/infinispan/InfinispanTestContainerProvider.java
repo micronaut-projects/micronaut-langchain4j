@@ -45,7 +45,7 @@ public final class InfinispanTestContainerProvider extends AbstractTestContainer
         Map<String, Object> requestedProperties,
         Map<String, Object> testResourcesConfig
     ) {
-        return Infinispan.createInfinispanContainer(imageName);
+        return Infinispan.createContainer(imageName);
     }
 
     @Override
