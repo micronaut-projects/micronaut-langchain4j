@@ -18,6 +18,8 @@ package io.micronaut.langchain4j.agentic;
 import dev.langchain4j.agentic.AgenticServices;
 import dev.langchain4j.agentic.UntypedAgent;
 import dev.langchain4j.agentic.agent.AgentBuilder;
+import dev.langchain4j.agentic.declarative.ChatModelSupplier;
+import dev.langchain4j.agentic.declarative.StreamingChatModelSupplier;
 import dev.langchain4j.agentic.workflow.ConditionalAgentService;
 import dev.langchain4j.agentic.workflow.LoopAgentService;
 import dev.langchain4j.agentic.workflow.ParallelAgentService;
@@ -55,10 +57,15 @@ import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.inject.BeanIdentifier;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.langchain4j.agentic.annotation.AgenticService;
+import io.micronaut.langchain4j.jsonschema.StructuredOutputSchemas;
 import io.micronaut.langchain4j.tools.ToolRegistry;
 import io.micronaut.langchain4j.utils.RetrievalUtils;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -104,7 +111,7 @@ public final class AgenticServiceFactory {
                     (Class) iface,
                     chatModel,
                     new AgenticServices.AgentConfigurator(ctx -> {
-                        applyBuilderConfig(beanContext, serviceDef, iface, ctx);
+                        applyBuilderConfig(beanContext, serviceDef, iface, chatModel, ctx);
                         fireAgentBuilderListeners(beanContext, ctx);
                     }, null, null)
                 );
@@ -158,6 +165,7 @@ public final class AgenticServiceFactory {
     private static void applyBuilderConfig(BeanContext beanContext,
                                            AgenticServiceInfo<Object> serviceDef,
                                            Class<?> rootInterface,
+                                           @Nullable ChatModel rootChatModel,
                                            AgenticServices.DeclarativeAgentCreationContext<?> ctx) {
         Class<?> agentType = resolveAgentInterface(ctx.agentServiceClass());
         String agentName = deriveAgentName(agentType);
@@ -173,6 +181,41 @@ public final class AgenticServiceFactory {
         configureRag(beanContext, agentName, agentBuilder);
         configureTools(beanContext, serviceDef, rootInterface, agentType, agentName, agentBuilder);
         configureOutputKey(serviceDef, rootInterface, agentType, agentBuilder);
+        configureStructuredOutput(beanContext, agentType, configuredModel != null ? configuredModel : rootChatModel, agentBuilder);
+    }
+
+    /**
+     * The agent builder has no chat request transformer, so the chat model of an agent returning a type with a
+     * generated JSON schema is decorated to send that schema.
+     */
+    private static void configureStructuredOutput(BeanContext beanContext,
+                                                  Class<?> agentType,
+                                                  @Nullable ChatModel chatModel,
+                                                  AgentBuilder<?, ?> agentBuilder) {
+        if (chatModel == null || hasChatModelSupplier(agentType)) {
+            // the agent declares its own model, which the builder does not expose
+            return;
+        }
+        beanContext.findBean(StructuredOutputSchemas.class).ifPresent(structuredOutputSchemas ->
+            structuredOutputSchemas.schemasFor(agentReturnTypes(agentType))
+                .ifPresent(schemas -> agentBuilder.chatModel(structuredOutputSchemas.decorate(chatModel, schemas, agentType))));
+    }
+
+    private static boolean hasChatModelSupplier(Class<?> agentType) {
+        for (Method method : agentType.getDeclaredMethods()) {
+            if (method.isAnnotationPresent(ChatModelSupplier.class) || method.isAnnotationPresent(StreamingChatModelSupplier.class)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static List<Argument<?>> agentReturnTypes(Class<?> agentType) {
+        // LangChain4j reads the agent methods reflectively, and so the return types too
+        return Arrays.stream(agentType.getMethods())
+            .filter(method -> Modifier.isAbstract(method.getModifiers()) && method.getDeclaringClass() != Object.class)
+            .<Argument<?>>map(method -> Argument.of(method.getGenericReturnType()))
+            .toList();
     }
 
     private static void configureOutputKey(AgenticServiceInfo<Object> serviceDef,
