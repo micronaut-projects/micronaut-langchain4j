@@ -150,6 +150,7 @@ class ExecutableMethodToolExecutorTest {
 
         @Tool("Logs a message")
         void log(String message) {
+            // nothing to do: the test checks the result LangChain4j sends for a void tool
         }
 
         @Tool("Returns nothing")
