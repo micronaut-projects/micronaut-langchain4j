@@ -35,6 +35,7 @@ import dev.langchain4j.invocation.InvocationParameters;
 import dev.langchain4j.invocation.LangChain4jManaged;
 import dev.langchain4j.model.chat.request.json.JsonObjectSchema;
 import dev.langchain4j.model.chat.request.json.JsonSchemaElement;
+import dev.langchain4j.service.IllegalConfigurationException;
 import dev.langchain4j.service.tool.AiServiceTool;
 import dev.langchain4j.service.tool.ToolExecutionResult;
 import dev.langchain4j.service.tool.ToolExecutor;
@@ -42,10 +43,12 @@ import dev.langchain4j.spi.ServiceHelper;
 import dev.langchain4j.spi.services.CompletableFutureAdapter;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
+
 import io.micronaut.core.type.Argument;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.inject.ExecutableMethod;
+
+import org.jspecify.annotations.NonNull;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -96,7 +99,7 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
         Argument<?>[] arguments = method.getArguments();
         this.parameters = new ToolParameter[arguments.length];
         for (int i = 0; i < arguments.length; i++) {
-            parameters[i] = ToolParameter.of(arguments[i]);
+            parameters[i] = ToolParameter.of(method, arguments[i]);
         }
     }
 
@@ -337,7 +340,7 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
         String defaultValue,
         boolean required) {
 
-        static ToolParameter of(Argument<?> argument) {
+        static ToolParameter of(ExecutableMethod<?, ?> method, Argument<?> argument) {
             AnnotationMetadata metadata = argument.getAnnotationMetadata();
             Class<?> type = argument.getType();
             ParameterKind kind;
@@ -364,14 +367,55 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
             String defaultValue = metadata.stringValue(P.class, "defaultValue")
                 .filter(v -> !P.NO_DEFAULT.equals(v))
                 .orElse(null);
-            boolean required = kind == ParameterKind.VALUE
-                && defaultValue == null
-                && metadata.booleanValue(P.class, "required").orElse(true);
+            boolean declaredRequired = metadata.booleanValue(P.class, "required").orElse(true);
             Argument<?> valueArgument = kind == ParameterKind.OPTIONAL
                 ? argument.getFirstTypeVariable().orElse(Argument.OBJECT_ARGUMENT)
                 : argument;
+            validate(method, argument, kind, type, valueArgument, defaultValue, declaredRequired);
+            boolean required = kind == ParameterKind.VALUE && defaultValue == null && declaredRequired;
             return new ToolParameter(kind, name, type, valueArgument.getType(), valueArgument.asType(),
                 description != null ? description : value, defaultValue, required);
+        }
+
+        /**
+         * Rejects the declarations LangChain4j rejects when it registers a tool: a default value or an optional
+         * primitive that the invocation could not honour.
+         */
+        private static void validate(ExecutableMethod<?, ?> method,
+                                     Argument<?> argument,
+                                     ParameterKind kind,
+                                     Class<?> type,
+                                     Argument<?> valueArgument,
+                                     String defaultValue,
+                                     boolean declaredRequired) {
+            String location = "Parameter '%s' of tool '%s.%s'".formatted(
+                argument.getName(), method.getDeclaringType().getName(), method.getMethodName());
+            if (type.isPrimitive() && !declaredRequired && defaultValue == null) {
+                throw IllegalConfigurationException.illegalConfiguration(
+                    "%s is a primitive (%s) and cannot be marked as @P(required = false). "
+                        + "Use a boxed type (e.g. Integer instead of int), Optional<T>, or @P(defaultValue = ...).",
+                    location, type.getName());
+            }
+            if (defaultValue == null) {
+                return;
+            }
+            if (kind == ParameterKind.OPTIONAL) {
+                throw IllegalConfigurationException.illegalConfiguration(
+                    "%s has @P(defaultValue = ...) and is Optional<T>. Optional<T> already represents \"absent\"; "
+                        + "use one mechanism or the other.", location);
+            }
+            if (kind != ParameterKind.VALUE) {
+                throw IllegalConfigurationException.illegalConfiguration(
+                    "%s has @P(defaultValue = ...) but is a framework-injected parameter; "
+                        + "default values are not supported on framework-injected parameters.", location);
+            }
+            try {
+                ToolArguments.parseDefaultValue(defaultValue, argument.getName(), type, valueArgument.asType());
+            } catch (Exception e) {
+                throw IllegalConfigurationException.illegalConfiguration(
+                    "Cannot parse @P(defaultValue = \"%s\") for %s (type %s): %s",
+                    defaultValue, location, type.getName(), e.getMessage());
+            }
         }
 
         Object resolve(String toolName, Map<String, Object> arguments, InvocationContext context) {
