@@ -1,6 +1,6 @@
 When an `@AiService` or `@AgenticService` method returns a POJO (or a `List` or `Set` of POJOs), LangChain4j asks the model for a JSON answer: it derives a JSON schema from the return type reflectively and sends it as the response format, or appends format instructions to the user message when the model does not support JSON schemas.
 
-With https://micronaut-projects.github.io/micronaut-json-schema/latest/guide/[Micronaut JSON Schema], the schema is generated at compile time instead, and the generated schema is the one the model receives. Compared with the schema LangChain4j derives:
+With https://docs.micronaut.io/latest/json-schema/[Micronaut JSON Schema], the schema is generated at compile time instead, and the generated schema is the one the model receives. Compared with the schema LangChain4j derives:
 
 * the descriptions come from the Javadoc (or KDoc, or Python docstrings) of the type and its properties, and the validation constraints (`format`, `pattern`, `minimum`, ...) are passed on to the model in the descriptions;
 * no reflection is needed to build the schema, which suits GraalVM native images;
