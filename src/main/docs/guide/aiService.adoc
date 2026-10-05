@@ -10,7 +10,7 @@ snippet::example.micronaut.aiservice.Friend[source="main"]
 NOTE: In Python an AI service is an abstract class (`abc.ABC`) whose methods are declared with `...` bodies; the decorators mirror the LangChain4j annotations.
 
 [.lang-python]
-NOTE: LangChain4j builds the service implementation reflectively from the Java interface generated for the Python class and reads the `@SystemMessage`/`@UserMessage` annotations from it. `@AiService` implies the `@AllowsReflection` hint (`micronaut.core.annotation`), so the Python compiler copies the annotations onto the generated interface without any `@AllowsReflection` or `micronaut.introspection.allow-reflection` option.
+NOTE: LangChain4j builds the service implementation reflectively from the Java interface generated for the Python class and reads the `@SystemMessage`/`@UserMessage` annotations from it. `@AiService` implies the `@AllowsReflection` hint (`io.micronaut.core.annotation`), so the Python compiler copies the annotations onto the generated interface without any `@AllowsReflection` or `micronaut.introspection.allow-reflection` option.
 
 You can now inject the `@AiService` definition into any Micronaut component including tests:
 

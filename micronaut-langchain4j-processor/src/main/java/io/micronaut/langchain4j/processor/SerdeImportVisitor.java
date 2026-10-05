@@ -26,7 +26,6 @@ import io.micronaut.sourcegen.model.AnnotationDef;
 import io.micronaut.sourcegen.model.ClassDef;
 import io.micronaut.sourcegen.model.ClassTypeDef;
 import io.micronaut.sourcegen.model.TypeDef;
-import io.micronaut.sourcegen.model.VariableDef;
 
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
@@ -69,7 +68,9 @@ public final class SerdeImportVisitor implements TypeElementVisitor<Object, Obje
 
     @Override
     public VisitorKind getVisitorKind() {
-        return VisitorKind.ISOLATING;
+        // a record used by several services is imported once per compilation, by the first one visited: Micronaut
+        // Serialization names the introspection of an import after the imported type, so a second import would clash
+        return VisitorKind.AGGREGATING;
     }
 
     @Override
@@ -119,7 +120,7 @@ public final class SerdeImportVisitor implements TypeElementVisitor<Object, Obje
         List<Object> imports = new ArrayList<>();
         for (ClassElement type : types) {
             imports.add(AnnotationDef.builder(ClassTypeDef.of(SERDE_IMPORT))
-                .addMember("value", new VariableDef.StaticField(ClassTypeDef.of(type), "class", TypeDef.of(Class.class)))
+                .addMember("value", ClassTypeDef.of(type).getStaticField("class", TypeDef.CLASS))
                 .build());
         }
         ClassDef holder = ClassDef.builder(packageName.isEmpty() ? simpleName : packageName + "." + simpleName)
