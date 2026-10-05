@@ -92,7 +92,8 @@ final class JsonMappedTypes {
         if (method.hasDeclaredAnnotation(NativeImageMetadataVisitor.AGENT)) {
             return true;
         }
-        return NativeImageMetadataVisitor.WORKFLOW_ANNOTATIONS.stream().anyMatch(method::hasDeclaredAnnotation);
+        return NativeImageMetadataVisitor.WORKFLOW_ANNOTATIONS.stream().anyMatch(method::hasDeclaredAnnotation)
+            || NativeImageMetadataVisitor.OTHER_AGENT_ANNOTATIONS.stream().anyMatch(method::hasDeclaredAnnotation);
     }
 
     /**
