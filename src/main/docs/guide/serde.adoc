@@ -1,0 +1,13 @@
+LangChain4j maps the structured outputs of AI services and agents (the records or POJOs their methods return), the arguments and results of tools and the arguments of agents to and from JSON with Jackson, reflectively. With the following dependency, it maps them with https://micronaut-projects.github.io/micronaut-serialization/latest/guide/[Micronaut Serialization] instead:
+
+dependency:micronaut-langchain4j-serde[groupId=io.micronaut.langchain4j]
+
+Micronaut Serialization maps a type with the introspection generated at compile time for it, without reflection, when the type is annotated with `@Serdeable` or imported with `@SerdeImport`. With `micronaut-serde-processor` and `micronaut-langchain4j-processor` on the annotation processor path, the public records returned by AI services and agents, and the public records used as parameters or results of tools, are imported automatically, together with the records they are made of.
+
+dependency:micronaut-serde-processor[groupId=io.micronaut.serde,scope="annotationProcessor"]
+
+The other types are still mapped by Micronaut Serialization: with their introspection when they are `@Introspected`, and otherwise with an introspection that `micronaut-reflection` builds reflectively from their fields, of any visibility, and their accessors, as LangChain4j's Jackson mapping does. Enable the `DEBUG` level of the `io.micronaut.langchain4j.serde` logger to see the types mapped reflectively. Jackson annotations (`@JsonProperty`, `@JsonCreator`, ...) are only honoured on the types with a compile-time introspection: Micronaut Serialization maps them onto the introspection when it is generated.
+
+The mapping follows the defaults of LangChain4j's codec rather than the configuration of the application, whose JSON mapping is left unchanged: unknown properties are rejected (LangChain4j relies on it to find the JSON in the answers of the models), enums are read case insensitively, null values are written, and `LocalDate`, `LocalTime` and `LocalDateTime` are also read in the object shape of the JSON schema LangChain4j derives for them (`{"year": 2001, "month": 2, "day": 3}`).
+
+NOTE: Micronaut Serialization replaces Jackson for these mappings only. Jackson remains a dependency of LangChain4j, which also uses it for the requests and responses of the model providers, the persistence of chat memories and agentic scopes, and to read the Jackson annotations of the types it derives JSON schemas from.
