@@ -100,30 +100,8 @@ public final class NativeImageMetadataVisitor implements TypeElementVisitor<Obje
 
     @Override
     public void visitClass(ClassElement element, VisitorContext context) {
-        boolean aiService = element.hasStereotype(AI_SERVICE);
-        boolean agent = element.hasStereotype(AGENTIC_SERVICE) || declaresAgentMethods(element);
         String type = element.getName();
-        List<String> entries = new ArrayList<>();
-        if (aiService || agent) {
-            // the methods, their annotations and parameters, and the static methods invoked reflectively
-            entries.add("""
-                {"type": "%s", "allPublicMethods": true, "allDeclaredMethods": true}""".formatted(type));
-            if (element.isInterface()) {
-                entries.add(proxy(type));
-                if (agent) {
-                    // AgentBuilder, AgentUtil.buildAgent (workflows) and PlannerBasedInvocationHandler.withAgenticScope
-                    entries.add(proxy(type, INTERNAL_AGENT, AGENTIC_SCOPE_OWNER, CHAT_MEMORY_ACCESS, CHAT_MESSAGES_ACCESS, RESPONSE_RECEIVED_LISTENER));
-                    entries.add(proxy(type, INTERNAL_AGENT, AGENTIC_SCOPE_OWNER, AGENTIC_SCOPE_ACCESS));
-                    entries.add(proxy(type, INTERNAL_AGENT, AGENTIC_SCOPE_OWNER));
-                }
-            }
-            if (agent) {
-                for (String agenticInterface : AGENTIC_INTERFACES) {
-                    entries.add("""
-                        {"type": "%s", "allPublicMethods": true}""".formatted(agenticInterface));
-                }
-            }
-        }
+        List<String> entries = new ArrayList<>(serviceEntries(element));
         // the structured outputs and the tool parameters and results: LangChain4j derives their JSON schema from their
         // fields, and Jackson, unless Micronaut Serialization maps them, binds them reflectively
         for (ClassElement jsonType : JsonMappedTypes.collect(element, t -> true)) {
@@ -134,6 +112,43 @@ public final class NativeImageMetadataVisitor implements TypeElementVisitor<Obje
         if (entries.isEmpty()) {
             return;
         }
+        writeMetadata(element, entries, context);
+    }
+
+    /**
+     * The metadata of an AI service, agentic service or agent: its methods, their annotations and parameters, the static
+     * methods LangChain4j invokes reflectively, and the proxies LangChain4j creates for it.
+     */
+    private static List<String> serviceEntries(ClassElement element) {
+        boolean aiService = element.hasStereotype(AI_SERVICE);
+        boolean agent = element.hasStereotype(AGENTIC_SERVICE) || declaresAgentMethods(element);
+        if (!aiService && !agent) {
+            return List.of();
+        }
+        String type = element.getName();
+        List<String> entries = new ArrayList<>();
+        entries.add("""
+            {"type": "%s", "allPublicMethods": true, "allDeclaredMethods": true}""".formatted(type));
+        if (element.isInterface()) {
+            entries.add(proxy(type));
+        }
+        if (agent) {
+            if (element.isInterface()) {
+                // AgentBuilder, AgentUtil.buildAgent (workflows) and PlannerBasedInvocationHandler.withAgenticScope
+                entries.add(proxy(type, INTERNAL_AGENT, AGENTIC_SCOPE_OWNER, CHAT_MEMORY_ACCESS, CHAT_MESSAGES_ACCESS, RESPONSE_RECEIVED_LISTENER));
+                entries.add(proxy(type, INTERNAL_AGENT, AGENTIC_SCOPE_OWNER, AGENTIC_SCOPE_ACCESS));
+                entries.add(proxy(type, INTERNAL_AGENT, AGENTIC_SCOPE_OWNER));
+            }
+            for (String agenticInterface : AGENTIC_INTERFACES) {
+                entries.add("""
+                    {"type": "%s", "allPublicMethods": true}""".formatted(agenticInterface));
+            }
+        }
+        return entries;
+    }
+
+    private static void writeMetadata(ClassElement element, List<String> entries, VisitorContext context) {
+        String type = element.getName();
         String json = entries.stream().collect(Collectors.joining(",\n    ", "{\n  \"reflection\": [\n    ", "\n  ]\n}\n"));
         String path = "native-image/io.micronaut.langchain4j/" + type + "/reachability-metadata.json";
         context.visitMetaInfFile(path, element).ifPresent(file -> {
