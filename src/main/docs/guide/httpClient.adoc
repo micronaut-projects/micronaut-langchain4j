@@ -15,6 +15,37 @@ snippet::example.micronaut.http.RequestSourceFilter[source="main"]
 
 * HTTP client observability, such as Micrometer metrics and the tracing of Micronaut Tracing, records the requests.
 
+[[modelCredentials]]
+=== Model Credentials
+
+The credentials of a model are usually its configured API key. To send other credentials with each request, for example a short-lived token or the token of the current user, declare a api:langchain4j.http.client.ModelAuthProvider[] bean. The providers are asked in order for each request of the models that use the Micronaut HTTP client: the first value that is not `null` replaces the `Authorization` header.
+
+snippet::example.micronaut.http.GatewayAuthProvider[source="main"]
+
+<1> The provider is only enabled when the gateway is configured.
+<2> Returning `null` keeps the credentials of the model configuration, here for the models that are not served by the gateway.
+<3> The value of the `Authorization` header.
+
+The provider is called on the thread that sends the request, also for the streaming and asynchronous requests, so it can read the context of the current HTTP request.
+
+==== Token Propagation
+
+When the application is secured with https://micronaut-projects.github.io/micronaut-security/latest/guide/[Micronaut Security], the bearer token of the user that calls the application can be sent to the models in place of their API key, for example to an OpenAI-compatible gateway that authorizes each user:
+
+[configuration]
+----
+langchain4j:
+  token-propagation:
+    enabled: true
+    uri-regex: https://ai-gateway[.]example[.]com/.*
+----
+
+`uri-regex` limits the propagation to the models whose URLs match. The token is the one that Micronaut Security authenticated for the current request.
+
+NOTE: The token propagation of Micronaut Security itself (`micronaut.security.token.propagation`) does not apply to the models: it never replaces the `Authorization` header that a request already has, and the models send their API key.
+
+=== Streaming and asynchronous requests
+
 The streaming responses (server-sent events) and the non-blocking requests of the asynchronous AI services are also handled by the Micronaut HTTP client.
 
 The other providers (Azure OpenAI, Bedrock, Vertex AI, OCI GenAI and Google Gen AI) use the HTTP client of their cloud SDK.

@@ -10,6 +10,8 @@ dependencies {
     testImplementation(mn.micronaut.http.client.core)
     testImplementation(platform(mnReactor.boms.reactor))
     testImplementation(libs.reactor.core)
+    testImplementation(mnSecurity.micronaut.security)
+    testImplementation(mn.micronaut.http.server.netty)
     testRuntimeOnly(mn.micronaut.http.client)
     testRuntimeOnly(mn.micronaut.jackson.databind)
 }

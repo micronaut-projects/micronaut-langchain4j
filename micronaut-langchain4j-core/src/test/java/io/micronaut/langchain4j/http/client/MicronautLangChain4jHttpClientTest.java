@@ -759,6 +759,7 @@ class MicronautLangChain4jHttpClientTest {
                 () -> executorService,
                 null,
                 null,
+                null,
                 java.time.Duration.ofSeconds(1)
             ).execute(HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -798,6 +799,7 @@ class MicronautLangChain4jHttpClientTest {
         java.time.Duration readTimeout) {
         return new MicronautLangChain4jHttpClient(
             () -> httpClient,
+            null,
             null,
             null,
             null,
