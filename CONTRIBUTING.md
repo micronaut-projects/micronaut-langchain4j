@@ -99,7 +99,7 @@ The plugin also adds a new tab in the bottom of the IDE to run Checkstyle and sh
 
 ## Native image metadata of the model providers
 
-The Ollama, Mistral AI, Google AI Gemini and Hugging Face modules ship the GraalVM reachability metadata of the LangChain4j types their providers map with Jackson (`src/main/resources/META-INF/native-image/io.micronaut.langchain4j/<module>/reachability-metadata.json`). The `NativeImageMetadataTest` of each module fails when a LangChain4j upgrade adds or removes such a type. To regenerate the metadata, run the test with the `UPDATE_NATIVE_METADATA` environment variable:
+The Ollama, Mistral AI, Google AI Gemini, Hugging Face, Cohere, Jina and Voyage AI modules ship the GraalVM reachability metadata of the LangChain4j types their providers map with Jackson (`src/main/resources/META-INF/native-image/io.micronaut.langchain4j/<module>/reachability-metadata.json`). The `NativeImageMetadataTest` of each module fails when a LangChain4j upgrade adds or removes such a type. To regenerate the metadata, run the test with the `UPDATE_NATIVE_METADATA` environment variable:
 
 ```bash
 UPDATE_NATIVE_METADATA=true ./gradlew :micronaut-langchain4j-ollama:test --tests '*NativeImageMetadataTest'

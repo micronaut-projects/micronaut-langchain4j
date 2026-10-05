@@ -1,0 +1,3 @@
+Scoring models (also called re-ranking models) score the relevance of text segments to a query. They are used to re-rank the content retrieved for retrieval augmented generation, see <<configuringRetrieval, Configuring Retrieval>>.
+
+Each module configures a `dev.langchain4j.model.scoring.ScoringModel` bean under `langchain4j.<provider>.scoring-model` (and named ones under `langchain4j.<provider>.scoring-models.<name>`), and an `EmbeddingModel` bean under `langchain4j.<provider>.embedding-model`. The models use the Micronaut HTTP client.

@@ -1,0 +1,16 @@
+{
+  "reflection": [
+    {"type": "dev.langchain4j.model.jina.internal.api.JinaDocument", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.jina.internal.api.JinaEmbedding", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.jina.internal.api.JinaEmbeddingRequest", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.jina.internal.api.JinaEmbeddingRequest$JinaEmbeddingRequestBuilder", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.jina.internal.api.JinaEmbeddingResponse", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.jina.internal.api.JinaMultimodalEmbeddingRequest", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.jina.internal.api.JinaMultimodalEmbeddingRequest$JinaMultimodalInput", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.jina.internal.api.JinaRerankingRequest", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.jina.internal.api.JinaRerankingRequest$JinaRerankingRequestBuilder", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.jina.internal.api.JinaRerankingResponse", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.jina.internal.api.JinaRerankingResult", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.jina.internal.api.JinaUsage", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true}
+  ]
+}

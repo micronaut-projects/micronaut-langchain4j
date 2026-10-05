@@ -26,6 +26,11 @@ chatModels:
   googleai-gemini: Google AI Gemini
   vertexai: VertexAi
   vertexai-gemini: VertexAi Gemini
+scoringModels:
+  title: Scoring Models
+  cohere: Cohere
+  jina: Jina
+  voyageai: Voyage AI
 embeddingStores:
   title: Embedding Stores
   embeddingStoresInMemory: In-Memory
