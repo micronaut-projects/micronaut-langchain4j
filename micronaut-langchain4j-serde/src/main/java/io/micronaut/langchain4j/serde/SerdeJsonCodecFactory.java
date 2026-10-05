@@ -32,7 +32,7 @@ public final class SerdeJsonCodecFactory implements JsonCodecFactory, Prioritize
     /**
      * The priority of the factory: above the default priority of the factories of other integrations.
      */
-    public static final int PRIORITY = 100;
+    public static final int CODEC_PRIORITY = 100;
 
     @Override
     public Json.JsonCodec create() {
@@ -41,6 +41,6 @@ public final class SerdeJsonCodecFactory implements JsonCodecFactory, Prioritize
 
     @Override
     public int priority() {
-        return PRIORITY;
+        return CODEC_PRIORITY;
     }
 }
