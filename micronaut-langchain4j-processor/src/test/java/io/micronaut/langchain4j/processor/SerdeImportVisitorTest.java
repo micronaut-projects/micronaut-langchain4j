@@ -80,6 +80,45 @@ class SerdeImportVisitorTest {
         assertEquals(Set.of("Person", "Address", "Country", "Order", "OrderQuery"), introspected);
     }
 
+    @Test
+    void staticAgentsAndRecordsOfSerdeableRecordsAreImported() {
+        Set<String> introspected = introspectedTypes("""
+            package test;
+
+            import dev.langchain4j.agentic.Agent;
+            import dev.langchain4j.service.V;
+            import io.micronaut.serde.annotation.Serdeable;
+
+            public interface Model {
+
+                final class CountryAction {
+                    @Agent(outputKey = "country")
+                    public static Country country(@V("topic") String topic) {
+                        return null;
+                    }
+                }
+
+                record Country(String name) {
+                }
+
+                interface Planner {
+                    @Agent(outputKey = "plan")
+                    Plan plan(@V("topic") String topic);
+                }
+
+                // already @Serdeable: not imported, but the records of its components are
+                @Serdeable
+                record Plan(Step step) {
+                }
+
+                record Step(String description) {
+                }
+            }
+            """);
+        // Plan keeps the introspection of its own @Serdeable annotation, which is not an import
+        assertEquals(Set.of("Country", "Step"), introspected);
+    }
+
     private static Set<String> introspectedTypes(String source) {
         try (JavaParser parser = new JavaParser()) {
             Iterable<? extends JavaFileObject> generated = parser.generate("test.Model", source);
