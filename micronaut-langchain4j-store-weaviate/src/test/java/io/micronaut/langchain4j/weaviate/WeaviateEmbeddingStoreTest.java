@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 class WeaviateEmbeddingStoreTest {
 
     @Container
-    static final WeaviateContainer CONTAINER = new WeaviateContainer("cr.weaviate.io/semitechnologies/weaviate:1.32.4");
+    static final WeaviateContainer CONTAINER = new WeaviateContainer("semitechnologies/weaviate:1.32.4");
 
     @Test
     void addsAndSearchesEmbeddings() {
