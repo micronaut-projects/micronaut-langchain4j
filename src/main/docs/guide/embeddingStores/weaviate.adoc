@@ -14,4 +14,4 @@ langchain4j:
       object-class: Document
 ----
 
-include::{includedir}configurationProperties/io.micronaut.langchain4j.weaviate.DefaultWeaviateEmbeddingStoreConfiguration.adoc[]
+include::{includedir}configurationProperties/dev.langchain4j.store.embedding.weaviate.WeaviateEmbeddingStore$WeaviateEmbeddingStoreBuilder.adoc[]
