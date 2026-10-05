@@ -91,6 +91,52 @@ class NativeImageMetadataVisitorTest {
         assertTrue(metadata.isEmpty(), metadata::toString);
     }
 
+    @Test
+    void structuredOutputsAndToolTypesAreRegisteredForTheirJsonSchema() {
+        Map<String, String> metadata = generateMetadata("test.Model", """
+            package test;
+
+            import dev.langchain4j.agent.tool.Tool;
+            import io.micronaut.langchain4j.annotation.AiService;
+            import java.util.List;
+
+            interface Model {
+                @AiService
+                interface Assistant {
+                    List<Person> people(String text);
+                }
+
+                record Person(String name, Address address, Kind kind) {
+                }
+
+                class Address {
+                    private String city;
+                }
+
+                enum Kind { FRIEND }
+
+                @jakarta.inject.Singleton
+                class Tools {
+                    @Tool("Finds an order")
+                    String find(Query query) {
+                        return null;
+                    }
+                }
+
+                record Query(String id) {
+                }
+            }
+            """);
+        String service = metadata.get("test.Model$Assistant");
+        for (String type : new String[] {"Person", "Address", "Kind"}) {
+            assertTrue(service.contains("{\"type\": \"test.Model$" + type
+                + "\", \"allDeclaredFields\": true, \"allDeclaredConstructors\": true, \"allDeclaredMethods\": true}"), service);
+        }
+        String tools = metadata.get("test.Model$Tools");
+        assertTrue(tools.contains("{\"type\": \"test.Model$Query\", \"allDeclaredFields\": true"), tools);
+        assertFalse(tools.contains("proxy"), tools);
+    }
+
     private static Map<String, String> generateMetadata(String className, String source) {
         try (JavaParser parser = new JavaParser()) {
             Iterable<? extends JavaFileObject> generated = parser.generate(className, source);

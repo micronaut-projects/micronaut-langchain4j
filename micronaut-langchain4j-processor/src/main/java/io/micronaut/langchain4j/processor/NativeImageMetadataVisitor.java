@@ -18,7 +18,6 @@ package io.micronaut.langchain4j.processor;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.inject.ast.ClassElement;
 import io.micronaut.inject.ast.ElementQuery;
-import io.micronaut.inject.ast.MethodElement;
 import io.micronaut.inject.processing.ProcessingException;
 import io.micronaut.inject.visitor.TypeElementVisitor;
 import io.micronaut.inject.visitor.VisitorContext;
@@ -38,7 +37,9 @@ import java.util.stream.Collectors;
  * services and agents, which LangChain4j also implements with proxies combining the agent type with its own interfaces
  * and whose static {@code @Agent}, {@code @Output}, {@code @ExitCondition}, ... methods it invokes reflectively.
  *
- * <p>Tool classes need no metadata: their {@code @Tool} methods are invoked through their Micronaut
+ * <p>The metadata also covers the structured outputs of the services and agents and the parameters and results of
+ * the tools, whose JSON schema LangChain4j derives from their fields. Tool classes themselves need no metadata: their
+ * {@code @Tool} methods are invoked through their Micronaut
  * {@link io.micronaut.inject.ExecutableMethod}.</p>
  *
  * @since 2.4.0
@@ -88,6 +89,7 @@ public final class NativeImageMetadataVisitor implements TypeElementVisitor<Obje
         names.add(AGENTIC_SERVICE);
         names.add(AGENT);
         names.addAll(WORKFLOW_ANNOTATIONS);
+        names.add(JsonMappedTypes.TOOL);
         return names;
     }
 
@@ -100,28 +102,37 @@ public final class NativeImageMetadataVisitor implements TypeElementVisitor<Obje
     public void visitClass(ClassElement element, VisitorContext context) {
         boolean aiService = element.hasStereotype(AI_SERVICE);
         boolean agent = element.hasStereotype(AGENTIC_SERVICE) || declaresAgentMethods(element);
-        if (!aiService && !agent) {
-            return;
-        }
         String type = element.getName();
         List<String> entries = new ArrayList<>();
-        // the methods, their annotations and parameters, and the static methods invoked reflectively
-        entries.add("""
-            {"type": "%s", "allPublicMethods": true, "allDeclaredMethods": true}""".formatted(type));
-        if (element.isInterface()) {
-            entries.add(proxy(type));
+        if (aiService || agent) {
+            // the methods, their annotations and parameters, and the static methods invoked reflectively
+            entries.add("""
+                {"type": "%s", "allPublicMethods": true, "allDeclaredMethods": true}""".formatted(type));
+            if (element.isInterface()) {
+                entries.add(proxy(type));
+                if (agent) {
+                    // AgentBuilder, AgentUtil.buildAgent (workflows) and PlannerBasedInvocationHandler.withAgenticScope
+                    entries.add(proxy(type, INTERNAL_AGENT, AGENTIC_SCOPE_OWNER, CHAT_MEMORY_ACCESS, CHAT_MESSAGES_ACCESS, RESPONSE_RECEIVED_LISTENER));
+                    entries.add(proxy(type, INTERNAL_AGENT, AGENTIC_SCOPE_OWNER, AGENTIC_SCOPE_ACCESS));
+                    entries.add(proxy(type, INTERNAL_AGENT, AGENTIC_SCOPE_OWNER));
+                }
+            }
             if (agent) {
-                // AgentBuilder, AgentUtil.buildAgent (workflows) and PlannerBasedInvocationHandler.withAgenticScope
-                entries.add(proxy(type, INTERNAL_AGENT, AGENTIC_SCOPE_OWNER, CHAT_MEMORY_ACCESS, CHAT_MESSAGES_ACCESS, RESPONSE_RECEIVED_LISTENER));
-                entries.add(proxy(type, INTERNAL_AGENT, AGENTIC_SCOPE_OWNER, AGENTIC_SCOPE_ACCESS));
-                entries.add(proxy(type, INTERNAL_AGENT, AGENTIC_SCOPE_OWNER));
+                for (String agenticInterface : AGENTIC_INTERFACES) {
+                    entries.add("""
+                        {"type": "%s", "allPublicMethods": true}""".formatted(agenticInterface));
+                }
             }
         }
-        if (agent) {
-            for (String agenticInterface : AGENTIC_INTERFACES) {
-                entries.add("""
-                    {"type": "%s", "allPublicMethods": true}""".formatted(agenticInterface));
-            }
+        // the structured outputs and the tool parameters and results: LangChain4j derives their JSON schema from their
+        // fields, and Jackson, unless Micronaut Serialization maps them, binds them reflectively
+        for (ClassElement jsonType : JsonMappedTypes.collect(element, t -> true)) {
+            entries.add("""
+                {"type": "%s", "allDeclaredFields": true, "allDeclaredConstructors": true, "allDeclaredMethods": true}"""
+                .formatted(jsonType.getName()));
+        }
+        if (entries.isEmpty()) {
+            return;
         }
         String json = entries.stream().collect(Collectors.joining(",\n    ", "{\n  \"reflection\": [\n    ", "\n  ]\n}\n"));
         String path = "native-image/io.micronaut.langchain4j/" + type + "/reachability-metadata.json";
@@ -138,19 +149,7 @@ public final class NativeImageMetadataVisitor implements TypeElementVisitor<Obje
     }
 
     private static boolean declaresAgentMethods(ClassElement element) {
-        return !element.getEnclosedElements(ElementQuery.ALL_METHODS.filter(NativeImageMetadataVisitor::isAgentMethod)).isEmpty();
-    }
-
-    private static boolean isAgentMethod(MethodElement method) {
-        if (method.hasDeclaredAnnotation(AGENT)) {
-            return true;
-        }
-        for (String workflow : WORKFLOW_ANNOTATIONS) {
-            if (method.hasDeclaredAnnotation(workflow)) {
-                return true;
-            }
-        }
-        return false;
+        return !element.getEnclosedElements(ElementQuery.ALL_METHODS.filter(JsonMappedTypes::isAgentMethod)).isEmpty();
     }
 
     private static String proxy(String... interfaces) {
