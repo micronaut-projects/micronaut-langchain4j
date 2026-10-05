@@ -40,12 +40,13 @@ import java.util.Set;
  * When Micronaut Serialization is on the annotation processor path, imports into it ({@code @SerdeImport}) the
  * records LangChain4j maps to and from JSON: the structured outputs of the AI services and agents, and the parameters
  * and results of the tools, with the records they are made of. With {@code micronaut-langchain4j-serde}, LangChain4j
- * then maps them with Micronaut Serialization rather than reflectively with Jackson.
+ * then maps them with their compile-time introspection, without reflection.
  *
  * <p>Only public records are imported (Micronaut Serialization cannot import other types): the properties of a record
  * are its components, whereas a class whose fields are only reachable reflectively would be written as an empty
  * object. Classes, and types annotated with {@code @Serdeable} or {@code @Introspected} already, are left as they
- * are.</p>
+ * are: micronaut-langchain4j-serde maps a type without a {@code @Serdeable} introspection with its
+ * {@code @Introspected} introspection, or reflectively with micronaut-reflection.</p>
  *
  * @since 2.4.0
  */

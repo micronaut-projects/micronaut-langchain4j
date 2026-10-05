@@ -53,13 +53,28 @@ public class NativeStructuredOutputTest {
         assertEquals(new Reading(21), forecaster.reading(EchoChatModel.JSON + "{\"temperature_celsius\": 21}"));
     }
 
+    @Test
+    void classesWithoutIntrospectionAreMappedReflectively() {
+        // a class with private fields only, described by micronaut-reflection with the generated reflection metadata
+        Station station = forecaster.station(EchoChatModel.JSON + "{\"name\": \"Orly\", \"altitude\": 89}");
+        assertEquals("Orly", station.name);
+        assertEquals(89, station.altitude);
+    }
+
     @AiService
     public interface Forecaster {
         Forecast forecast(String request);
 
         Reading reading(String request);
 
+        Station station(String request);
+
         List<Location> locations(String request);
+    }
+
+    public static class Station {
+        private String name;
+        private int altitude;
     }
 
     public record Location(String city) {
