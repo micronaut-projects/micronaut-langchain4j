@@ -41,7 +41,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig;
     properties = {
         @Lang4jConfig.Property(name = "httpClientBuilder", injected = true),
         @Lang4jConfig.Property(name = "baseUrl", common = true, required = true, defaultValue = "https://api.mistral.ai/v1/"),
-        @Lang4jConfig.Property(name = "modelName", common = true, required = true, defaultValue = "mistral-tiny"),
+        @Lang4jConfig.Property(name = "modelName", common = true, required = true, defaultValue = "mistral-small-latest"),
         @Lang4jConfig.Property(name = "apiKey", common = true, required = true),
         @Lang4jConfig.Property(name = "logRequests", common = true, defaultValue = StringUtils.FALSE),
         @Lang4jConfig.Property(name = "logResponses", common = true, defaultValue = StringUtils.FALSE)
