@@ -6,6 +6,7 @@ import dev.langchain4j.agent.tool.SearchBehavior;
 import dev.langchain4j.agent.tool.Tool;
 import dev.langchain4j.agent.tool.ToolExecutionRequest;
 import dev.langchain4j.agent.tool.ToolMemoryId;
+import dev.langchain4j.agent.tool.ToolSpecification;
 import dev.langchain4j.data.image.Image;
 import dev.langchain4j.data.message.Content;
 import dev.langchain4j.data.message.ImageContent;
@@ -95,6 +96,14 @@ class ExecutableMethodToolExecutorTest {
     }
 
     @Test
+    void blankNamesAndDescriptionsAreNotSet() {
+        ToolSpecification specification = tool("blank").toolSpecification();
+        assertEquals("blank", specification.name());
+        assertEquals(List.of("input"), List.copyOf(specification.parameters().properties().keySet()));
+        assertEquals("The input", specification.parameters().properties().get("input").description());
+    }
+
+    @Test
     void specificationMetadataAndReturnBehavior() {
         AiServiceTool tool = tool("immediate");
         assertEquals(ReturnBehavior.IMMEDIATE, tool.returnBehavior());
@@ -156,6 +165,11 @@ class ExecutableMethodToolExecutorTest {
         @Tool("Returns nothing")
         String nothing() {
             return null;
+        }
+
+        @Tool(name = " ", value = "Blank name")
+        String blank(@P(name = " ", value = " ", description = "The input") String input) {
+            return input;
         }
 
         @Tool("Returns a map")

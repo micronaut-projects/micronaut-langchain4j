@@ -302,7 +302,7 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
 
     private static String toolName(ExecutableMethod<?, ?> method) {
         return method.stringValue(Tool.class, "name")
-            .filter(StringUtils::isNotEmpty)
+            .filter(StringUtils::hasText)
             .orElse(method.getMethodName());
     }
 
@@ -357,9 +357,10 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
             } else {
                 kind = ParameterKind.VALUE;
             }
-            String name = metadata.stringValue(P.class, "name").filter(StringUtils::isNotEmpty).orElse(argument.getName());
-            String value = metadata.stringValue(P.class).filter(StringUtils::isNotEmpty).orElse(null);
-            String description = metadata.stringValue(P.class, "description").filter(StringUtils::isNotEmpty).orElse(null);
+            // blank values are not set, as for LangChain4j
+            String name = metadata.stringValue(P.class, "name").filter(StringUtils::hasText).orElse(argument.getName());
+            String value = metadata.stringValue(P.class).filter(StringUtils::hasText).orElse(null);
+            String description = metadata.stringValue(P.class, "description").filter(StringUtils::hasText).orElse(null);
             if (value != null && description != null) {
                 throw new IllegalArgumentException(
                     "Parameter '%s' has both 'value' and 'description' set in @P. Use one or the other, but not both.".formatted(name));
