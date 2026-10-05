@@ -7,6 +7,7 @@ dependencies {
     api(libs.langchain4j)
     api(libs.langchain4j.http.client)
     compileOnly(libs.langchain4j.mcp)
+    compileOnly(mn.graalvm.nativeimage)
     implementation(platform(mnReactor.boms.reactor))
     implementation(mn.micronaut.http.client.core)
     implementation(libs.reactor.core)
