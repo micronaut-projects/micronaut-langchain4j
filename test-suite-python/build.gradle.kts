@@ -10,6 +10,8 @@ dependencies {
     // (micronaut-inject-python), which takes the compile classpath as its annotation processor path: the
     // annotation processors are regular dependencies rather than annotation processor ones.
     implementation(projects.micronautLangchain4jProcessor)
+    implementation(mnJsonSchema.micronaut.json.schema.processor)
+    implementation(mnJsonSchema.micronaut.json.schema.utils)
     implementation(mn.micronaut.inject.python)
     implementation(mn.micronaut.context.python)
     implementation(projects.micronautLangchain4jCore)
