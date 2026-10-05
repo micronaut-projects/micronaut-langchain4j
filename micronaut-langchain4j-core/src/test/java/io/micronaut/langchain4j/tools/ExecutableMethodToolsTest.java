@@ -64,7 +64,7 @@ class ExecutableMethodToolsTest {
             .map(AiServiceTool::toolSpecification)
             .collect(Collectors.toMap(ToolSpecification::name, Function.identity()));
 
-        assertEquals(Set.of("add", "greet", "fail", "current_unit"), specifications.keySet());
+        assertEquals(Set.of("add", "greet", "fail", "crash", "current_unit"), specifications.keySet());
 
         ToolSpecification add = specifications.get("add");
         assertEquals("Adds two numbers", add.description());
@@ -108,6 +108,12 @@ class ExecutableMethodToolsTest {
     }
 
     @Test
+    void toolErrorsThrownAsErrorsAreReportedToTheModel() {
+        chatModel.toolRequest = ToolExecutionRequest.builder().id("1").name("crash").arguments("{}").build();
+        assertEquals("tool:crashed", assistant.chat("memory-6", "Crash"));
+    }
+
+    @Test
     void invalidArgumentsFailLikeLangChain4jTools() {
         // without a ToolArgumentsErrorHandler, LangChain4j rethrows the argument error of a tool
         chatModel.toolRequest = ToolExecutionRequest.builder().id("1").name("add").arguments("{\"first\": \"two\", \"b\": 3}").build();
@@ -141,6 +147,11 @@ class ExecutableMethodToolsTest {
         @Tool("Always fails")
         String fail() {
             throw new IllegalStateException("boom");
+        }
+
+        @Tool("Always fails with an error")
+        String crash() {
+            throw new AssertionError("crashed");
         }
 
         @Tool(name = "current_unit", value = {"Line one", "Line two"})

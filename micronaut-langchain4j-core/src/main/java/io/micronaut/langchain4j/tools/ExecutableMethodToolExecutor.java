@@ -145,8 +145,9 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
         Object result;
         try {
             result = method.invoke(bean, arguments);
-        } catch (Exception e) {
-            // ExecutableMethod.invoke rethrows the checked exceptions of the method as they are
+        } catch (Exception | Error e) {
+            // ExecutableMethod.invoke rethrows what the method throws as it is. An Error is a failure of the tool too,
+            // as for LangChain4j, whose reflective invocation wraps whatever the method throws
             throw new ToolExecutionException(e);
         }
         CompletableFuture<?> future = toCompletableFuture(result);
@@ -168,8 +169,8 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
         Object result;
         try {
             result = method.invoke(bean, arguments);
-        } catch (Exception e) {
-            // ExecutableMethod.invoke rethrows the checked exceptions of the method as they are
+        } catch (Exception | Error e) {
+            // as in executeWithContext, an Error is a failure of the tool too
             return CompletableFuture.failedFuture(new ToolExecutionException(e));
         }
         CompletableFuture<?> future = toCompletableFuture(result);

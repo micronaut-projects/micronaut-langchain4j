@@ -86,6 +86,16 @@ class ExecutableMethodToolExecutorTest {
     }
 
     @Test
+    void errorsAreToolExecutionExceptionsToo() {
+        ToolExecutionException failure = assertThrows(ToolExecutionException.class, () -> execute("crash", "{}"));
+        assertInstanceOf(AssertionError.class, failure.getCause());
+        CompletionException asyncFailure = assertThrows(CompletionException.class,
+            () -> executor("crash").executeAsync(request("crash", "{}"), context()).join());
+        assertInstanceOf(ToolExecutionException.class, asyncFailure.getCause());
+        assertInstanceOf(AssertionError.class, asyncFailure.getCause().getCause());
+    }
+
+    @Test
     void injectedParameters() {
         InvocationParameters parameters = new InvocationParameters();
         InvocationContext context = InvocationContext.builder().chatMemoryId("memory").invocationParameters(parameters).build();
@@ -196,6 +206,11 @@ class ExecutableMethodToolExecutorTest {
         @Tool("Fails")
         String fail() {
             throw new IllegalStateException("boom");
+        }
+
+        @Tool("Fails with an error")
+        String crash() {
+            throw new AssertionError("boom");
         }
 
         @Tool("Fails asynchronously")
