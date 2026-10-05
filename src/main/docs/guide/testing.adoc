@@ -17,3 +17,43 @@ snippet::example.micronaut.aiservice.evaluation.EvaluatingFriend[source="main"]
 snippet::example.micronaut.aiservice.evaluation.AiServiceEvaluationExample[source="test"]
 
 `FactCheckingEvaluator` requires non-empty context, which makes it a good fit for RAG-style responses backed by retrieved sources.
+
+[[evaluationSamples]]
+=== Evaluation samples
+
+The Micronaut LangChain4j test module runs evaluations from sample files and provides a scripted chat model for tests. Add it to the test classpath:
+
+dependency:micronaut-langchain4j-test[groupId=io.micronaut.langchain4j,scope=testImplementation]
+
+A sample file lists the inputs to send to the AI service, with the optional context that the answers must be grounded in, for example `src/test/resources/samples/support.yml`:
+
+[source,yaml]
+----
+samples:
+  - name: framework
+    input: What is Micronaut?
+    context: Micronaut is a modern JVM framework for building microservices and serverless applications.
+  - name: native
+    input: Can a Micronaut application be compiled to a native executable?
+    context: Micronaut applications can be compiled to native executables with GraalVM.
+----
+
+A JUnit parameterized test then evaluates the answer to each sample:
+
+snippet::example.micronaut.testing.SupportAssistantEvaluationTest[source=test]
+
+<1> The module exposes `RelevancyEvaluator` and `FactCheckingEvaluator` beans, judged by the `ChatModel` bean named by `langchain4j.evaluation.chat-model`, otherwise by the default `ChatModel`. In a real evaluation the judge is a capable model.
+<2> The evaluator is injected like any bean.
+<3> `@EvaluationSamplesSource` runs the test once per sample of the file, which `EvaluationSamples.load(...)` also reads.
+<4> `EvaluationAssertions.assertPasses` fails the test with the feedback of the evaluator.
+<5> `ScriptedChatModel` answers with the first rule that matches the request and records the requests, so a test does not need a real model.
+
+[.lang-python]
+NOTE: In Python, the test loops over the samples, since JUnit parameterized tests are not available.
+
+`ScriptedChatModel` can also request tool calls and stream:
+
+* `whenUserMessageContains(text)`, `whenToolResult()` and `when(predicate)` select the requests, and `respond(...)` or `callTool(name, argumentsJson)` answer them, in order. `otherwise(...)` answers the other requests.
+* `ScriptedChatModel.respondingWith(responses...)` answers the requests with the responses, in order.
+* `streaming()` returns a `StreamingChatModel` with the same rules, which streams the text of the responses word by word.
+* `requests()` returns the requests received, for example to check the messages sent to the model.

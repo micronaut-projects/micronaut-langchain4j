@@ -20,6 +20,7 @@ dependencies {
     implementation(project(":micronaut-langchain4j-google-genai"))
     testImplementation(project(":micronaut-langchain4j-ollama"))
     testImplementation(project(":test-suite-utils"))
+    testImplementation(project(":micronaut-langchain4j-test"))
     testImplementation(mnTest.micronaut.test.junit5)
     testImplementation(platform(libs.boms.langchain4j))
     testImplementation(libs.langchain4j.kotlin)

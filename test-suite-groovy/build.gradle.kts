@@ -19,6 +19,7 @@ dependencies {
     testImplementation(project(":micronaut-langchain4j-ollama"))
 
     testImplementation(project(":test-suite-utils"))
+    testImplementation(project(":micronaut-langchain4j-test"))
     testCompileOnly(mn.micronaut.inject.groovy)
     testImplementation(mnTest.micronaut.test.junit5)
     testImplementation(platform(mnTest.boms.testcontainers))

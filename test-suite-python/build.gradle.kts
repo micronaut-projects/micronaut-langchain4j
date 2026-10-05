@@ -22,6 +22,7 @@ dependencies {
     testAnnotationProcessor(mn.micronaut.inject.java)
     testImplementation(mn.micronaut.inject.python.test)
     testImplementation(projects.testSuiteUtils)
+    testImplementation(projects.micronautLangchain4jTest)
     testImplementation(platform(mnTest.boms.testcontainers))
     testImplementation(libs.testcontainers.junit.jupiter)
     testImplementation(mnTest.micronaut.test.junit5)
