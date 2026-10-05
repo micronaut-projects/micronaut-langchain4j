@@ -1,0 +1,27 @@
+Every chat model, streaming chat model and embedding model whose LangChain4j builder accepts listeners receives the `ChatModelListener` (or embedding model listener) beans of the application. Define a listener as a bean to observe the requests, responses and errors of all models:
+
+[source,java]
+----
+@Singleton
+class LoggingListener implements ChatModelListener {
+    @Override
+    public void onResponse(ChatModelResponseContext context) {
+        LOG.info("Tokens used: {}", context.chatResponse().tokenUsage());
+    }
+}
+----
+
+=== Micrometer
+
+To record the https://opentelemetry.io/docs/specs/semconv/gen-ai/gen-ai-metrics/[OpenTelemetry GenAI metrics] of the chat models with https://micronaut-projects.github.io/micronaut-micrometer/latest/guide/[Micronaut Micrometer], add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-micrometer[]
+
+When there is a `MeterRegistry` bean, LangChain4j's `MicrometerMetricsChatModelListener` is registered. It records:
+
+* `gen_ai.client.token.usage` - the input and output tokens, tagged with the provider, the operation, the request and response model names and the token type.
+* `gen_ai.client.operation.duration` - the duration of the chat model requests.
+
+When there is also an `ObservationRegistry` bean (for example with `micronaut-micrometer-observation`) and `dev.langchain4j:langchain4j-observation` is on the classpath, LangChain4j's `ObservationChatModelListener` is registered instead. It records each chat model request as a Micrometer observation, which produces the same metrics and, with a tracing bridge, spans.
+
+Set `langchain4j.micrometer.enabled` to `false` to disable these listeners.
