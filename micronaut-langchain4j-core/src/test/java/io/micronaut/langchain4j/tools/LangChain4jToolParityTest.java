@@ -18,6 +18,7 @@ import jakarta.inject.Singleton;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * The tool specifications and the coercion of the tool arguments re-implement helpers of LangChain4j that are not
@@ -78,7 +81,8 @@ class LangChain4jToolParityTest {
             "{\"a\": \"A\", \"b2\": \"B\", \"d\": \"7\", \"e\": null}",
             "{\"a\": \"A\", \"b\": \"B\"}",
             "{}"),
-        "nothing", List.of("{}", "{\"unexpected\": 1}")
+        "nothing", List.of("{}", "{\"unexpected\": 1}"),
+        "blank", List.of("{\"input\": \"a\"}", "{}")
     );
 
     @Inject
@@ -105,7 +109,9 @@ class LangChain4jToolParityTest {
                 .propagateToolExecutionExceptions(true)
                 .build();
             ToolExecutor micronaut = executor(method);
-            for (String arguments : ARGUMENTS.get(method.getName())) {
+            List<String> payloads = ARGUMENTS.get(method.getName());
+            assertNotNull(payloads, () -> "No arguments are declared in ARGUMENTS for the tool method " + method.getName());
+            for (String arguments : payloads) {
                 String expected = outcome(langChain4j, method, arguments);
                 String actual = outcome(micronaut, method, arguments);
                 if (!expected.equals(actual)) {
@@ -127,14 +133,23 @@ class LangChain4jToolParityTest {
     }
 
     private static List<Method> toolMethods() {
-        return Arrays.stream(ParityTools.class.getDeclaredMethods())
+        List<Method> methods = Arrays.stream(ParityTools.class.getDeclaredMethods())
             .filter(method -> method.isAnnotationPresent(Tool.class))
             .toList();
+        for (Method method : methods) {
+            for (Parameter parameter : method.getParameters()) {
+                // LangChain4j names the tool parameters after the reflective parameter names
+                assertTrue(parameter.isNamePresent(), () -> "The tests must be compiled with -parameters: the parameters of "
+                    + method.getName() + " have no names");
+            }
+        }
+        return methods;
     }
 
     private ExecutableMethodToolExecutor executor(Method method) {
         ExecutableMethod<?, ?> executableMethod = beanContext.getBeanDefinition(ParityTools.class).getExecutableMethods().stream()
-            .filter(candidate -> candidate.getMethodName().equals(method.getName()))
+            .filter(candidate -> candidate.getMethodName().equals(method.getName())
+                && Arrays.equals(candidate.getArgumentTypes(), method.getParameterTypes()))
             .findFirst()
             .orElseThrow();
         return new ExecutableMethodToolExecutor(beanContext.getBean(ParityTools.class), executableMethod);
@@ -175,6 +190,11 @@ class LangChain4jToolParityTest {
                      Optional<String> e,
                      @ToolMemoryId String memoryId) {
             return a + "|" + b + "|" + c + "|" + d + "|" + e + "|" + memoryId;
+        }
+
+        @Tool(name = " ", value = "Blank name")
+        String blank(@P(name = " ", value = " ", description = "The input") String input) {
+            return input;
         }
 
         @Tool
