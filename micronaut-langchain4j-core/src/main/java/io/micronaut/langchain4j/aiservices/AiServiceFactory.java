@@ -19,6 +19,7 @@ import dev.langchain4j.memory.chat.ChatMemoryProvider;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.moderation.ModerationModel;
+import dev.langchain4j.observability.api.listener.AiServiceListener;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.service.TokenStream;
 import dev.langchain4j.service.tool.AiServiceTool;
@@ -103,6 +104,12 @@ public class AiServiceFactory {
         lookupByNameOrDefault(name, ToolArgumentsErrorHandler.class, builder::toolArgumentsErrorHandler);
         lookupByNameOrDefault(name, ToolSearchStrategy.class, builder::toolSearchStrategy);
         configureToolCalling(name, builder);
+
+        // AiServiceListener beans observe every AI service, Micronaut event listeners receive the same events
+        builder.registerListeners(beanContext.getBeansOfType(AiServiceListener.class).stream()
+            .<AiServiceListener<?>>map(listener -> listener)
+            .toList());
+        builder.registerListeners(AiServiceEventPublishers.create(beanContext));
 
         ModelSelection modelSelection = selectModels(serviceDef.beanDefinition());
         if (modelSelection.chatModel()) {

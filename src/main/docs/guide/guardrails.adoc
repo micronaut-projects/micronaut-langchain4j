@@ -1,0 +1,19 @@
+https://docs.langchain4j.dev/tutorials/guardrails[Guardrails] validate the input of an AI service before it is sent to the model, and the output of the model before it is returned. They are declared with LangChain4j's `@InputGuardrails` and `@OutputGuardrails` annotations, on an AI service method or on the AI service to apply to all its methods.
+
+The guardrail classes are resolved as Micronaut beans, so they can inject other beans:
+
+snippet::example.micronaut.aiservice.guardrails.PromptInjectionGuard[source="main"]
+
+<1> The guardrail is a bean.
+<2> An input guardrail validates the user message, and can read the rest of the request (the chat memory, the augmentation result...).
+<3> A fatal result stops the invocation: the AI service throws an `InputGuardrailException`.
+
+snippet::example.micronaut.aiservice.guardrails.GuardedAssistant[source="main"]
+
+<1> The guardrail validates the input of this method.
+
+Output guardrails are declared the same way with `@OutputGuardrails`. They can ask the model to retry or reprompt it, up to the `maxRetries` of the annotation.
+
+A guardrail class that is not a bean is instantiated with its public no-argument constructor, which requires reflection in a GraalVM native image. The guardrails provided by LangChain4j's `dev.langchain4j:langchain4j-guardrails` module (for example the prompt injection and moderation guardrails) can be used this way, or registered as beans with a factory to configure them.
+
+The guardrails also produce events, see <<aiServiceEvents, AI Service Events>>.
