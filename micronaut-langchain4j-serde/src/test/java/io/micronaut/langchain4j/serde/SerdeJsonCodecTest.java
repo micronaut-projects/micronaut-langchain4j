@@ -90,12 +90,19 @@ class SerdeJsonCodecTest {
         assertEquals(new Dates(LocalDate.of(2001, 2, 3), LocalTime.of(4, 5), LocalDateTime.of(2001, 2, 3, 4, 5, 6, 7)), dates);
         assertEquals(new Dates(LocalDate.of(2001, 2, 3), LocalTime.of(4, 5), LocalDateTime.of(2001, 2, 3, 4, 5, 6, 7)),
             codec.fromJson("{\"date\":\"2001-02-03\",\"time\":\"04:05\",\"dateTime\":\"2001-02-03T04:05:06.000000007\"}", Dates.class));
+        // like the other types, the object shapes reject unknown properties
+        assertThrows(JsonReadException.class, () -> codec.fromJson("{\"year\":2001,\"month\":2,\"day\":3,\"hallucinated\":true}", LocalDate.class));
+        assertThrows(JsonReadException.class, () -> codec.fromJson("{\"hour\":4,\"minute\":5,\"zone\":\"UTC\"}", LocalTime.class));
+        assertThrows(JsonReadException.class, () -> codec.fromJson(
+            "{\"date\":{\"year\":2001,\"month\":2,\"day\":3},\"time\":{\"hour\":4,\"minute\":5},\"offset\":1}", LocalDateTime.class));
         assertEquals("{\"date\":\"2001-02-03\",\"time\":\"04:05:00\",\"dateTime\":\"2001-02-03T04:05:06.000000007\"}",
             codec.toJson(new Dates(LocalDate.of(2001, 2, 3), LocalTime.of(4, 5), LocalDateTime.of(2001, 2, 3, 4, 5, 6, 7))));
     }
 
     @Test
     void theApplicationMapperIsNotChanged() {
+        // the mapper of the codec, with its object-shape deserializers, exists before the application context
+        assertEquals(LocalDate.of(2001, 2, 3), codec.fromJson("{\"year\":2001,\"month\":2,\"day\":3}", LocalDate.class));
         try (ApplicationContext context = ApplicationContext.run()) {
             ObjectMapper mapper = context.getBean(ObjectMapper.class);
             assertThrows(IOException.class, () -> mapper.readValue("{\"year\":2001,\"month\":2,\"day\":3}", LocalDate.class));
