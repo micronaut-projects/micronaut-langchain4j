@@ -20,6 +20,7 @@ import dev.langchain4j.exception.JsonWriteException;
 import dev.langchain4j.internal.Json;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.type.Argument;
+import io.micronaut.core.util.SupplierUtil;
 import io.micronaut.serde.ObjectMapper;
 import io.micronaut.serde.config.DeserializationConfiguration;
 import io.micronaut.serde.config.SerializationConfiguration;
@@ -27,6 +28,7 @@ import io.micronaut.serde.support.DefaultSerdeIntrospections;
 
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * LangChain4j's general purpose JSON codec ({@code dev.langchain4j.internal.Json}) backed by Micronaut Serialization:
@@ -63,7 +65,8 @@ final class SerdeJsonCodec implements Json.JsonCodec {
         SerializationConfiguration.PREFIX + ".inclusion", "ALWAYS"
     );
 
-    private volatile ObjectMapper objectMapper;
+    // the mapper is created on first use: LangChain4j creates the codec when it loads its Json class
+    private final Supplier<Mappers> mappers = SupplierUtil.memoized(SerdeJsonCodec::createMappers);
 
     @Override
     public String toJson(Object o) {
@@ -91,20 +94,26 @@ final class SerdeJsonCodec implements Json.JsonCodec {
     }
 
     private ObjectMapper objectMapper() {
-        ObjectMapper mapper = objectMapper;
-        if (mapper == null) {
-            synchronized (this) {
-                mapper = objectMapper;
-                if (mapper == null) {
-                    // a mapper of its own: LangChain4j creates the codec once per class loader, independently of the
-                    // application contexts, and the configuration must not change the JSON of the application
-                    mapper = ObjectMapper.create(CONFIGURATION, SerdeJsonCodec.class.getPackageName())
-                        .cloneWithConfiguration(null, null, null,
-                            new DefaultSerdeIntrospections().withRuntimeIntrospectionResolver(new ReflectiveIntrospectionResolver()));
-                    objectMapper = mapper;
-                }
-            }
-        }
-        return mapper;
+        return mappers.get().mapper();
+    }
+
+    /**
+     * A mapper of its own: LangChain4j creates the codec once per class loader, independently of the application
+     * contexts, and the configuration must not change the JSON of the application. The mapper, and the bean context
+     * behind it, live as long as the codec, that is as long as LangChain4j's classes.
+     */
+    private static Mappers createMappers() {
+        ObjectMapper.CloseableObjectMapper owner = ObjectMapper.create(CONFIGURATION, SerdeJsonCodec.class.getPackageName());
+        return new Mappers(owner, owner.cloneWithConfiguration(null, null, null,
+            new DefaultSerdeIntrospections().withRuntimeIntrospectionResolver(new ReflectiveIntrospectionResolver())));
+    }
+
+    /**
+     * The mapper of the codec, and the mapper owning the bean context it was cloned from.
+     *
+     * @param owner  The mapper owning the bean context
+     * @param mapper The mapper of the codec
+     */
+    private record Mappers(ObjectMapper.CloseableObjectMapper owner, ObjectMapper mapper) {
     }
 }
