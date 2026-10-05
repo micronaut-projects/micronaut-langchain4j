@@ -44,7 +44,7 @@ Supported patterns:
 - link:{langchain4j}/dev/langchain4j/agentic/declarative/ConditionalAgent.html[ConditionalAgent]
 - link:{langchain4j}/dev/langchain4j/agentic/declarative/LoopAgent.html[LoopAgent]
 
-Supervisor-style and planner-style agents can still be modeled using LangChain4j typed agents or composed workflows, but the Micronaut-managed workflow builder lifecycle currently applies to the workflow types listed above.
+The Micronaut-managed workflow builder lifecycle applies to the workflow types listed above. Supervisor and planner agents (link:{langchain4j}/dev/langchain4j/agentic/declarative/SupervisorAgent.html[SupervisorAgent], link:{langchain4j}/dev/langchain4j/agentic/declarative/PlannerAgent.html[PlannerAgent]) are supported too: see <<supervisorAgents, Supervisor agents>>.
 
 Example: an evening planner (Sequence)
 
@@ -58,6 +58,7 @@ Loop example with customization via a listener
 
 snippet::example.micronaut.agentic.LoopingPlannerAgent[source=main]
 
+[[agenticServiceConfiguration]]
 === Configuration
 
 You can select which `ChatModel` bean to use per agent via configuration. The agent id is derived from the interface name by:
@@ -143,3 +144,45 @@ Workflow builders can be customized the same way. This example changes the loop 
 snippet::example.micronaut.agentic.LoopAgentServiceListener[source=main]
 
 The same approach applies to Micronaut-managed workflow services: `SequentialAgentService`, `ParallelAgentService`, `ParallelMapperService`, `ConditionalAgentService`, and `LoopAgentService`.
+
+[[supervisorAgents]]
+=== Supervisor agents
+
+A supervisor agent lets the chat model decide which of its sub-agents to invoke, and with which arguments, until the request is addressed. Declare it with LangChain4j's `@SupervisorAgent` on a method of an `@AgenticService`:
+
+snippet::example.micronaut.agentic.TravelSupervisorAgent[source=main]
+
+The supervisor plans with the chat model of the agentic service (see <<agenticServiceConfiguration, Configuration>>), and its sub-agents receive the Micronaut model, memory, retrieval and tool configuration of their agent id like any other agent. `responseStrategy` selects whether the supervisor answers with the last response of a sub-agent (`LAST`, the default), with the summary written by the planner (`SUMMARY`) or with the better of both (`SCORED`).
+
+Tests can script the planner with a chat model bean that answers with the agent invocations:
+
+snippet::example.micronaut.agentic.TravelSupervisorAgentTest[source=test]
+
+[[agenticSuppliers]]
+=== Supplier methods
+
+LangChain4j agents can declare static supplier methods, such as `@ChatModelSupplier`, `@ToolsSupplier`, `@ToolProviderSupplier`, `@ContentRetrieverSupplier`, `@ChatMemoryProviderSupplier`, `@ParallelExecutor` or `@McpClientSupplier`. With Micronaut, the parameters of these methods are beans: annotate a parameter with `@Named` to select a bean by name.
+
+NOTE: LangChain4j calls a `@ChatModelSupplier` or `@StreamingChatModelSupplier` method that has parameters for each invocation of the agent within a workflow: a standalone typed agent ignores it.
+
+==== MCP client agents
+
+An MCP client agent calls a tool of an MCP server as a step of a workflow. Add the LangChain4j agentic MCP dependency, together with an MCP client, for example the one of https://micronaut-projects.github.io/micronaut-mcp/latest/guide/[Micronaut MCP]:
+
+dependency:langchain4j-agentic-mcp[groupId=dev.langchain4j]
+
+dependency:micronaut-mcp-client-langchain4j[groupId=io.micronaut.mcp]
+
+The `@McpClientSupplier` method receives the `McpClient` bean of the server:
+
+snippet::example.micronaut.agentic.WorldClockAgent[source=main]
+
+<1> The tool of the MCP server to call. The arguments of the tool are the parameters of the method, read from the agentic scope.
+<2> The Micronaut MCP client bean named `time-server`, configured under `micronaut.mcp.client.http.time-server` (see <<tools, Tools>> for an MCP client configuration).
+
+[.lang-python]
+NOTE: In Python, a class with a static function compiles to a Java interface only when it is an introduction type, so the MCP client agent above is an `@AgenticService` too.
+
+==== A2A client agents
+
+LangChain4j's `@A2AClientAgent` invokes a remote agent with the https://a2a-protocol.org[Agent2Agent (A2A)] protocol. It requires the `dev.langchain4j:langchain4j-agentic-a2a` dependency, and the URL of the remote agent server is set with the `a2aServerUrl` attribute or returned by a static `@A2AServerUrlSupplier` method without parameters. A static `@A2AClientCustomizer` method can customize the A2A client.

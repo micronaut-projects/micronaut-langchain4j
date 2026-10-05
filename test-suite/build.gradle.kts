@@ -12,6 +12,7 @@ dependencies {
     implementation(mn.reactive.streams)
     implementation(mn.micronaut.http.client.core)
     implementation(projects.micronautLangchain4jAgentic)
+    implementation(libs.langchain4j.agentic.mcp)
     implementation(projects.micronautLangchain4jOpenai)
     testImplementation(platform(mnTest.boms.testcontainers))
     testImplementation(projects.micronautLangchain4jOllama)

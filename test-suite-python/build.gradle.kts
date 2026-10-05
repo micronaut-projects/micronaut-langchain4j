@@ -15,6 +15,7 @@ dependencies {
     implementation(projects.micronautLangchain4jCore)
     implementation(projects.micronautLangchain4jGoogleGenai)
     implementation(projects.micronautLangchain4jAgentic)
+    implementation(libs.langchain4j.agentic.mcp)
     implementation(projects.micronautLangchain4jOpenai)
     implementation(projects.micronautLangchain4jOllama)
     // The Java helper of src/test/java (Ollama context configurer) is processed by javac

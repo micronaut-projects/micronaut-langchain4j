@@ -57,6 +57,7 @@ import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.langchain4j.agentic.annotation.AgenticService;
 import io.micronaut.langchain4j.tools.ToolRegistry;
 import io.micronaut.langchain4j.utils.RetrievalUtils;
+import jakarta.annotation.PreDestroy;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -82,6 +83,7 @@ public final class AgenticServiceFactory {
     );
 
     private final Lock lock = new ReentrantLock();
+    private volatile @Nullable BeanContext beanContext;
 
     /**
      * Build the agentic service for the given definition.
@@ -90,6 +92,7 @@ public final class AgenticServiceFactory {
      * @param serviceDef Service definition information for building an agentic proxy
      * @return the agentic proxy
      */
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public Object buildAgenticService(BeanContext beanContext,
                                       AgenticServiceInfo<Object> serviceDef) {
         Class<?> iface = resolveAgentInterface(serviceDef.type());
@@ -99,16 +102,18 @@ public final class AgenticServiceFactory {
         try {
             AgenticServices.setWorkflowAgentsBuilder(new MicronautWorkflowAgentsBuilder(beanContext));
             try {
-                @SuppressWarnings({"rawtypes", "unchecked"})
-                Object agent = AgenticServices.createAgenticSystem(
+                Object[] agent = new Object[1];
+                // the parameters of the static supplier methods (@ChatModelSupplier, @McpClientSupplier, ...) are beans
+                BeanContextSupplierParameterResolver.creating(beanContext, () -> agent[0] = AgenticServices.createAgenticSystem(
                     (Class) iface,
                     chatModel,
                     new AgenticServices.AgentConfigurator(ctx -> {
                         applyBuilderConfig(beanContext, serviceDef, iface, ctx);
                         fireAgentBuilderListeners(beanContext, ctx);
                     }, null, null)
-                );
-                return agent;
+                ));
+                this.beanContext = beanContext;
+                return agent[0];
             } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException("AgenticServices.createAgenticSystem failed for " + iface.getName(), e);
             } finally {
@@ -116,6 +121,17 @@ public final class AgenticServiceFactory {
             }
         } finally {
             lock.unlock();
+        }
+    }
+
+    /**
+     * Releases the agent types created by the bean context.
+     */
+    @PreDestroy
+    void close() {
+        BeanContext context = beanContext;
+        if (context != null) {
+            BeanContextSupplierParameterResolver.release(context);
         }
     }
 
