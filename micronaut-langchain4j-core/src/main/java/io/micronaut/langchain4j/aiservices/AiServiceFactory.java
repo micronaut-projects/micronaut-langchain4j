@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
@@ -94,7 +95,8 @@ public class AiServiceFactory {
             });
 
         // the tools invoke the @Tool methods through their ExecutableMethod: LangChain4j does not scan the tool classes
-        List<AiServiceTool> toolsTyped = serviceDef.tools() != null ? toolRegistry.getAiServiceTools(serviceDef.tools()) : List.of();
+        Set<Class<?>> toolTypes = serviceDef.tools();
+        List<AiServiceTool> toolsTyped = toolTypes != null ? toolRegistry.getAiServiceTools(toolTypes) : List.of();
         if (CollectionUtils.isNotEmpty(toolsTyped)) {
             builder.tools(toolsTyped);
         }

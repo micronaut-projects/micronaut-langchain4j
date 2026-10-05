@@ -22,6 +22,7 @@ import io.micronaut.inject.ast.MethodElement;
 import io.micronaut.inject.ast.ParameterElement;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -70,14 +71,16 @@ final class JsonMappedTypes {
         boolean service = element.hasStereotype(NativeImageMetadataVisitor.AI_SERVICE)
             || element.hasStereotype(NativeImageMetadataVisitor.AGENTIC_SERVICE);
         Set<ClassElement> types = new LinkedHashSet<>();
-        for (MethodElement method : element.getEnclosedElements(ElementQuery.ALL_METHODS.onlyInstance())) {
+        Set<String> visited = new HashSet<>();
+        // all the methods: an agent of a workflow can be a static @Agent method
+        for (MethodElement method : element.getEnclosedElements(ElementQuery.ALL_METHODS)) {
             if (method.hasStereotype(TOOL)) {
                 for (ParameterElement parameter : method.getParameters()) {
-                    collect(parameter.getGenericType(), accept, types);
+                    collect(parameter.getGenericType(), accept, types, visited);
                 }
-                collect(method.getGenericReturnType(), accept, types);
+                collect(method.getGenericReturnType(), accept, types, visited);
             } else if (service && method.isAbstract() || isAgentMethod(method)) {
-                collect(method.getGenericReturnType(), accept, types);
+                collect(method.getGenericReturnType(), accept, types, visited);
             }
         }
         return types;
@@ -90,33 +93,31 @@ final class JsonMappedTypes {
         return NativeImageMetadataVisitor.WORKFLOW_ANNOTATIONS.stream().anyMatch(method::hasDeclaredAnnotation);
     }
 
-    private static void collect(ClassElement type, Predicate<ClassElement> accept, Set<ClassElement> types) {
+    private static void collect(ClassElement type, Predicate<ClassElement> accept, Set<ClassElement> types, Set<String> visited) {
         if (type == null || type.isPrimitive()) {
             return;
         }
-        if (type.isEnum()) {
-            if (!SKIPPED_PACKAGES.stream().anyMatch(type.getName()::startsWith) && accept.test(type)) {
-                types.add(type);
-            }
-            return;
-        }
         if (type.isArray()) {
-            collect(type.fromArray(), accept, types);
+            collect(type.fromArray(), accept, types, visited);
             return;
         }
         for (String container : CONTAINERS) {
             if (type.isAssignable(container)) {
-                type.getTypeArguments().values().forEach(argument -> collect(argument, accept, types));
+                type.getTypeArguments().values().forEach(argument -> collect(argument, accept, types, visited));
                 return;
             }
         }
         String name = type.getName();
-        if (type.isInterface() || type.isAbstract() || SKIPPED_PACKAGES.stream().anyMatch(name::startsWith) || !accept.test(type)) {
+        if (type.isInterface() || type.isAbstract() || SKIPPED_PACKAGES.stream().anyMatch(name::startsWith) || !visited.add(name)) {
             return;
         }
-        if (types.add(type)) {
+        if (accept.test(type)) {
+            types.add(type);
+        }
+        if (!type.isEnum()) {
+            // the fields of a type that is not collected itself, such as a @Serdeable record, are still traversed
             for (FieldElement field : type.getEnclosedElements(ElementQuery.ALL_FIELDS.onlyInstance())) {
-                collect(field.getGenericType(), accept, types);
+                collect(field.getGenericType(), accept, types, visited);
             }
         }
     }
