@@ -16,6 +16,7 @@
 package io.micronaut.langchain4j.jsonschema;
 
 import dev.langchain4j.internal.Json;
+import dev.langchain4j.model.chat.request.json.JsonObjectSchema;
 import dev.langchain4j.model.chat.request.json.JsonSchemaElement;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Requires;
@@ -53,6 +54,9 @@ import java.util.concurrent.locks.ReentrantLock;
  * <p>A type is looked up when it is annotated with {@link JsonSchema}, or when a schema named after it is found
  * whose title is its name: the Java class generated for a Python class carries the annotation only when reflection
  * is allowed for it.</p>
+ *
+ * <p>A generated schema without properties is not supplied: it is the schema of a type whose state is held in fields
+ * that are not properties for Micronaut, but that LangChain4j reads and writes.</p>
  */
 @Singleton
 @Internal
@@ -101,7 +105,14 @@ final class GeneratedJsonSchemaProvider implements StructuredOutputSchemaProvide
                 return Optional.empty();
             }
             register(document);
-            return Optional.of(converter.convert(document));
+            JsonSchemaElement schema = converter.convert(document);
+            if (schema instanceof JsonObjectSchema object && object.properties().isEmpty()) {
+                // LangChain4j reads and writes fields, which Micronaut JSON Schema only describes when they are properties
+                LOG.warn("The JSON schema generated for {} declares no properties, LangChain4j derives the schema instead: "
+                    + "declare a record, accessors, or @Introspected(accessKind = FIELD)", type.getName());
+                return Optional.empty();
+            }
+            return Optional.of(schema);
         } catch (RuntimeException e) {
             LOG.warn("The JSON schema generated for {} is not supported, LangChain4j derives the schema instead: {}", type.getName(), e.getMessage());
             return Optional.empty();

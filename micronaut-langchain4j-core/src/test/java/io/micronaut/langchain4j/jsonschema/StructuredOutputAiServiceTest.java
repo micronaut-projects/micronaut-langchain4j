@@ -31,6 +31,7 @@ import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.langchain4j.annotation.AiService;
 import io.micronaut.langchain4j.jsonschema.StructuredOutputTypes.Category;
+import io.micronaut.langchain4j.jsonschema.StructuredOutputTypes.FieldsOnly;
 import io.micronaut.langchain4j.jsonschema.StructuredOutputTypes.Level;
 import io.micronaut.langchain4j.jsonschema.StructuredOutputTypes.Plain;
 import io.micronaut.langchain4j.jsonschema.StructuredOutputTypes.PlannedDay;
@@ -48,6 +49,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -136,6 +138,21 @@ class StructuredOutputAiServiceTest {
         assertEquals(JsonSchemas.jsonSchemaFrom(Plain.class).orElseThrow(), request.responseFormat().jsonSchema());
     }
 
+    @Test
+    void typesWithFieldsOnlyKeepTheReflectiveSchema(Planner planner) throws IOException {
+        FieldsOnly speaker = planner.speaker("Ada");
+
+        assertEquals("Ada", speaker.name);
+        assertEquals(36, speaker.age);
+
+        // the generated schema declares no properties, unlike the one LangChain4j derives from the fields
+        assertFalse(generatedSchema("structured-output-types-fields-only").contains("\"properties\""));
+        assertTrue(provider.findSchema(FieldsOnly.class).isEmpty());
+        JsonSchema schema = chatModel.lastRequest().responseFormat().jsonSchema();
+        assertEquals(JsonSchemas.jsonSchemaFrom(FieldsOnly.class).orElseThrow(), schema);
+        assertEquals(Set.of("name", "age"), ((JsonObjectSchema) schema.rootElement()).properties().keySet());
+    }
+
     @Requires(property = "spec.name", value = SPEC_NAME)
     @AiService
     interface Planner {
@@ -146,6 +163,8 @@ class StructuredOutputAiServiceTest {
         Category categorize(String topic);
 
         Plain plain(String value);
+
+        FieldsOnly speaker(String name);
     }
 
     @Factory
@@ -171,7 +190,8 @@ class StructuredOutputAiServiceTest {
             "PlannedDay", "{\"day\": \"Monday\", \"talks\": [" + talk + "]}",
             "List_of_PlannedTalk", "{\"values\": [" + talk + "]}",
             "Category", "{\"name\": \"Java\", \"children\": [{\"name\": \"Records\", \"children\": []}]}",
-            "Plain", "{\"value\": \"plain\"}"
+            "Plain", "{\"value\": \"plain\"}",
+            "FieldsOnly", "{\"name\": \"Ada\", \"age\": 36}"
         );
     }
 }

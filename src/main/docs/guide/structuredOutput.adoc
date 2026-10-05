@@ -25,6 +25,8 @@ NOTE: The Groovy compiler does not keep the Groovydoc of the classes, so set the
 [.lang-python]
 NOTE: The class is declared `@Introspected` so that LangChain4j, which parses the answer of the model with Jackson, can construct it. In Python, do not name the `@JsonSchema` types in the `micronaut.introspection.allow-reflection` compiler option (the schema would be generated twice, failing the compilation): the integration does not need the annotation at runtime.
 
+NOTE: Micronaut JSON Schema describes the properties of a type: the components of a record, the accessors of a bean, or the fields of a class annotated with `@Introspected(accessKind = Introspected.AccessKind.FIELD)`. LangChain4j also reads and writes plain fields, which are not properties for Micronaut. For a class whose state is only held in such fields, the generated schema has no properties: a warning is logged, and the schema LangChain4j derives is sent instead.
+
 No other change is needed: the AI services and agents returning these types send the generated schemas.
 
 .An `@AiService` returning structured outputs

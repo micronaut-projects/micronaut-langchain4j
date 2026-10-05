@@ -70,6 +70,15 @@ final class StructuredOutputTypes {
     }
 
     /**
+     * A type whose fields are not properties for Micronaut JSON Schema: its generated schema has no properties.
+     */
+    @JsonSchema
+    static final class FieldsOnly {
+        String name;
+        int age;
+    }
+
+    /**
      * A type without a generated schema.
      *
      * @param value The value
