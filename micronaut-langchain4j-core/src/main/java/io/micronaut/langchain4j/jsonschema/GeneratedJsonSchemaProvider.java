@@ -78,12 +78,7 @@ final class GeneratedJsonSchemaProvider implements StructuredOutputSchemaProvide
 
     @Override
     public @NonNull Optional<JsonSchemaElement> findSchema(@NonNull Class<?> type) {
-        Optional<JsonSchemaElement> schema = schemas.get(type);
-        if (schema == null) {
-            schema = load(type);
-            schemas.putIfAbsent(type, schema);
-        }
-        return schema;
+        return schemas.computeIfAbsent(type, this::load);
     }
 
     private Optional<JsonSchemaElement> load(Class<?> type) {

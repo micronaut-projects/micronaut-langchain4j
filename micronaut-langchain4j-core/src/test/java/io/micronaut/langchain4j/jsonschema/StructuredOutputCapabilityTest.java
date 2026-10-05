@@ -115,7 +115,7 @@ class StructuredOutputCapabilityTest {
         @Singleton
         @Requires(property = "spec.provider-support", value = "true")
         JsonSchemaResponseFormatSupport recordingModelSupport() {
-            return (ChatModel chatModel) -> chatModel instanceof SchemaRecordingChatModel;
+            return SchemaRecordingChatModel.class::isInstance;
         }
     }
 }

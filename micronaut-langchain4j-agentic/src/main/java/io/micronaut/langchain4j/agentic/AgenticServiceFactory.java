@@ -62,7 +62,7 @@ import io.micronaut.langchain4j.utils.RetrievalUtils;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -211,13 +211,10 @@ public final class AgenticServiceFactory {
 
     private static List<Argument<?>> agentReturnTypes(Class<?> agentType) {
         // LangChain4j reads the agent methods reflectively, and so the return types too
-        List<Argument<?>> returnTypes = new ArrayList<>();
-        for (Method method : agentType.getMethods()) {
-            if (Modifier.isAbstract(method.getModifiers()) && method.getDeclaringClass() != Object.class) {
-                returnTypes.add(Argument.of(method.getGenericReturnType()));
-            }
-        }
-        return returnTypes;
+        return Arrays.stream(agentType.getMethods())
+            .filter(method -> Modifier.isAbstract(method.getModifiers()) && method.getDeclaringClass() != Object.class)
+            .<Argument<?>>map(method -> Argument.of(method.getGenericReturnType()))
+            .toList();
     }
 
     private static void configureOutputKey(AgenticServiceInfo<Object> serviceDef,

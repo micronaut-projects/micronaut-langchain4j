@@ -21,6 +21,7 @@ import dev.langchain4j.model.chat.request.json.JsonArraySchema;
 import dev.langchain4j.model.chat.request.json.JsonBooleanSchema;
 import dev.langchain4j.model.chat.request.json.JsonEnumSchema;
 import dev.langchain4j.model.chat.request.json.JsonIntegerSchema;
+import dev.langchain4j.model.chat.request.json.JsonNullSchema;
 import dev.langchain4j.model.chat.request.json.JsonNumberSchema;
 import dev.langchain4j.model.chat.request.json.JsonObjectSchema;
 import dev.langchain4j.model.chat.request.json.JsonReferenceSchema;
@@ -32,6 +33,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -151,6 +153,115 @@ class JsonSchemaConverterTest {
     void unresolvedReference() {
         assertThrows(IllegalArgumentException.class, () -> convert("""
             {"type": "object", "properties": {"x": {"$ref": "https://example.com/missing.schema.json"}}}"""));
+    }
+
+    @Test
+    void typesWithoutKeywordsAndIgnoredValues() {
+        JsonObjectSchema schema = convert("""
+            {"type": "object", "required": [], "description": " ",
+             "properties": {
+               "nothing": {"type": "null"},
+               "list": {"items": {"type": "string"}},
+               "any": {},
+               "empty": {"anyOf": [{"type": "null"}, true]},
+               "odd": {"type": "string", "minimum": {"$data": "x"}},
+               "ignored": true
+             }}""");
+
+        assertEquals(null, schema.description());
+        assertEquals(List.of(), schema.required());
+        assertInstanceOf(JsonNullSchema.class, schema.properties().get("nothing"));
+        assertInstanceOf(JsonStringSchema.class, ((JsonArraySchema) schema.properties().get("list")).items());
+        assertInstanceOf(JsonObjectSchema.class, schema.properties().get("any"));
+        assertInstanceOf(JsonNullSchema.class, schema.properties().get("empty"));
+        assertEquals(null, schema.properties().get("odd").description());
+        assertEquals(5, schema.properties().size());
+    }
+
+    @Test
+    void referenceDescriptionsOverrideTheReferencedOnes() {
+        JsonObjectSchema schema = convert("""
+            {"type": "object", "properties": {
+               "s": {"$ref": "#/$defs/S", "description": "string"},
+               "i": {"$ref": "#/$defs/I", "description": "integer"},
+               "n": {"$ref": "#/$defs/N", "description": "number"},
+               "b": {"$ref": "#/$defs/B", "description": "boolean"},
+               "e": {"$ref": "#/$defs/E", "description": "enum"},
+               "a": {"$ref": "#/$defs/A", "description": "anyOf"},
+               "r": {"$ref": "#/$defs/R", "description": "array"},
+               "z": {"$ref": "#/$defs/Z", "description": "null"},
+               "same": {"$ref": "#/$defs/S", "description": "S"}
+             },
+             "$defs": {
+               "S": {"type": "string", "description": "S"}, "I": {"type": "integer"}, "N": {"type": "number"},
+               "B": {"type": "boolean"}, "E": {"enum": ["X"]}, "A": {"anyOf": [{"type": "string"}, {"type": "integer"}]},
+               "R": {"type": "array", "items": {"type": "string"}}, "Z": {"type": "null"}
+             }}""");
+
+        for (String name : List.of("s", "i", "n", "b", "e", "a", "r")) {
+            assertEquals(((Map<String, String>) Map.of("s", "string", "i", "integer", "n", "number", "b", "boolean",
+                "e", "enum", "a", "anyOf", "r", "array")).get(name), schema.properties().get(name).description());
+        }
+        assertEquals(List.of("X"), ((JsonEnumSchema) schema.properties().get("e")).enumValues());
+        assertInstanceOf(JsonNullSchema.class, schema.properties().get("z"));
+        assertEquals("S", schema.properties().get("same").description());
+    }
+
+    @Test
+    void recursiveRoots() {
+        JsonObjectSchema titled = convert("""
+            {"title": "Tree", "type": "object", "properties": {"children": {"type": "array", "items": {"$ref": "#"}}}}""");
+        assertEquals("Tree", ((JsonReferenceSchema) ((JsonArraySchema) titled.properties().get("children")).items()).reference());
+        assertEquals(titled.properties(), ((JsonObjectSchema) titled.definitions().get("Tree")).properties());
+
+        JsonObjectSchema identified = convert("""
+            {"$id": "https://example.com/schemas/node.schema.json", "type": "object",
+             "properties": {"next": {"$ref": "node.schema.json"}}}""");
+        assertTrue(identified.definitions().containsKey("node"));
+
+        JsonObjectSchema anonymous = convert("""
+            {"type": "object", "properties": {"next": {"$ref": "#/"}}}""");
+        assertTrue(anonymous.definitions().containsKey("root"));
+
+        assertThrows(IllegalArgumentException.class, () -> converter.convert(parse("""
+            {"type": "array", "items": {"$ref": "#"}}""")));
+    }
+
+    @Test
+    void recursiveDefinitionsGetUniqueNames() {
+        JsonObjectSchema schema = convert("""
+            {"type": "object", "properties": {"a": {"$ref": "#/$defs/Node"}, "b": {"$ref": "#/definitions/Node"}},
+             "$defs": {"Node": {"type": "object", "properties": {"next": {"$ref": "#/$defs/Node"}}}},
+             "definitions": {"Node": {"type": "object", "properties": {"other": {"$ref": "#/definitions/Node"}}}}}""");
+
+        assertEquals(Set.of("Node", "Node2"), schema.definitions().keySet());
+    }
+
+    @Test
+    void unsupportedSchemas() {
+        assertThrows(IllegalArgumentException.class, () -> convert("""
+            {"type": "object", "properties": {"x": {"type": "tuple"}}}"""));
+        assertThrows(IllegalArgumentException.class, () -> convert("""
+            {"type": "object", "properties": {"x": {"$ref": "#/$defs/Missing"}}}"""));
+        assertThrows(IllegalArgumentException.class, () -> convert("""
+            {"type": "object", "properties": {"x": {"$ref": "#/type/x"}}}"""));
+        assertThrows(IllegalArgumentException.class, () -> convert("""
+            {"allOf": [{"type": "string"}, {"type": "integer"}]}"""));
+    }
+
+    @Test
+    void allOfWithSiblingProperties() {
+        JsonObjectSchema schema = convert("""
+            {"allOf": [{"type": "object", "properties": {"a": {"type": "string"}}, "additionalProperties": false}],
+             "properties": {"b": {"type": "string"}}}""");
+
+        assertEquals(Set.of("a", "b"), schema.properties().keySet());
+        assertEquals(false, schema.additionalProperties());
+        assertTrue(schema.required().isEmpty());
+
+        JsonObjectSchema single = convert("""
+            {"allOf": [{"type": "object", "properties": {"a": {"type": "string"}}}], "description": "One"}""");
+        assertEquals("One", single.description());
     }
 
     private JsonObjectSchema convert(String json) {

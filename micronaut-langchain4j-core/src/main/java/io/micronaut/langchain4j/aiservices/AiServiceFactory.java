@@ -38,7 +38,6 @@ import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.langchain4j.jsonschema.StructuredOutputSchemas;
 import io.micronaut.langchain4j.tools.ToolRegistry;
 import io.micronaut.langchain4j.utils.RetrievalUtils;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -122,13 +121,10 @@ public class AiServiceFactory {
     }
 
     private static List<Argument<?>> returnTypes(BeanDefinition<?> beanDefinition) {
-        List<Argument<?>> returnTypes = new ArrayList<>();
-        for (ExecutableMethod<?, ?> method : beanDefinition.getExecutableMethods()) {
-            if (method.getDeclaringType() != Object.class) {
-                returnTypes.add(method.getReturnType().asArgument());
-            }
-        }
-        return returnTypes;
+        return beanDefinition.getExecutableMethods().stream()
+            .filter(method -> method.getDeclaringType() != Object.class)
+            .<Argument<?>>map(method -> method.getReturnType().asArgument())
+            .toList();
     }
 
     private <T> void lookupByNameOrDefault(String name, Class<T> beanType, Consumer<T> configurer) {

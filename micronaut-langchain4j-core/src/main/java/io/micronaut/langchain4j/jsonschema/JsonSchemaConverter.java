@@ -134,10 +134,10 @@ final class JsonSchemaConverter {
         return switch (element) {
             case JsonObjectSchema s -> s.toBuilder().description(description).build();
             case JsonArraySchema s -> JsonArraySchema.builder().description(description).items(s.items()).build();
-            case JsonStringSchema s -> JsonStringSchema.builder().description(description).build();
-            case JsonIntegerSchema s -> JsonIntegerSchema.builder().description(description).build();
-            case JsonNumberSchema s -> JsonNumberSchema.builder().description(description).build();
-            case JsonBooleanSchema s -> JsonBooleanSchema.builder().description(description).build();
+            case JsonStringSchema _ -> JsonStringSchema.builder().description(description).build();
+            case JsonIntegerSchema _ -> JsonIntegerSchema.builder().description(description).build();
+            case JsonNumberSchema _ -> JsonNumberSchema.builder().description(description).build();
+            case JsonBooleanSchema _ -> JsonBooleanSchema.builder().description(description).build();
             case JsonEnumSchema s -> JsonEnumSchema.builder().description(description).enumValues(s.enumValues()).build();
             case JsonAnyOfSchema s -> JsonAnyOfSchema.builder().description(description).anyOf(s.anyOf()).build();
             default -> element;
@@ -176,7 +176,7 @@ final class JsonSchemaConverter {
         private final Set<String> recursive = new HashSet<>();
 
         JsonSchemaElement convertRoot(Document document) {
-            JsonSchemaElement root = expand(new Target(document, document.root(), ""), document);
+            JsonSchemaElement root = expand(new Target(document, document.root(), ""));
             if (definitions.isEmpty()) {
                 return root;
             }
@@ -189,7 +189,7 @@ final class JsonSchemaConverter {
             return objectSchema.toBuilder().definitions(definitions).build();
         }
 
-        private JsonSchemaElement expand(Target target, Document document) {
+        private JsonSchemaElement expand(Target target) {
             String key = target.document().key(target.pointer());
             String name = definitionName(key, target);
             if (!expanding.add(key)) {
@@ -212,7 +212,7 @@ final class JsonSchemaConverter {
         private JsonSchemaElement element(Map<String, Object> schema, Document document) {
             String description = description(schema);
             if (schema.get(REF) instanceof String ref) {
-                return withDescription(expand(resolve(ref, document), document), description);
+                return withDescription(expand(resolve(ref, document)), description);
             }
             if (schema.get("enum") instanceof List<?> values) {
                 return JsonEnumSchema.builder().description(description).enumValues(enumValues(values)).build();
@@ -231,10 +231,7 @@ final class JsonSchemaConverter {
             }
             List<String> types = types(schema);
             if (types.size() > 1) {
-                List<JsonSchemaElement> variants = new ArrayList<>(types.size());
-                for (String type : types) {
-                    variants.add(typed(type, schema, null, document));
-                }
+                List<JsonSchemaElement> variants = types.stream().map(type -> typed(type, schema, null, document)).toList();
                 return JsonAnyOfSchema.builder().description(description).anyOf(variants).build();
             }
             return typed(types.getFirst(), schema, description, document);
@@ -298,12 +295,10 @@ final class JsonSchemaConverter {
         }
 
         private JsonSchemaElement allOf(List<?> parts, Map<String, Object> schema, @Nullable String description, Document document) {
-            List<JsonSchemaElement> elements = new ArrayList<>(parts.size() + 1);
-            for (Object part : parts) {
-                if (part instanceof Map<?, ?> partSchema) {
-                    elements.add(element(asSchema(partSchema), document));
-                }
-            }
+            List<JsonSchemaElement> elements = new ArrayList<>(parts.stream()
+                .filter(Map.class::isInstance)
+                .map(part -> element(asSchema((Map<?, ?>) part), document))
+                .toList());
             if (schema.containsKey(PROPERTIES)) {
                 // properties declared next to allOf (for example by a subclass) belong to the intersection
                 elements.add(object(schema, null, document));
@@ -312,30 +307,33 @@ final class JsonSchemaConverter {
                 return withDescription(elements.getFirst(), description);
             }
             if (elements.stream().allMatch(JsonObjectSchema.class::isInstance)) {
-                JsonObjectSchema.Builder merged = JsonObjectSchema.builder().description(description);
-                List<String> required = new ArrayList<>();
-                for (JsonSchemaElement element : elements) {
-                    JsonObjectSchema objectSchema = (JsonObjectSchema) element;
-                    merged.addProperties(objectSchema.properties());
-                    if (objectSchema.required() != null) {
-                        objectSchema.required().stream().filter(r -> !required.contains(r)).forEach(required::add);
-                    }
-                    if (objectSchema.additionalProperties() != null) {
-                        merged.additionalProperties(objectSchema.additionalProperties());
-                    }
-                }
-                if (!required.isEmpty()) {
-                    merged.required(required);
-                }
-                return merged.build();
+                return merge(elements.stream().map(JsonObjectSchema.class::cast).toList(), description);
             }
             throw new IllegalArgumentException("Unsupported JSON schema: allOf is only supported for objects");
+        }
+
+        private JsonObjectSchema merge(List<JsonObjectSchema> objectSchemas, @Nullable String description) {
+            JsonObjectSchema.Builder merged = JsonObjectSchema.builder().description(description);
+            List<String> required = new ArrayList<>();
+            for (JsonObjectSchema objectSchema : objectSchemas) {
+                merged.addProperties(objectSchema.properties());
+                objectSchema.required().stream().filter(r -> !required.contains(r)).forEach(required::add);
+                if (objectSchema.additionalProperties() != null) {
+                    merged.additionalProperties(objectSchema.additionalProperties());
+                }
+            }
+            if (!required.isEmpty()) {
+                merged.required(required);
+            }
+            return merged.build();
         }
 
         private Target resolve(String ref, Document document) {
             int hash = ref.indexOf('#');
             String location = hash >= 0 ? ref.substring(0, hash) : ref;
-            String pointer = hash >= 0 ? ref.substring(hash + 1) : "";
+            String fragment = hash >= 0 ? ref.substring(hash + 1) : "";
+            // "#" and "#/" both point to the root
+            String pointer = "/".equals(fragment) ? "" : fragment;
             Document target = document;
             if (!location.isEmpty()) {
                 URI uri = document.id() != null ? document.id().resolve(location) : URI.create(location);
@@ -350,7 +348,7 @@ final class JsonSchemaConverter {
 
         private Map<String, Object> navigate(Map<String, Object> root, String pointer, String ref) {
             Object current = root;
-            if (!pointer.isEmpty() && !"/".equals(pointer)) {
+            if (!pointer.isEmpty()) {
                 for (String token : pointer.substring(pointer.startsWith("/") ? 1 : 0).split("/")) {
                     String segment = token.replace("~1", "/").replace("~0", "~");
                     current = current instanceof Map<?, ?> map ? map.get(segment) : null;
@@ -366,13 +364,15 @@ final class JsonSchemaConverter {
             return definitionNames.computeIfAbsent(key, k -> {
                 String name;
                 String pointer = target.pointer();
-                if (!pointer.isEmpty() && !"/".equals(pointer)) {
+                if (!pointer.isEmpty()) {
                     name = pointer.substring(pointer.lastIndexOf('/') + 1);
                 } else if (target.document().root().get("title") instanceof String title) {
                     name = title;
                 } else if (target.document().id() != null) {
-                    String path = target.document().id().getPath();
-                    name = path.substring(path.lastIndexOf('/') + 1).replace(".schema.json", "").replace(".json", "");
+                    URI id = target.document().id();
+                    // a URN has no path
+                    String path = id.getPath() != null ? id.getPath() : id.getSchemeSpecificPart();
+                    name = path.substring(Math.max(path.lastIndexOf('/'), path.lastIndexOf(':')) + 1).replace(".schema.json", "").replace(".json", "");
                 } else {
                     name = "root";
                 }
