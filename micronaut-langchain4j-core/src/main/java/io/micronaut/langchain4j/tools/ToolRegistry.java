@@ -15,6 +15,7 @@
  */
 package io.micronaut.langchain4j.tools;
 
+import dev.langchain4j.agent.tool.CompensateFor;
 import dev.langchain4j.agent.tool.Tool;
 import dev.langchain4j.service.tool.AiServiceTool;
 import io.micronaut.context.BeanContext;
@@ -24,11 +25,14 @@ import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.ExecutableMethod;
 import jakarta.inject.Singleton;
 import org.jspecify.annotations.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
 /**
@@ -36,7 +40,10 @@ import java.util.function.Predicate;
  */
 @Singleton
 public class ToolRegistry implements ExecutableMethodProcessor<Tool> {
+    private static final Logger LOG = LoggerFactory.getLogger(ToolRegistry.class);
+
     private final Map<BeanDefinition<?>, List<ExecutableMethod<?, ?>>> beansWithTools = new LinkedHashMap<>();
+    private final Set<BeanDefinition<?>> compensationsReported = ConcurrentHashMap.newKeySet();
     private final BeanContext beanContext;
 
     public ToolRegistry(BeanContext beanContext) {
@@ -103,6 +110,7 @@ public class ToolRegistry implements ExecutableMethodProcessor<Tool> {
         List<AiServiceTool> tools = new ArrayList<>();
         this.beansWithTools.forEach((definition, methods) -> {
             if (filter.test(definition)) {
+                reportUnsupportedCompensations(definition);
                 Object bean = beanContext.getBean(definition);
                 for (ExecutableMethod<?, ?> method : methods) {
                     tools.add(ExecutableMethodToolExecutor.toAiServiceTool(bean, method));
@@ -110,5 +118,34 @@ public class ToolRegistry implements ExecutableMethodProcessor<Tool> {
             }
         });
         return tools;
+    }
+
+    /**
+     * LangChain4j only registers the {@link CompensateFor} compensating actions of the tool objects it scans, which
+     * these tools replace: the actions never run, so it is reported once for each tool bean.
+     */
+    private void reportUnsupportedCompensations(BeanDefinition<?> definition) {
+        List<ExecutableMethod<?, ?>> compensations = compensatingMethods(definition);
+        if (!compensations.isEmpty() && compensationsReported.add(definition)) {
+            for (ExecutableMethod<?, ?> method : compensations) {
+                LOG.warn("@CompensateFor(\"{}\") on {}.{} is not supported and the compensating action never runs: "
+                        + "LangChain4j only registers compensating actions for the tools it discovers reflectively",
+                    method.stringValue(CompensateFor.class).orElse(""), definition.getBeanType().getName(), method.getMethodName());
+            }
+        }
+    }
+
+    /**
+     * @param definition The definition of a tool bean
+     * @return The {@link CompensateFor} methods of the bean
+     */
+    static List<ExecutableMethod<?, ?>> compensatingMethods(BeanDefinition<?> definition) {
+        List<ExecutableMethod<?, ?>> methods = new ArrayList<>();
+        for (ExecutableMethod<?, ?> method : definition.getExecutableMethods()) {
+            if (method.hasAnnotation(CompensateFor.class)) {
+                methods.add(method);
+            }
+        }
+        return methods;
     }
 }
