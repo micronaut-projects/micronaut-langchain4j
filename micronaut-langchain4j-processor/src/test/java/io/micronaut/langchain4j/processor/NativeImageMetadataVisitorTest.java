@@ -4,11 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import dev.langchain4j.agentic.Agent;
+import dev.langchain4j.agentic.agent.AgentBuilder;
+import dev.langchain4j.agentic.internal.AgentUtil;
 import io.micronaut.annotation.processing.test.JavaParser;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import javax.tools.JavaFileObject;
 import org.junit.jupiter.api.Test;
@@ -89,6 +94,46 @@ class NativeImageMetadataVisitorTest {
             }
             """);
         assertTrue(metadata.isEmpty(), metadata::toString);
+    }
+
+    /**
+     * The proxy interface lists are copied from LangChain4j, which has no metadata of its own: this fails when an
+     * upgrade changes the proxies LangChain4j creates, which otherwise only a native image would show.
+     */
+    @Test
+    void theRegisteredProxiesAreTheOnesLangChain4jCreates() {
+        String json = generateMetadata("test.Writer", """
+            package test;
+
+            import dev.langchain4j.agentic.Agent;
+
+            interface Writer {
+                @Agent
+                String write(String topic);
+            }
+            """).get("test.Writer");
+
+        // AgentBuilder.build, for agents
+        assertTrue(json.contains(proxy(AgentBuilder.interfacesToImplement(SampleAgent.class))), json);
+        // AgentUtil.buildAgent, for workflows
+        Object workflow = AgentUtil.buildAgent(SampleAgent.class, (proxy, method, arguments) -> null);
+        assertTrue(json.contains(proxy(workflow.getClass().getInterfaces())), json);
+    }
+
+    /**
+     * @param interfaces The interfaces of a proxy LangChain4j creates for {@link SampleAgent}, the agent type first
+     * @return The metadata of the same proxy for the type {@code test.Writer}
+     */
+    private static String proxy(Class<?>[] interfaces) {
+        assertEquals(SampleAgent.class, interfaces[0]);
+        return "{\"type\": {\"proxy\": [" + Stream.concat(Stream.of("test.Writer"), Arrays.stream(interfaces).skip(1).map(Class::getName))
+            .map(name -> '"' + name + '"')
+            .collect(Collectors.joining(", ")) + "]}}";
+    }
+
+    interface SampleAgent {
+        @Agent
+        String write(String topic);
     }
 
     private static Map<String, String> generateMetadata(String className, String source) {
