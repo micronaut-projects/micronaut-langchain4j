@@ -1,5 +1,6 @@
 package io.micronaut.langchain4j.tools;
 
+import dev.langchain4j.agent.tool.CompensateFor;
 import dev.langchain4j.agent.tool.P;
 import dev.langchain4j.agent.tool.Tool;
 import dev.langchain4j.agent.tool.ToolExecutionRequest;
@@ -17,8 +18,11 @@ import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.tool.AiServiceTool;
+import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.inject.BeanDefinition;
+import io.micronaut.inject.ExecutableMethod;
 import io.micronaut.langchain4j.annotation.AiService;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
@@ -53,6 +57,9 @@ class ExecutableMethodToolsTest {
     ToolRegistry toolRegistry;
 
     @Inject
+    BeanContext beanContext;
+
+    @Inject
     ScriptedChatModel chatModel;
 
     @Inject
@@ -64,7 +71,7 @@ class ExecutableMethodToolsTest {
             .map(AiServiceTool::toolSpecification)
             .collect(Collectors.toMap(ToolSpecification::name, Function.identity()));
 
-        assertEquals(Set.of("add", "greet", "fail", "current_unit"), specifications.keySet());
+        assertEquals(Set.of("add", "greet", "fail", "crash", "current_unit"), specifications.keySet());
 
         ToolSpecification add = specifications.get("add");
         assertEquals("Adds two numbers", add.description());
@@ -108,6 +115,25 @@ class ExecutableMethodToolsTest {
     }
 
     @Test
+    void toolErrorsThrownAsErrorsAreReportedToTheModel() {
+        chatModel.toolRequest = ToolExecutionRequest.builder().id("1").name("crash").arguments("{}").build();
+        assertEquals("tool:crashed", assistant.chat("memory-6", "Crash"));
+    }
+
+    @Test
+    void compensatingActionsAreFoundToBeReportedAndAreNotTools() {
+        BeanDefinition<Booking> definition = beanContext.getBeanDefinition(Booking.class);
+
+        assertEquals(List.of("cancelFlight"), ToolRegistry.compensatingMethods(definition).stream()
+            .map(ExecutableMethod::getMethodName)
+            .toList());
+        assertEquals(List.of("bookFlight"), toolRegistry.getAiServiceTools(Set.of(Booking.class)).stream()
+            .map(tool -> tool.toolSpecification().name())
+            .toList());
+        assertTrue(ToolRegistry.compensatingMethods(beanContext.getBeanDefinition(Calculator.class)).isEmpty());
+    }
+
+    @Test
     void invalidArgumentsFailLikeLangChain4jTools() {
         // without a ToolArgumentsErrorHandler, LangChain4j rethrows the argument error of a tool
         chatModel.toolRequest = ToolExecutionRequest.builder().id("1").name("add").arguments("{\"first\": \"two\", \"b\": 3}").build();
@@ -143,9 +169,29 @@ class ExecutableMethodToolsTest {
             throw new IllegalStateException("boom");
         }
 
+        @Tool("Always fails with an error")
+        String crash() {
+            throw new AssertionError("crashed");
+        }
+
         @Tool(name = "current_unit", value = {"Line one", "Line two"})
         String unit() {
             return "metric";
+        }
+    }
+
+    @Singleton
+    @Requires(property = "spec.name", value = SPEC_NAME)
+    static class Booking {
+
+        @Tool("Books a flight")
+        String bookFlight(String flight) {
+            return "booked " + flight;
+        }
+
+        @CompensateFor("bookFlight")
+        void cancelFlight(String flight) {
+            // not registered as a compensating action: the test checks that it is found to be reported
         }
     }
 
