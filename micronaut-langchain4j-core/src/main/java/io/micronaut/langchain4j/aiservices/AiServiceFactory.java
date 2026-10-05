@@ -128,16 +128,22 @@ public class AiServiceFactory {
 
     private void configureToolProviders(AiServiceDef<Object> serviceDef, AiServices<Object> builder) {
         List<String> names = serviceDef.toolProviders();
-        if (names == null) {
-            // like the other components: the provider named after the service, otherwise the default one
-            String name = serviceDef.name();
-            Optional<ToolProvider> toolProvider = name != null ? beanContext.findBean(ToolProvider.class, Qualifiers.byName(name)) : Optional.empty();
-            toolProvider.or(this::defaultToolProvider).ifPresent(builder::toolProvider);
-        } else if (!names.isEmpty()) {
-            List<ToolProvider> toolProviders = new ArrayList<>(names.size());
+        List<String> mcpClients = serviceDef.mcpClients();
+        List<ToolProvider> toolProviders = new ArrayList<>();
+        if (names != null) {
             for (String toolProviderName : names) {
                 toolProviders.add(beanContext.getBean(ToolProvider.class, Qualifiers.byName(toolProviderName)));
             }
+        } else if (mcpClients == null) {
+            // like the other components: the provider named after the service, otherwise the default one
+            String name = serviceDef.name();
+            Optional<ToolProvider> toolProvider = name != null ? beanContext.findBean(ToolProvider.class, Qualifiers.byName(name)) : Optional.empty();
+            toolProvider.or(this::defaultToolProvider).ifPresent(toolProviders::add);
+        }
+        if (CollectionUtils.isNotEmpty(mcpClients)) {
+            toolProviders.add(McpToolProviders.create(beanContext, serviceDef.type(), mcpClients));
+        }
+        if (!toolProviders.isEmpty()) {
             builder.toolProviders(toolProviders);
         }
     }
