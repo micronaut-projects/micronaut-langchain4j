@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
 final class ToolArguments {
 
     private static final Pattern TRAILING_COMMA_PATTERN = Pattern.compile(",(\\s*[}\\]])");
-    private static final Pattern LEADING_TRAILING_QUOTE_PATTERN = Pattern.compile("^\"|\"$");
+    private static final Pattern LEADING_TRAILING_QUOTE_PATTERN = Pattern.compile("(^\")|(\"$)");
     private static final Pattern ESCAPED_QUOTE_PATTERN = Pattern.compile("\\\\\"");
     private static final Type MAP_TYPE = new ParameterizedType() {
         @Override
@@ -232,7 +232,7 @@ final class ToolArguments {
     }
 
     private static IllegalArgumentException notConvertable(Object argument, String parameterName, Class<?> parameterClass) {
-        return new IllegalArgumentException("Argument \"%s\" is not convertable to %s, got %s: <%s>".formatted(
+        return new IllegalArgumentException("Argument \"%s\" is not convertible to %s, got %s: <%s>".formatted(
             parameterName, parameterClass.getName(), argument == null ? "null" : argument.getClass().getName(), argument));
     }
 }
