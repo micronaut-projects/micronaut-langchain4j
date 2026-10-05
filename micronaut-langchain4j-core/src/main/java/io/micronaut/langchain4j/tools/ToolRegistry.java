@@ -19,10 +19,11 @@ import dev.langchain4j.agent.tool.Tool;
 import dev.langchain4j.service.tool.AiServiceTool;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.processor.ExecutableMethodProcessor;
-import io.micronaut.core.annotation.NonNull;
+
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.ExecutableMethod;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
