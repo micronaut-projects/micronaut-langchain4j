@@ -97,6 +97,7 @@ langchain4j-agentic-a2a = { module = 'dev.langchain4j:langchain4j-agentic-a2a' }
 langchain4j-agentic-mcp = { module = 'dev.langchain4j:langchain4j-agentic-mcp' }
 langchain4j-http-client = { module = 'dev.langchain4j:langchain4j-http-client' }
 langchain4j-mcp = { module = 'dev.langchain4j:langchain4j-mcp' }
+langchain4j-skills = { module = 'dev.langchain4j:langchain4j-skills' }
 langchain4j-cohere = { module = 'dev.langchain4j:langchain4j-cohere' }
 langchain4j-google-genai = { module = 'dev.langchain4j:langchain4j-google-genai' }
 langchain4j-jina = { module = 'dev.langchain4j:langchain4j-jina' }

@@ -15,6 +15,7 @@ httpClient: HTTP Client
 imageModels: Image Models
 testResources: Test Resources
 controlPanel: Control Panel
+experimental: Experimental Features
 chatModels:
   title: Chat Language Models
   chatModelExample: ChatModel Example
