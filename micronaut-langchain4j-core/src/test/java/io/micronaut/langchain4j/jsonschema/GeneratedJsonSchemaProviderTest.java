@@ -32,6 +32,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -41,6 +45,8 @@ class GeneratedJsonSchemaProviderTest {
     private final ApplicationContext context = ApplicationContext.run();
     private final Map<Class<?>, String> schemasByType = new LinkedHashMap<>();
     private final Map<String, Readable> allSchemas = new LinkedHashMap<>();
+    private final AtomicInteger lookups = new AtomicInteger();
+    private volatile Runnable onLookup = () -> { };
     private final GeneratedJsonSchemaProvider provider = new GeneratedJsonSchemaProvider(new JsonSchemaClassPathResourceLoader() {
         @Override
         public <T> Optional<String> jsonSchemaStringForClass(@NonNull Class<T> type) {
@@ -49,6 +55,8 @@ class GeneratedJsonSchemaProviderTest {
 
         @Override
         public @NonNull Map<String, Readable> jsonSchemas() {
+            lookups.incrementAndGet();
+            onLookup.run();
             return allSchemas;
         }
     }, new JsonSchemaConfiguration() {
@@ -103,6 +111,45 @@ class GeneratedJsonSchemaProviderTest {
         assertEquals(1, address.properties().size());
         // the result is cached
         assertEquals(schema, provider.findSchema(Annotated.class).orElseThrow());
+    }
+
+    @Test
+    void concurrentLookupsLookUpAllSchemasOnce() throws InterruptedException {
+        schemasByType.put(Annotated.class, """
+            {"type": "object", "properties": {"address": {"$ref": "urn:example:address"}}}""");
+        schemasByType.put(NotAnnotated.class, """
+            {"title": "NotAnnotated", "type": "object", "properties": {"contact": {"$ref": "urn:example:contact"}}}""");
+        allSchemas.put("address.schema.json", readable("address", """
+            {"$id": "urn:example:address", "type": "object", "properties": {"city": {"type": "string"}}}"""));
+        allSchemas.put("contact.schema.json", readable("contact", """
+            {"$id": "urn:example:contact", "type": "object", "properties": {"email": {"type": "string"}}}"""));
+        CountDownLatch started = new CountDownLatch(1);
+        CountDownLatch released = new CountDownLatch(1);
+        onLookup = () -> {
+            started.countDown();
+            try {
+                released.await(10, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        };
+
+        Thread first = Thread.ofPlatform().start(() -> provider.findSchema(Annotated.class));
+        assertTrue(started.await(10, TimeUnit.SECONDS));
+        Thread second = Thread.ofPlatform().start(() -> provider.findSchema(NotAnnotated.class));
+        // the second lookup has to wait for the first one, not to repeat it
+        Set<Thread.State> waiting = Set.of(Thread.State.WAITING, Thread.State.TIMED_WAITING, Thread.State.BLOCKED);
+        for (long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(10);
+             !waiting.contains(second.getState()) && System.nanoTime() < deadline;) {
+            Thread.onSpinWait();
+        }
+        released.countDown();
+        first.join();
+        second.join();
+
+        assertEquals(1, lookups.get());
+        assertTrue(((JsonObjectSchema) provider.findSchema(Annotated.class).orElseThrow()).properties().containsKey("address"));
+        assertTrue(((JsonObjectSchema) provider.findSchema(NotAnnotated.class).orElseThrow()).properties().containsKey("contact"));
     }
 
     private static Readable readable(String name, String content) {

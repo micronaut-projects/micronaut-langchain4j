@@ -40,6 +40,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Supplies the JSON schemas generated at compile time by Micronaut JSON Schema for the types annotated with
@@ -66,6 +68,7 @@ final class GeneratedJsonSchemaProvider implements StructuredOutputSchemaProvide
     private final JsonSchemaConverter converter = new JsonSchemaConverter(this::findDocument);
     private final Map<Class<?>, Optional<JsonSchemaElement>> schemas = new ConcurrentHashMap<>();
     private final Map<URI, Map<String, Object>> documentsById = new ConcurrentHashMap<>();
+    private final Lock allDocumentsLock = new ReentrantLock();
     private volatile boolean allDocumentsLoaded;
 
     GeneratedJsonSchemaProvider(JsonSchemaClassPathResourceLoader loader,
@@ -158,8 +161,26 @@ final class GeneratedJsonSchemaProvider implements StructuredOutputSchemaProvide
                 document = documentsById.get(id);
             }
         }
-        if (document == null && !allDocumentsLoaded) {
+        if (document == null) {
             // a schema in a sub-folder or with another base URI: look all of them up, where the classpath allows it
+            loadAllDocuments();
+            document = documentsById.get(id);
+        }
+        return Optional.ofNullable(document);
+    }
+
+    /**
+     * Reads every generated schema once: concurrent lookups wait for the scan instead of repeating it.
+     */
+    private void loadAllDocuments() {
+        if (allDocumentsLoaded) {
+            return;
+        }
+        allDocumentsLock.lock();
+        try {
+            if (allDocumentsLoaded) {
+                return;
+            }
             for (Readable readable : loader.jsonSchemas().values()) {
                 try {
                     read(readable.asInputStream());
@@ -168,9 +189,9 @@ final class GeneratedJsonSchemaProvider implements StructuredOutputSchemaProvide
                 }
             }
             allDocumentsLoaded = true;
-            document = documentsById.get(id);
+        } finally {
+            allDocumentsLock.unlock();
         }
-        return Optional.ofNullable(document);
     }
 
     private void read(InputStream schema) {
