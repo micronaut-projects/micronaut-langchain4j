@@ -6,6 +6,7 @@ import dev.langchain4j.agent.tool.SearchBehavior;
 import dev.langchain4j.agent.tool.Tool;
 import dev.langchain4j.agent.tool.ToolExecutionRequest;
 import dev.langchain4j.agent.tool.ToolMemoryId;
+import dev.langchain4j.agent.tool.ToolSpecification;
 import dev.langchain4j.data.image.Image;
 import dev.langchain4j.data.message.Content;
 import dev.langchain4j.data.message.ImageContent;
@@ -86,12 +87,36 @@ class ExecutableMethodToolExecutorTest {
     }
 
     @Test
+    void errorsAreToolExecutionExceptionsToo() {
+        ToolExecutionException failure = assertThrows(ToolExecutionException.class, () -> execute("crash", "{}"));
+        assertInstanceOf(AssertionError.class, failure.getCause());
+        CompletionException asyncFailure = assertThrows(CompletionException.class,
+            () -> executor("crash").executeAsync(request("crash", "{}"), context()).join());
+        assertInstanceOf(ToolExecutionException.class, asyncFailure.getCause());
+        assertInstanceOf(AssertionError.class, asyncFailure.getCause().getCause());
+    }
+
+    @Test
+    void errorsOfTheVirtualMachineAreRethrown() {
+        assertThrows(InternalError.class, () -> execute("vmError", "{}"));
+        assertThrows(InternalError.class, () -> executor("vmError").executeAsync(request("vmError", "{}"), context()));
+    }
+
+    @Test
     void injectedParameters() {
         InvocationParameters parameters = new InvocationParameters();
         InvocationContext context = InvocationContext.builder().chatMemoryId("memory").invocationParameters(parameters).build();
         assertEquals("memory|true|true", executor("injected").executeWithContext(request("injected", "{}"), context).resultText());
         // the memory id given to the legacy execute method is the one of the invocation context
         assertTrue(executor("injected").execute(request("injected", "{}"), "other").startsWith("other|"));
+    }
+
+    @Test
+    void blankNamesAndDescriptionsAreNotSet() {
+        ToolSpecification specification = tool("blank").toolSpecification();
+        assertEquals("blank", specification.name());
+        assertEquals(List.of("input"), List.copyOf(specification.parameters().properties().keySet()));
+        assertEquals("The input", specification.parameters().properties().get("input").description());
     }
 
     @Test
@@ -158,6 +183,11 @@ class ExecutableMethodToolExecutorTest {
             return null;
         }
 
+        @Tool(name = " ", value = "Blank name")
+        String blank(@P(name = " ", value = " ", description = "The input") String input) {
+            return input;
+        }
+
         @Tool("Returns a map")
         Map<String, Integer> map() {
             return Map.of("a", 1);
@@ -196,6 +226,16 @@ class ExecutableMethodToolExecutorTest {
         @Tool("Fails")
         String fail() {
             throw new IllegalStateException("boom");
+        }
+
+        @Tool("Fails with an error")
+        String crash() {
+            throw new AssertionError("boom");
+        }
+
+        @Tool("Fails with an error of the virtual machine")
+        String vmError() {
+            throw new InternalError("boom");
         }
 
         @Tool("Fails asynchronously")
