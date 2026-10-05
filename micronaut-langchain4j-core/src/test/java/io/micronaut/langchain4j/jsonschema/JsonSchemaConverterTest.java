@@ -223,8 +223,9 @@ class JsonSchemaConverterTest {
             {"type": "object", "properties": {"next": {"$ref": "#/"}}}""");
         assertTrue(anonymous.definitions().containsKey("root"));
 
-        assertThrows(IllegalArgumentException.class, () -> converter.convert(parse("""
-            {"type": "array", "items": {"$ref": "#"}}""")));
+        Map<String, Object> recursiveArray = parse("""
+            {"type": "array", "items": {"$ref": "#"}}""");
+        assertThrows(IllegalArgumentException.class, () -> converter.convert(recursiveArray));
     }
 
     @Test

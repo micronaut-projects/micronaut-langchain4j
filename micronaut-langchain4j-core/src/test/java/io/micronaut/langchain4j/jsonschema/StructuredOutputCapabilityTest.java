@@ -16,7 +16,6 @@
 package io.micronaut.langchain4j.jsonschema;
 
 import dev.langchain4j.data.message.UserMessage;
-import dev.langchain4j.model.chat.ChatModel;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Requires;

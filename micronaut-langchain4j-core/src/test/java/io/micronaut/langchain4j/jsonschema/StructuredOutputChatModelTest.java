@@ -47,32 +47,32 @@ class StructuredOutputChatModelTest {
     private final ChatModel delegate = new ChatModel() {
         @Override
         public ChatResponse chat(ChatRequest chatRequest) {
-            return record("chat", chatRequest);
+            return recordCall("chat", chatRequest);
         }
 
         @Override
         public ChatResponse chat(ChatRequest chatRequest, ChatRequestOptions options) {
-            return record("chatWithOptions", chatRequest);
+            return recordCall("chatWithOptions", chatRequest);
         }
 
         @Override
         public ChatResponse doChat(ChatRequest chatRequest) {
-            return record("doChat", chatRequest);
+            return recordCall("doChat", chatRequest);
         }
 
         @Override
         public CompletableFuture<ChatResponse> chatAsync(ChatRequest chatRequest) {
-            return CompletableFuture.completedFuture(record("chatAsync", chatRequest));
+            return CompletableFuture.completedFuture(recordCall("chatAsync", chatRequest));
         }
 
         @Override
         public CompletableFuture<ChatResponse> chatAsync(ChatRequest chatRequest, ChatRequestOptions options) {
-            return CompletableFuture.completedFuture(record("chatAsyncWithOptions", chatRequest));
+            return CompletableFuture.completedFuture(recordCall("chatAsyncWithOptions", chatRequest));
         }
 
         @Override
         public CompletableFuture<ChatResponse> doChatAsync(ChatRequest chatRequest) {
-            return CompletableFuture.completedFuture(record("doChatAsync", chatRequest));
+            return CompletableFuture.completedFuture(recordCall("doChatAsync", chatRequest));
         }
 
         @Override
@@ -125,7 +125,7 @@ class StructuredOutputChatModelTest {
         assertEquals(Set.of(), new StructuredOutputChatModel(delegate, UnaryOperator.identity(), false).supportedCapabilities());
     }
 
-    private ChatResponse record(String method, ChatRequest request) {
+    private ChatResponse recordCall(String method, ChatRequest request) {
         calls.add(method + ":" + ((UserMessage) request.messages().getFirst()).singleText());
         return ChatResponse.builder().aiMessage(AiMessage.from("ok")).build();
     }
