@@ -138,7 +138,7 @@ class GeneratedJsonSchemaProviderTest {
             started.countDown();
             try {
                 released.await(10, TimeUnit.SECONDS);
-            } catch (InterruptedException e) {
+            } catch (InterruptedException _) {
                 Thread.currentThread().interrupt();
             }
         };
