@@ -71,7 +71,7 @@ class ExecutableMethodToolsTest {
             .map(AiServiceTool::toolSpecification)
             .collect(Collectors.toMap(ToolSpecification::name, Function.identity()));
 
-        assertEquals(Set.of("add", "greet", "fail", "current_unit"), specifications.keySet());
+        assertEquals(Set.of("add", "greet", "fail", "crash", "current_unit"), specifications.keySet());
 
         ToolSpecification add = specifications.get("add");
         assertEquals("Adds two numbers", add.description());
@@ -112,6 +112,12 @@ class ExecutableMethodToolsTest {
     void toolErrorsAreReportedToTheModel() {
         chatModel.toolRequest = ToolExecutionRequest.builder().id("1").name("fail").arguments("{}").build();
         assertEquals("tool:boom", assistant.chat("memory-4", "Fail"));
+    }
+
+    @Test
+    void toolErrorsThrownAsErrorsAreReportedToTheModel() {
+        chatModel.toolRequest = ToolExecutionRequest.builder().id("1").name("crash").arguments("{}").build();
+        assertEquals("tool:crashed", assistant.chat("memory-6", "Crash"));
     }
 
     @Test
@@ -161,6 +167,11 @@ class ExecutableMethodToolsTest {
         @Tool("Always fails")
         String fail() {
             throw new IllegalStateException("boom");
+        }
+
+        @Tool("Always fails with an error")
+        String crash() {
+            throw new AssertionError("crashed");
         }
 
         @Tool(name = "current_unit", value = {"Line one", "Line two"})
