@@ -314,18 +314,38 @@ final class JsonSchemaConverter {
 
         private JsonObjectSchema merge(List<JsonObjectSchema> objectSchemas, @Nullable String description) {
             JsonObjectSchema.Builder merged = JsonObjectSchema.builder().description(description);
+            Map<String, JsonSchemaElement> properties = new LinkedHashMap<>();
             List<String> required = new ArrayList<>();
             for (JsonObjectSchema objectSchema : objectSchemas) {
-                merged.addProperties(objectSchema.properties());
+                objectSchema.properties().forEach((name, property) ->
+                    properties.merge(name, property, (declared, redeclared) -> intersect(name, declared, redeclared)));
                 objectSchema.required().stream().filter(r -> !required.contains(r)).forEach(required::add);
                 if (objectSchema.additionalProperties() != null) {
                     merged.additionalProperties(objectSchema.additionalProperties());
                 }
             }
+            merged.addProperties(properties);
             if (!required.isEmpty()) {
                 merged.required(required);
             }
             return merged.build();
+        }
+
+        /**
+         * A property declared by several parts of an allOf (for example redeclared by a subclass) has to satisfy
+         * all of them: objects are merged, and the last description of an otherwise identical schema is kept.
+         * Anything else has no counterpart in the LangChain4j model.
+         */
+        private JsonSchemaElement intersect(String name, JsonSchemaElement declared, JsonSchemaElement redeclared) {
+            String description = redeclared.description() != null ? redeclared.description() : declared.description();
+            if (declared instanceof JsonObjectSchema first && redeclared instanceof JsonObjectSchema second) {
+                return merge(List.of(first, second), description);
+            }
+            JsonSchemaElement element = withDescription(redeclared, description);
+            if (element.equals(withDescription(declared, description))) {
+                return element;
+            }
+            throw new IllegalArgumentException("Unsupported JSON schema: allOf declares the property '" + name + "' with different schemas");
         }
 
         private Target resolve(String ref, Document document) {

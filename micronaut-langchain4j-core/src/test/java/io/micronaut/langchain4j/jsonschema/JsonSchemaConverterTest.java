@@ -265,6 +265,43 @@ class JsonSchemaConverterTest {
         assertEquals("One", single.description());
     }
 
+    @Test
+    void allOfMergesPropertiesDeclaredByMoreThanOnePart() {
+        JsonObjectSchema schema = convert("""
+            {"allOf": [
+               {"type": "object", "properties": {
+                  "name": {"type": "string", "description": "The name"},
+                  "id": {"type": "integer", "description": "The identifier"},
+                  "address": {"type": "object", "properties": {"city": {"type": "string"}}, "required": ["city"]}}},
+               {"type": "object", "properties": {
+                  "name": {"type": "string", "description": "The full name", "minLength": 1},
+                  "id": {"type": "integer"},
+                  "address": {"type": "object", "description": "Where to", "properties": {"zip": {"type": "string"}}}}}
+             ]}""");
+
+        assertEquals(List.of("name", "id", "address"), List.copyOf(schema.properties().keySet()));
+        assertEquals("The full name (minLength: 1)", schema.properties().get("name").description());
+        assertEquals("The identifier", schema.properties().get("id").description());
+        JsonObjectSchema address = (JsonObjectSchema) schema.properties().get("address");
+        assertEquals("Where to", address.description());
+        assertEquals(Set.of("city", "zip"), address.properties().keySet());
+        assertEquals(List.of("city"), address.required());
+    }
+
+    @Test
+    void allOfWithConflictingPropertiesIsUnsupported() {
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> convert("""
+            {"allOf": [{"type": "object", "properties": {"id": {"type": "string"}}}],
+             "properties": {"id": {"type": "integer"}}}"""));
+        assertTrue(e.getMessage().contains("'id'"));
+
+        assertThrows(IllegalArgumentException.class, () -> convert("""
+            {"allOf": [
+               {"type": "object", "properties": {"kind": {"enum": ["a", "b"]}}},
+               {"type": "object", "properties": {"kind": {"enum": ["a"]}}}
+             ]}"""));
+    }
+
     private JsonObjectSchema convert(String json) {
         return (JsonObjectSchema) converter.convert(parse(json));
     }
