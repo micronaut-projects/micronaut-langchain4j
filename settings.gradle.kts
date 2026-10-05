@@ -65,6 +65,7 @@ configure<io.micronaut.build.MicronautBuildSettingsExtension> {
     useStandardizedProjectNames.set(true)
     importMicronautCatalog()
     importMicronautCatalog("micronaut-reactor")
+    importMicronautCatalog("micronaut-json-schema")
     importMicronautCatalog("micronaut-sourcegen")
     importMicronautCatalog("micronaut-groovy")
     importMicronautCatalog("micronaut-kotlin")
