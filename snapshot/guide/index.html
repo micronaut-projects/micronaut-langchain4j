@@ -425,7 +425,13 @@ langchain4j.open-ai.streaming-chat-model.log-responses=true</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">langchain4j = {open-ai = {api-key = "${OPENAI_API_KEY}", streaming-chat-model = {model-name = "gpt-4o", log-requests = true, log-responses = true}}}</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[langchain4j.open-ai]
+api-key = "${OPENAI_API_KEY}"
+
+[langchain4j.open-ai.streaming-chat-model]
+model-name = "gpt-4o"
+log-requests = true
+log-responses = true</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2128,7 +2134,11 @@ langchain4j.agentic.agents.creative-writer.chat-model=creative-chat-model</code>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">langchain4j = {agentic = {agents = {greeter = {chat-model = "friendly-chat-model"}, creative-writer = {chat-model = "creative-chat-model"}}}}</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[langchain4j.agentic.agents.greeter]
+chat-model = "friendly-chat-model"
+
+[langchain4j.agentic.agents.creative-writer]
+chat-model = "creative-chat-model"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2235,7 +2245,11 @@ langchain4j.agentic.agents.creative-writer.memory.max-messages=50</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">langchain4j = {agentic = {agents = {greeter = {memory = {store = "redis"}}, creative-writer = {memory = {max-messages = 50}}}}}</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[langchain4j.agentic.agents.greeter.memory]
+store = "redis"
+
+[langchain4j.agentic.agents.creative-writer.memory]
+max-messages = 50</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
