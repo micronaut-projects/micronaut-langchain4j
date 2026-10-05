@@ -7,6 +7,8 @@ repositories {
 dependencies {
     annotationProcessor(mn.micronaut.inject.java)
     annotationProcessor(projects.micronautLangchain4jProcessor)
+    annotationProcessor(mnJsonSchema.micronaut.json.schema.processor)
+    implementation(mnJsonSchema.micronaut.json.schema.utils)
     implementation(projects.micronautLangchain4jCore)
     implementation(mn.reactive.streams)
     implementation(projects.micronautLangchain4jAgentic)
