@@ -1,0 +1,17 @@
+Add the following dependency to use the https://weaviate.io[Weaviate] embedding store:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-store-weaviate[]
+
+.Example Configuration
+[configuration]
+----
+langchain4j:
+  weaviate:
+    embedding-store:
+      scheme: https
+      host: my-cluster.weaviate.network
+      api-key: ${WEAVIATE_API_KEY}
+      object-class: Document
+----
+
+include::{includedir}configurationProperties/io.micronaut.langchain4j.weaviate.DefaultWeaviateEmbeddingStoreConfiguration.adoc[]

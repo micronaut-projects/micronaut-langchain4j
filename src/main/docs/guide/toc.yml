@@ -37,6 +37,7 @@ embeddingStores:
   embeddingStoresInMemory: In-Memory
   chroma: Chroma
   elasticsearch: Elastic Search
+  milvus: Milvus
   mongodb: MongoDB
   neo4j: Neo4j
   oracledb: Oracle
@@ -44,6 +45,7 @@ embeddingStores:
   pgvector: PGVector
   redis: Redis
   qdrant: Qdrant
+  weaviate: Weaviate
 breaks: Breaking Changes
 repository: Repository
 releaseHistory: Release History
