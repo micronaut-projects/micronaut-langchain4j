@@ -40,6 +40,7 @@ import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.ExecutableMethod;
 import io.micronaut.inject.qualifiers.Qualifiers;
+import io.micronaut.langchain4j.jsonschema.StructuredOutputSchemas;
 import io.micronaut.langchain4j.tools.ToolRegistry;
 import io.micronaut.langchain4j.utils.RetrievalUtils;
 import java.util.ArrayList;
@@ -74,6 +75,9 @@ public class AiServiceFactory {
      * <p>Retrieval is configured only when a {@link dev.langchain4j.rag.RetrievalAugmentor} bean or a
      * {@link dev.langchain4j.rag.content.retriever.ContentRetriever} bean exists, see {@link RetrievalUtils}.</p>
      *
+     * <p>The methods returning a type with a generated JSON schema send it as the response format, see
+     * {@link StructuredOutputSchemas}.</p>
+     *
      * @param serviceDef The service definition
      * @return The AI services.
      */
@@ -83,8 +87,8 @@ public class AiServiceFactory {
         Class<Object> type = serviceDef.type();
         String name = serviceDef.name();
 
-        AiServices<Object> builder = AiServices
-            .builder(new MicronautAiServiceContext(type, serviceDef.beanDefinition(), beanContext));
+        MicronautAiServiceContext context = new MicronautAiServiceContext(type, serviceDef.beanDefinition(), beanContext);
+        AiServices<Object> builder = AiServices.builder(context);
 
         AiServiceCustomizer<Object> creationCustomizer = Optional.ofNullable(serviceDef.customizer())
             .flatMap(beanContext::findBean)
@@ -125,6 +129,9 @@ public class AiServiceFactory {
                 builder
             ));
         }
+        // after the customizer, which may replace the chat model or the chat request transformer
+        beanContext.findBean(StructuredOutputSchemas.class)
+            .ifPresent(schemas -> schemas.configure(context, returnTypes(serviceDef.beanDefinition())));
         return builder;
     }
 
@@ -181,6 +188,13 @@ public class AiServiceFactory {
                 builder.executeToolsConcurrently();
             }
         }
+    }
+
+    private static List<Argument<?>> returnTypes(BeanDefinition<?> beanDefinition) {
+        return beanDefinition.getExecutableMethods().stream()
+            .filter(method -> method.getDeclaringType() != Object.class)
+            .<Argument<?>>map(method -> method.getReturnType().asArgument())
+            .toList();
     }
 
     private <T> void lookupByNameOrDefault(String name, Class<T> beanType, Consumer<T> configurer) {
