@@ -97,6 +97,15 @@ class GeneratedJsonSchemaProviderTest {
     }
 
     @Test
+    void schemaWithoutProperties() {
+        // the schema generated for a type with fields only, which are not properties for Micronaut
+        schemasByType.put(Annotated.class, """
+            {"title": "Annotated", "type": "object"}""");
+
+        assertTrue(provider.findSchema(Annotated.class).isEmpty());
+    }
+
+    @Test
     void referencesAreLookedUpInAllSchemas() {
         schemasByType.put(Annotated.class, """
             {"type": "object", "properties": {"address": {"$ref": "urn:example:address"}}}""");
