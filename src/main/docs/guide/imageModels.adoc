@@ -1,0 +1,19 @@
+Image models generate images from a text prompt. The OpenAI, Azure OpenAI, Vertex AI and Google Gen AI modules configure a `dev.langchain4j.model.image.ImageModel` bean, under `langchain4j.<provider>.image-model` (and named ones under `langchain4j.<provider>.image-models.<name>`):
+
+.Example Configuration
+[configuration]
+----
+langchain4j:
+  open-ai:
+    api-key: ${OPENAI_API_KEY}
+    image-model:
+      model-name: gpt-image-1
+      size: 1024x1024
+----
+
+Inject the image model where images are generated:
+
+snippet::example.micronaut.image.ImageGenerator[source="main"]
+
+<1> The `ImageModel` bean is injected.
+<2> The model generates an image, returned as a URL or as base64 data depending on the model.

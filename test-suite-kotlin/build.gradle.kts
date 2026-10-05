@@ -13,6 +13,7 @@ dependencies {
     kspTest(project(":micronaut-langchain4j-processor"))
     implementation(project(":micronaut-langchain4j-core"))
     implementation(mn.reactive.streams)
+    implementation(mn.micronaut.http.client.core)
     implementation(project(":micronaut-langchain4j-agentic"))
     implementation(project(":micronaut-langchain4j-openai"))
     implementation(project(":micronaut-langchain4j-google-genai"))
