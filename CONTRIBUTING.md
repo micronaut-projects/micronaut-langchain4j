@@ -104,3 +104,5 @@ The Ollama, Mistral AI, Google AI Gemini and Hugging Face modules ship the Graal
 ```bash
 UPDATE_NATIVE_METADATA=true ./gradlew :micronaut-langchain4j-ollama:test --tests '*NativeImageMetadataTest'
 ```
+
+This metadata should move to the [GraalVM Reachability Metadata repository](https://github.com/oracle/graalvm-reachability-metadata), after which it can be removed from these modules: [Ollama](https://github.com/oracle/graalvm-reachability-metadata/issues/10457), [Mistral AI](https://github.com/oracle/graalvm-reachability-metadata/issues/10458), [Google AI Gemini](https://github.com/oracle/graalvm-reachability-metadata/issues/10459), [Hugging Face](https://github.com/oracle/graalvm-reachability-metadata/issues/10460).
