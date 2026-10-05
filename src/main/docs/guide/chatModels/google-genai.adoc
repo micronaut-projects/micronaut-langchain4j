@@ -1,0 +1,40 @@
+The Google Gen AI module uses the https://github.com/googleapis/java-genai[Google Gen AI SDK], which works with both the Gemini API and Vertex AI. It provides a chat model, a streaming chat model, an embedding model and an image model. Add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-google-genai[]
+
+To use the Gemini API, configure an API key:
+
+.Example Configuration
+[configuration]
+----
+langchain4j:
+  google-gen-ai:
+    api-key: ${GEMINI_API_KEY}
+    chat-model:
+      model-name: gemini-2.5-flash
+----
+
+To use Vertex AI, configure the project and the location. The requests are authenticated with the `GoogleCredentials` bean of the application if there is one, otherwise with the application default credentials:
+
+.Example Configuration
+[configuration]
+----
+langchain4j:
+  google-gen-ai:
+    vertex-ai: true
+    project-id: my-project
+    location: us-central1
+----
+
+The models share a `com.google.genai.Client` bean configured under `langchain4j.google-gen-ai`, including the connection pool of its HTTP client:
+
+include::{includedir}configurationProperties/io.micronaut.langchain4j.googlegenai.GoogleGenAiClientConfiguration.adoc[]
+
+The SDK uses OkHttp. To customize the HTTP client, for example to add interceptors, register a `BeanCreatedEventListener` for `ClientOptions.Builder` (or `HttpOptions.Builder`):
+
+snippet::example.micronaut.googlegenai.HttpClientCustomizer[source="main"]
+
+<1> The listener is notified when the client options of the Google Gen AI client are created.
+<2> It sets the OkHttp client that the SDK uses.
+
+NOTE: The `labels` of the requests are not configurable, because they are only supported by Vertex AI. Set them with a `BeanCreatedEventListener` for the model builder, for example `GoogleGenAiChatModel.Builder`.

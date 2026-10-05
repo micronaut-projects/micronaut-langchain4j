@@ -115,6 +115,8 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                     .map(p -> p.name).toArray(String[]::new);
                 String[] optionalInjects = properties.stream().filter(p -> !p.required && p.injected)
                     .map(p -> p.name).toArray(String[]::new);
+                // excluded properties are left out of the configuration binding, like the injected ones
+                String[] excluded = properties.stream().filter(p -> p.excluded).map(p -> p.name).toArray(String[]::new);
 
                 if (StringUtils.isNotEmpty(packageName)) {
                     String namedPrefix = modelConfig.getNamedPrefix();
@@ -127,6 +129,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                         modelConfig.builderType,
                         requiredInjects,
                         optionalInjects,
+                        excluded,
                         commonConfig,
                         modelNameMethod,
                         modelConfig.defaultModelName
@@ -144,6 +147,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                         modelConfig.builderMethod,
                         requiredInjects,
                         optionalInjects,
+                        excluded,
                         commonConfig,
                         modelNameMethod,
                         modelConfig.defaultModelName,
@@ -343,12 +347,12 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             });
     }
 
-    private static ClassDef buildNamedConfigurationDef(String prefix, String configurationClassName, ClassElement model, ClassElement builderType, String[] requiredInjects, String[] optionalInjects, RecordDef commonConfig, MethodElement modelNameMethod, String defaultModelName) {
+    private static ClassDef buildNamedConfigurationDef(String prefix, String configurationClassName, ClassElement model, ClassElement builderType, String[] requiredInjects, String[] optionalInjects, String[] excluded, RecordDef commonConfig, MethodElement modelNameMethod, String defaultModelName) {
         FieldDef prefixField = FieldDef.builder("PREFIX")
             .ofType(TypeDef.of(String.class))
             .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
             .initializer(new ExpressionDef.Constant(TypeDef.of(String.class), prefix)).build();
-        String[] allExcludes = ArrayUtils.concat(requiredInjects, optionalInjects);
+        String[] allExcludes = ArrayUtils.concat(ArrayUtils.concat(requiredInjects, optionalInjects), excluded);
         FieldDef builderField = FieldDef.builder("builder")
             .addAnnotation(AnnotationDef.builder(ConfigurationBuilder.class)
                 .addMember("prefixes", "")
@@ -495,6 +499,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         MethodElement builderMethod,
         String[] requiredInjects,
         String[] optionalInjects,
+        String[] excluded,
         RecordDef commonConfig,
         MethodElement modelNameMethod,
         String defaultModelName, boolean configRequired) {
@@ -502,7 +507,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             .ofType(TypeDef.of(String.class))
             .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
             .initializer(ExpressionDef.constant(prefix)).build();
-        String[] allExcludes = ArrayUtils.concat(requiredInjects, optionalInjects);
+        String[] allExcludes = ArrayUtils.concat(ArrayUtils.concat(requiredInjects, optionalInjects), excluded);
         FieldDef builderField = FieldDef.builder("builder")
             .addAnnotation(AnnotationDef.builder(ConfigurationBuilder.class)
                 .addMember("prefixes", "")
@@ -567,7 +572,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             return properties;
         }
         List<PropertyConfig> all = new ArrayList<>(properties);
-        all.add(new PropertyConfig(LISTENERS, null, false, true, false));
+        all.add(new PropertyConfig(LISTENERS, null, false, true, false, false));
         return all;
     }
 
@@ -708,7 +713,8 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         String defaultValue,
         boolean required,
         boolean injected,
-        boolean common
+        boolean common,
+        boolean excluded
     ) implements Lang4jConfig.Property {
         public PropertyConfig(AnnotationValue<Lang4jConfig.Property> annotation) {
             this(
@@ -716,7 +722,8 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                 annotation.stringValue("defaultValue").orElse(null),
                 annotation.booleanValue("required").orElse(false),
                 annotation.booleanValue("injected").orElse(false),
-                annotation.booleanValue("common").orElse(false)
+                annotation.booleanValue("common").orElse(false),
+                annotation.booleanValue("excluded").orElse(false)
             );
         }
 

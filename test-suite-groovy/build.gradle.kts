@@ -13,6 +13,7 @@ dependencies {
     implementation(mn.reactive.streams)
     implementation(project(":micronaut-langchain4j-agentic"))
     implementation(project(":micronaut-langchain4j-openai"))
+    implementation(project(":micronaut-langchain4j-google-genai"))
     testImplementation(project(":micronaut-langchain4j-ollama"))
 
     testImplementation(project(":test-suite-utils"))
