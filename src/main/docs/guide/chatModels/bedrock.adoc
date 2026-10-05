@@ -2,13 +2,16 @@ Add the following dependency:
 
 dependency:io.micronaut.langchain4j:micronaut-langchain4j-bedrock[]
 
-Then add the link:configurationreference.html#io.micronaut.langchain4j.bedrock.CommonBedrockLlamaChatModelConfiguration[necessary configuration].
+Then add the link:configurationreference.html#io.micronaut.langchain4j.bedrock.CommonBedrockChatModelConfiguration[necessary configuration].
 
 .Example Configuration
 [configuration]
 ----
-langchain4j.bedrock-llama.api-key: YOUR_KEY
+langchain4j.bedrock.region: us-east-1
+langchain4j.bedrock.chat-model.model-id: anthropic.claude-3-haiku-20240307-v1:0
 ----
+
+The `model-id` is the Amazon Bedrock model ID or inference profile ID to invoke. There is no default value, choose a model that is enabled for your account and region.
 
 You will additionally need to define a bean of type https://sdk.amazonaws.com/java/api/latest/software/amazon/awssdk/auth/credentials/AwsCredentialsProvider.html[AwsCredentialsProvider].
 

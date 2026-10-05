@@ -84,7 +84,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
     }
 )
 final class OpenAiModule {
-    public static final String DEFAULT_CHAT_MODEL = "gpt-3.5-turbo";
-    public static final String DEFAULT_IMAGE_MODEL = "dall-e-3";
-    public static final String DEFAULT_EMBEDDING_MODEL = "text-embedding-ada-002";
+    public static final String DEFAULT_CHAT_MODEL = "gpt-4.1-mini";
+    public static final String DEFAULT_IMAGE_MODEL = "gpt-image-1";
+    public static final String DEFAULT_EMBEDDING_MODEL = "text-embedding-3-small";
 }
