@@ -5,6 +5,7 @@ quickStart:
 responseStreaming: Response Streaming
 aiService: AI Service
 agenticService: Agentic Service
+structuredOutput: Structured Outputs
 testing: Testing
 tools: Tools
 guardrails: Guardrails
