@@ -16,4 +16,4 @@ NOTE: The tool is registered under the method name, which the model sees, so the
 
 The tools are not discovered by LangChain4j scanning the tool class: Micronaut builds the `ToolSpecification` of each `@Tool` method from its compile-time metadata (the method and parameter names, `@Tool`, `@P`, `@ToolMemoryId`) and invokes the method through its Micronaut `ExecutableMethod`. Tool classes therefore need no reflection, neither in a GraalVM native image nor for classes written in Python. The tools of a service are also available programmatically, as LangChain4j `AiServiceTool` instances, from api:io.micronaut.langchain4j.tools.ToolRegistry#getAiServiceTools(java.util.Set)[].
 
-NOTE: LangChain4j's `@CompensateFor` compensating actions are not supported, since LangChain4j only registers them for the tools it discovers reflectively.
+NOTE: LangChain4j's `@CompensateFor` compensating actions are not supported, since LangChain4j only registers them for the tools it discovers reflectively. A warning is logged when a tool bean used by a service declares one, because the action never runs, even with `compensateOnToolErrors`.
