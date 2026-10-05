@@ -53,6 +53,8 @@ langchain4j.chat-memory-store.jdbc.default.auto-create-table: true
 
 The segment under `jdbc` (for example `default`) is the name of the datasource.
 
+NOTE: For Oracle Database, use the dedicated Oracle chat memory store of `micronaut-langchain4j-store-oracle` described above rather than the JDBC store.
+
 To use the MongoDB implementation `dev.langchain4j.community.store.memory.chat.mongodb.MongoDbChatMemoryStore`, add the following dependency:
 
 dependency:micronaut-langchain4j-store-mongodb[groupId=io.micronaut.langchain4j]

@@ -75,6 +75,10 @@ final class JdbcChatMemoryStoreFactory {
             if (product.contains("h2")) {
                 return JdbcChatMemoryStoreConfiguration.Dialect.H2;
             }
+            if (product.contains("oracle")) {
+                throw new ConfigurationException("The JDBC chat memory store does not support Oracle Database: use the Oracle chat memory store of micronaut-langchain4j-store-oracle ("
+                    + "langchain4j.chat-memory-store.oracle.<datasource>)");
+            }
             throw new ConfigurationException("Unsupported database " + product + " for the JDBC chat memory store: configure "
                 + JdbcChatMemoryStoreConfiguration.PREFIX + ".<datasource>.dialect");
         } catch (SQLException e) {
