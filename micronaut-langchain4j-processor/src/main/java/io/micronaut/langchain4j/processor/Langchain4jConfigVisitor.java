@@ -380,7 +380,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                     aThis.field("builder", TypeDef.of(builderType)).returning()
                 ));
 
-        addCommonConstructor(commonConfig, classDefBuilder, modelNameMethod, defaultModelName, false, builderField);
+        addCommonConstructor(commonConfig, builderType, classDefBuilder, modelNameMethod, defaultModelName, false, builderField);
 
         for (String requiredInject : requiredInjects) {
             addInjectionPoint(builderType, requiredInject, true, classDefBuilder, builderField);
@@ -395,6 +395,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
 
     private static void addCommonConstructor(
         RecordDef commonConfig,
+        ClassElement builderType,
         ClassDef.ClassDefBuilder classDefBuilder,
         MethodElement modelNameMethod,
         String defaultModelName,
@@ -423,6 +424,11 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             List<PropertyDef> properties = commonConfig.getProperties();
             for (PropertyDef property : properties) {
                 if (property.getName().equals("enabled")) {
+                    continue;
+                }
+                // a common property applies to the builders that have it (e.g. the Responses models have no timeout)
+                if (builderType.getEnclosedElement(ElementQuery.ALL_METHODS.named(property.getName()).onlyAccessible().onlyInstance()
+                    .filter(m -> m.getParameters().length == 1)).isEmpty()) {
                     continue;
                 }
                 constructorBuilder.addStatement(
@@ -549,6 +555,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         }
         addCommonConstructor(
             commonConfig,
+            builderType,
             classDefBuilder,
             modelNameMethod,
             defaultModelName,
