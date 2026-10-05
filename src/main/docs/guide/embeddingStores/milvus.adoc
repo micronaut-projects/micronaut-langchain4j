@@ -16,4 +16,4 @@ langchain4j:
 
 The `dimension` must match the dimension of the embeddings of your embedding model. Milvus is eventually consistent by default: set `consistency-level` to `STRONG` to search the embeddings right after they are added.
 
-include::{includedir}configurationProperties/io.micronaut.langchain4j.milvus.DefaultMilvusV2EmbeddingStoreConfiguration.adoc[]
+include::{includedir}configurationProperties/dev.langchain4j.store.embedding.milvus.v2.MilvusV2EmbeddingStore$Builder.adoc[]
