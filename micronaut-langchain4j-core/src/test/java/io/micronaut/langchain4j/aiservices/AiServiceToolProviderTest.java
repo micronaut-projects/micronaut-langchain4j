@@ -55,7 +55,7 @@ class AiServiceToolProviderTest {
     }
 
     @Test
-    void severalUnqualifiedToolProvidersAreNotUsedImplicitly() {
+    void namedToolProvidersAreNotUsedImplicitly() {
         assertEquals("no tools", unnamedAssistant.chat("hello"));
         assertEquals(List.of(), chatModel.lastToolNames());
     }

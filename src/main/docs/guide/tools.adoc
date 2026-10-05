@@ -22,11 +22,22 @@ NOTE: LangChain4j's `@CompensateFor` compensating actions are not supported, sin
 
 Tools can also be provided dynamically by a LangChain4j https://docs.langchain4j.dev/tutorials/tools#dynamic-tool-provisioning[ToolProvider] bean, for example the tool provider of the https://micronaut-projects.github.io/micronaut-mcp/latest/guide/#clientLangchain4j[Micronaut MCP LangChain4j client], which provides the tools of the configured MCP servers.
 
+snippet::example.micronaut.aiservice.tools.WeatherToolProvider[source="main"]
+
+<1> The tool provider is a bean qualified with a name.
+<2> It returns the specifications of the tools and the executors that invoke them.
+
+Name the tool providers of an AI service with the `toolProviders` member of `@AiService`:
+
+snippet::example.micronaut.aiservice.tools.WeatherAssistant[source="main"]
+
+<1> The AI service uses the tools of the `ToolProvider` bean named `weather`.
+
 An AI service uses the following tool providers:
 
-* The `ToolProvider` beans named by the `toolProviders` member of `@AiService`, for example `@AiService(toolProviders = {"github", "jira"})`. Set the member to an empty array to use no tool provider.
-* Otherwise, the `ToolProvider` bean qualified with the name of the service (`@AiService(named = "weather")` uses the `ToolProvider` bean annotated with `@Named("weather")`).
-* Otherwise, the `ToolProvider` bean if there is exactly one. When there are several unqualified tool providers, none of them is used implicitly, so that tools are never exposed to a service by accident.
+* The `ToolProvider` beans named by the `toolProviders` member of `@AiService`. Set the member to an empty array to use no tool provider.
+* Otherwise, the `ToolProvider` bean qualified with the name of the service, given by the `named` member of `@AiService`.
+* Otherwise, the default `ToolProvider` bean: the only `ToolProvider` bean without a qualifier (or annotated with `@Primary`). Tool providers qualified with a name are only used by the services that select them, and when there are several unqualified tool providers none of them is used implicitly, so that tools are never exposed to a service by accident.
 
 The following LangChain4j beans are also applied to AI services, preferring a bean qualified with the name of the service over the default bean:
 

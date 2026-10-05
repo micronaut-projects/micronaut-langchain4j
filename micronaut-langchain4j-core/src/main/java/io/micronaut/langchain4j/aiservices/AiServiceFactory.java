@@ -129,15 +129,10 @@ public class AiServiceFactory {
     private void configureToolProviders(AiServiceDef<Object> serviceDef, AiServices<Object> builder) {
         List<String> names = serviceDef.toolProviders();
         if (names == null) {
-            // like the other components: the provider named after the service, otherwise the default one. Several
-            // unqualified providers are ambiguous, so none is used rather than exposing every tool to every service
-            BeanProvider<ToolProvider> provider = beanContext.getProvider(ToolProvider.class);
+            // like the other components: the provider named after the service, otherwise the default one
             String name = serviceDef.name();
-            Optional<ToolProvider> toolProvider = name != null ? provider.find(Qualifiers.byName(name)) : Optional.empty();
-            if (toolProvider.isEmpty() && provider.isUnique()) {
-                toolProvider = provider.find(null);
-            }
-            toolProvider.ifPresent(builder::toolProvider);
+            Optional<ToolProvider> toolProvider = name != null ? beanContext.findBean(ToolProvider.class, Qualifiers.byName(name)) : Optional.empty();
+            toolProvider.or(this::defaultToolProvider).ifPresent(builder::toolProvider);
         } else if (!names.isEmpty()) {
             List<ToolProvider> toolProviders = new ArrayList<>(names.size());
             for (String toolProviderName : names) {
@@ -145,6 +140,18 @@ public class AiServiceFactory {
             }
             builder.toolProviders(toolProviders);
         }
+    }
+
+    /**
+     * The default tool provider is the only unqualified (or {@code @Primary}) {@link ToolProvider} bean. Providers
+     * qualified with a name are only used by the services that select them, and several unqualified providers are
+     * ambiguous, so none is used rather than exposing tools to a service by accident.
+     */
+    private Optional<ToolProvider> defaultToolProvider() {
+        List<BeanDefinition<ToolProvider>> candidates = beanContext.getBeanDefinitions(ToolProvider.class).stream()
+            .filter(definition -> definition.isPrimary() || definition.getDeclaredQualifier() == null)
+            .toList();
+        return candidates.size() == 1 ? Optional.of(beanContext.getBean(candidates.getFirst())) : Optional.empty();
     }
 
     private void configureToolCalling(@Nullable String name, AiServices<Object> builder) {
