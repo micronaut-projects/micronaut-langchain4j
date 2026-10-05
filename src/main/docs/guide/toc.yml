@@ -7,6 +7,7 @@ aiService: AI Service
 agenticService: Agentic Service
 testing: Testing
 tools: Tools
+reflection: Reflection and GraalVM Native Image
 chatModels:
   title: Chat Language Models
   chatModelExample: ChatModel Example

@@ -31,15 +31,6 @@ dependencies {
     testRuntimeOnly(mn.micronaut.http.client)
 }
 
-micronautBuild {
-    python {
-        // LangChain4j builds the AI and agentic services with java.lang.reflect.Proxy and reads their annotations
-        // (@SystemMessage, @UserMessage, @Agent, @Tool, ...) reflectively from the generated interfaces and classes:
-        // the compiler copies them for the classes named here (or declared @AllowsReflection)
-        compilerArgs.add("-Amicronaut.introspection.allowReflection=example.micronaut.*")
-    }
-}
-
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
     systemProperty("micronaut.python.pool.enabled", "false")

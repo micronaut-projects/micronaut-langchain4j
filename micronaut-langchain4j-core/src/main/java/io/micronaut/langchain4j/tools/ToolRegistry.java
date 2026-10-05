@@ -16,31 +16,37 @@
 package io.micronaut.langchain4j.tools;
 
 import dev.langchain4j.agent.tool.Tool;
+import dev.langchain4j.service.tool.AiServiceTool;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.processor.ExecutableMethodProcessor;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.ExecutableMethod;
 import jakarta.inject.Singleton;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * Register of tools.
  */
 @Singleton
 public class ToolRegistry implements ExecutableMethodProcessor<Tool> {
-    private final List<BeanDefinition<?>> beansWithTools = new ArrayList<>();
+    private final Map<BeanDefinition<?>, List<ExecutableMethod<?, ?>>> beansWithTools = new LinkedHashMap<>();
     private final BeanContext beanContext;
 
     public ToolRegistry(BeanContext beanContext) {
         this.beanContext = beanContext;
     }
-    
+
     @Override
     public <B> void process(BeanDefinition<B> beanDefinition, ExecutableMethod<B, ?> method) {
-        if (!this.beansWithTools.contains(beanDefinition)) {
-            this.beansWithTools.add(beanDefinition);
+        List<ExecutableMethod<?, ?>> methods = this.beansWithTools.computeIfAbsent(beanDefinition, definition -> new ArrayList<>());
+        if (!methods.contains(method)) {
+            methods.add(method);
         }
     }
 
@@ -49,7 +55,7 @@ public class ToolRegistry implements ExecutableMethodProcessor<Tool> {
      * @return The tools
      */
     public List<Object> getAllTools() {
-        return this.beansWithTools.stream()
+        return this.beansWithTools.keySet().stream()
             .map(definition -> (Object) beanContext.getBean(definition))
             .toList();
     }
@@ -60,9 +66,48 @@ public class ToolRegistry implements ExecutableMethodProcessor<Tool> {
      * @return A list of types
      */
     public List<Object> getToolsTyped(Set<?> toolTypes) {
-        return this.beansWithTools.stream()
+        return this.beansWithTools.keySet().stream()
             .filter(definition -> toolTypes.contains(definition.getBeanType()))
             .map(definition -> (Object) beanContext.getBean(definition))
             .toList();
+    }
+
+    /**
+     * Get the tools of the beans of the given types, as {@link AiServiceTool}s invoking the {@link Tool} methods through
+     * their Micronaut {@link ExecutableMethod}: unlike the tool objects of {@link #getToolsTyped(Set)}, they let
+     * LangChain4j call the tools without scanning and invoking the methods reflectively.
+     *
+     * @param toolTypes The tool types
+     * @return The tools
+     * @since 2.4.0
+     */
+    @NonNull
+    public List<AiServiceTool> getAiServiceTools(@NonNull Set<?> toolTypes) {
+        return aiServiceTools(definition -> toolTypes.contains(definition.getBeanType()));
+    }
+
+    /**
+     * Get all available tools, as {@link AiServiceTool}s invoking the {@link Tool} methods through their Micronaut
+     * {@link ExecutableMethod}.
+     *
+     * @return The tools
+     * @since 2.4.0
+     */
+    @NonNull
+    public List<AiServiceTool> getAllAiServiceTools() {
+        return aiServiceTools(definition -> true);
+    }
+
+    private List<AiServiceTool> aiServiceTools(Predicate<BeanDefinition<?>> filter) {
+        List<AiServiceTool> tools = new ArrayList<>();
+        this.beansWithTools.forEach((definition, methods) -> {
+            if (filter.test(definition)) {
+                Object bean = beanContext.getBean(definition);
+                for (ExecutableMethod<?, ?> method : methods) {
+                    tools.add(ExecutableMethodToolExecutor.toAiServiceTool(bean, method));
+                }
+            }
+        });
+        return tools;
     }
 }

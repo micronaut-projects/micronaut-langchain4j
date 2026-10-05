@@ -17,6 +17,7 @@ package io.micronaut.langchain4j.agentic.annotation;
 
 import io.micronaut.aop.Introduction;
 import io.micronaut.context.annotation.AliasFor;
+import io.micronaut.core.annotation.AllowsReflection;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.ReflectiveAccess;
@@ -40,6 +41,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @ReflectiveAccess
+@AllowsReflection
 @Experimental
 public @interface AgenticService {
 

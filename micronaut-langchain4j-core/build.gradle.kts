@@ -10,6 +10,7 @@ dependencies {
     implementation(mn.micronaut.http.client.core)
     implementation(libs.reactor.core)
     testAnnotationProcessor(mn.micronaut.inject.java)
+    testAnnotationProcessor(projects.micronautLangchain4jProcessor)
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(mn.micronaut.jackson.databind)
     testImplementation(libs.langchain4j.ollama)

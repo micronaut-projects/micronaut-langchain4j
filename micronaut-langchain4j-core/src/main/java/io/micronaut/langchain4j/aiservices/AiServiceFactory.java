@@ -21,6 +21,7 @@ import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.moderation.ModerationModel;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.service.TokenStream;
+import dev.langchain4j.service.tool.AiServiceTool;
 import dev.langchain4j.spi.ServiceHelper;
 import dev.langchain4j.spi.services.TokenStreamAdapter;
 import io.micronaut.context.BeanContext;
@@ -86,7 +87,8 @@ public class AiServiceFactory {
                 return ref.get();
             });
 
-        List<Object> toolsTyped = serviceDef.tools() != null ? toolRegistry.getToolsTyped(serviceDef.tools()) : List.of();
+        // the tools invoke the @Tool methods through their ExecutableMethod: LangChain4j does not scan the tool classes
+        List<AiServiceTool> toolsTyped = serviceDef.tools() != null ? toolRegistry.getAiServiceTools(serviceDef.tools()) : List.of();
         if (CollectionUtils.isNotEmpty(toolsTyped)) {
             builder.tools(toolsTyped);
         }
