@@ -1,15 +1,9 @@
 Every chat model, streaming chat model and embedding model whose LangChain4j builder accepts listeners receives the `ChatModelListener` (or embedding model listener) beans of the application. Define a listener as a bean to observe the requests, responses and errors of all models:
 
-[source,java]
-----
-@Singleton
-class LoggingListener implements ChatModelListener {
-    @Override
-    public void onResponse(ChatModelResponseContext context) {
-        LOG.info("Tokens used: {}", context.chatResponse().tokenUsage());
-    }
-}
-----
+snippet::example.micronaut.observability.TokenUsageListener[source="main"]
+
+<1> The listener is a bean, so it is injected into every model.
+<2> It is notified of every chat model response, here to log the token usage.
 
 === Micrometer
 
