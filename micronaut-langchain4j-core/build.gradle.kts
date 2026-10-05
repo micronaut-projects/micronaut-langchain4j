@@ -10,6 +10,7 @@ dependencies {
     implementation(platform(mnReactor.boms.reactor))
     implementation(mn.micronaut.http.client.core)
     implementation(libs.reactor.core)
+    implementation(libs.langchain4j.reactor)
     testAnnotationProcessor(mn.micronaut.inject.java)
     testAnnotationProcessor(projects.micronautLangchain4jProcessor)
     testImplementation(mn.micronaut.http.server.netty)

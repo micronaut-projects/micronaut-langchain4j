@@ -21,6 +21,8 @@ import dev.langchain4j.exception.TimeoutException;
 import dev.langchain4j.http.client.HttpMethod;
 import dev.langchain4j.http.client.HttpRequest;
 import dev.langchain4j.http.client.SuccessfulHttpResponse;
+import dev.langchain4j.http.client.sse.HttpResponseReceived;
+import dev.langchain4j.http.client.sse.HttpStreamingEvent;
 import dev.langchain4j.http.client.sse.ServerSentEvent;
 import dev.langchain4j.http.client.sse.ServerSentEventContext;
 import dev.langchain4j.http.client.sse.ServerSentEventListener;
@@ -61,6 +63,7 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -236,6 +239,87 @@ class MicronautLangChain4jHttpClientTest {
         assertTrue(opened.get());
         assertTrue(closed.get());
         assertEquals(List.of("hello", "world"), events);
+    }
+
+    @Test
+    void executesRequestsAsynchronously() throws Exception {
+        AtomicReference<String> receivedBody = new AtomicReference<>();
+        server = HttpServer.create(new InetSocketAddress(0), 0);
+        server.createContext("/async", exchange -> {
+            receivedBody.set(new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8));
+            byte[] response = "{\"answer\":\"micronaut\"}".getBytes(StandardCharsets.UTF_8);
+            exchange.getResponseHeaders().add("Content-Type", "application/json");
+            exchange.sendResponseHeaders(200, response.length);
+            exchange.getResponseBody().write(response);
+            exchange.close();
+        });
+        server.createContext("/async-error", exchange -> {
+            exchange.getRequestBody().readAllBytes();
+            byte[] response = "{\"error\":\"bad request\"}".getBytes(StandardCharsets.UTF_8);
+            exchange.sendResponseHeaders(400, response.length);
+            exchange.getResponseBody().write(response);
+            exchange.close();
+        });
+        server.start();
+        var client = new MicronautLangChain4jHttpClientBuilder().build();
+
+        SuccessfulHttpResponse response = client.executeAsync(HttpRequest.builder()
+                .method(HttpMethod.POST)
+                .url(url("/async"))
+                .addHeader("Content-Type", "application/json")
+                .body("{\"question\":\"framework?\"}")
+                .build())
+            .get(5, TimeUnit.SECONDS);
+
+        assertEquals(200, response.statusCode());
+        assertEquals("{\"answer\":\"micronaut\"}", response.body());
+        assertEquals("{\"question\":\"framework?\"}", receivedBody.get());
+
+        java.util.concurrent.ExecutionException failure = assertThrows(java.util.concurrent.ExecutionException.class, () -> client.executeAsync(HttpRequest.builder()
+                .method(HttpMethod.POST)
+                .url(url("/async-error"))
+                .body("{}")
+                .build())
+            .get(5, TimeUnit.SECONDS));
+        HttpException httpException = assertInstanceOf(HttpException.class, failure.getCause());
+        assertEquals(400, httpException.statusCode());
+        assertEquals("{\"error\":\"bad request\"}", httpException.getMessage());
+    }
+
+    @Test
+    void streamsEventsAsAPublisher() throws Exception {
+        server = HttpServer.create(new InetSocketAddress(0), 0);
+        server.createContext("/sse", exchange -> {
+            exchange.getRequestBody().readAllBytes();
+            byte[] response = """
+                data: micro
+
+                data: naut
+
+                """.getBytes(StandardCharsets.UTF_8);
+            exchange.getResponseHeaders().add("Content-Type", "text/event-stream");
+            exchange.sendResponseHeaders(200, response.length);
+            exchange.getResponseBody().write(response);
+            exchange.close();
+        });
+        server.start();
+
+        java.util.concurrent.Flow.Publisher<HttpStreamingEvent> publisher = new MicronautLangChain4jHttpClientBuilder()
+            .build()
+            .stream(HttpRequest.builder()
+                .method(HttpMethod.POST)
+                .url(url("/sse"))
+                .body("{}")
+                .build());
+        List<HttpStreamingEvent> events = reactor.adapter.JdkFlowAdapter.flowPublisherToFlux(publisher)
+            .collectList()
+            .block(java.time.Duration.ofSeconds(5));
+
+        assertInstanceOf(HttpResponseReceived.class, events.getFirst());
+        assertEquals(List.of("micro", "naut"), events.stream()
+            .filter(ServerSentEvent.class::isInstance)
+            .map(event -> ((ServerSentEvent) event).data())
+            .toList());
     }
 
     @Test

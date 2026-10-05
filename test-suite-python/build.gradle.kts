@@ -25,6 +25,8 @@ dependencies {
     testImplementation(mnTest.micronaut.test.junit5)
     testImplementation(mnTest.junit.jupiter.api)
     testImplementation(mnSerde.micronaut.serde.jackson)
+    testImplementation(platform(mnReactor.boms.reactor))
+    testImplementation(libs.reactor.core)
     testRuntimeOnly(mnTest.junit.jupiter.engine)
     testRuntimeOnly(mnTest.junit.platform.launcher)
     testRuntimeOnly(mnLogging.logback.classic)

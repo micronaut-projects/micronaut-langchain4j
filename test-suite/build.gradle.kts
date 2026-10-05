@@ -8,6 +8,7 @@ dependencies {
     annotationProcessor(mn.micronaut.inject.java)
     annotationProcessor(projects.micronautLangchain4jProcessor)
     implementation(projects.micronautLangchain4jCore)
+    implementation(mn.reactive.streams)
     implementation(projects.micronautLangchain4jAgentic)
     implementation(projects.micronautLangchain4jOpenai)
     testImplementation(platform(mnTest.boms.testcontainers))
