@@ -29,6 +29,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 /**
@@ -44,6 +45,10 @@ import java.util.function.Function;
 @Requires(property = SerdeJsonCodec.CODEC_PROPERTY, value = "true")
 final class TemporalObjectDeserializers {
 
+    private static final Set<String> DATE_KEYS = Set.of("year", "month", "day");
+    private static final Set<String> TIME_KEYS = Set.of("hour", "minute", "second", "nano");
+    private static final Set<String> DATE_TIME_KEYS = Set.of("date", "time");
+
     @Singleton
     Deserializer<LocalDate> localDateDeserializer() {
         return new TemporalDeserializer<>(LocalDate::parse, TemporalObjectDeserializers::localDate);
@@ -56,16 +61,30 @@ final class TemporalObjectDeserializers {
 
     @Singleton
     Deserializer<LocalDateTime> localDateTimeDeserializer() {
-        return new TemporalDeserializer<>(LocalDateTime::parse, fields -> LocalDateTime.of(
-            localDate(object(fields.get("date"))),
-            localTime(object(fields.get("time")))));
+        return new TemporalDeserializer<>(LocalDateTime::parse, fields -> {
+            checkKeys(fields, DATE_TIME_KEYS);
+            return LocalDateTime.of(localDate(object(fields.get("date"))), localTime(object(fields.get("time"))));
+        });
+    }
+
+    /**
+     * Rejects a property the shape does not have, as the codec rejects the unknown properties of the other types.
+     */
+    private static void checkKeys(Map<?, ?> fields, Set<String> keys) {
+        for (Object key : fields.keySet()) {
+            if (!keys.contains(String.valueOf(key))) {
+                throw new IllegalArgumentException("Unknown property '" + key + "', expected " + keys);
+            }
+        }
     }
 
     private static LocalDate localDate(Map<?, ?> fields) {
+        checkKeys(fields, DATE_KEYS);
         return LocalDate.of(number(fields, "year"), number(fields, "month"), number(fields, "day"));
     }
 
     private static LocalTime localTime(Map<?, ?> fields) {
+        checkKeys(fields, TIME_KEYS);
         return LocalTime.of(number(fields, "hour"), number(fields, "minute"), optionalNumber(fields, "second"), optionalNumber(fields, "nano"));
     }
 
