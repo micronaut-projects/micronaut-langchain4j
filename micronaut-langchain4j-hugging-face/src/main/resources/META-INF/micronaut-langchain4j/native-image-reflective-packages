@@ -1,2 +1,0 @@
-# The request and response types LangChain4j maps with Jackson, registered for reflection in native images
-dev.langchain4j.model.huggingface.client
