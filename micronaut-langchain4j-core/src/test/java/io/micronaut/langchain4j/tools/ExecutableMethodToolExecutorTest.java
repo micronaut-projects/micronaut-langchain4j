@@ -96,6 +96,12 @@ class ExecutableMethodToolExecutorTest {
     }
 
     @Test
+    void errorsOfTheVirtualMachineAreRethrown() {
+        assertThrows(InternalError.class, () -> execute("vmError", "{}"));
+        assertThrows(InternalError.class, () -> executor("vmError").executeAsync(request("vmError", "{}"), context()));
+    }
+
+    @Test
     void injectedParameters() {
         InvocationParameters parameters = new InvocationParameters();
         InvocationContext context = InvocationContext.builder().chatMemoryId("memory").invocationParameters(parameters).build();
@@ -211,6 +217,11 @@ class ExecutableMethodToolExecutorTest {
         @Tool("Fails with an error")
         String crash() {
             throw new AssertionError("boom");
+        }
+
+        @Tool("Fails with an error of the virtual machine")
+        String vmError() {
+            throw new InternalError("boom");
         }
 
         @Tool("Fails asynchronously")

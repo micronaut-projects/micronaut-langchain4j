@@ -142,14 +142,7 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
     @Override
     public ToolExecutionResult executeWithContext(ToolExecutionRequest request, InvocationContext context) {
         Object[] arguments = prepareArguments(request, context);
-        Object result;
-        try {
-            result = method.invoke(bean, arguments);
-        } catch (Exception | Error e) {
-            // ExecutableMethod.invoke rethrows what the method throws as it is. An Error is a failure of the tool too,
-            // as for LangChain4j, whose reflective invocation wraps whatever the method throws
-            throw new ToolExecutionException(e);
-        }
+        Object result = invoke(arguments);
         CompletableFuture<?> future = toCompletableFuture(result);
         if (future != null) {
             Object value;
@@ -168,10 +161,9 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
         Object[] arguments = prepareArguments(request, context);
         Object result;
         try {
-            result = method.invoke(bean, arguments);
-        } catch (Exception | Error e) {
-            // as in executeWithContext, an Error is a failure of the tool too
-            return CompletableFuture.failedFuture(new ToolExecutionException(e));
+            result = invoke(arguments);
+        } catch (ToolExecutionException e) {
+            return CompletableFuture.failedFuture(e);
         }
         CompletableFuture<?> future = toCompletableFuture(result);
         if (future == null) {
@@ -184,6 +176,22 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
             }
             return toToolExecutionResult(value, valueType);
         });
+    }
+
+    /**
+     * Invokes the tool method. {@link ExecutableMethod#invoke} rethrows what the method throws as it is: an exception
+     * or an {@link Error} is a failure of the tool, as for LangChain4j, whose reflective invocation wraps whatever the
+     * method throws. The errors of the virtual machine ({@link OutOfMemoryError}, {@link StackOverflowError}, ...) are
+     * not failures of the tool to report to the model, and are rethrown.
+     */
+    private Object invoke(Object[] arguments) {
+        try {
+            return method.invoke(bean, arguments);
+        } catch (VirtualMachineError e) {
+            throw e;
+        } catch (Exception | Error e) {
+            throw new ToolExecutionException(e);
+        }
     }
 
     private Object[] prepareArguments(ToolExecutionRequest request, InvocationContext context) {
