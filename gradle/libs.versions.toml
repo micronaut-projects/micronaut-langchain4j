@@ -37,6 +37,7 @@ micronaut-reactor = "4.3.0"
 micronaut-micrometer = "6.1.0"
 micronaut-control-panel = "2.2.0"
 micronaut-mcp = "2.1.0"
+micronaut-json-schema = "2.3.1"
 awaitility = "4.3.0"
 #TODO remove when non vulnerable versions exists
 commons-compress = "1.28.0"
@@ -73,6 +74,7 @@ jsoup = { module = 'org.jsoup:jsoup', version.ref = 'jsoup' }
 
 # Micronaut BOMS
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut'  }
+micronaut-json-schema = { module = 'io.micronaut.jsonschema:micronaut-json-schema-bom', version.ref = 'micronaut-json-schema' }
 micronaut-reactor = { module = 'io.micronaut.reactor:micronaut-reactor-bom', version.ref = 'micronaut-reactor' }
 micronaut-groovy = { module = 'io.micronaut.groovy:micronaut-groovy-bom', version.ref = 'micronaut-groovy' }
 micronaut-kotlin = { module = 'io.micronaut.kotlin:micronaut-kotlin-bom', version.ref = 'micronaut-kotlin' }

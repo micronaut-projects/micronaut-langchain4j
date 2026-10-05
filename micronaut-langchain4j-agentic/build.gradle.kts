@@ -7,6 +7,8 @@ dependencies {
     api(libs.langchain4j)
     api(libs.langchain4j.agentic)
     testAnnotationProcessor(projects.micronautLangchain4jProcessor)
+    testAnnotationProcessor(mnJsonSchema.micronaut.json.schema.processor)
+    testImplementation(mnJsonSchema.micronaut.json.schema.utils)
 }
 
 micronautBuild {
