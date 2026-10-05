@@ -35,6 +35,7 @@ import dev.langchain4j.memory.chat.ChatMemoryProvider;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.service.tool.ToolProvider;
+import dev.langchain4j.service.tool.ToolProviderResult;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.BeanProvider;
 import io.micronaut.context.BeanResolutionContext;
@@ -250,10 +251,15 @@ public final class AgenticServiceFactory {
         }
 
         if (CollectionUtils.isNotEmpty(toolTypes)) {
+            // the tools invoke the @Tool methods through their ExecutableMethod: LangChain4j does not scan the tool
+            // classes. AgentBuilder has no tools(List<AiServiceTool>), so a static provider keeps their ReturnBehavior
             beanContext.findBean(ToolRegistry.class)
-                .map(registry -> registry.getToolsTyped(toolTypes))
+                .map(registry -> registry.getAiServiceTools(toolTypes))
                 .filter(CollectionUtils::isNotEmpty)
-                .ifPresent(tools -> agentBuilder.tools(tools.toArray()));
+                .ifPresent(tools -> {
+                    ToolProviderResult result = ToolProviderResult.builder().addAll(tools).build();
+                    agentBuilder.toolProvider(request -> result);
+                });
         }
         lookupByNameOrDefault(beanContext, agentName, ToolProvider.class, agentBuilder::toolProvider);
     }
