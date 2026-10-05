@@ -1,0 +1,117 @@
+{{#with controlPanel.body }}
+    <div class="cp-dashboard-stack">
+        <div class="card card-light">
+            <div class="card-header">
+                <h3 class="card-title">Chat</h3>
+            </div>
+            <div class="card-body">
+                {{#if chatModels }}
+                    <div id="langchain4jChatMessages" class="cp-dashboard-stack" aria-live="polite"></div>
+                    <form id="langchain4jChatForm" class="cp-dashboard-stack">
+                        <div class="form-group">
+                            <label for="langchain4jChatModel">Chat model</label>
+                            <select id="langchain4jChatModel" class="form-control">
+                                {{#each chatModels }}
+                                    <option value="{{ name }}">{{ name }} ({{ type }})</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="langchain4jChatText">Message</label>
+                            <textarea id="langchain4jChatText" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary"{{#unless ext.writeAccess.allowed}} disabled aria-disabled="true" title="{{ ext.writeAccess.reason }}"{{/unless}}>
+                            <i class="fas fa-paper-plane"></i>
+                            Send
+                        </button>
+                    </form>
+                {{else}}
+                    <div class="cp-data-table-empty">No chat model is configured.</div>
+                {{/if}}
+            </div>
+        </div>
+
+        <div class="card card-light">
+            <div class="card-header">
+                <h3 class="card-title">Models</h3>
+            </div>
+            <div class="card-body">
+                <table class="table cp-data-table-table">
+                    <thead>
+                    <tr>
+                        <th>Kind</th>
+                        <th>Name</th>
+                        <th>Implementation</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each chatModels }}<tr><td>Chat model</td><td>{{ name }}</td><td><code class="cp-table-code">{{ type }}</code></td></tr>{{/each}}
+                    {{#each embeddingModels }}<tr><td>Embedding model</td><td>{{ name }}</td><td><code class="cp-table-code">{{ type }}</code></td></tr>{{/each}}
+                    {{#each imageModels }}<tr><td>Image model</td><td>{{ name }}</td><td><code class="cp-table-code">{{ type }}</code></td></tr>{{/each}}
+                    {{#each scoringModels }}<tr><td>Scoring model</td><td>{{ name }}</td><td><code class="cp-table-code">{{ type }}</code></td></tr>{{/each}}
+                    {{#each embeddingStores }}<tr><td>Embedding store</td><td>{{ name }}</td><td><code class="cp-table-code">{{ type }}</code></td></tr>{{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card card-light">
+            <div class="card-header">
+                <h3 class="card-title">AI services</h3>
+            </div>
+            <div class="card-body">
+                {{#if aiServices }}
+                    <ul>{{#each aiServices }}<li><code class="cp-table-code">{{ this }}</code></li>{{/each}}</ul>
+                {{else}}
+                    <div class="cp-data-table-empty">No AI service is declared.</div>
+                {{/if}}
+            </div>
+        </div>
+
+        <div class="card card-light">
+            <div class="card-header">
+                <h3 class="card-title">Tools</h3>
+            </div>
+            <div class="card-body">
+                {{#if tools }}
+                    <table class="table cp-data-table-table">
+                        <thead><tr><th>Name</th><th>Description</th></tr></thead>
+                        <tbody>{{#each tools }}<tr><td><code class="cp-table-code">{{ name }}</code></td><td>{{ description }}</td></tr>{{/each}}</tbody>
+                    </table>
+                {{else}}
+                    <div class="cp-data-table-empty">No tool is declared.</div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#langchain4jChatForm').on('submit', function (event) {
+            event.preventDefault();
+            var text = $('#langchain4jChatText').val();
+            if (!text) {
+                return;
+            }
+            var messages = $('#langchain4jChatMessages');
+            var question = $('<p class="card-text"><strong>You:</strong> </p>');
+            question.append(document.createTextNode(text));
+            messages.append(question);
+            $('#langchain4jChatText').val('');
+            $.ajax({
+                url: '{{ ext.controlPanelPath }}/langchain4j-control-panel-controller/chat',
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({model: $('#langchain4jChatModel').val(), text: text}),
+                success: function (result) {
+                    var answer = $('<p class="card-text"><strong>Model:</strong> </p>');
+                    answer.append(document.createTextNode(result.answer));
+                    messages.append(answer);
+                },
+                error: function (xhr, status, error) {
+                    var reason = xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : error;
+                    globalAlertMessageDisplay('Error', reason, 'alert-danger', 'fa-circle-exclamation');
+                }
+            });
+        });
+    </script>
+{{/with}}
