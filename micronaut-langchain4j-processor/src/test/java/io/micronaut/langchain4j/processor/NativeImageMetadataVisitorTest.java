@@ -7,10 +7,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import dev.langchain4j.agentic.Agent;
 import dev.langchain4j.agentic.agent.AgentBuilder;
 import dev.langchain4j.agentic.internal.AgentUtil;
+import dev.langchain4j.internal.Json;
 import io.micronaut.annotation.processing.test.JavaParser;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -113,22 +116,38 @@ class NativeImageMetadataVisitorTest {
             }
             """).get("test.Writer");
 
+        List<List<String>> proxies = registeredProxies(json);
+
         // AgentBuilder.build, for agents
-        assertTrue(json.contains(proxy(AgentBuilder.interfacesToImplement(SampleAgent.class))), json);
+        assertTrue(proxies.contains(proxyOfWriter(AgentBuilder.interfacesToImplement(SampleAgent.class))), proxies::toString);
         // AgentUtil.buildAgent, for workflows
         Object workflow = AgentUtil.buildAgent(SampleAgent.class, (proxy, method, arguments) -> null);
-        assertTrue(json.contains(proxy(workflow.getClass().getInterfaces())), json);
+        assertTrue(proxies.contains(proxyOfWriter(workflow.getClass().getInterfaces())), proxies::toString);
+    }
+
+    /**
+     * @param json The generated metadata
+     * @return The interfaces, in order, of each proxy the metadata registers
+     */
+    private static List<List<String>> registeredProxies(String json) {
+        List<List<String>> proxies = new ArrayList<>();
+        for (Object entry : (List<?>) Json.fromJson(json, Map.class).get("reflection")) {
+            if (entry instanceof Map<?, ?> reflection && reflection.get("type") instanceof Map<?, ?> type
+                && type.get("proxy") instanceof List<?> interfaces) {
+                proxies.add(interfaces.stream().map(Object::toString).toList());
+            }
+        }
+        return proxies;
     }
 
     /**
      * @param interfaces The interfaces of a proxy LangChain4j creates for {@link SampleAgent}, the agent type first
-     * @return The metadata of the same proxy for the type {@code test.Writer}
+     * @return The interfaces of the same proxy for the type {@code test.Writer}
      */
-    private static String proxy(Class<?>[] interfaces) {
-        assertEquals(SampleAgent.class, interfaces[0]);
-        return "{\"type\": {\"proxy\": [" + Stream.concat(Stream.of("test.Writer"), Arrays.stream(interfaces).skip(1).map(Class::getName))
-            .map(name -> '"' + name + '"')
-            .collect(Collectors.joining(", ")) + "]}}";
+    private static List<String> proxyOfWriter(Class<?>[] interfaces) {
+        assertTrue(interfaces.length > 0, "LangChain4j created a proxy without interfaces");
+        assertEquals(SampleAgent.class, interfaces[0], "The agent type is expected to be the first interface of the proxy");
+        return Stream.concat(Stream.of("test.Writer"), Arrays.stream(interfaces).skip(1).map(Class::getName)).toList();
     }
 
     interface SampleAgent {
