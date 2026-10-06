@@ -33,4 +33,6 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig;
     }
 )
 final class WeaviateModule {
+    private WeaviateModule() {
+    }
 }
