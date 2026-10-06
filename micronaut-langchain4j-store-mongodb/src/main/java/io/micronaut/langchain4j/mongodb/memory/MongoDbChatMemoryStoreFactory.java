@@ -47,9 +47,10 @@ final class MongoDbChatMemoryStoreFactory {
         if (!configuration.isEnabled()) {
             throw new DisabledBeanException("The MongoDB chat memory store is disabled");
         }
-        MongoClient client = configuration.getServer() == null
+        String server = configuration.getServer();
+        MongoClient client = server == null
             ? beanContext.getBean(MongoClient.class)
-            : beanContext.getBean(MongoClient.class, Qualifiers.byName(configuration.getServer()));
+            : beanContext.getBean(MongoClient.class, Qualifiers.byName(server));
         return configuration.getBuilder()
             .mongoClient(client)
             .build();
