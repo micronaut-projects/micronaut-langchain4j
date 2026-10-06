@@ -5,6 +5,7 @@ import dev.langchain4j.micrometer.metrics.listeners.MicrometerMetricsChatModelLi
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.listener.ChatModelListener;
 import dev.langchain4j.observation.listener.ObservationChatModelListener;
+import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import io.micrometer.observation.ObservationRegistry;
@@ -25,7 +26,6 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ChatModelMetricsTest {
 
@@ -62,7 +62,7 @@ class ChatModelMetricsTest {
 
             MeterRegistry registry = context.getBean(MeterRegistry.class);
             double tokens = registry.find("gen_ai.client.token.usage").summaries().stream()
-                .mapToDouble(summary -> summary.totalAmount())
+                .mapToDouble(DistributionSummary::totalAmount)
                 .sum();
             assertEquals(4, tokens);
         }
