@@ -11,6 +11,6 @@ class NativeImageMetadataTest {
 
     @Test
     void registersTheRequestAndResponseTypes() {
-        ReflectionMetadata.verify("micronaut-langchain4j-hugging-face", dev.langchain4j.model.huggingface.HuggingFaceChatModel.class, "dev.langchain4j.model.huggingface.client");
+        ReflectionMetadata.verify("micronaut-langchain4j-hugging-face", dev.langchain4j.model.huggingface.HuggingFaceEmbeddingModel.class, "dev.langchain4j.model.huggingface.client");
     }
 }
