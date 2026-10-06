@@ -31,6 +31,7 @@ import java.util.Set;
  * @param tools          The tools
  * @param customizer     The customizer class
  * @param toolProviders  The names of the tool provider beans, or {@code null} to use the default tool provider
+ * @param mcpClients     The names of the MCP client beans whose tools are provided to the service
  * @param <T>            The generic type
  * @see AiService
  */
@@ -45,7 +46,9 @@ public record AiServiceDef<T>(
     @Nullable
     Class<AiServiceCustomizer<T>> customizer,
     @Nullable
-    List<String> toolProviders
+    List<String> toolProviders,
+    @Nullable
+    List<String> mcpClients
 ) {
 
     /**
@@ -60,6 +63,6 @@ public record AiServiceDef<T>(
      */
     @Deprecated(since = "2.4.0", forRemoval = true)
     public AiServiceDef(BeanDefinition<T> beanDefinition, Class<T> type, @Nullable String name, @Nullable Set<Class<?>> tools, @Nullable Class<AiServiceCustomizer<T>> customizer) {
-        this(beanDefinition, type, name, tools, customizer, null);
+        this(beanDefinition, type, name, tools, customizer, null, null);
     }
 }
