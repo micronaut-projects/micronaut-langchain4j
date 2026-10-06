@@ -47,9 +47,8 @@ final class JdbcChatMemoryStoreFactory {
         if (!configuration.isEnabled()) {
             throw new DisabledBeanException("The JDBC chat memory store is disabled");
         }
-        JdbcChatMemoryStoreConfiguration.Dialect dialect = configuration.getDialect() != null
-            ? configuration.getDialect()
-            : detect(configuration);
+        JdbcChatMemoryStoreConfiguration.Dialect configured = configuration.getDialect();
+        JdbcChatMemoryStoreConfiguration.Dialect dialect = configured != null ? configured : detect(configuration);
         return configuration.getBuilder()
             .sqlDialect(sqlDialect(dialect))
             .build();
