@@ -53,4 +53,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
 final class JinaModule {
     static final String DEFAULT_EMBEDDING_MODEL = "jina-embeddings-v3";
     static final String DEFAULT_SCORING_MODEL = "jina-reranker-v2-base-multilingual";
+
+    private JinaModule() {
+    }
 }
