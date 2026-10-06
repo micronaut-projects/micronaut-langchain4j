@@ -19,6 +19,7 @@ dependencies {
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(mn.micronaut.jackson.databind)
     testImplementation(libs.langchain4j.ollama)
+    testImplementation(libs.langchain4j.mcp)
     testImplementation(mnTest.micronaut.test.junit5)
     testRuntimeOnly(mn.micronaut.http.client)
     testRuntimeOnly(mnLogging.logback.classic)
