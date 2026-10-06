@@ -17,7 +17,6 @@ package io.micronaut.langchain4j.rag;
 
 import io.micronaut.context.annotation.EachProperty;
 import io.micronaut.context.annotation.Parameter;
-import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ import java.util.List;
  * @since 2.4.0
  */
 @EachProperty(IngestionConfiguration.PREFIX)
-public final class IngestionConfiguration {
+public final class IngestionConfiguration extends EmbeddingStoreUsingConfiguration {
 
     /**
      * The configuration prefix.
@@ -53,9 +52,6 @@ public final class IngestionConfiguration {
      */
     public static final String DEFAULT_GLOB = "**";
 
-    private final String name;
-    private @Nullable String embeddingStore;
-    private @Nullable String embeddingModel;
     private List<String> sources = new ArrayList<>();
     private String glob = DEFAULT_GLOB;
     private boolean recursive = true;
@@ -67,44 +63,7 @@ public final class IngestionConfiguration {
      * @param name The name of the ingestion
      */
     public IngestionConfiguration(@Parameter String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return The name of the ingestion
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @return The name of the embedding store bean, or {@code null} for the default embedding store
-     */
-    public @Nullable String getEmbeddingStore() {
-        return embeddingStore;
-    }
-
-    /**
-     * @param embeddingStore The name of the embedding store bean that stores the segments. Defaults to the default
-     *                       embedding store.
-     */
-    public void setEmbeddingStore(@Nullable String embeddingStore) {
-        this.embeddingStore = embeddingStore;
-    }
-
-    /**
-     * @return The name of the embedding model bean, or {@code null} for the default embedding model
-     */
-    public @Nullable String getEmbeddingModel() {
-        return embeddingModel;
-    }
-
-    /**
-     * @param embeddingModel The name of the embedding model bean that embeds the segments. Defaults to the default
-     *                       embedding model.
-     */
-    public void setEmbeddingModel(@Nullable String embeddingModel) {
-        this.embeddingModel = embeddingModel;
+        super(name);
     }
 
     /**
