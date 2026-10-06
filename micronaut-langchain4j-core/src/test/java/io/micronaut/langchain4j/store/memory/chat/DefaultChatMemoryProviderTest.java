@@ -12,6 +12,7 @@ import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.exceptions.ConfigurationException;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import org.junit.jupiter.api.Test;
@@ -21,8 +22,10 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DefaultChatMemoryProviderTest {
@@ -60,6 +63,25 @@ class DefaultChatMemoryProviderTest {
             assertTrue(context.getBean(RecordingStore.class).updates.isEmpty());
             assertSame(context.getBean(ChatMemoryStore.class, io.micronaut.inject.qualifiers.Qualifiers.byName("inMemory")),
                 context.getBean(ChatMemoryStore.class, io.micronaut.inject.qualifiers.Qualifiers.byName("inMemory")));
+        }
+    }
+
+    @Test
+    void tokenWindowMemoryRequiresMaxTokens() {
+        try (ApplicationContext context = ApplicationContext.run(Map.of(
+            "spec.name", "tokens",
+            "langchain4j.chat-memory.type", "token-window"))) {
+            ChatMemoryProvider provider = context.getBean(ChatMemoryProvider.class);
+            ConfigurationException error = assertThrows(ConfigurationException.class, () -> provider.get("conversation"));
+            assertTrue(error.getMessage().contains("langchain4j.chat-memory.max-tokens is required"), error.getMessage());
+        }
+    }
+
+    @Test
+    void canBeDisabled() {
+        try (ApplicationContext context = ApplicationContext.run(Map.of("langchain4j.chat-memory.enabled", false))) {
+            assertFalse(context.getBean(ChatMemoryConfiguration.class).isEnabled());
+            assertFalse(context.containsBean(DefaultChatMemoryProvider.class));
         }
     }
 
@@ -111,7 +133,7 @@ class DefaultChatMemoryProviderTest {
                 @Override
                 public int estimateTokenCountInMessages(Iterable<ChatMessage> messages) {
                     int count = 0;
-                    for (ChatMessage ignored : messages) {
+                    for (ChatMessage _ : messages) {
                         count++;
                     }
                     return count;
