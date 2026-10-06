@@ -34,6 +34,7 @@ import jakarta.inject.Singleton;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * The default {@link ChatMemoryProvider} of the AI services, configured with {@link ChatMemoryConfiguration}.
@@ -55,7 +56,7 @@ final class DefaultChatMemoryProvider implements ChatMemoryProvider {
     private final BeanContext beanContext;
     private final ChatMemoryConfiguration configuration;
     private final MessageWindowChatMemoryConfiguration messageWindowConfiguration;
-    private volatile ChatMemoryStore store;
+    private final AtomicReference<ChatMemoryStore> store = new AtomicReference<>();
 
     DefaultChatMemoryProvider(BeanContext beanContext,
                               ChatMemoryConfiguration configuration,
@@ -89,10 +90,10 @@ final class DefaultChatMemoryProvider implements ChatMemoryProvider {
     }
 
     private ChatMemoryStore store() {
-        ChatMemoryStore chatMemoryStore = store;
+        ChatMemoryStore chatMemoryStore = store.get();
         if (chatMemoryStore == null) {
-            chatMemoryStore = resolveStore();
-            store = chatMemoryStore;
+            store.compareAndSet(null, resolveStore());
+            chatMemoryStore = store.get();
         }
         return chatMemoryStore;
     }
