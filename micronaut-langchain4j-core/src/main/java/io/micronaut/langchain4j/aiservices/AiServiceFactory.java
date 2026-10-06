@@ -28,6 +28,7 @@ import dev.langchain4j.service.tool.ToolExecutionErrorHandler;
 import dev.langchain4j.service.tool.ToolProvider;
 import dev.langchain4j.service.tool.search.ToolSearchStrategy;
 import dev.langchain4j.spi.ServiceHelper;
+import dev.langchain4j.spi.services.PublisherAdapter;
 import dev.langchain4j.spi.services.TokenStreamAdapter;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.BeanProvider;
@@ -50,6 +51,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Flow;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
@@ -59,6 +61,7 @@ import java.util.function.Consumer;
 @Factory
 public class AiServiceFactory {
     private static final Collection<TokenStreamAdapter> TOKEN_STREAM_ADAPTERS = ServiceHelper.loadFactories(TokenStreamAdapter.class);
+    private static final Collection<PublisherAdapter> PUBLISHER_ADAPTERS = ServiceHelper.loadFactories(PublisherAdapter.class);
 
     private final BeanContext beanContext;
     private final ToolRegistry toolRegistry;
@@ -246,11 +249,17 @@ public class AiServiceFactory {
 
     private static boolean isStreamingReturnType(ExecutableMethod<?, ?> method) {
         Argument<?> returnType = method.getReturnType().asArgument();
-        if (TokenStream.class.isAssignableFrom(returnType.getType())) {
+        // TokenStream and the reactive types (Flow.Publisher, Flux, Publisher...) stream the response of a streaming model
+        if (TokenStream.class.isAssignableFrom(returnType.getType()) || Flow.Publisher.class.isAssignableFrom(returnType.getType())) {
             return true;
         }
+        for (PublisherAdapter publisherAdapter : PUBLISHER_ADAPTERS) {
+            if (publisherAdapter.canAdapt(returnType.asType())) {
+                return true;
+            }
+        }
         for (TokenStreamAdapter tokenStreamAdapter : TOKEN_STREAM_ADAPTERS) {
-            if (tokenStreamAdapter.canAdaptTokenStreamTo(returnType.getType())) {
+            if (tokenStreamAdapter.canAdaptTokenStreamTo(returnType.asType())) {
                 return true;
             }
         }

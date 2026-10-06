@@ -15,8 +15,28 @@ langchain4j:
 
 Then, you will be able to inject a bean of type `dev.langchain4j.model.chat.StreamingChatModel`.
 
-Additionally, you can use an <<aiService, AI Service>> with a method whose return type uses Project Reactor.
-For example, an `@AiService` interface with a method whose return type is `Flux<String>`.
-In order to do this, you will need to add the following dependency:
+=== Asynchronous and Reactive AI Services
 
-dependency:langchain4j-reactor[groupId=dev.langchain4j]
+The methods of an <<aiService, AI Service>> can return asynchronous and reactive types:
+
+snippet::example.micronaut.aiservice.reactive.AsyncFriend[source="main"]
+
+<1> A `CompletableFuture` (or `CompletionStage`) completes with the response of the chat model.
+<2> A Reactive Streams `Publisher<String>` emits the partial responses of the streaming chat model.
+
+The following return types are supported:
+
+|===
+|Return type |Model |Notes
+
+|`TokenStream` |Streaming chat model |LangChain4j's callback API
+|`Publisher<String>` (Reactive Streams), `Flux<String>` (Reactor) |Streaming chat model |Works with every streaming chat model
+|`Mono<T>` (Reactor), `CompletableFuture<T>`, `CompletionStage<T>` |Chat model |Requires a chat model with a non-blocking implementation (`doChatAsync`)
+|`java.util.concurrent.Flow.Publisher<String>` or `Flow.Publisher<AiServiceStreamingEvent>` |Streaming chat model |Requires a streaming chat model with a non-blocking implementation
+|===
+
+The AI service uses the chat model, the streaming chat model or both, depending on the return types of its methods.
+
+The non-blocking implementations of LangChain4j 1.21 are those of the OpenAI and Anthropic models, which use the Micronaut HTTP client without blocking a thread. Asynchronous methods also run the tools without blocking when the `@Tool` methods return a `CompletableFuture` or a `CompletionStage`.
+
+TIP: In Kotlin, add the `dev.langchain4j:langchain4j-kotlin` dependency to return a `kotlinx.coroutines.flow.Flow<String>` from an AI service method.
