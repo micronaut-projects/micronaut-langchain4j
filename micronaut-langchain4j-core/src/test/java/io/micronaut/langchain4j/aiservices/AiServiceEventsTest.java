@@ -1,6 +1,5 @@
 package io.micronaut.langchain4j.aiservices;
 
-import dev.langchain4j.agent.tool.ToolSpecification;
 import dev.langchain4j.guardrail.InputGuardrail;
 import dev.langchain4j.guardrail.InputGuardrailRequest;
 import dev.langchain4j.guardrail.InputGuardrailResult;
@@ -12,9 +11,7 @@ import dev.langchain4j.observability.api.event.InputGuardrailExecutedEvent;
 import dev.langchain4j.observability.api.event.ToolExecutedEvent;
 import dev.langchain4j.observability.api.listener.AiServiceCompletedListener;
 import dev.langchain4j.service.guardrail.InputGuardrails;
-import dev.langchain4j.service.tool.ToolExecutor;
 import dev.langchain4j.service.tool.ToolProvider;
-import dev.langchain4j.service.tool.ToolProviderResult;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Primary;
