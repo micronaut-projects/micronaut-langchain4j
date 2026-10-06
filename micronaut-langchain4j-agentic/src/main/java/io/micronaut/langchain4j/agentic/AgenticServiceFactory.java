@@ -68,6 +68,7 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
@@ -90,7 +91,7 @@ public final class AgenticServiceFactory {
     );
 
     private final Lock lock = new ReentrantLock();
-    private volatile @Nullable BeanContext beanContext;
+    private final AtomicReference<BeanContext> beanContext = new AtomicReference<>();
 
     /**
      * Build the agentic service for the given definition.
@@ -119,7 +120,7 @@ public final class AgenticServiceFactory {
                         fireAgentBuilderListeners(beanContext, ctx);
                     }, null, null)
                 ));
-                this.beanContext = beanContext;
+                this.beanContext.set(beanContext);
                 return agent[0];
             } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException("AgenticServices.createAgenticSystem failed for " + iface.getName(), e);
@@ -136,7 +137,7 @@ public final class AgenticServiceFactory {
      */
     @PreDestroy
     void close() {
-        BeanContext context = beanContext;
+        BeanContext context = beanContext.get();
         if (context != null) {
             BeanContextSupplierParameterResolver.release(context);
         }
