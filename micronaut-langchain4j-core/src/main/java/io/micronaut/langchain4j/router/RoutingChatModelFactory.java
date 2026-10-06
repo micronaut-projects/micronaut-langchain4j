@@ -61,11 +61,13 @@ final class RoutingChatModelFactory {
     }
 
     private ChatModelRouter router(RoutingChatModelConfiguration configuration) {
-        if (configuration.getRouter() != null) {
-            return beanContext.getBean(ChatModelRouter.class, Qualifiers.byName(configuration.getRouter()));
+        String router = configuration.getRouter();
+        if (router != null) {
+            return beanContext.getBean(ChatModelRouter.class, Qualifiers.byName(router));
         }
-        DecisionModel decisionModel = configuration.getDecisionModel() != null
-            ? beanContext.getBean(DecisionModel.class, Qualifiers.byName(configuration.getDecisionModel()))
+        String decisionModelName = configuration.getDecisionModel();
+        DecisionModel decisionModel = decisionModelName != null
+            ? beanContext.getBean(DecisionModel.class, Qualifiers.byName(decisionModelName))
             : beanContext.getBean(DecisionModel.class);
         DecisionModelChatModelRouter.Builder builder = DecisionModelChatModelRouter.builder().decisionModel(decisionModel);
         if (configuration.getQuestion() != null) {
