@@ -7,6 +7,7 @@ import dev.langchain4j.model.chat.request.ChatRequest;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.skills.Skills;
 import io.micronaut.context.ApplicationContext;
+import io.micronaut.context.Qualifier;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.exceptions.BeanInstantiationException;
 import io.micronaut.inject.qualifiers.Qualifiers;
@@ -50,8 +51,8 @@ class SkillsConfigurationTest {
     @Test
     void requiresSkills() {
         try (ApplicationContext context = ApplicationContext.run(Map.of("langchain4j.skills.none.directory", directory.toString()))) {
-            BeanInstantiationException error = assertThrows(BeanInstantiationException.class,
-                () -> context.getBean(Skills.class, Qualifiers.byName("none")));
+            Qualifier<Skills> none = Qualifiers.byName("none");
+            BeanInstantiationException error = assertThrows(BeanInstantiationException.class, () -> context.getBean(Skills.class, none));
             assertTrue(error.getMessage().contains("No skills found for langchain4j.skills.none"), error.getMessage());
         }
     }
