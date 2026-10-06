@@ -127,12 +127,9 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                         namedConfigQualifiedName,
                         modelConfig.languageModel(),
                         modelConfig.builderType,
-                        requiredInjects,
-                        optionalInjects,
-                        excluded,
+                        new BuilderProperties(requiredInjects, optionalInjects, excluded),
                         commonConfig,
-                        modelNameMethod,
-                        modelConfig.defaultModelName
+                        new ModelName(modelNameMethod, modelConfig.defaultModelName)
                     );
                     writeJavaSource(generator, context, element, packageName, namedConfigSimpleName, namedConfigDef, modelConfig.modelKind);
 
@@ -357,12 +354,14 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             });
     }
 
-    private static ClassDef buildNamedConfigurationDef(String prefix, String configurationClassName, ClassElement model, ClassElement builderType, String[] requiredInjects, String[] optionalInjects, String[] excluded, RecordDef commonConfig, MethodElement modelNameMethod, String defaultModelName) {
+    private static ClassDef buildNamedConfigurationDef(String prefix, String configurationClassName, ClassElement model, ClassElement builderType, BuilderProperties builderProperties, RecordDef commonConfig, ModelName modelName) {
+        String[] requiredInjects = builderProperties.requiredInjects();
+        String[] optionalInjects = builderProperties.optionalInjects();
         FieldDef prefixField = FieldDef.builder("PREFIX")
             .ofType(TypeDef.of(String.class))
             .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
             .initializer(new ExpressionDef.Constant(TypeDef.of(String.class), prefix)).build();
-        String[] allExcludes = ArrayUtils.concat(ArrayUtils.concat(requiredInjects, optionalInjects), excluded);
+        String[] allExcludes = ArrayUtils.concat(ArrayUtils.concat(requiredInjects, optionalInjects), builderProperties.excluded());
         FieldDef builderField = FieldDef.builder("builder")
             .addAnnotation(AnnotationDef.builder(ConfigurationBuilder.class)
                 .addMember("prefixes", "")
@@ -390,7 +389,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                     aThis.field("builder", TypeDef.of(builderType)).returning()
                 ));
 
-        addCommonConstructor(commonConfig, builderType, classDefBuilder, modelNameMethod, defaultModelName, false, builderField);
+        addCommonConstructor(commonConfig, builderType, classDefBuilder, modelName.method(), modelName.defaultName(), false, builderField);
 
         for (String requiredInject : requiredInjects) {
             addInjectionPoint(builderType, requiredInject, true, classDefBuilder, builderField);
@@ -635,6 +634,25 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                     ))
             );
         }
+    }
+
+    /**
+     * The builder properties that are injected, or left out of the configuration binding.
+     *
+     * @param requiredInjects The properties injected with a required bean
+     * @param optionalInjects The properties injected with an optional bean
+     * @param excluded The properties that are not configurable
+     */
+    private record BuilderProperties(String[] requiredInjects, String[] optionalInjects, String[] excluded) {
+    }
+
+    /**
+     * The method that sets the model name, and the default model name.
+     *
+     * @param method The model name method of the builder
+     * @param defaultName The default model name
+     */
+    private record ModelName(MethodElement method, String defaultName) {
     }
 
     private record ModelConfig(
