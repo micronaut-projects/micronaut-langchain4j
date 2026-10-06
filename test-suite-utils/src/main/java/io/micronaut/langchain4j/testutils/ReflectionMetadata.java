@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,8 +47,14 @@ public final class ReflectionMetadata {
     );
 
     // helpers of the providers (HTTP clients, mappers, parsers...) that LangChain4j never maps with Jackson
-    private static final Pattern HELPER = Pattern.compile(
-        ".*(Client|Utils|Helper|Parser|ResponseBuilder|Mapper|Service|Processor|Writer|Writers|Estimator|Catalog|BaseChatModel|Batch(Chat|Embedding|Image)Model)|Base.*ChatModel|Json");
+    private static final List<String> HELPER_SUFFIXES = List.of(
+        "Client", "Utils", "Helper", "Parser", "ResponseBuilder", "Mapper", "Service", "Processor", "Writer", "Writers",
+        "Estimator", "Catalog", "BaseChatModel", "BatchChatModel", "BatchEmbeddingModel", "BatchImageModel");
+
+    // the anonymous classes, whose binary names contain $1, $2...
+    private static final Pattern ANONYMOUS = Pattern.compile("\\$\\d");
+
+    private static final String CLASS_SUFFIX = ".class";
 
     private static final Pattern TYPE = Pattern.compile("\"type\"\\s*:\\s*\"([^\"]+)\"");
 
@@ -86,7 +93,7 @@ public final class ReflectionMetadata {
         Set<String> types = new TreeSet<>();
         for (String className : classNames(anchor)) {
             int lastDot = className.lastIndexOf('.');
-            if (!packages.contains(className.substring(0, lastDot)) || className.matches(".*\\$\\d+.*")) {
+            if (!packages.contains(className.substring(0, lastDot)) || ANONYMOUS.matcher(className).find()) {
                 continue;
             }
             try {
@@ -94,7 +101,7 @@ public final class ReflectionMetadata {
                 if (!isExcluded(type)) {
                     types.add(className);
                 }
-            } catch (ClassNotFoundException | LinkageError e) {
+            } catch (ClassNotFoundException | LinkageError _) {
                 // a type of an optional dependency
             }
         }
@@ -106,12 +113,18 @@ public final class ReflectionMetadata {
         while (topLevel.getEnclosingClass() != null) {
             topLevel = topLevel.getEnclosingClass();
         }
-        if (Throwable.class.isAssignableFrom(type) || isModel(type) || HELPER.matcher(topLevel.getSimpleName()).matches()) {
+        if (Throwable.class.isAssignableFrom(type) || isModel(type) || isHelper(topLevel.getSimpleName())) {
             return true;
         }
         // the builders of the models
         Class<?> enclosing = type.getEnclosingClass();
         return enclosing != null && isModel(enclosing);
+    }
+
+    private static boolean isHelper(String simpleName) {
+        return simpleName.equals("Json")
+            || simpleName.startsWith("Base") && simpleName.endsWith("ChatModel")
+            || HELPER_SUFFIXES.stream().anyMatch(simpleName::endsWith);
     }
 
     private static boolean isModel(Class<?> type) {
@@ -139,7 +152,7 @@ public final class ReflectionMetadata {
                 try (Stream<Path> files = Files.walk(location)) {
                     return files.map(location::relativize)
                         .map(path -> path.toString().replace(location.getFileSystem().getSeparator(), "/"))
-                        .filter(name -> name.endsWith(".class"))
+                        .filter(name -> name.endsWith(CLASS_SUFFIX))
                         .map(ReflectionMetadata::toClassName)
                         .toList();
                 }
@@ -147,8 +160,8 @@ public final class ReflectionMetadata {
             try (JarFile jar = new JarFile(location.toFile())) {
                 List<String> names = new ArrayList<>();
                 jar.stream()
-                    .map(entry -> entry.getName())
-                    .filter(name -> name.endsWith(".class") && !name.startsWith("META-INF/"))
+                    .map(JarEntry::getName)
+                    .filter(name -> name.endsWith(CLASS_SUFFIX) && !name.startsWith("META-INF/"))
                     .map(ReflectionMetadata::toClassName)
                     .forEach(names::add);
                 return names;
@@ -161,7 +174,7 @@ public final class ReflectionMetadata {
     }
 
     private static String toClassName(String resourceName) {
-        return resourceName.substring(0, resourceName.length() - ".class".length()).replace('/', '.');
+        return resourceName.substring(0, resourceName.length() - CLASS_SUFFIX.length()).replace('/', '.');
     }
 
     private static Set<String> declaredTypes(Path file) {

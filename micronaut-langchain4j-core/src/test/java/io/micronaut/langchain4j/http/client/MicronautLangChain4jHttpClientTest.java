@@ -454,6 +454,7 @@ class MicronautLangChain4jHttpClientTest {
                 .build(), new ServerSentEventListener() {
                     @Override
                     public void onEvent(ServerSentEvent event, ServerSentEventContext context) {
+                        // the events are not checked: the test only checks that the request body reaches the server
                     }
 
                     @Override
