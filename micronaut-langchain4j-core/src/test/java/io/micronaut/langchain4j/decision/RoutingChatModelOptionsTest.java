@@ -8,6 +8,7 @@ import dev.langchain4j.model.chat.router.ChatModelRouter;
 import dev.langchain4j.model.chat.router.ChatModelRoutingResult;
 import dev.langchain4j.model.decision.DecisionModel;
 import io.micronaut.context.ApplicationContext;
+import io.micronaut.context.Qualifier;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.exceptions.BeanInstantiationException;
@@ -62,8 +63,8 @@ class RoutingChatModelOptionsTest {
         try (ApplicationContext context = ApplicationContext.run(Map.of(
             "spec.name", SPEC_NAME,
             "langchain4j.routing-chat-models.empty.default-route", "fast"))) {
-            BeanInstantiationException error = assertThrows(BeanInstantiationException.class,
-                () -> context.getBean(ChatModel.class, Qualifiers.byName("empty")));
+            Qualifier<ChatModel> empty = Qualifiers.byName("empty");
+            BeanInstantiationException error = assertThrows(BeanInstantiationException.class, () -> context.getBean(ChatModel.class, empty));
             assertTrue(error.getMessage().contains("The routing chat model 'empty' has no routes"), error.getMessage());
         }
     }
