@@ -53,4 +53,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
 final class CohereModule {
     static final String DEFAULT_EMBEDDING_MODEL = "embed-v4.0";
     static final String DEFAULT_SCORING_MODEL = "rerank-v3.5";
+
+    private CohereModule() {
+    }
 }

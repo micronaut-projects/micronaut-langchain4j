@@ -53,4 +53,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
 final class VoyageAiModule {
     static final String DEFAULT_EMBEDDING_MODEL = "voyage-3.5";
     static final String DEFAULT_SCORING_MODEL = "rerank-2.5";
+
+    private VoyageAiModule() {
+    }
 }
