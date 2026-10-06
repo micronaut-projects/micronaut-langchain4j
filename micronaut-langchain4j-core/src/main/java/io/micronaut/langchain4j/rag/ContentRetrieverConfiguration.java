@@ -27,7 +27,7 @@ import org.jspecify.annotations.Nullable;
  * @since 2.4.0
  */
 @EachProperty(ContentRetrieverConfiguration.PREFIX)
-public final class ContentRetrieverConfiguration {
+public final class ContentRetrieverConfiguration extends EmbeddingStoreUsingConfiguration {
 
     /**
      * The configuration prefix.
@@ -39,9 +39,6 @@ public final class ContentRetrieverConfiguration {
      */
     public static final int DEFAULT_MAX_RESULTS = 3;
 
-    private final String name;
-    private @Nullable String embeddingStore;
-    private @Nullable String embeddingModel;
     private int maxResults = DEFAULT_MAX_RESULTS;
     private @Nullable Double minScore;
 
@@ -49,43 +46,7 @@ public final class ContentRetrieverConfiguration {
      * @param name The name of the content retriever
      */
     public ContentRetrieverConfiguration(@Parameter String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return The name of the content retriever
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @return The name of the embedding store bean, or {@code null} for the default embedding store
-     */
-    public @Nullable String getEmbeddingStore() {
-        return embeddingStore;
-    }
-
-    /**
-     * @param embeddingStore The name of the embedding store bean. Defaults to the default embedding store.
-     */
-    public void setEmbeddingStore(@Nullable String embeddingStore) {
-        this.embeddingStore = embeddingStore;
-    }
-
-    /**
-     * @return The name of the embedding model bean, or {@code null} for the default embedding model
-     */
-    public @Nullable String getEmbeddingModel() {
-        return embeddingModel;
-    }
-
-    /**
-     * @param embeddingModel The name of the embedding model bean that embeds the user message. Defaults to the default
-     *                       embedding model.
-     */
-    public void setEmbeddingModel(@Nullable String embeddingModel) {
-        this.embeddingModel = embeddingModel;
+        super(name);
     }
 
     /**
