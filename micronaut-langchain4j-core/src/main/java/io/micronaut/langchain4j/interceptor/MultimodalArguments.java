@@ -31,9 +31,9 @@ import org.jspecify.annotations.Nullable;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.StreamSupport;
 
 /**
  * Converts the arguments annotated with {@link ImageUrl}, {@link PdfUrl}, {@link AudioUrl} and {@link VideoUrl} to the
@@ -42,17 +42,17 @@ import java.util.function.Function;
 @Internal
 final class MultimodalArguments {
 
-    private static final List<Converter> CONVERTERS = List.of(
+    private static final List<Converter> URL_CONVERTERS = List.of(
         new Converter(ImageUrl.class, ImageContent::from, ImageContent::from),
         new Converter(PdfUrl.class, PdfFileContent::from, PdfFileContent::from),
         new Converter(AudioUrl.class, AudioContent::from, AudioContent::from),
         new Converter(VideoUrl.class, VideoContent::from, VideoContent::from)
     );
 
-    private final @Nullable Converter[] converters;
+    private final @Nullable Converter[] argumentConverters;
 
     private MultimodalArguments(@Nullable Converter[] converters) {
-        this.converters = converters;
+        this.argumentConverters = converters;
     }
 
     /**
@@ -63,7 +63,7 @@ final class MultimodalArguments {
         Converter[] converters = new Converter[arguments.length];
         boolean multimodal = false;
         for (int i = 0; i < arguments.length; i++) {
-            for (Converter converter : CONVERTERS) {
+            for (Converter converter : URL_CONVERTERS) {
                 if (arguments[i].getAnnotationMetadata().hasAnnotation(converter.annotation())) {
                     converters[i] = converter;
                     multimodal = true;
@@ -80,7 +80,7 @@ final class MultimodalArguments {
     Object[] convert(Object[] values) {
         Object[] converted = values.clone();
         for (int i = 0; i < converted.length; i++) {
-            Converter converter = converters[i];
+            Converter converter = argumentConverters[i];
             if (converter != null) {
                 converted[i] = converter.convert(converted[i]);
             }
@@ -94,11 +94,7 @@ final class MultimodalArguments {
 
         Object convert(@Nullable Object value) {
             if (value instanceof Iterable<?> values) {
-                List<Content> contents = new ArrayList<>();
-                for (Object element : values) {
-                    contents.add(content(element));
-                }
-                return contents;
+                return StreamSupport.stream(values.spliterator(), false).map(this::content).toList();
             }
             if (value == null) {
                 return List.of();
