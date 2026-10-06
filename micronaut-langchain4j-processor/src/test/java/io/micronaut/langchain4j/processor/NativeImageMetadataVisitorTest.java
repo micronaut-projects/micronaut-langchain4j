@@ -74,6 +74,60 @@ class NativeImageMetadataVisitorTest {
     }
 
     @Test
+    void theOtherDeclarativeAgentsAreRegisteredForReflection() {
+        Map<String, String> metadata = generateMetadata("test.Pitch", """
+            package test;
+
+            import dev.langchain4j.agentic.Agent;
+            import dev.langchain4j.agentic.declarative.A2AClientAgent;
+            import dev.langchain4j.agentic.declarative.HumanInTheLoop;
+            import dev.langchain4j.agentic.declarative.McpClientAgent;
+            import dev.langchain4j.agentic.declarative.RegistryAgent;
+            import dev.langchain4j.agentic.declarative.SequenceAgent;
+            import dev.langchain4j.service.V;
+            import io.micronaut.langchain4j.agentic.annotation.AgenticService;
+
+            @AgenticService
+            interface Pitch {
+                @SequenceAgent(subAgents = {Audience.class, Remote.class, Registered.class, Mcp.class, Writer.class}, outputKey = "pitch")
+                String pitch(@V("topic") String topic);
+            }
+
+            interface Audience {
+                @HumanInTheLoop(description = "Asks for the audience", outputKey = "audience")
+                static String audience(@V("topic") String topic) {
+                    return "kids";
+                }
+            }
+
+            interface Remote {
+                @A2AClientAgent(a2aServerUrl = "http://localhost:8080", outputKey = "remote")
+                String remote(@V("topic") String topic);
+            }
+
+            interface Registered {
+                @RegistryAgent("registered")
+                String registered(@V("topic") String topic);
+            }
+
+            interface Mcp {
+                @McpClientAgent(toolName = "tool", outputKey = "mcp")
+                String mcp(@V("topic") String topic);
+            }
+
+            interface Writer {
+                @Agent(outputKey = "pitch")
+                String write(@V("topic") String topic);
+            }
+            """);
+        assertEquals(java.util.Set.of("test.Pitch", "test.Audience", "test.Remote", "test.Registered", "test.Mcp", "test.Writer"), metadata.keySet());
+        for (String type : java.util.List.of("test.Audience", "test.Remote", "test.Registered", "test.Mcp")) {
+            String json = metadata.get(type);
+            assertTrue(json.contains("{\"type\": \"" + type + "\", \"allPublicMethods\": true, \"allDeclaredMethods\": true}"), json);
+        }
+    }
+
+    @Test
     void toolClassesNeedNoMetadata() {
         Map<String, String> metadata = generateMetadata("test.Tools", """
             package test;
