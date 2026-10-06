@@ -96,3 +96,13 @@ In this case, to fix the issues, we need to:
 - Add a space after `if` in line 34
 
 The plugin also adds a new tab in the bottom of the IDE to run Checkstyle and show errors and warnings. We recommend that you run the report and fix all issues before submitting a pull request.
+
+## Native image metadata of the model providers
+
+The Ollama, Mistral AI, Google AI Gemini and Hugging Face modules ship the GraalVM reachability metadata of the LangChain4j types their providers map with Jackson (`src/main/resources/META-INF/native-image/io.micronaut.langchain4j/<module>/reachability-metadata.json`). The `NativeImageMetadataTest` of each module fails when a LangChain4j upgrade adds or removes such a type. To regenerate the metadata, run the test with the `UPDATE_NATIVE_METADATA` environment variable:
+
+```bash
+UPDATE_NATIVE_METADATA=true ./gradlew :micronaut-langchain4j-ollama:test --tests '*NativeImageMetadataTest'
+```
+
+This metadata should move to the [GraalVM Reachability Metadata repository](https://github.com/oracle/graalvm-reachability-metadata), after which it can be removed from these modules: [Ollama](https://github.com/oracle/graalvm-reachability-metadata/issues/10457), [Mistral AI](https://github.com/oracle/graalvm-reachability-metadata/issues/10458), [Google AI Gemini](https://github.com/oracle/graalvm-reachability-metadata/issues/10459), [Hugging Face](https://github.com/oracle/graalvm-reachability-metadata/issues/10460).
