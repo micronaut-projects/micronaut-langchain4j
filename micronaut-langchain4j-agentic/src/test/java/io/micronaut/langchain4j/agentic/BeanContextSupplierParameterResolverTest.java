@@ -44,7 +44,8 @@ class BeanContextSupplierParameterResolverTest {
             assertSame(service, resolver.resolve(context(method, parameters[1])));
 
             BeanContextSupplierParameterResolver.release(context);
-            IllegalStateException error = assertThrows(IllegalStateException.class, () -> resolver.resolve(context(method, parameters[1])));
+            SupplierParameterResolver.Context released = context(method, parameters[1]);
+            IllegalStateException error = assertThrows(IllegalStateException.class, () -> resolver.resolve(released));
             assertEquals("The bean context that created the agent " + Suppliers.class.getName() + " is closed", error.getMessage());
         }
     }
@@ -85,7 +86,7 @@ class BeanContextSupplierParameterResolverTest {
 
     interface Suppliers {
         static Object supply(String text, Service service, @V("service") Service fromScope, Unknown unknown) {
-            return service;
+            return java.util.Arrays.asList(text, service, fromScope, unknown);
         }
     }
 }
