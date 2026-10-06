@@ -30,7 +30,6 @@ import io.micronaut.context.BeanContext;
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.inject.qualifiers.Qualifiers;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,13 +57,10 @@ final class AiServiceEventPublishers {
     }
 
     static List<AiServiceListener<?>> create(BeanContext beanContext) {
-        List<AiServiceListener<?>> listeners = new ArrayList<>(EVENT_TYPES.size());
-        for (Class<? extends AiServiceEvent> eventType : EVENT_TYPES) {
-            if (hasListeners(beanContext, eventType)) {
-                listeners.add(publisher(beanContext, eventType));
-            }
-        }
-        return listeners;
+        return EVENT_TYPES.stream()
+            .filter(eventType -> hasListeners(beanContext, eventType))
+            .<AiServiceListener<?>>map(eventType -> publisher(beanContext, eventType))
+            .toList();
     }
 
     private static boolean hasListeners(BeanContext beanContext, Class<?> eventType) {
