@@ -9,6 +9,7 @@ import dev.langchain4j.store.embedding.EmbeddingSearchRequest;
 import dev.langchain4j.store.embedding.EmbeddingSearchResult;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.mongodb.MongoDbEmbeddingStore;
+import io.micronaut.context.annotation.Property;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
@@ -16,6 +17,10 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @MicronautTest(transactional = false)
+@Property(name = "mongodb.servers.default.application-name", value = "test")
+@Property(name = "langchain4j.mongodb-atlas.embedding-stores.default.database-name", value = "testdb")
+@Property(name = "langchain4j.mongodb-atlas.embedding-stores.default.collection-name", value = "testcol")
+@Property(name = "langchain4j.mongodb-atlas.embedding-stores.default.index-name", value = "testindex")
 @Disabled("Investigate MongoDB Atlas Support in Testcontainers")
 public class MongoStoreTest {
     @Test

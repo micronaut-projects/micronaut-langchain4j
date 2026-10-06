@@ -127,6 +127,9 @@ langchain4j-cassandra = { module = 'dev.langchain4j:langchain4j-cassandra' }
 langchain4j-chroma = { module = 'dev.langchain4j:langchain4j-chroma' }
 langchain4j-milvus-v2 = { module = 'dev.langchain4j:langchain4j-milvus-v2' }
 langchain4j-weaviate = { module = 'dev.langchain4j:langchain4j-weaviate' }
+langchain4j-community-sql = { module = 'dev.langchain4j:langchain4j-community-sql' }
+langchain4j-community-mongodb = { module = 'dev.langchain4j:langchain4j-community-mongodb' }
+testcontainers-mongodb = { module = 'org.testcontainers:testcontainers-mongodb' }
 testcontainers-milvus = { module = 'org.testcontainers:testcontainers-milvus' }
 testcontainers-weaviate = { module = 'org.testcontainers:testcontainers-weaviate' }
 langchain4j-embeddings-all-minilm-l6-v2 = { module = 'dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2' }
