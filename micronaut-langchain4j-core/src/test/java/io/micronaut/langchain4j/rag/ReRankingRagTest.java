@@ -10,6 +10,7 @@ import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.output.Response;
 import dev.langchain4j.model.scoring.ScoringModel;
+import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Primary;
@@ -23,6 +24,7 @@ import jakarta.inject.Singleton;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -50,6 +52,22 @@ class ReRankingRagTest {
         String userMessage = ((UserMessage) lastRequest.get().messages().getLast()).singleText();
         assertTrue(userMessage.contains("native images"), userMessage);
         assertFalse(userMessage.contains("JVM framework"), userMessage);
+    }
+
+    @Test
+    void reRanksTheExplicitContentRetrieversAboveTheMinimumScore() {
+        try (ApplicationContext context = ApplicationContext.run(Map.of(
+            "spec.name", SPEC_NAME,
+            "langchain4j.rag.ingestion.docs.sources", "classpath:rag-docs",
+            "langchain4j.rag.content-retrievers.docs.max-results", "2",
+            "langchain4j.rag.retrieval-augmentors.explicit.content-retrievers", "docs",
+            "langchain4j.rag.retrieval-augmentors.explicit.re-rank", "true",
+            "langchain4j.rag.retrieval-augmentors.explicit.min-score", "0.5"))) {
+            context.getBean(ExplicitReRankedAssistant.class).chat("How do I build a native executable?");
+            String userMessage = ((UserMessage) context.getBean(LastReRankedRequest.class).get().messages().getLast()).singleText();
+            assertTrue(userMessage.contains("native images"), userMessage);
+            assertFalse(userMessage.contains("JVM framework"), userMessage);
+        }
     }
 
     @Singleton
@@ -89,12 +107,7 @@ class ReRankingRagTest {
         @Singleton
         @Named("keyword")
         ScoringModel scoringModel() {
-            return new ScoringModel() {
-                @Override
-                public Response<List<Double>> scoreAll(List<TextSegment> segments, String query) {
-                    return Response.from(segments.stream().map(segment -> segment.text().contains("native") ? 0.9 : 0.1).toList());
-                }
-            };
+            return (segments, query) -> Response.from(segments.stream().map(segment -> segment.text().contains("native") ? 0.9 : 0.1).toList());
         }
     }
 }
@@ -102,5 +115,11 @@ class ReRankingRagTest {
 @Requires(property = "spec.name", value = ReRankingRagTest.SPEC_NAME)
 @AiService("docs")
 interface ReRankedAssistant {
+    String chat(String userMessage);
+}
+
+@Requires(property = "spec.name", value = ReRankingRagTest.SPEC_NAME)
+@AiService("explicit")
+interface ExplicitReRankedAssistant {
     String chat(String userMessage);
 }
