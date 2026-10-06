@@ -62,4 +62,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
 final class GoogleGenAiModule {
     static final String DEFAULT_CHAT_MODEL = "gemini-3.8-flash";
     static final String DEFAULT_EMBEDDING_MODEL = "gemini-embedding-001";
+
+    private GoogleGenAiModule() {
+    }
 }
