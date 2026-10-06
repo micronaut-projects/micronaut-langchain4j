@@ -67,6 +67,14 @@ public @interface Lang4jConfig {
          * @return True if common.
          */
         boolean common() default false;
+
+        /**
+         * Whether the builder property is excluded from the configuration, for a property that the configuration
+         * binding would set to a value the model rejects (for example an empty map).
+         * @return True if excluded
+         * @since 2.4.0
+         */
+        boolean excluded() default false;
     }
 
     /**

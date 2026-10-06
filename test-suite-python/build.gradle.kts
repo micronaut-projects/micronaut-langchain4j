@@ -15,6 +15,7 @@ dependencies {
     implementation(mn.micronaut.inject.python)
     implementation(mn.micronaut.context.python)
     implementation(projects.micronautLangchain4jCore)
+    implementation(projects.micronautLangchain4jGoogleGenai)
     implementation(projects.micronautLangchain4jAgentic)
     implementation(projects.micronautLangchain4jOpenai)
     implementation(projects.micronautLangchain4jOllama)
