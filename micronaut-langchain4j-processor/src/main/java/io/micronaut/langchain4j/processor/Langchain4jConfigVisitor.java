@@ -245,6 +245,16 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         return commonConfig;
     }
 
+    /**
+     * Whether a common property is set on a builder: the {@code enabled} property is not, and a common property only
+     * applies to the builders that have it (e.g. the Responses models have no timeout).
+     */
+    private static boolean appliesTo(PropertyDef property, ClassElement builderType) {
+        return !property.getName().equals("enabled")
+            && builderType.getEnclosedElement(ElementQuery.ALL_METHODS.named(property.getName()).onlyAccessible().onlyInstance()
+                .filter(m -> m.getParameters().length == 1)).isPresent();
+    }
+
     private static ModelConfig getModelConfig(ClassElement element, VisitorContext context, AnnotationValue<Model> provider) {
         ClassElement languageModel = provider.stringValue("impl")
             .flatMap(context::getClassElement)
@@ -423,12 +433,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             constructorBuilder.addParameter(ParameterDef.builder("config", commonConfig.asTypeDef()).build());
             List<PropertyDef> properties = commonConfig.getProperties();
             for (PropertyDef property : properties) {
-                if (property.getName().equals("enabled")) {
-                    continue;
-                }
-                // a common property applies to the builders that have it (e.g. the Responses models have no timeout)
-                if (builderType.getEnclosedElement(ElementQuery.ALL_METHODS.named(property.getName()).onlyAccessible().onlyInstance()
-                    .filter(m -> m.getParameters().length == 1)).isEmpty()) {
+                if (!appliesTo(property, builderType)) {
                     continue;
                 }
                 constructorBuilder.addStatement(
