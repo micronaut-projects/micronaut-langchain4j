@@ -305,7 +305,7 @@ class MicronautLangChain4jHttpClientTest {
             exchange.getRequestBody().readAllBytes();
             try {
                 release.await(10, TimeUnit.SECONDS);
-            } catch (InterruptedException e) {
+            } catch (InterruptedException _) {
                 Thread.currentThread().interrupt();
             }
             exchange.sendResponseHeaders(200, -1);
@@ -384,7 +384,8 @@ class MicronautLangChain4jHttpClientTest {
             .url(url("/failing"))
             .body("{}")
             .build(), lineParser));
-        HttpException error = assertThrows(HttpException.class, () -> failing.blockLast(java.time.Duration.ofSeconds(5)));
+        java.time.Duration timeout = java.time.Duration.ofSeconds(5);
+        HttpException error = assertThrows(HttpException.class, () -> failing.blockLast(timeout));
         assertEquals(500, error.statusCode());
     }
 
