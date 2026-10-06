@@ -159,7 +159,7 @@ public class AiServiceFactory {
             Optional<ToolProvider> toolProvider = name != null ? beanContext.findBean(ToolProvider.class, Qualifiers.byName(name)) : Optional.empty();
             toolProvider.or(this::defaultToolProvider).ifPresent(toolProviders::add);
         }
-        if (CollectionUtils.isNotEmpty(mcpClients)) {
+        if (mcpClients != null && !mcpClients.isEmpty()) {
             toolProviders.add(McpToolProviders.create(beanContext, serviceDef.type(), mcpClients));
         }
         if (!toolProviders.isEmpty()) {
