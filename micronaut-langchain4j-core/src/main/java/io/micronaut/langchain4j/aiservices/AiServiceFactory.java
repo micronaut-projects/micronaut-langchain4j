@@ -140,9 +140,9 @@ public class AiServiceFactory {
         List<String> mcpClients = serviceDef.mcpClients();
         List<ToolProvider> toolProviders = new ArrayList<>();
         if (names != null) {
-            for (String toolProviderName : names) {
-                toolProviders.add(beanContext.getBean(ToolProvider.class, Qualifiers.byName(toolProviderName)));
-            }
+            names.stream()
+                .map(toolProviderName -> beanContext.getBean(ToolProvider.class, Qualifiers.byName(toolProviderName)))
+                .forEach(toolProviders::add);
         } else if (mcpClients == null) {
             // like the other components: the provider named after the service, otherwise the default one
             String name = serviceDef.name();
