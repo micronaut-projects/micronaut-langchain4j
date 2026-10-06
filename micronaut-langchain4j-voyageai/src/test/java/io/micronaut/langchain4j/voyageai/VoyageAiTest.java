@@ -18,6 +18,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -81,8 +82,8 @@ class VoyageAiTest {
             "langchain4j.voyage-ai.api-key", "test",
             "langchain4j.voyage-ai.scoring-model.model-name", "test",
             "langchain4j.voyage-ai.embedding-model.model-name", "test"))) {
-            context.getBean(ScoringModel.class);
-            context.getBean(EmbeddingModel.class);
+            assertNotNull(context.getBean(ScoringModel.class));
+            assertNotNull(context.getBean(EmbeddingModel.class));
         }
     }
 }
