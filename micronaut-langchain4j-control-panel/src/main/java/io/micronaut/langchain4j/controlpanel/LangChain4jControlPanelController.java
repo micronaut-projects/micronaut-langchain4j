@@ -36,6 +36,8 @@ import io.micronaut.serde.annotation.Serdeable;
 
 import java.util.Optional;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Sends the messages of the chat of the control panel to a chat model.
  */
@@ -100,6 +102,6 @@ final class LangChain4jControlPanelController {
      * @param error The error, if the model failed
      */
     @Serdeable
-    record ChatReply(String answer, String error) {
+    record ChatReply(@Nullable String answer, @Nullable String error) {
     }
 }
