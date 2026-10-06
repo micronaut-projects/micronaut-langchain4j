@@ -20,6 +20,7 @@ import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.image.ImageModel;
 import dev.langchain4j.model.scoring.ScoringModel;
+import dev.langchain4j.service.tool.AiServiceTool;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.BeanRegistration;
@@ -83,7 +84,7 @@ public final class LangChain4jControlPanel extends AbstractControlPanel<LangChai
                 .sorted()
                 .toList(),
             toolRegistry.getAllAiServiceTools().stream()
-                .map(tool -> tool.toolSpecification())
+                .map(AiServiceTool::toolSpecification)
                 .map(specification -> new Tool(specification.name(), description(specification)))
                 .sorted(Comparator.comparing(Tool::name))
                 .toList()
