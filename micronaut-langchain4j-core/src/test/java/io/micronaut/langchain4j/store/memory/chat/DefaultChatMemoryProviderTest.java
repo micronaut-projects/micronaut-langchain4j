@@ -133,7 +133,7 @@ class DefaultChatMemoryProviderTest {
                 @Override
                 public int estimateTokenCountInMessages(Iterable<ChatMessage> messages) {
                     int count = 0;
-                    for (ChatMessage _ : messages) {
+                    for (var _ : messages) {
                         count++;
                     }
                     return count;
