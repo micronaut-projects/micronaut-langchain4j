@@ -11,7 +11,7 @@ langchain4j:
   google-gen-ai:
     api-key: ${GEMINI_API_KEY}
     chat-model:
-      model-name: gemini-2.5-flash
+      model-name: gemini-3.8-flash
 ----
 
 To use Vertex AI, configure the project and the location. The requests are authenticated with the `GoogleCredentials` bean of the application if there is one, otherwise with the application default credentials:
