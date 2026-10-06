@@ -76,7 +76,7 @@ public final class DecisionServiceInterceptor implements MethodInterceptor<Objec
         }
         try {
             return provider.find(null);
-        } catch (NonUniqueBeanException e) {
+        } catch (NonUniqueBeanException _) {
             return Optional.empty();
         }
     }
