@@ -43,7 +43,6 @@ import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.langchain4j.jsonschema.StructuredOutputSchemas;
 import io.micronaut.langchain4j.tools.ToolRegistry;
 import io.micronaut.langchain4j.utils.RetrievalUtils;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -143,11 +142,9 @@ public class AiServiceFactory {
             Optional<ToolProvider> toolProvider = name != null ? beanContext.findBean(ToolProvider.class, Qualifiers.byName(name)) : Optional.empty();
             toolProvider.or(this::defaultToolProvider).ifPresent(builder::toolProvider);
         } else if (!names.isEmpty()) {
-            List<ToolProvider> toolProviders = new ArrayList<>(names.size());
-            for (String toolProviderName : names) {
-                toolProviders.add(beanContext.getBean(ToolProvider.class, Qualifiers.byName(toolProviderName)));
-            }
-            builder.toolProviders(toolProviders);
+            builder.toolProviders(names.stream()
+                .map(toolProviderName -> beanContext.getBean(ToolProvider.class, Qualifiers.byName(toolProviderName)))
+                .toList());
         }
     }
 
