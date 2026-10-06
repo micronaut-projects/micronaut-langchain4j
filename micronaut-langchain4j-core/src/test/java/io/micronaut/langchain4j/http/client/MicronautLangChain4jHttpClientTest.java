@@ -287,6 +287,108 @@ class MicronautLangChain4jHttpClientTest {
     }
 
     @Test
+    void failsTheAsyncRequestsThatCannotBeSent() {
+        java.util.concurrent.CompletableFuture<SuccessfulHttpResponse> future = new MicronautLangChain4jHttpClientBuilder()
+            .build()
+            .executeAsync(HttpRequest.builder()
+                .method(HttpMethod.GET)
+                .url("not a url")
+                .build());
+        assertTrue(future.isCompletedExceptionally());
+    }
+
+    @Test
+    void timesOutAndCancelsAsyncRequests() throws Exception {
+        CountDownLatch release = new CountDownLatch(1);
+        server = HttpServer.create(new InetSocketAddress(0), 0);
+        server.createContext("/slow", exchange -> {
+            exchange.getRequestBody().readAllBytes();
+            try {
+                release.await(10, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            exchange.sendResponseHeaders(200, -1);
+            exchange.close();
+        });
+        server.setExecutor(Executors.newCachedThreadPool());
+        server.start();
+        try {
+            var client = new MicronautLangChain4jHttpClientBuilder()
+                .readTimeout(java.time.Duration.ofMillis(200))
+                .build();
+            java.util.concurrent.ExecutionException failure = assertThrows(java.util.concurrent.ExecutionException.class,
+                () -> client.executeAsync(slowRequest()).get(5, TimeUnit.SECONDS));
+            assertInstanceOf(TimeoutException.class, failure.getCause());
+
+            java.util.concurrent.CompletableFuture<SuccessfulHttpResponse> cancelled = new MicronautLangChain4jHttpClientBuilder()
+                .build()
+                .executeAsync(slowRequest());
+            assertTrue(cancelled.cancel(true));
+            assertTrue(cancelled.isCancelled());
+        } finally {
+            release.countDown();
+        }
+    }
+
+    private HttpRequest slowRequest() {
+        return HttpRequest.builder()
+            .method(HttpMethod.POST)
+            .url(url("/slow"))
+            .body("{}")
+            .build();
+    }
+
+    @Test
+    void streamsTheEventsOfARequestParserAsAPublisher() throws Exception {
+        server = HttpServer.create(new InetSocketAddress(0), 0);
+        server.createContext("/ndjson", exchange -> {
+            exchange.getRequestBody().readAllBytes();
+            byte[] response = "{\"part\":\"micro\"}\n{\"part\":\"naut\"}\n".getBytes(StandardCharsets.UTF_8);
+            exchange.getResponseHeaders().add("Content-Type", "application/x-ndjson");
+            exchange.sendResponseHeaders(200, response.length);
+            exchange.getResponseBody().write(response);
+            exchange.close();
+        });
+        server.createContext("/failing", exchange -> {
+            exchange.getRequestBody().readAllBytes();
+            byte[] response = "boom".getBytes(StandardCharsets.UTF_8);
+            exchange.sendResponseHeaders(500, response.length);
+            exchange.getResponseBody().write(response);
+            exchange.close();
+        });
+        server.start();
+        ServerSentEventParser lineParser = (inputStream, listener) -> {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+                reader.lines().forEach(line -> listener.onEvent(new ServerSentEvent(null, line)));
+            } catch (IOException e) {
+                listener.onError(e);
+            }
+        };
+        var client = new MicronautLangChain4jHttpClientBuilder().build();
+
+        List<HttpStreamingEvent> events = reactor.adapter.JdkFlowAdapter.flowPublisherToFlux(client.stream(HttpRequest.builder()
+                .method(HttpMethod.POST)
+                .url(url("/ndjson"))
+                .body("{}")
+                .build(), lineParser))
+            .collectList()
+            .block(java.time.Duration.ofSeconds(5));
+        assertEquals(List.of("{\"part\":\"micro\"}", "{\"part\":\"naut\"}"), events.stream()
+            .filter(ServerSentEvent.class::isInstance)
+            .map(event -> ((ServerSentEvent) event).data())
+            .toList());
+
+        reactor.core.publisher.Flux<HttpStreamingEvent> failing = reactor.adapter.JdkFlowAdapter.flowPublisherToFlux(client.stream(HttpRequest.builder()
+            .method(HttpMethod.POST)
+            .url(url("/failing"))
+            .body("{}")
+            .build(), lineParser));
+        HttpException error = assertThrows(HttpException.class, () -> failing.blockLast(java.time.Duration.ofSeconds(5)));
+        assertEquals(500, error.statusCode());
+    }
+
+    @Test
     void streamsEventsAsAPublisher() throws Exception {
         server = HttpServer.create(new InetSocketAddress(0), 0);
         server.createContext("/sse", exchange -> {
