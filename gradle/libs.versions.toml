@@ -95,6 +95,9 @@ langchain4j = { module = 'dev.langchain4j:langchain4j' }
 langchain4j-agentic = { module = 'dev.langchain4j:langchain4j-agentic' }
 langchain4j-http-client = { module = 'dev.langchain4j:langchain4j-http-client' }
 langchain4j-mcp = { module = 'dev.langchain4j:langchain4j-mcp' }
+langchain4j-cohere = { module = 'dev.langchain4j:langchain4j-cohere' }
+langchain4j-jina = { module = 'dev.langchain4j:langchain4j-jina' }
+langchain4j-voyage-ai = { module = 'dev.langchain4j:langchain4j-voyage-ai' }
 langchain4j-micrometer-metrics = { module = 'dev.langchain4j:langchain4j-micrometer-metrics' }
 langchain4j-observation = { module = 'dev.langchain4j:langchain4j-observation' }
 micronaut-mcp-client-langchain4j = { module = 'io.micronaut.mcp:micronaut-mcp-client-langchain4j', version.ref = 'micronaut-mcp' }
