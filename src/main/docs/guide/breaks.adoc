@@ -27,6 +27,10 @@ The `langchain4j.bedrock.model` property was never applied to the Bedrock models
 
 The default chat memory provider of the AI services kept the conversations in memory, even when a persistent chat memory store (Redis, Neo4j, Cassandra, Oracle) was configured. It now keeps them in the persistent chat memory store if the application has exactly one. Set `langchain4j.chat-memory.store: inMemory` to keep them in memory.
 
+==== Hugging Face uses the Micronaut HTTP client
+
+The Hugging Face models use the Micronaut HTTP client instead of LangChain4j's JDK HTTP client, like the OpenAI, Anthropic, Ollama, Mistral AI and Google AI Gemini models. Add a Micronaut HTTP client implementation, such as `io.micronaut:micronaut-http-client`, to the runtime classpath.
+
 ==== LangChain4j Community 1.20
 
 The LangChain4j community modules (Redis, Neo4j, OCI GenAI) have been upgraded from `1.16.0-beta26` to `1.20.0-beta30`. Refer to the https://github.com/langchain4j/langchain4j-community/releases[LangChain4j Community release notes] for changes.

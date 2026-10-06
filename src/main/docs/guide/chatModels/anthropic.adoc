@@ -9,3 +9,20 @@ Then add the link:configurationreference.html#io.micronaut.langchain4j.anthropic
 ----
 langchain4j.anthropic.api-key: YOUR_KEY
 ----
+
+https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking[Extended thinking] and https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching[prompt caching] are configured on the models:
+
+.Example Configuration
+[configuration]
+----
+langchain4j:
+  anthropic:
+    api-key: ${ANTHROPIC_API_KEY}
+    chat-model:
+      model-name: claude-sonnet-4-5
+      thinking-type: enabled
+      thinking-budget-tokens: 2048
+      return-thinking: true
+      cache-system-messages: true
+      cache-tools: true
+----
