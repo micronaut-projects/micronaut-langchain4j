@@ -15,6 +15,8 @@
  */
 package io.micronaut.langchain4j.testresources.qdrant;
 
+import org.jspecify.annotations.Nullable;
+
 import io.micronaut.core.io.socket.SocketUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +41,7 @@ public class Qdrant {
 
     private static final Logger LOG = LoggerFactory.getLogger(Qdrant.class);
     private static final String IMAGE_NAME = "qdrant/qdrant:v1.16";
-    private static QdrantContainer container;
+    private static @Nullable QdrantContainer container;
 
     /**
      *

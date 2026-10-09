@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.Experimental;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
+import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -88,7 +89,7 @@ public final class EvaluationSamples {
         return result;
     }
 
-    private static String text(Object value) {
+    private static @Nullable String text(@Nullable Object value) {
         return value != null ? value.toString() : null;
     }
 }

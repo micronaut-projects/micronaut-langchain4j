@@ -25,6 +25,8 @@ import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
+
+import org.jspecify.annotations.Nullable;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -51,7 +53,7 @@ final class ToolArguments {
         }
 
         @Override
-        public Type getOwnerType() {
+        public @Nullable Type getOwnerType() {
             return null;
         }
     };

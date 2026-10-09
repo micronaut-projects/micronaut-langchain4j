@@ -94,13 +94,13 @@ public class AiServiceFactory {
         MicronautAiServiceContext context = new MicronautAiServiceContext(type, serviceDef.beanDefinition(), beanContext);
         AiServices<Object> builder = AiServices.builder(context);
 
-        AiServiceCustomizer<Object> creationCustomizer = Optional.ofNullable(serviceDef.customizer())
-            .flatMap(beanContext::findBean)
-            .orElseGet(() -> {
-                AtomicReference<AiServiceCustomizer<Object>> ref = new AtomicReference<>();
-                lookupByNameOrDefault(name, Argument.of(AiServiceCustomizer.class, type), null, ref::set);
-                return ref.get();
-            });
+        Class<AiServiceCustomizer<Object>> customizerType = serviceDef.customizer();
+        AtomicReference<@Nullable AiServiceCustomizer<Object>> customizer = new AtomicReference<>(
+            customizerType != null ? beanContext.findBean(customizerType).orElse(null) : null);
+        if (customizer.get() == null) {
+            lookupByNameOrDefault(name, Argument.of(AiServiceCustomizer.class, type), null, customizer::set);
+        }
+        @Nullable AiServiceCustomizer<Object> creationCustomizer = customizer.get();
 
         // the tools invoke the @Tool methods through their ExecutableMethod: LangChain4j does not scan the tool classes
         Set<Class<?>> toolTypes = serviceDef.tools();
@@ -210,11 +210,11 @@ public class AiServiceFactory {
             .toList();
     }
 
-    private <T> void lookupByNameOrDefault(String name, Class<T> beanType, Consumer<T> configurer) {
+    private <T> void lookupByNameOrDefault(@Nullable String name, Class<T> beanType, Consumer<T> configurer) {
         lookupByNameOrDefault(name, Argument.of(beanType), null, configurer);
     }
 
-    private <T> void lookupByNameOrDefault(String name, Argument<T> beanType, @Nullable T defaultValue, Consumer<T> configurer) {
+    private <T> void lookupByNameOrDefault(@Nullable String name, Argument<T> beanType, @Nullable T defaultValue, Consumer<T> configurer) {
         Qualifier<T> qualifier = name != null ? Qualifiers.byName(name) : null;
         BeanProvider<T> provider = beanContext.getProvider(
             beanType
