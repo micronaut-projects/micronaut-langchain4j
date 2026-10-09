@@ -15,7 +15,6 @@ observability: Observability
 httpClient: HTTP Client
 imageModels: Image Models
 testResources: Test Resources
-controlPanel: Control Panel
 chatModels:
   title: Chat Language Models
   chatModelExample: ChatModel Example
