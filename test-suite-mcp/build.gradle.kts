@@ -9,6 +9,8 @@ dependencies {
     testAnnotationProcessor(projects.micronautLangchain4jProcessor)
     testAnnotationProcessor(mnSerde.micronaut.serde.processor)
     testImplementation(projects.micronautLangchain4jCore)
+    testImplementation(projects.micronautLangchain4jAgentic)
+    testImplementation(libs.langchain4j.agentic.mcp)
     testImplementation(libs.micronaut.mcp.client.langchain4j)
     testImplementation(libs.micronaut.mcp.server.java.sdk)
     testImplementation(mn.micronaut.http.server.netty)
