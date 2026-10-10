@@ -20,6 +20,7 @@ dependencies {
     testImplementation(projects.micronautLangchain4jOllama)
 
     testImplementation(projects.testSuiteUtils)
+    testImplementation(projects.micronautLangchain4jTest)
     testImplementation(projects.micronautLangchain4jStoreRedis)
     testAnnotationProcessor(mn.micronaut.inject.java)
     testImplementation(projects.micronautLangchain4jStoreNeo4j)

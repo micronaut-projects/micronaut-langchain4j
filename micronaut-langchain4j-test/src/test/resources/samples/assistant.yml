@@ -1,0 +1,7 @@
+samples:
+  - name: framework
+    input: Which framework should I use for microservices on the JVM?
+    context: Micronaut is a modern JVM framework for building microservices.
+  - name: native
+    input: Can my application be compiled to a native executable?
+    context: Micronaut applications can be compiled to native executables with GraalVM.
