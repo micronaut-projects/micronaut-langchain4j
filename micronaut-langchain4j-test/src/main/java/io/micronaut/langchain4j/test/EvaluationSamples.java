@@ -26,6 +26,7 @@ import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Loads {@link EvaluationSample evaluation samples} from a YAML (or JSON) file of the classpath: a list of samples,
@@ -81,14 +82,10 @@ public final class EvaluationSamples {
             result.add(new EvaluationSample(
                 name != null ? name.toString() : "sample " + (i + 1),
                 input,
-                text(sample.get("context")),
-                text(sample.get("expected"))
+                Objects.toString(sample.get("context"), null),
+                Objects.toString(sample.get("expected"), null)
             ));
         }
         return result;
-    }
-
-    private static String text(Object value) {
-        return value != null ? value.toString() : null;
     }
 }
