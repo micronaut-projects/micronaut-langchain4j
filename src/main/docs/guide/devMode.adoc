@@ -1,0 +1,28 @@
+In development mode (`micronaut.dev.enabled`, which `./gradlew mnDev` and `mvn mn:dev` set), the application restarts on a new generation after a change of its classes, and some beans are kept across the restart.
+
+== What is kept across a restart
+
+The models and the embedding stores that the `langchain4j.*` configuration defines (chat, streaming chat, embedding, image and moderation models, and the embedding stores of the store modules) are kept when they hold nothing that a restart replaces. A model of a provider whose client is costly to build, such as the AWS, Google or OCI SDK clients, or an in-process model such as Jlama, whose weights are loaded once, is then reused by the next generation.
+
+A change of configuration under the provider's prefix, such as `langchain4j.ollama` or `langchain4j.openai`, releases its models and stores: the next generation creates them again from the new configuration.
+
+A model or a store is not kept, and is created again on each restart, when it holds:
+
+* an object, a class or a class loader of the application, such as a `ChatModelListener`, a tokenizer or an `HttpClientBuilder` bean of the application;
+* the context, a provider, the environment or the event publisher, which resolve through the stopped context. The Micronaut HTTP client that the providers use by default resolves its client through the context, so a model built on it is created again in each generation; the event loops of the HTTP client are kept by the development runtime;
+* another singleton of the context, such as a client bean injected through the configuration, which is destroyed with the context.
+
+The refusal is logged at debug under `io.micronaut.langchain4j.dev`.
+
+The in-memory embedding stores and chat memory stores are not kept: the application fills them as it starts, and would fill them twice.
+
+== What is rebuilt
+
+An AI service is built on its first call, from the tools, models, chat memory and retrievers of its generation. A restart builds it again, from the classes of the new generation. A change of a method body applied without a restart runs the new body in the tools already built.
+
+Without a restart:
+
+* A `@Tool` method or an `@AiService` added, removed or replaced, or a reload that retires a class loader, builds the AI services again on their next call, with the current tools.
+* A change of the file an in-memory embedding store is read from (`langchain4j.in-memory.embedding-stores.*.path`) recreates that store, and builds the AI services again.
+
+A prompt template that an AI service reads from a resource, with `fromResource`, is read on each call, so its next call uses the changed file.

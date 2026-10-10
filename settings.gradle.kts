@@ -83,6 +83,7 @@ include("test-suite-kotlin")
 include("test-suite-groovy")
 include("test-suite-python")
 include("test-suite-utils")
+include("test-suite-dev-reload")
 
 val micronautVersion = providers.gradleProperty("micronautVersion")
 
