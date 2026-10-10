@@ -162,6 +162,9 @@ public class AiServiceFactory {
         if (mcpClients != null && !mcpClients.isEmpty()) {
             toolProviders.add(McpToolProviders.create(beanContext, serviceDef.type(), mcpClients));
         }
+        if (serviceDef.skills() != null) {
+            toolProviders.add(SkillsSupport.configure(beanContext, serviceDef.type(), serviceDef.skills(), builder));
+        }
         if (!toolProviders.isEmpty()) {
             builder.toolProviders(toolProviders);
         }
