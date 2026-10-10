@@ -26,6 +26,7 @@ import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.annotation.Retain;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.Internal;
 import org.jspecify.annotations.NonNull;
@@ -162,7 +163,8 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                             factoryName,
                             modelConfig.languageModel(),
                             modelConfig.languageModelKind(),
-                            modelConfig.exposed()
+                            modelConfig.exposed(),
+                            invalidatedBy(modelConfig, commonConfig, providers, element, context)
                         ));
                         writeJavaSource(generator, context, element, packageName, factorySimpleName, factoryDef, modelConfig.modelKind);
                     }
@@ -239,6 +241,20 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         return commonConfig;
     }
 
+    /**
+     * The configuration prefixes a change under which releases a model retained across a development restart: the
+     * model's own prefix and the prefix of the configuration it shares with the provider's other models, which is that
+     * of the first model.
+     */
+    private static List<String> invalidatedBy(ModelConfig modelConfig, @Nullable RecordDef commonConfig, List<AnnotationValue<Model>> providers, ClassElement element, VisitorContext context) {
+        String modelPrefix = modelConfig.getCommonPrefix();
+        if (commonConfig == null || providers.isEmpty()) {
+            return List.of(modelPrefix);
+        }
+        String sharedPrefix = getModelConfig(element, context, providers.get(0)).getCommonPrefix();
+        return sharedPrefix.equals(modelPrefix) ? List.of(modelPrefix) : List.of(modelPrefix, sharedPrefix);
+    }
+
     private static ModelConfig getModelConfig(ClassElement element, VisitorContext context, AnnotationValue<Model> provider) {
         ClassElement languageModel = provider.stringValue("impl")
             .flatMap(context::getClassElement)
@@ -300,6 +316,9 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                 MethodDef.builder("model")
                     .addModifiers(Modifier.PROTECTED)
                     .addAnnotation(Context.class)
+                    .addAnnotation(AnnotationDef.builder(Retain.class)
+                        .addMember("invalidatedBy", (Object) spec.invalidatedBy())
+                        .build())
                     .addAnnotation(AnnotationDef.builder(Bean.class)
                         .addMember("typed", new VariableDef.StaticField(ClassTypeDef.of(spec.languageModelKind().getRawClassElement().getName()), "class", TypeDef.of(Class.class)))
                         .build())
@@ -676,7 +695,8 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         String factoryName,
         ClassElement languageModel,
         ClassElement languageModelKind,
-        @Nullable ClassElement exposed) {
+        @Nullable ClassElement exposed,
+        List<String> invalidatedBy) {
     }
 
     @SuppressWarnings("ClassExplicitlyAnnotation")

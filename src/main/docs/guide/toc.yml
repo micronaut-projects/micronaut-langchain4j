@@ -36,4 +36,5 @@ embeddingStores:
   redis: Redis
   qdrant: Qdrant
 repository: Repository
+devMode: Development Mode
 releaseHistory: Release History
