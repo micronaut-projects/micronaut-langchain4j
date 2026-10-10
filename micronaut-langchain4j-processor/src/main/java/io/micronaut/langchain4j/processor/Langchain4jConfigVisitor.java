@@ -26,6 +26,7 @@ import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.annotation.Retain;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.Internal;
 import org.jspecify.annotations.NonNull;
@@ -162,7 +163,8 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                             factoryName,
                             modelConfig.languageModel(),
                             modelConfig.languageModelKind(),
-                            modelConfig.exposed()
+                            modelConfig.exposed(),
+                            modelConfig.getCommonPrefix()
                         ));
                         writeJavaSource(generator, context, element, packageName, factorySimpleName, factoryDef, modelConfig.modelKind);
                     }
@@ -300,6 +302,9 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                 MethodDef.builder("model")
                     .addModifiers(Modifier.PROTECTED)
                     .addAnnotation(Context.class)
+                    .addAnnotation(AnnotationDef.builder(Retain.class)
+                        .addMember("invalidatedBy", spec.commonPrefix())
+                        .build())
                     .addAnnotation(AnnotationDef.builder(Bean.class)
                         .addMember("typed", new VariableDef.StaticField(ClassTypeDef.of(spec.languageModelKind().getRawClassElement().getName()), "class", TypeDef.of(Class.class)))
                         .build())
@@ -676,7 +681,8 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         String factoryName,
         ClassElement languageModel,
         ClassElement languageModelKind,
-        @Nullable ClassElement exposed) {
+        @Nullable ClassElement exposed,
+        String commonPrefix) {
     }
 
     @SuppressWarnings("ClassExplicitlyAnnotation")
