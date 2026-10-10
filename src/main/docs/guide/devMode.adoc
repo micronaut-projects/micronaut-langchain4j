@@ -6,6 +6,8 @@ The models and the embedding stores that the `langchain4j.*` configuration defin
 
 A change of configuration under the provider's prefix, such as `langchain4j.ollama` or `langchain4j.openai`, releases its models and stores: the next generation creates them again from the new configuration.
 
+The embedding stores built on a client or a data source of another module, such as those of MongoDB Atlas, Oracle and PGVector, are not kept by this module: they hold a bean of that module.
+
 A model or a store is not kept, and is created again on each restart, when it holds:
 
 * an object, a class or a class loader of the application, such as a `ChatModelListener`, a tokenizer or an `HttpClientBuilder` bean of the application;

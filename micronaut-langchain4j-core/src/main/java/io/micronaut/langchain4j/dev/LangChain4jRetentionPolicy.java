@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.net.http.HttpClient;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Collections;
@@ -40,6 +41,7 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -241,7 +243,7 @@ final class LangChain4jRetentionPolicy implements BeanRetentionPolicy {
 
         /**
          * The JDK's own classes are not read field by field, which their modules refuse, but the containers among
-         * them are read through their API.
+         * them, and what a JDK HTTP client or a thread pool calls back, are read through their API.
          */
         private void expandJdk(Object object) {
             try {
@@ -260,6 +262,15 @@ final class LangChain4jRetentionPolicy implements BeanRetentionPolicy {
                     optional.ifPresent(this::add);
                 } else if (object instanceof AtomicReference<?> reference) {
                     add(reference.get());
+                } else if (object instanceof HttpClient client) {
+                    // the callbacks a JDK HTTP client calls, which an application may supply
+                    client.executor().ifPresent(this::add);
+                    client.authenticator().ifPresent(this::add);
+                    client.cookieHandler().ifPresent(this::add);
+                    client.proxy().ifPresent(this::add);
+                } else if (object instanceof ThreadPoolExecutor executor) {
+                    add(executor.getThreadFactory());
+                    add(executor.getRejectedExecutionHandler());
                 }
             } catch (RuntimeException e) {
                 // a container that cannot be read as a whole, such as one modified meanwhile: nothing more is read

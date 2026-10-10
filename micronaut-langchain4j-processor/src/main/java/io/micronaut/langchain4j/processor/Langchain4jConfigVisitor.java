@@ -164,7 +164,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                             modelConfig.languageModel(),
                             modelConfig.languageModelKind(),
                             modelConfig.exposed(),
-                            modelConfig.getCommonPrefix()
+                            invalidatedBy(modelConfig, commonConfig, providers, element, context)
                         ));
                         writeJavaSource(generator, context, element, packageName, factorySimpleName, factoryDef, modelConfig.modelKind);
                     }
@@ -241,6 +241,20 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         return commonConfig;
     }
 
+    /**
+     * The configuration prefixes a change under which releases a model retained across a development restart: the
+     * model's own prefix and the prefix of the configuration it shares with the provider's other models, which is that
+     * of the first model.
+     */
+    private static List<String> invalidatedBy(ModelConfig modelConfig, @Nullable RecordDef commonConfig, List<AnnotationValue<Model>> providers, ClassElement element, VisitorContext context) {
+        String modelPrefix = modelConfig.getCommonPrefix();
+        if (commonConfig == null || providers.isEmpty()) {
+            return List.of(modelPrefix);
+        }
+        String sharedPrefix = getModelConfig(element, context, providers.get(0)).getCommonPrefix();
+        return sharedPrefix.equals(modelPrefix) ? List.of(modelPrefix) : List.of(modelPrefix, sharedPrefix);
+    }
+
     private static ModelConfig getModelConfig(ClassElement element, VisitorContext context, AnnotationValue<Model> provider) {
         ClassElement languageModel = provider.stringValue("impl")
             .flatMap(context::getClassElement)
@@ -303,7 +317,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                     .addModifiers(Modifier.PROTECTED)
                     .addAnnotation(Context.class)
                     .addAnnotation(AnnotationDef.builder(Retain.class)
-                        .addMember("invalidatedBy", spec.commonPrefix())
+                        .addMember("invalidatedBy", (Object) spec.invalidatedBy())
                         .build())
                     .addAnnotation(AnnotationDef.builder(Bean.class)
                         .addMember("typed", new VariableDef.StaticField(ClassTypeDef.of(spec.languageModelKind().getRawClassElement().getName()), "class", TypeDef.of(Class.class)))
@@ -682,7 +696,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         ClassElement languageModel,
         ClassElement languageModelKind,
         @Nullable ClassElement exposed,
-        String commonPrefix) {
+        List<String> invalidatedBy) {
     }
 
     @SuppressWarnings("ClassExplicitlyAnnotation")

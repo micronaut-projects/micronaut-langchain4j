@@ -74,9 +74,9 @@ import java.util.Set;
  *     retrievers built on it.</li>
  * </ul>
  *
- * <p>As a class change retires a class loader, in place or with a restart, the methods of the retired AI services are
- * removed from the set LangChain4j keeps, in a static field, of the AI service methods it validated on a call, which
- * would otherwise keep every retired generation reachable.</p>
+ * <p>As the application restarts, the methods of its AI services are removed from the set LangChain4j keeps, in a
+ * static field, of the AI service methods it validated on a call, which would otherwise keep every retired generation
+ * reachable.</p>
  *
  * <p>Prompt templates that an AI service reads from a resource ({@code fromResource}) are read by LangChain4j on each
  * call, so they need nothing here. Each bean is recreated through {@link WatchableBeanContext#recreate(Object)}; a
@@ -215,20 +215,34 @@ final class DevelopmentAiServicesReloader {
             return null;
         }
 
+        /**
+         * Removes the methods of the application's classes as the application restarts: the development runtime holds
+         * the requests while it restarts and the stopping generation receives the change before it stops, so no AI
+         * service call adds to the set meanwhile, which LangChain4j does without a lock. A loader retired in place,
+         * while the application serves, is left until the next restart, which removes the methods of every loader
+         * that is not of the runtime classpath, the generations retired in place included.
+         */
         static void evict(ClassChangeEvent change) {
             Set<Method> methods = METHODS;
-            if (methods == null || change.retiredLoaders().isEmpty()) {
+            if (methods == null || change.strategy() != ReloadStrategy.RESTART) {
                 return;
             }
-            // LangChain4j adds to the set without a lock: a call that adds meanwhile is retried once
-            for (int attempt = 0; attempt < 2; attempt++) {
-                try {
-                    methods.removeIf(method -> change.isStaleType(method.getDeclaringClass()));
-                    return;
-                } catch (ConcurrentModificationException e) {
-                    // retried
+            try {
+                methods.removeIf(method -> !isRuntime(method.getDeclaringClass()));
+            } catch (ConcurrentModificationException e) {
+                // a call from a thread of the application's own, which the runtime does not hold: left until the next restart
+                LOG.debug("Could not remove the retired AI service methods LangChain4j validated, since a call added to them meanwhile", e);
+            }
+        }
+
+        private static boolean isRuntime(Class<?> type) {
+            ClassLoader loader = type.getClassLoader();
+            for (ClassLoader runtime = ValidatedMethods.class.getClassLoader(); runtime != null; runtime = runtime.getParent()) {
+                if (runtime == loader) {
+                    return true;
                 }
             }
+            return loader == null || loader == ClassLoader.getPlatformClassLoader();
         }
     }
 
