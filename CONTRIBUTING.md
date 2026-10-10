@@ -97,6 +97,12 @@ In this case, to fix the issues, we need to:
 
 The plugin also adds a new tab in the bottom of the IDE to run Checkstyle and show errors and warnings. We recommend that you run the report and fix all issues before submitting a pull request.
 
+## Null checking
+
+The main code is checked with [NullAway](https://github.com/uber/NullAway) in [JSpecify](https://jspecify.dev/) mode, at compile time. Every package has a `package-info.java` annotated with `@NullMarked`: types are non-null by default, and a type that can be null is annotated with `org.jspecify.annotations.Nullable`. Do not annotate classes or methods with `@NullMarked`: a new package gets a `package-info.java` with it instead.
+
+The build fails on a NullAway error. The test code and the generated sources are not checked.
+
 ## Native image metadata of the model providers
 
 The Ollama, Mistral AI, Google AI Gemini, Hugging Face, Cohere, Jina and Voyage AI modules ship the GraalVM reachability metadata of the LangChain4j types their providers map with Jackson (`src/main/resources/META-INF/native-image/io.micronaut.langchain4j/<module>/reachability-metadata.json`). The `NativeImageMetadataTest` of each module fails when a LangChain4j upgrade adds or removes such a type. To regenerate the metadata, run the test with the `UPDATE_NATIVE_METADATA` environment variable:

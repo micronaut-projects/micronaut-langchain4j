@@ -15,6 +15,8 @@
  */
 package io.micronaut.langchain4j.serde;
 
+import org.jspecify.annotations.Nullable;
+
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Internal;
@@ -88,7 +90,7 @@ final class TemporalObjectDeserializers {
         return LocalTime.of(number(fields, "hour"), number(fields, "minute"), optionalNumber(fields, "second"), optionalNumber(fields, "nano"));
     }
 
-    private static Map<?, ?> object(Object value) {
+    private static Map<?, ?> object(@Nullable Object value) {
         if (value instanceof Map<?, ?> map) {
             return map;
         }

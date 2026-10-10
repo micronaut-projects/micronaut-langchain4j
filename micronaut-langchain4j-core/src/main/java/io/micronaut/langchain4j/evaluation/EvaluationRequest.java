@@ -82,7 +82,7 @@ public record EvaluationRequest(
         return new EvaluationRequest(userText, join(sources), response);
     }
 
-    private static String join(List<Content> sources) {
+    private static @Nullable String join(@Nullable List<Content> sources) {
         if (sources == null || sources.isEmpty()) {
             return null;
         }

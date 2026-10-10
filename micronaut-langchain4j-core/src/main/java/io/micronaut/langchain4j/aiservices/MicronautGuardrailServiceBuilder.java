@@ -46,8 +46,8 @@ final class MicronautGuardrailServiceBuilder implements GuardrailService.Builder
     private final BeanDefinition<?> beanDefinition;
     private final Class<?> aiServiceClass;
     private final BeanContext beanContext;
-    private InputGuardrailsConfig inputGuardrailsConfig;
-    private OutputGuardrailsConfig outputGuardrailsConfig;
+    private @Nullable InputGuardrailsConfig inputGuardrailsConfig;
+    private @Nullable OutputGuardrailsConfig outputGuardrailsConfig;
     private final List<Class<? extends InputGuardrail>> inputGuardrailClasses = new ArrayList<>();
     private final List<Class<? extends OutputGuardrail>> outputGuardrailClasses = new ArrayList<>();
     private final List<InputGuardrail> inputGuardrails = new ArrayList<>();
