@@ -11,6 +11,7 @@ import io.micronaut.context.annotation.Primary;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.langchain4j.annotation.AiService;
+import io.micronaut.langchain4j.evaluation.EvaluationResult;
 import io.micronaut.langchain4j.evaluation.FactCheckingEvaluator;
 import io.micronaut.langchain4j.evaluation.RelevancyEvaluator;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
@@ -61,8 +62,9 @@ class EvaluationSamplesTest {
     void reportsTheFeedbackOfAFailedEvaluation() {
         RelevancyEvaluator strict = new RelevancyEvaluator(ScriptedChatModel.respondingWith("FAIL\nOff topic"));
         EvaluationSample sample = EvaluationSamples.load("samples/assistant.yml").getFirst();
+        EvaluationResult result = strict.evaluate(sample.request("Bananas"));
         AssertionError error = org.junit.jupiter.api.Assertions.assertThrows(AssertionError.class,
-            () -> assertPasses(sample, strict.evaluate(sample.request("Bananas"))));
+            () -> assertPasses(sample, result));
         assertEquals("The evaluation of the sample 'framework' failed: Off topic", error.getMessage());
     }
 
