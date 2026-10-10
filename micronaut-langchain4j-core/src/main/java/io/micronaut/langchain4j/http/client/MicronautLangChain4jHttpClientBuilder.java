@@ -49,11 +49,12 @@ final class MicronautLangChain4jHttpClientBuilder implements HttpClientBuilder {
     private final @Nullable BeanProvider<ByteBodyFactory> byteBodyFactoryProvider;
     private final @Nullable BeanProvider<ExecutorService> blockingExecutorProvider;
     private final @Nullable BeanContext beanContext;
+    private final @Nullable BeanProvider<ModelAuthProvider> authProviders;
     private @Nullable Duration connectTimeout;
     private @Nullable Duration readTimeout;
 
     MicronautLangChain4jHttpClientBuilder() {
-        this(null, null, null, null, null);
+        this(null, null, null, null, null, null);
     }
 
     @Inject
@@ -62,12 +63,14 @@ final class MicronautLangChain4jHttpClientBuilder implements HttpClientBuilder {
         @Nullable BeanProvider<HttpClientRegistry<io.micronaut.http.client.HttpClient>> httpClientRegistryProvider,
         @Nullable BeanProvider<ByteBodyFactory> byteBodyFactoryProvider,
         @Named(TaskExecutors.BLOCKING) @Nullable BeanProvider<ExecutorService> blockingExecutorProvider,
-        @Nullable BeanContext beanContext) {
+        @Nullable BeanContext beanContext,
+        @Nullable BeanProvider<ModelAuthProvider> authProviders) {
         this.httpClientProvider = httpClientProvider;
         this.httpClientRegistryProvider = httpClientRegistryProvider;
         this.byteBodyFactoryProvider = byteBodyFactoryProvider;
         this.blockingExecutorProvider = blockingExecutorProvider;
         this.beanContext = beanContext;
+        this.authProviders = authProviders;
     }
 
     @Override
@@ -100,6 +103,7 @@ final class MicronautLangChain4jHttpClientBuilder implements HttpClientBuilder {
             byteBodyFactoryProvider,
             blockingExecutorProvider,
             beanContext,
+            authProviders,
             connectTimeout,
             readTimeout
         );
