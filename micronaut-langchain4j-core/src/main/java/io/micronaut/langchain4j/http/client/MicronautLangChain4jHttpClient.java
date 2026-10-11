@@ -22,6 +22,8 @@ import dev.langchain4j.http.client.FormDataFile;
 import dev.langchain4j.http.client.HttpRequest;
 import dev.langchain4j.http.client.SuccessfulHttpResponse;
 import dev.langchain4j.http.client.sse.ServerSentEventListener;
+import dev.langchain4j.http.client.sse.HttpResponseReceived;
+import dev.langchain4j.http.client.sse.HttpStreamingEvent;
 import dev.langchain4j.http.client.sse.ServerSentEventContext;
 import dev.langchain4j.http.client.sse.ServerSentEventParsingHandle;
 import dev.langchain4j.http.client.sse.DefaultServerSentEventParser;
@@ -51,6 +53,9 @@ import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 import org.jspecify.annotations.Nullable;
+import reactor.adapter.JdkFlowAdapter;
+import reactor.core.Disposable;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
@@ -65,6 +70,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Flow;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
@@ -127,6 +133,108 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         } catch (IOException e) {
             throw new LangChain4jException("Error closing Micronaut HTTP client", e);
         }
+    }
+
+    /**
+     * Executes the request without blocking a thread: the response is read by the Micronaut HTTP client's event loop.
+     * Used by the non-blocking chat models (and the asynchronous AI services) of LangChain4j.
+     */
+    @Override
+    public CompletableFuture<SuccessfulHttpResponse> executeAsync(HttpRequest request) {
+        ClientHandle client;
+        try {
+            client = client(request.url());
+        } catch (RuntimeException e) {
+            return CompletableFuture.failedFuture(e);
+        }
+        CompletableFuture<SuccessfulHttpResponse> result = new CompletableFuture<>();
+        Mono<io.micronaut.http.HttpResponse<String>> exchange = Mono.from(client.httpClient().exchange(
+                standardRequest(request),
+                Argument.STRING,
+                Argument.STRING))
+            .onErrorResume(HttpClientResponseException.class, e -> Mono.just(stringResponse(e)));
+        if (readTimeout != null) {
+            exchange = exchange.timeout(readTimeout);
+        }
+        Disposable subscription = exchange
+            .doFinally(signal -> closeQuietly(client))
+            .subscribe(
+                response -> {
+                    String body = response.getBody(String.class).orElse(null);
+                    if (isSuccessful(response)) {
+                        result.complete(successfulResponse(response, body));
+                    } else {
+                        result.completeExceptionally(new HttpException(response.code(), body));
+                    }
+                },
+                error -> result.completeExceptionally(error instanceof ReadTimeoutException || error instanceof java.util.concurrent.TimeoutException
+                    ? new TimeoutException(error)
+                    : error),
+                () -> {
+                    if (!result.isDone()) {
+                        result.completeExceptionally(new LangChain4jException("HTTP client completed without response"));
+                    }
+                });
+        result.whenComplete((response, error) -> {
+            if (result.isCancelled()) {
+                subscription.dispose();
+            }
+        });
+        return result;
+    }
+
+    /**
+     * Exposes the streamed response as a cold publisher: each subscription executes the request, emits an
+     * {@link HttpResponseReceived} event followed by the parsed events, and cancelling the subscription cancels the
+     * request.
+     */
+    @Override
+    public Flow.Publisher<HttpStreamingEvent> stream(HttpRequest request, ServerSentEventParser parser) {
+        Flux<HttpStreamingEvent> events = Flux.create(sink -> {
+            AtomicReference<ServerSentEventParsingHandle> handle = new AtomicReference<>();
+            sink.onCancel(() -> {
+                ServerSentEventParsingHandle parsingHandle = handle.get();
+                if (parsingHandle != null) {
+                    parsingHandle.cancel();
+                }
+            });
+            execute(request, parser, new ServerSentEventListener() {
+                @Override
+                public void onOpen(SuccessfulHttpResponse response) {
+                    sink.next(new HttpResponseReceived(response));
+                }
+
+                @Override
+                public void onEvent(dev.langchain4j.http.client.sse.ServerSentEvent event, ServerSentEventContext context) {
+                    handle.compareAndSet(null, context.parsingHandle());
+                    sink.next(event);
+                }
+
+                @Override
+                public void onEvent(dev.langchain4j.http.client.sse.ServerSentEvent event) {
+                    sink.next(event);
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+                    sink.error(throwable);
+                }
+
+                @Override
+                public void onClose() {
+                    sink.complete();
+                }
+            });
+        });
+        return JdkFlowAdapter.publisherToFlowPublisher(events);
+    }
+
+    private static io.micronaut.http.HttpResponse<String> stringResponse(HttpClientResponseException e) {
+        io.micronaut.http.HttpResponse<?> response = e.getResponse();
+        String body = readBody(response);
+        return io.micronaut.http.HttpResponse.<String>status(response.code(), response.reason())
+            .headers(headers -> response.getHeaders().forEach((name, values) -> values.forEach(value -> headers.add(name, value))))
+            .body(body);
     }
 
     @Override
