@@ -22,6 +22,10 @@ import dev.langchain4j.model.moderation.ModerationModel;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.service.TokenStream;
 import dev.langchain4j.service.tool.AiServiceTool;
+import dev.langchain4j.service.tool.ToolArgumentsErrorHandler;
+import dev.langchain4j.service.tool.ToolExecutionErrorHandler;
+import dev.langchain4j.service.tool.ToolProvider;
+import dev.langchain4j.service.tool.search.ToolSearchStrategy;
 import dev.langchain4j.spi.ServiceHelper;
 import dev.langchain4j.spi.services.TokenStreamAdapter;
 import io.micronaut.context.BeanContext;
@@ -43,6 +47,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
@@ -98,6 +103,11 @@ public class AiServiceFactory {
         if (CollectionUtils.isNotEmpty(toolsTyped)) {
             builder.tools(toolsTyped);
         }
+        configureToolProviders(serviceDef, builder);
+        lookupByNameOrDefault(name, ToolExecutionErrorHandler.class, builder::toolExecutionErrorHandler);
+        lookupByNameOrDefault(name, ToolArgumentsErrorHandler.class, builder::toolArgumentsErrorHandler);
+        lookupByNameOrDefault(name, ToolSearchStrategy.class, builder::toolSearchStrategy);
+        configureToolCalling(name, builder);
 
         ModelSelection modelSelection = selectModels(serviceDef.beanDefinition());
         if (modelSelection.chatModel()) {
@@ -122,6 +132,53 @@ public class AiServiceFactory {
         beanContext.findBean(StructuredOutputSchemas.class)
             .ifPresent(schemas -> schemas.configure(context, returnTypes(serviceDef.beanDefinition())));
         return builder;
+    }
+
+    private void configureToolProviders(AiServiceDef<Object> serviceDef, AiServices<Object> builder) {
+        List<String> names = serviceDef.toolProviders();
+        if (names == null) {
+            // like the other components: the provider named after the service, otherwise the default one
+            String name = serviceDef.name();
+            Optional<ToolProvider> toolProvider = name != null ? beanContext.findBean(ToolProvider.class, Qualifiers.byName(name)) : Optional.empty();
+            toolProvider.or(this::defaultToolProvider).ifPresent(builder::toolProvider);
+        } else if (!names.isEmpty()) {
+            builder.toolProviders(names.stream()
+                .map(toolProviderName -> beanContext.getBean(ToolProvider.class, Qualifiers.byName(toolProviderName)))
+                .toList());
+        }
+    }
+
+    /**
+     * The default tool provider is the only unqualified (or {@code @Primary}) {@link ToolProvider} bean. Providers
+     * qualified with a name are only used by the services that select them, and several unqualified providers are
+     * ambiguous, so none is used rather than exposing tools to a service by accident.
+     */
+    private Optional<ToolProvider> defaultToolProvider() {
+        List<BeanDefinition<ToolProvider>> candidates = beanContext.getBeanDefinitions(ToolProvider.class).stream()
+            .filter(definition -> definition.isPrimary() || definition.getDeclaredQualifier() == null)
+            .toList();
+        return candidates.size() == 1 ? Optional.of(beanContext.getBean(candidates.getFirst())) : Optional.empty();
+    }
+
+    private void configureToolCalling(@Nullable String name, AiServices<Object> builder) {
+        AiServiceConfiguration configuration = Optional.ofNullable(name)
+            .flatMap(n -> beanContext.findBean(AiServiceConfiguration.class, Qualifiers.byName(n)))
+            .or(() -> beanContext.findBean(AiServiceConfiguration.class, Qualifiers.byName(AiServiceConfiguration.DEFAULT)))
+            .orElse(null);
+        if (configuration == null) {
+            return;
+        }
+        if (configuration.getMaxToolCallingRoundTrips() != null) {
+            builder.maxToolCallingRoundTrips(configuration.getMaxToolCallingRoundTrips());
+        }
+        if (configuration.isExecuteToolsConcurrently()) {
+            String executorName = configuration.getToolExecutor();
+            if (executorName != null) {
+                builder.executeToolsConcurrently(beanContext.getBean(ExecutorService.class, Qualifiers.byName(executorName)));
+            } else {
+                builder.executeToolsConcurrently();
+            }
+        }
     }
 
     private static List<Argument<?>> returnTypes(BeanDefinition<?> beanDefinition) {

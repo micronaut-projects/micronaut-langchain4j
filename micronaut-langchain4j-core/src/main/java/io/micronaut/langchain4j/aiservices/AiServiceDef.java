@@ -19,6 +19,7 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.langchain4j.annotation.AiService;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,6 +30,7 @@ import java.util.Set;
  * @param name           The name
  * @param tools          The tools
  * @param customizer     The customizer class
+ * @param toolProviders  The names of the tool provider beans, or {@code null} to use the default tool provider
  * @param <T>            The generic type
  * @see AiService
  */
@@ -41,6 +43,23 @@ public record AiServiceDef<T>(
     @Nullable
     Set<Class<?>> tools,
     @Nullable
-    Class<AiServiceCustomizer<T>> customizer
+    Class<AiServiceCustomizer<T>> customizer,
+    @Nullable
+    List<String> toolProviders
 ) {
+
+    /**
+     * Creates a definition that uses the default tool provider.
+     *
+     * @param beanDefinition The bean definition
+     * @param type           The type
+     * @param name           The name
+     * @param tools          The tools
+     * @param customizer     The customizer class
+     * @deprecated Use the canonical constructor
+     */
+    @Deprecated(since = "2.4.0", forRemoval = true)
+    public AiServiceDef(BeanDefinition<T> beanDefinition, Class<T> type, @Nullable String name, @Nullable Set<Class<?>> tools, @Nullable Class<AiServiceCustomizer<T>> customizer) {
+        this(beanDefinition, type, name, tools, customizer, null);
+    }
 }
