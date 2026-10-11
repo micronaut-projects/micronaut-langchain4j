@@ -34,3 +34,7 @@ The Hugging Face models use the Micronaut HTTP client instead of LangChain4j's J
 ==== LangChain4j Community 1.20
 
 The LangChain4j community modules (Redis, Neo4j, OCI GenAI) have been upgraded from `1.16.0-beta26` to `1.20.0-beta30`. Refer to the https://github.com/langchain4j/langchain4j-community/releases[LangChain4j Community release notes] for changes.
+
+==== Nullness annotations
+
+Every package of Micronaut LangChain4j is now annotated with JSpecify `@NullMarked`: the types of the API are non-null, unless annotated with `@Nullable`. Kotlin reads these annotations, so Kotlin code sees non-null and nullable types where it previously saw platform types. For example, the getters of the optional properties of `PgVectorEmbeddingStoreConfig` now return nullable types.
