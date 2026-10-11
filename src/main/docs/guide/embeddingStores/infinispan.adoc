@@ -1,0 +1,24 @@
+Add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-store-infinispan[]
+
+.Example Configuration
+[configuration]
+----
+langchain4j.infinispan.host: localhost
+langchain4j.infinispan.port: 11222
+langchain4j.infinispan.client-intelligence: HASH_DISTRIBUTION_AWARE
+langchain4j.infinispan.embedding-store.cache-name: embeddings
+langchain4j.infinispan.embedding-store.dimension: 384
+----
+
+NOTE: Use Infinispan Server 16.x with this integration. The currently resolved Hot Rod client is
+16.0.6, and Infinispan Server 15.2.6 rejects the automatic schema-registration task
+(`@@schemas@createOrUpdate`) that the LangChain4j embedding store invokes during startup. The
+integration exposes only the cache name, dimension, and Hot Rod configuration; it does not expose
+the embedding store's schema-registration setting. Compatibility with Infinispan Server releases
+earlier than 15.2.6 has not been verified.
+
+Set `langchain4j.infinispan.client-intelligence` to `BASIC` when connecting through a proxy or
+load balancer that does not expose the addresses advertised by the Infinispan cluster. Micronaut
+Test Resources automatically supplies `BASIC` for its Docker container.
