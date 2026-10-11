@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    testImplementation(projects.testSuiteUtils)
     api(libs.langchain4j.ollama) {
         exclude(group = "dev.langchain4j", module = "langchain4j-http-client-jdk")
     }

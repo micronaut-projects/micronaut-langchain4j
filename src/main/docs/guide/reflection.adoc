@@ -7,3 +7,24 @@ LangChain4j implements AI services and agents with `java.lang.reflect.Proxy` and
 * *Structured outputs and tool types*: LangChain4j derives the JSON schema of the structured outputs of AI services and agents (the records or POJOs their methods return), and of the parameters and results of tools, from their fields, and maps them with Jackson, reflectively. The processor also writes the native image metadata of these types and of the types of their fields, so they need neither `@ReflectiveAccess` nor hand-written metadata. With `micronaut-langchain4j-serde` they are mapped with Micronaut Serialization instead of Jackson, see <<serde, Micronaut Serialization>>.
 
 NOTE: The processor must be on the annotation processor path of the classes declaring the services and agents (`annotationProcessor("io.micronaut.langchain4j:micronaut-langchain4j-processor")` in Gradle) for the native image metadata to be generated.
+
+=== Native Image Support by Module
+
+Several LangChain4j providers map their REST APIs with Jackson, reflectively, and do not ship native image metadata. The Micronaut modules of these providers (Ollama, Mistral AI, Google AI Gemini and Hugging Face) ship the reachability metadata of their request and response types, so applications need no reflection configuration for them either. The `test-suite-graal` project verifies the following in a native image:
+
+|===
+|Module |Status
+
+|`micronaut-langchain4j-openai` |Tested: chat, streaming chat, embeddings
+|`micronaut-langchain4j-anthropic` |Tested: chat
+|`micronaut-langchain4j-mistralai` |Tested: chat, streaming chat, embeddings
+|`micronaut-langchain4j-ollama` |Tested: chat, streaming chat, embeddings, tool calling through an AI service
+|`micronaut-langchain4j-googleai-gemini` |Tested: chat, streaming chat, embeddings
+|`micronaut-langchain4j-bedrock` |Tested: model creation. The AWS SDK provides its own native image metadata.
+|`micronaut-langchain4j-hugging-face` |Reachability metadata provided, not tested
+|`micronaut-langchain4j-azure` |Not tested. Known issue: the Azure SDK (`azure-core`) initializes SLF4J and Logback at image build time, which fails the image build when another class with a static logger is also initialized at build time (seen together with `micronaut-langchain4j-agentic`)
+|`micronaut-langchain4j-vertexai`, `micronaut-langchain4j-vertexai-gemini`, `micronaut-langchain4j-oci-genai` |Not tested: they rely on the native image support of the Google Cloud and OCI SDKs
+|`micronaut-langchain4j-jlama` |Not supported: Jlama runs the model in the JVM with the Vector API
+|In-memory embedding store (core) |Tested
+|Other embedding stores |Not tested: they rely on the native image support of their client libraries
+|===
