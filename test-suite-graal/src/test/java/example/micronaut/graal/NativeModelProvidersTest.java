@@ -5,6 +5,7 @@ import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.chat.response.StreamingChatResponseHandler;
 import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.model.scoring.ScoringModel;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import org.junit.jupiter.api.AfterAll;
@@ -61,6 +62,17 @@ class NativeModelProvidersTest {
             Map.entry("langchain4j.ollama.streaming-chat-models.ollama.model-name", "test"),
             Map.entry("langchain4j.google-ai-gemini.streaming-chat-models.gemini.model-name", "test"),
             Map.entry("langchain4j.google-ai-gemini.streaming-chat-models.gemini.base-url", server.url("gemini")),
+            Map.entry("langchain4j.cohere.api-key", "test"),
+            Map.entry("langchain4j.cohere.base-url", server.url("cohere/")),
+            Map.entry("langchain4j.cohere.scoring-models.cohere.model-name", "test"),
+            Map.entry("langchain4j.cohere.embedding-models.cohere.model-name", "test"),
+            Map.entry("langchain4j.jina.api-key", "test"),
+            Map.entry("langchain4j.jina.base-url", server.url("jina/")),
+            Map.entry("langchain4j.jina.scoring-models.jina.model-name", "test"),
+            Map.entry("langchain4j.voyage-ai.api-key", "test"),
+            Map.entry("langchain4j.voyage-ai.base-url", server.url("voyage/")),
+            Map.entry("langchain4j.voyage-ai.scoring-models.voyage.model-name", "test"),
+            Map.entry("langchain4j.voyage-ai.embedding-models.voyage.model-name", "test"),
             Map.entry("langchain4j.bedrock.region", "us-east-1"),
             Map.entry("langchain4j.bedrock.chat-models.bedrock.model-id", "anthropic.claude-3-haiku-20240307-v1:0")
         ));
@@ -144,6 +156,18 @@ class NativeModelProvidersTest {
     void bedrock() {
         // the AWS SDK client is created, no request is sent
         only(context.getBeansOfType(ChatModel.class, Qualifiers.byName("bedrock")));
+    }
+
+    @Test
+    void scoringModels() {
+        for (String name : new String[] {"cohere", "jina", "voyage"}) {
+            ScoringModel model = only(context.getBeansOfType(ScoringModel.class, Qualifiers.byName(name)));
+            assertEquals(java.util.List.of(0.9, 0.1), model.scoreAll(
+                java.util.List.of(dev.langchain4j.data.segment.TextSegment.from("Micronaut"), dev.langchain4j.data.segment.TextSegment.from("Other")),
+                "framework?").content(), name);
+        }
+        assertEmbedding("cohere");
+        assertEmbedding("voyage");
     }
 
     private static void assertChat(String name) {

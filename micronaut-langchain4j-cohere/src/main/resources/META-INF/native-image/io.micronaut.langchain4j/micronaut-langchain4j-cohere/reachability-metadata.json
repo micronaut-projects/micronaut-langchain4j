@@ -1,0 +1,20 @@
+{
+  "reflection": [
+    {"type": "dev.langchain4j.model.cohere.BilledUnits", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.cohere.EmbedRequest", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.cohere.EmbedRequest$EmbedRequestBuilder", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.cohere.EmbedResponse", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.cohere.EmbedV2Request", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.cohere.EmbedV2Request$Builder", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.cohere.EmbedV2Request$ImageUrl", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.cohere.EmbedV2Request$V2Content", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.cohere.EmbedV2Request$V2Input", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.cohere.EmbedV2Response", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.cohere.EmbedV2Response$Embeddings", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.cohere.Meta", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.cohere.RerankRequest", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.cohere.RerankRequest$RerankRequestBuilder", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.cohere.RerankResponse", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.cohere.Result", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true}
+  ]
+}

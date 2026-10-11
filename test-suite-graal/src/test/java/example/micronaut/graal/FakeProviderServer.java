@@ -70,6 +70,19 @@ final class FakeProviderServer implements AutoCloseable {
 
         """;
 
+    private static final String COHERE_RERANK = """
+        {"id":"1","results":[{"index":1,"relevance_score":0.1},{"index":0,"relevance_score":0.9}],"meta":{"billed_units":{"search_units":1}}}
+        """;
+    private static final String COHERE_EMBED = """
+        {"id":"1","texts":["Micronaut"],"embeddings":{"float":[[0.1,0.2,0.3]]},"meta":{"billed_units":{"input_tokens":1}}}
+        """;
+    private static final String JINA_RERANK = """
+        {"model":"test","results":[{"index":1,"relevance_score":0.1},{"index":0,"relevance_score":0.9}],"usage":{"total_tokens":1}}
+        """;
+    private static final String VOYAGE_RERANK = """
+        {"object":"list","data":[{"index":1,"relevance_score":0.1},{"index":0,"relevance_score":0.9}],"model":"test","usage":{"total_tokens":1}}
+        """;
+
     private final HttpServer server;
 
     FakeProviderServer() {
@@ -94,7 +107,11 @@ final class FakeProviderServer implements AutoCloseable {
         String path = exchange.getRequestURI().getPath();
         String contentType = "application/json";
         String body;
-        if (path.endsWith("/chat/completions")) {
+        if (path.endsWith("rerank")) {
+            body = path.contains("/cohere/") ? COHERE_RERANK : path.contains("/jina/") ? JINA_RERANK : VOYAGE_RERANK;
+        } else if (path.contains("/cohere/") && path.endsWith("embed")) {
+            body = COHERE_EMBED;
+        } else         if (path.endsWith("/chat/completions")) {
             // OpenAI, Mistral AI and Azure OpenAI share the format
             body = stream ? OPENAI_STREAM : OPENAI_CHAT;
             contentType = stream ? "text/event-stream" : contentType;
