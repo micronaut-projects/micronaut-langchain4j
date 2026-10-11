@@ -43,6 +43,7 @@ import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.langchain4j.jsonschema.StructuredOutputSchemas;
 import io.micronaut.langchain4j.tools.ToolRegistry;
 import io.micronaut.langchain4j.utils.RetrievalUtils;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -136,15 +137,23 @@ public class AiServiceFactory {
 
     private void configureToolProviders(AiServiceDef<Object> serviceDef, AiServices<Object> builder) {
         List<String> names = serviceDef.toolProviders();
-        if (names == null) {
+        List<String> mcpClients = serviceDef.mcpClients();
+        List<ToolProvider> toolProviders = new ArrayList<>();
+        if (names != null) {
+            names.stream()
+                .map(toolProviderName -> beanContext.getBean(ToolProvider.class, Qualifiers.byName(toolProviderName)))
+                .forEach(toolProviders::add);
+        } else if (mcpClients == null) {
             // like the other components: the provider named after the service, otherwise the default one
             String name = serviceDef.name();
             Optional<ToolProvider> toolProvider = name != null ? beanContext.findBean(ToolProvider.class, Qualifiers.byName(name)) : Optional.empty();
-            toolProvider.or(this::defaultToolProvider).ifPresent(builder::toolProvider);
-        } else if (!names.isEmpty()) {
-            builder.toolProviders(names.stream()
-                .map(toolProviderName -> beanContext.getBean(ToolProvider.class, Qualifiers.byName(toolProviderName)))
-                .toList());
+            toolProvider.or(this::defaultToolProvider).ifPresent(toolProviders::add);
+        }
+        if (mcpClients != null && !mcpClients.isEmpty()) {
+            toolProviders.add(McpToolProviders.create(beanContext, serviceDef.type(), mcpClients));
+        }
+        if (!toolProviders.isEmpty()) {
+            builder.toolProviders(toolProviders);
         }
     }
 
