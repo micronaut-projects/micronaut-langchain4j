@@ -1,0 +1,28 @@
+This section documents breaking changes between Micronaut LangChain4j versions.
+
+=== 2.4.0
+
+==== Updated default model names
+
+The default model names of several providers referenced models that are retired or about to be retired. They now default to current models:
+
+|===
+|Provider |Model type |Previous default |New default
+
+|Anthropic |Chat |`claude-3-haiku-20240307` |`claude-haiku-4-5-20251001`
+|Mistral AI |Chat |`mistral-tiny` |`mistral-small-latest`
+|OpenAI |Chat |`gpt-3.5-turbo` |`gpt-4.1-mini`
+|OpenAI |Embedding |`text-embedding-ada-002` |`text-embedding-3-small`
+|OpenAI |Image |`dall-e-3` |`gpt-image-1`
+|Vertex AI Gemini |Chat |`gemini-1.5-flash-001` |`gemini-2.5-flash`
+|===
+
+Set the `model-name` property of the model to keep using a previous model. Note that embeddings produced by different embedding models are not compatible, so applications that stored embeddings created with the previous OpenAI default must either set `model-name: text-embedding-ada-002` or re-embed their content.
+
+==== Bedrock `model` property removed
+
+The `langchain4j.bedrock.model` property was never applied to the Bedrock models. It has been removed. Configure the model with `langchain4j.bedrock.chat-model.model-id` (and the equivalent property of the streaming chat and embedding models) instead.
+
+==== LangChain4j Community 1.20
+
+The LangChain4j community modules (Redis, Neo4j, OCI GenAI) have been upgraded from `1.16.0-beta26` to `1.20.0-beta30`. Refer to the https://github.com/langchain4j/langchain4j-community/releases[LangChain4j Community release notes] for changes.

@@ -37,5 +37,6 @@ embeddingStores:
   pgvector: PGVector
   redis: Redis
   qdrant: Qdrant
+breaks: Breaking Changes
 repository: Repository
 releaseHistory: Release History
