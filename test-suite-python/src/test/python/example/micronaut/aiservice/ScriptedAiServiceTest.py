@@ -8,6 +8,7 @@ from java.util.concurrent import TimeUnit
 from reactor.core.publisher import Flux
 
 from example.micronaut.aiservice.Friend import Friend
+from example.micronaut.aiservice.customizer.Concierge import Concierge
 from example.micronaut.aiservice.reactive.AsyncFriend import AsyncFriend
 from example.micronaut.aiservice.tools.CompanyBot import CompanyBot
 from example.micronaut.aiservice.tools.WeatherAssistant import WeatherAssistant
@@ -20,6 +21,7 @@ from dev.langchain4j.guardrail import InputGuardrailException
 @MicronautTest(startApplication=False, environments=["scripted-test"])
 class ScriptedAiServiceTest:
     friend: Annotated[Friend, Inject]
+    concierge: Annotated[Concierge, Inject]
     async_friend: Annotated[AsyncFriend, Inject]
     bot: Annotated[CompanyBot, Inject]
     weather: Annotated[WeatherAssistant, Inject]
@@ -56,3 +58,8 @@ class ScriptedAiServiceTest:
         assert self.async_friend.chat("Hello").get(10, TimeUnit.SECONDS) == "system:You are a good friend of mine. Answer using slang."
         streamed = Flux.from_(self.async_friend.stream("Hello")).collectList().block(Duration.ofSeconds(10))
         assert list(streamed) == ["micro", "naut"], streamed
+
+    @Test
+    def test_customizer(self):
+        # the AiServiceCustomizer bean written in Python transforms the system message of the service
+        assert self.concierge.ask("Where is breakfast?") == "system:You are the concierge of a hotel. Keep your answers short."
