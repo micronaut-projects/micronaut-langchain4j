@@ -15,6 +15,7 @@ dependencies {
     implementation(mn.micronaut.http.client.core)
     implementation(mnJsonSchema.micronaut.json.schema.utils)
     implementation(project(":micronaut-langchain4j-agentic"))
+    implementation(libs.langchain4j.agentic.mcp)
     implementation(project(":micronaut-langchain4j-openai"))
     implementation(project(":micronaut-langchain4j-google-genai"))
     testImplementation(project(":micronaut-langchain4j-ollama"))
