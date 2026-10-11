@@ -9,5 +9,6 @@ dependencies {
     implementation(projects.micronautLangchain4jCore)
     testImplementation(mn.micronaut.inject.java.test)
     testImplementation(libs.langchain4j.ollama)
+    testImplementation(projects.micronautLangchain4jAgentic)
     testImplementation(mnSourcegen.micronaut.sourcegen.generator.java)
 }

@@ -8,6 +8,7 @@ agenticService: Agentic Service
 structuredOutput: Structured Outputs
 testing: Testing
 tools: Tools
+reflection: Reflection and GraalVM Native Image
 chatModels:
   title: Chat Language Models
   chatModelExample: ChatModel Example
