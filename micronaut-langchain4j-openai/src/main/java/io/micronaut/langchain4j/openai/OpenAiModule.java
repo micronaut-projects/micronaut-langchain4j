@@ -15,16 +15,22 @@
  */
 package io.micronaut.langchain4j.openai;
 
+import dev.langchain4j.model.audio.AudioTranscriptionModel;
+import dev.langchain4j.model.audio.TextToSpeechModel;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.image.ImageModel;
 import dev.langchain4j.model.moderation.ModerationModel;
+import dev.langchain4j.model.openai.OpenAiAudioTranscriptionModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiEmbeddingModel;
 import dev.langchain4j.model.openai.OpenAiImageModel;
 import dev.langchain4j.model.openai.OpenAiModerationModel;
+import dev.langchain4j.model.openai.OpenAiResponsesChatModel;
+import dev.langchain4j.model.openai.OpenAiResponsesStreamingChatModel;
 import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
+import dev.langchain4j.model.openai.OpenAiTextToSpeechModel;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.langchain4j.annotation.Lang4jConfig;
 import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
@@ -56,6 +62,30 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
             kind = EmbeddingModel.class,
             impl = OpenAiEmbeddingModel.class,
             defaultModelName = OpenAiModule.DEFAULT_EMBEDDING_MODEL
+        ),
+        @Model(
+            kind = AudioTranscriptionModel.class,
+            impl = OpenAiAudioTranscriptionModel.class,
+            defaultModelName = OpenAiModule.DEFAULT_TRANSCRIPTION_MODEL,
+            configRequired = true
+        ),
+        @Model(
+            kind = TextToSpeechModel.class,
+            impl = OpenAiTextToSpeechModel.class,
+            defaultModelName = OpenAiModule.DEFAULT_TEXT_TO_SPEECH_MODEL,
+            configRequired = true
+        ),
+        @Model(
+            kind = ChatModel.class,
+            impl = OpenAiResponsesChatModel.class,
+            defaultModelName = OpenAiModule.DEFAULT_CHAT_MODEL,
+            configRequired = true
+        ),
+        @Model(
+            kind = StreamingChatModel.class,
+            impl = OpenAiResponsesStreamingChatModel.class,
+            defaultModelName = OpenAiModule.DEFAULT_CHAT_MODEL,
+            configRequired = true
         )
     },
     properties = {
@@ -75,6 +105,10 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
             name = "httpClientBuilder",
             injected = true
         ),
+        @Lang4jConfig.Property(
+            name = "httpClientProvider",
+            injected = true
+        ),
         @Lang4jConfig.Property(name = "baseUrl", common = true, required = true, defaultValue = "https://api.openai.com/v1/"),
         @Lang4jConfig.Property(name = "apiKey", common = true, required = true),
         @Lang4jConfig.Property(name = "organizationId", common = true),
@@ -87,4 +121,6 @@ final class OpenAiModule {
     public static final String DEFAULT_CHAT_MODEL = "gpt-4.1-mini";
     public static final String DEFAULT_IMAGE_MODEL = "gpt-image-1";
     public static final String DEFAULT_EMBEDDING_MODEL = "text-embedding-3-small";
+    public static final String DEFAULT_TRANSCRIPTION_MODEL = "gpt-4o-mini-transcribe";
+    public static final String DEFAULT_TEXT_TO_SPEECH_MODEL = "gpt-4o-mini-tts";
 }
