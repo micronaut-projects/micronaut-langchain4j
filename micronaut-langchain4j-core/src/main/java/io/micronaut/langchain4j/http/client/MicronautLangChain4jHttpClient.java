@@ -34,6 +34,7 @@ import io.micronaut.context.exceptions.BeanContextException;
 import io.micronaut.core.type.Argument;
 import io.micronaut.core.io.buffer.ByteArrayBufferFactory;
 import io.micronaut.http.ByteBodyHttpResponse;
+import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.MutableHttpRequest;
 import io.micronaut.http.body.ByteBody;
@@ -93,6 +94,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
     private final @Nullable BeanProvider<ByteBodyFactory> byteBodyFactoryProvider;
     private final @Nullable BeanProvider<ExecutorService> blockingExecutorProvider;
     private final @Nullable BeanContext beanContext;
+    private final @Nullable BeanProvider<ModelAuthProvider> authProviders;
     private final @Nullable Duration connectTimeout;
     private final @Nullable Duration readTimeout;
     private final Map<URI, io.micronaut.http.client.HttpClient> configuredManagedClients = new ConcurrentHashMap<>();
@@ -104,6 +106,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         @Nullable BeanProvider<ByteBodyFactory> byteBodyFactoryProvider,
         @Nullable BeanProvider<ExecutorService> blockingExecutorProvider,
         @Nullable BeanContext beanContext,
+        @Nullable BeanProvider<ModelAuthProvider> authProviders,
         @Nullable Duration connectTimeout,
         @Nullable Duration readTimeout) {
         this.httpClientProvider = httpClientProvider;
@@ -111,12 +114,14 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         this.byteBodyFactoryProvider = byteBodyFactoryProvider;
         this.blockingExecutorProvider = blockingExecutorProvider;
         this.beanContext = beanContext;
+        this.authProviders = authProviders;
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
     }
 
     @Override
-    public SuccessfulHttpResponse execute(HttpRequest request) throws HttpException, RuntimeException {
+    public SuccessfulHttpResponse execute(HttpRequest modelRequest) throws HttpException, RuntimeException {
+        HttpRequest request = authorize(modelRequest);
         try (ClientHandle client = client(request.url())) {
             io.micronaut.http.HttpResponse<?> response = exchange(client, request);
             try {
@@ -140,7 +145,8 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
      * Used by the non-blocking chat models (and the asynchronous AI services) of LangChain4j.
      */
     @Override
-    public CompletableFuture<SuccessfulHttpResponse> executeAsync(HttpRequest request) {
+    public CompletableFuture<SuccessfulHttpResponse> executeAsync(HttpRequest modelRequest) {
+        HttpRequest request = authorize(modelRequest);
         ClientHandle client;
         try {
             client = client(request.url());
@@ -189,7 +195,8 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
      * request.
      */
     @Override
-    public Flow.Publisher<HttpStreamingEvent> stream(HttpRequest request, ServerSentEventParser parser) {
+    public Flow.Publisher<HttpStreamingEvent> stream(HttpRequest modelRequest, ServerSentEventParser parser) {
+        HttpRequest request = authorize(modelRequest);
         Flux<HttpStreamingEvent> events = Flux.create(sink -> {
             AtomicReference<ServerSentEventParsingHandle> handle = new AtomicReference<>();
             sink.onCancel(() -> {
@@ -238,7 +245,8 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
     }
 
     @Override
-    public void execute(HttpRequest request, ServerSentEventParser parser, ServerSentEventListener listener) {
+    public void execute(HttpRequest modelRequest, ServerSentEventParser parser, ServerSentEventListener listener) {
+        HttpRequest request = authorize(modelRequest);
         CompletableFuture.runAsync(() -> {
             try {
                 ClientHandle client = client(request.url());
@@ -267,6 +275,41 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
                 safeOnError(listener, e);
             }
         }, sseExecutor());
+    }
+
+    /**
+     * Applies the first credentials returned by the {@link ModelAuthProvider} beans, on the thread that sends the
+     * request so that they can read the context of the current HTTP request.
+     */
+    private HttpRequest authorize(HttpRequest request) {
+        if (authProviders == null) {
+            return request;
+        }
+        ModelAuthRequest authRequest = null;
+        for (ModelAuthProvider authProvider : authProviders) {
+            if (authRequest == null) {
+                authRequest = new ModelAuthRequest(request.method().name(), URI.create(request.url()), request.headers());
+            }
+            String authorization = authProvider.authorization(authRequest);
+            if (authorization != null) {
+                Map<String, List<String>> headers = new LinkedHashMap<>();
+                request.headers().forEach((name, values) -> {
+                    if (!HttpHeaders.AUTHORIZATION.equalsIgnoreCase(name)) {
+                        headers.put(name, values);
+                    }
+                });
+                headers.put(HttpHeaders.AUTHORIZATION, List.of(authorization));
+                return HttpRequest.builder()
+                    .method(request.method())
+                    .url(request.url())
+                    .headers(headers)
+                    .formDataFields(request.formDataFields())
+                    .formDataFiles(request.formDataFiles())
+                    .body(request.body())
+                    .build();
+            }
+        }
+        return request;
     }
 
     private ClientHandle client(String url) {
