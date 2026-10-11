@@ -96,6 +96,7 @@ langchain4j-agentic = { module = 'dev.langchain4j:langchain4j-agentic' }
 langchain4j-http-client = { module = 'dev.langchain4j:langchain4j-http-client' }
 langchain4j-mcp = { module = 'dev.langchain4j:langchain4j-mcp' }
 langchain4j-cohere = { module = 'dev.langchain4j:langchain4j-cohere' }
+langchain4j-google-genai = { module = 'dev.langchain4j:langchain4j-google-genai' }
 langchain4j-jina = { module = 'dev.langchain4j:langchain4j-jina' }
 langchain4j-voyage-ai = { module = 'dev.langchain4j:langchain4j-voyage-ai' }
 langchain4j-micrometer-metrics = { module = 'dev.langchain4j:langchain4j-micrometer-metrics' }
