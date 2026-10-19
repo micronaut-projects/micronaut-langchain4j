@@ -64,10 +64,12 @@ class DefaultChatMemoryProviderTest {
     }
 
     @Test
-    void ignoresTheDisabledStores() {
+    void usesTheInMemoryStoreWhenSeveralPersistentStoresExist() {
+        // the stores are not created to find out which are enabled: an unconfigured one would fail
         try (ApplicationContext context = ApplicationContext.run(Map.of("spec.name", "persistent", "spec.disabled", true))) {
             context.getBean(ChatMemoryProvider.class).get("conversation").add(UserMessage.from("Hello"));
-            assertEquals(1, context.getBean(RecordingStore.class).updates.size());
+            assertTrue(context.getBean(RecordingStore.class).updates.isEmpty());
+            assertEquals(1, context.getBean(ChatMemoryStore.class, io.micronaut.inject.qualifiers.Qualifiers.byName("inMemory")).getMessages("conversation").size());
         }
     }
 
