@@ -22,7 +22,10 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.observation.ObservationRegistry;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.condition.Condition;
+import io.micronaut.context.condition.ConditionContext;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.reflect.ClassUtils;
 import io.micronaut.core.util.StringUtils;
 import jakarta.inject.Singleton;
 
@@ -43,8 +46,11 @@ final class MicrometerChatModelListenerFactory {
 
     static final String ENABLED = "langchain4j.micrometer.enabled";
 
+    private static final String OBSERVATION_LISTENER = "dev.langchain4j.observation.listener.ObservationChatModelListener";
+    private static final String OBSERVATION_REGISTRY = "io.micrometer.observation.ObservationRegistry";
+
     @Singleton
-    @Requires(missingBeans = ObservationRegistry.class)
+    @Requires(condition = ObservationListenerUnavailable.class)
     MicrometerMetricsChatModelListener metricsChatModelListener(MeterRegistry meterRegistry) {
         return new MicrometerMetricsChatModelListener(meterRegistry);
     }
@@ -54,5 +60,19 @@ final class MicrometerChatModelListenerFactory {
     @Requires(beans = ObservationRegistry.class)
     ObservationChatModelListener observationChatModelListener(ObservationRegistry observationRegistry, MeterRegistry meterRegistry) {
         return new ObservationChatModelListener(observationRegistry, meterRegistry);
+    }
+
+    /**
+     * Matches when the {@link ObservationChatModelListener} cannot be created, because {@code langchain4j-observation}
+     * or the {@link ObservationRegistry} bean is missing, so that the metrics are still recorded.
+     */
+    static final class ObservationListenerUnavailable implements Condition {
+        @Override
+        public boolean matches(ConditionContext context) {
+            ClassLoader classLoader = context.getBeanContext().getClassLoader();
+            return !ClassUtils.isPresent(OBSERVATION_LISTENER, classLoader)
+                || !ClassUtils.isPresent(OBSERVATION_REGISTRY, classLoader)
+                || !context.getBeanContext().containsBean(ObservationRegistry.class);
+        }
     }
 }
