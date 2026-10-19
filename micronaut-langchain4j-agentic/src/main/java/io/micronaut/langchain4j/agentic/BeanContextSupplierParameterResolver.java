@@ -27,7 +27,10 @@ import jakarta.inject.Named;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Parameter;
+import java.util.Collections;
+import java.util.IdentityHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -36,7 +39,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * {@link Named}.
  *
  * <p>LangChain4j keeps a single global list of resolvers and resolves some suppliers lazily, when the agent is
- * invoked, so the resolver remembers the bean context that created each agent type.</p>
+ * invoked, with the {@link Context} it passed to {@link #supports(Context)} when the agent was created. The resolver
+ * therefore binds each of these contexts (by identity, the same agent type may be created by several bean contexts) to
+ * the bean context that created the agent.</p>
  */
 @Internal
 final class BeanContextSupplierParameterResolver implements SupplierParameterResolver {
@@ -48,7 +53,7 @@ final class BeanContextSupplierParameterResolver implements SupplierParameterRes
         DeclarativeUtil.addSupplierParameterResolver(INSTANCE);
     }
 
-    private final Map<Class<?>, BeanContext> contexts = new ConcurrentHashMap<>();
+    private final Map<BeanContext, Set<Context>> bindings = new ConcurrentHashMap<>();
 
     private BeanContextSupplierParameterResolver() {
     }
@@ -74,12 +79,14 @@ final class BeanContextSupplierParameterResolver implements SupplierParameterRes
     }
 
     /**
-     * Forgets the agent types created by a bean context that is being closed.
+     * Forgets the supplier parameters of the agents created by a bean context that is being closed.
      *
      * @param beanContext The bean context
      */
-    static void release(BeanContext beanContext) {
-        INSTANCE.contexts.values().removeIf(context -> context == beanContext);
+    static void release(@Nullable BeanContext beanContext) {
+        if (beanContext != null) {
+            INSTANCE.bindings.remove(beanContext);
+        }
     }
 
     @Override
@@ -90,7 +97,8 @@ final class BeanContextSupplierParameterResolver implements SupplierParameterRes
             return false;
         }
         if (beanContext.containsBean(parameter.getType(), qualifier(parameter))) {
-            contexts.put(context.declaringAgentClass(), beanContext);
+            bindings.computeIfAbsent(beanContext, key -> Collections.synchronizedSet(Collections.newSetFromMap(new IdentityHashMap<>())))
+                .add(context);
             return true;
         }
         return false;
@@ -98,15 +106,25 @@ final class BeanContextSupplierParameterResolver implements SupplierParameterRes
 
     @Override
     public Object resolve(Context context) {
-        BeanContext beanContext = CREATING.get();
+        BeanContext beanContext = boundContext(context);
         if (beanContext == null) {
-            beanContext = contexts.get(context.declaringAgentClass());
+            beanContext = CREATING.get();
         }
         if (beanContext == null) {
             throw new IllegalStateException("The bean context that created the agent " + context.declaringAgentClass().getName() + " is closed");
         }
         Parameter parameter = context.parameter();
         return beanContext.getBean(parameter.getType(), qualifier(parameter));
+    }
+
+    @Nullable
+    private BeanContext boundContext(Context context) {
+        for (Map.Entry<BeanContext, Set<Context>> binding : bindings.entrySet()) {
+            if (binding.getValue().contains(context)) {
+                return binding.getKey();
+            }
+        }
+        return null;
     }
 
     private static boolean isBeanParameter(Parameter parameter) {
