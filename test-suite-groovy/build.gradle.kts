@@ -12,6 +12,7 @@ dependencies {
     compileOnly(mnJsonSchema.micronaut.json.schema.processor)
     implementation(project(":micronaut-langchain4j-core"))
     implementation(mn.reactive.streams)
+    implementation(mn.micronaut.http.client.core)
     implementation(mnJsonSchema.micronaut.json.schema.utils)
     implementation(project(":micronaut-langchain4j-agentic"))
     implementation(project(":micronaut-langchain4j-openai"))
