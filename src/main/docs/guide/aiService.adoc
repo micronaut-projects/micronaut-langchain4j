@@ -118,6 +118,22 @@ The content retriever retrieves 10 segments by embedding similarity, and the sco
 include::{includedir}configurationProperties/io.micronaut.langchain4j.rag.RetrievalAugmentorConfiguration.adoc[]
 
 [[aiServiceCustomization]]
+[[multimodal]]
+=== Multimodal Parameters
+
+An AI service can send images, PDF files, audio and video to the models that support them, together with the user message. Annotate a `String`, `URI` or `URL` parameter, or a collection of them, with ann:langchain4j.annotation.ImageUrl[], ann:langchain4j.annotation.PdfUrl[], ann:langchain4j.annotation.AudioUrl[] or ann:langchain4j.annotation.VideoUrl[]: the argument is sent as the LangChain4j content of that type.
+
+snippet::example.micronaut.aiservice.multimodal.PictureDescriber[source=main]
+
+<1> The picture at the URL is sent after the text of the user message. Like any content parameter of a LangChain4j AI service, the parameter is also annotated with `@UserMessage`.
+<2> The content parameter can be combined with a user message template.
+
+Parameters of the LangChain4j content types (`ImageContent`, `PdfFileContent`, `AudioContent`, `VideoContent`, or a `List` of `Content`) annotated with `@UserMessage` are also supported, for example to send an image read from a file.
+
+A test can check the contents that the model receives:
+
+snippet::example.micronaut.aiservice.multimodal.PictureDescriberTest[source=test]
+
 === Customizing AI Services
 
 An api:langchain4j.aiservices.AiServiceCustomizer[] bean customizes the LangChain4j `AiServices` builder of an AI service before the service is built, for any setting that the annotations and the configuration do not cover:
