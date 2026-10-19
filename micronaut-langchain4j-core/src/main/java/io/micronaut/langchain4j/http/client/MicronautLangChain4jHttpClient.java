@@ -324,7 +324,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         RawHttpClient rawHttpClient = client.rawHttpClient();
         io.micronaut.http.HttpResponse<?> response = rawHttpClient != null
             ? rawExchange(rawHttpClient, request, handle)
-            : standardExchange(client.httpClient(), request);
+            : standardExchange(client.httpClient(), request, handle);
         if (response == null) {
             return;
         }
@@ -459,28 +459,50 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
      */
     private io.micronaut.http.@Nullable HttpResponse<?> rawExchange(RawHttpClient client, HttpRequest request, RawStreamHandle handle) {
         MutableHttpRequest<Object> micronautRequest = micronautRequest(request);
-        Duration timeout = readTimeout == null ? DEFAULT_READ_TIMEOUT : readTimeout;
         try (CloseableByteBody requestBody = body(request)) {
-            CompletableFuture<? extends io.micronaut.http.HttpResponse<?>> exchange =
-                Mono.from(client.exchange(micronautRequest, requestBody, Thread.currentThread())).toFuture();
-            handle.exchange(exchange);
-            try {
-                return Objects.requireNonNull(exchange.get(timeout.toMillis(), TimeUnit.MILLISECONDS), NO_RESPONSE);
-            } catch (CancellationException _) {
-                return null;
-            } catch (java.util.concurrent.TimeoutException e) {
-                exchange.cancel(true);
-                throw new TimeoutException("Request timed out after " + timeout, e);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                exchange.cancel(true);
-                throw new LangChain4jException("Interrupted waiting for the response", e);
-            } catch (ExecutionException e) {
-                if (e.getCause() instanceof RuntimeException runtimeException) {
-                    throw runtimeException;
-                }
-                throw new LangChain4jException("Error sending the request", e.getCause());
+            return awaitExchange(client.exchange(micronautRequest, requestBody, Thread.currentThread()), handle);
+        }
+    }
+
+    /**
+     * Sends a streamed request with a client that has no raw exchange, whose pending exchange the handle can cancel
+     * while waiting for the response headers.
+     *
+     * @return The response, or {@code null} if the stream was cancelled before the response arrived
+     */
+    private io.micronaut.http.@Nullable HttpResponse<?> standardExchange(
+        io.micronaut.http.client.HttpClient client,
+        HttpRequest request,
+        RawStreamHandle handle) {
+        try {
+            return awaitExchange(client.exchange(standardRequest(request), Argument.STRING, Argument.STRING), handle);
+        } catch (HttpClientResponseException e) {
+            return e.getResponse();
+        }
+    }
+
+    private io.micronaut.http.@Nullable HttpResponse<?> awaitExchange(
+        Publisher<? extends io.micronaut.http.HttpResponse<?>> responsePublisher,
+        RawStreamHandle handle) {
+        Duration timeout = readTimeout == null ? DEFAULT_READ_TIMEOUT : readTimeout;
+        CompletableFuture<? extends io.micronaut.http.HttpResponse<?>> exchange = Mono.from(responsePublisher).toFuture();
+        handle.exchange(exchange);
+        try {
+            return Objects.requireNonNull(exchange.get(timeout.toMillis(), TimeUnit.MILLISECONDS), NO_RESPONSE);
+        } catch (CancellationException _) {
+            return null;
+        } catch (java.util.concurrent.TimeoutException e) {
+            exchange.cancel(true);
+            throw new TimeoutException("Request timed out after " + timeout, e);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            exchange.cancel(true);
+            throw new LangChain4jException("Interrupted waiting for the response", e);
+        } catch (ExecutionException e) {
+            if (e.getCause() instanceof RuntimeException runtimeException) {
+                throw runtimeException;
             }
+            throw new LangChain4jException("Error sending the request", e.getCause());
         }
     }
 
