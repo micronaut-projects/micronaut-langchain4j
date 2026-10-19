@@ -789,6 +789,78 @@ class MicronautLangChain4jHttpClientTest {
     }
 
     @Test
+    void cancelsAStreamBeforeItsFirstEvent() throws Exception {
+        CountDownLatch cancelled = new CountDownLatch(1);
+        CountDownLatch finished = new CountDownLatch(1);
+        AtomicBoolean streamedEverything = new AtomicBoolean();
+        server = HttpServer.create(new InetSocketAddress(0), 0);
+        server.createContext("/slow-sse", exchange -> {
+            exchange.getRequestBody().readAllBytes();
+            exchange.getResponseHeaders().add("Content-Type", "text/event-stream");
+            exchange.sendResponseHeaders(200, 0);
+            exchange.getResponseBody().flush();
+            try {
+                // the first event only comes once the subscriber has cancelled
+                cancelled.await(5, TimeUnit.SECONDS);
+                // more than the socket buffers hold, so that the writes fail once the connection is closed
+                byte[] event = ("data: " + "x".repeat(64 * 1024) + "\n\n").getBytes(StandardCharsets.UTF_8);
+                for (int i = 0; i < 200; i++) {
+                    exchange.getResponseBody().write(event);
+                    exchange.getResponseBody().flush();
+                }
+                streamedEverything.set(true);
+            } catch (IOException e) {
+                // the client closed the connection
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } finally {
+                finished.countDown();
+                exchange.close();
+            }
+        });
+        server.start();
+
+        java.util.concurrent.Flow.Publisher<HttpStreamingEvent> publisher = new MicronautLangChain4jHttpClientBuilder()
+            .build()
+            .stream(HttpRequest.builder()
+                .method(HttpMethod.POST)
+                .url(url("/slow-sse"))
+                .body("{}")
+                .build());
+        HttpStreamingEvent first = reactor.adapter.JdkFlowAdapter.flowPublisherToFlux(publisher)
+            .doOnCancel(cancelled::countDown)
+            .next()
+            .block(java.time.Duration.ofSeconds(5));
+
+        assertInstanceOf(HttpResponseReceived.class, first);
+        // cancelled before it reached the server, or the connection was closed while streaming
+        finished.await(5, TimeUnit.SECONDS);
+        assertFalse(streamedEverything.get(), "the request is cancelled");
+    }
+
+    @Test
+    void cancelsARawStreamBeforeItsFirstEvent() {
+        AtomicBoolean closed = new AtomicBoolean();
+        ServerSentEventParser parser = (input, listener) -> new dev.langchain4j.http.client.sse.DefaultServerSentEventParser().parse(input, listener);
+        java.util.concurrent.Flow.Publisher<HttpStreamingEvent> publisher = client(
+            new RawOnlyHttpClient(single(byteBodyResponse("data: first\n\n", closed))),
+            java.time.Duration.ofSeconds(1)
+        ).stream(HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .url("http://localhost/raw-stream")
+            .build(), parser);
+
+        List<HttpStreamingEvent> events = reactor.adapter.JdkFlowAdapter.flowPublisherToFlux(publisher)
+            .take(1)
+            .collectList()
+            .block(java.time.Duration.ofSeconds(5));
+
+        assertEquals(1, events.size());
+        assertInstanceOf(HttpResponseReceived.class, events.getFirst());
+        assertTrue(closed.get(), "the response is closed");
+    }
+
+    @Test
     void cancelsSseClientSubscriptions() throws Exception {
         AtomicReference<Subscription> subscription = new AtomicReference<>();
         AtomicBoolean cancelled = new AtomicBoolean();
