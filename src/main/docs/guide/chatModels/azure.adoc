@@ -14,3 +14,5 @@ langchain4j.azure-open-ai.endpoint: YOUR_ENDPOINT
 You will additionally need to define a bean of type https://learn.microsoft.com/en-us/java/api/com.azure.core.credential.tokencredential?view=azure-java-stable[TokenCredentials].
 
 One way to do this is to include the https://micronaut-projects.github.io/micronaut-azure/latest/guide/#azureSdk[Azure SDK module].
+
+The audio transcription model (`dev.langchain4j.model.audio.AudioTranscriptionModel`) is only created when it is configured, for example with `langchain4j.azure-open-ai.audio-transcription-model.deployment-name`.
