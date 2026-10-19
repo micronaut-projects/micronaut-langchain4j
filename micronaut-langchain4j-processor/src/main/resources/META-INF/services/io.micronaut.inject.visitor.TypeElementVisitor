@@ -1,2 +1,3 @@
 io.micronaut.langchain4j.processor.Langchain4jConfigVisitor
 io.micronaut.langchain4j.processor.NativeImageMetadataVisitor
+io.micronaut.langchain4j.processor.SerdeImportVisitor
