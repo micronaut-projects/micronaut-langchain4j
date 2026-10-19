@@ -168,14 +168,17 @@ public class AiServiceFactory {
     }
 
     /**
-     * The default tool provider is the only unqualified (or {@code @Primary}) {@link ToolProvider} bean. Providers
-     * qualified with a name are only used by the services that select them, and several unqualified providers are
-     * ambiguous, so none is used rather than exposing tools to a service by accident.
+     * The default tool provider is the only {@code @Primary} {@link ToolProvider} bean, otherwise the only unqualified
+     * one. Providers qualified with a name are only used by the services that select them, and several primary (or,
+     * without a primary one, several unqualified) providers are ambiguous, so none is used rather than exposing tools
+     * to a service by accident.
      */
     private Optional<ToolProvider> defaultToolProvider() {
-        List<BeanDefinition<ToolProvider>> candidates = beanContext.getBeanDefinitions(ToolProvider.class).stream()
-            .filter(definition -> definition.isPrimary() || definition.getDeclaredQualifier() == null)
-            .toList();
+        Collection<BeanDefinition<ToolProvider>> definitions = beanContext.getBeanDefinitions(ToolProvider.class);
+        List<BeanDefinition<ToolProvider>> candidates = definitions.stream().filter(BeanDefinition::isPrimary).toList();
+        if (candidates.isEmpty()) {
+            candidates = definitions.stream().filter(definition -> definition.getDeclaredQualifier() == null).toList();
+        }
         return candidates.size() == 1 ? Optional.of(beanContext.getBean(candidates.getFirst())) : Optional.empty();
     }
 
