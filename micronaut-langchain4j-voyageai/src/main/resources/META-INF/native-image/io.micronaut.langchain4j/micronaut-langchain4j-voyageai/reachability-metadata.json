@@ -1,0 +1,21 @@
+{
+  "reflection": [
+    {"type": "dev.langchain4j.model.voyageai.EmbeddingRequest", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.voyageai.EmbeddingRequest$Builder", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.voyageai.EmbeddingResponse", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.voyageai.EmbeddingResponse$EmbeddingData", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.voyageai.MultimodalEmbeddingRequest", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.voyageai.MultimodalEmbeddingRequest$Builder", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.voyageai.MultimodalEmbeddingRequest$ContentBlock", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.voyageai.MultimodalEmbeddingRequest$MultimodalInput", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.voyageai.RerankRequest", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.voyageai.RerankRequest$Builder", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.voyageai.RerankResponse", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.voyageai.RerankResponse$RerankData", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.voyageai.TokenUsage", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.voyageai.VoyageAiEmbeddingModelName", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.voyageai.VoyageAiEmbeddingRequestParameters", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.voyageai.VoyageAiEmbeddingRequestParameters$Builder", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.voyageai.VoyageAiScoringModelName", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true}
+  ]
+}
