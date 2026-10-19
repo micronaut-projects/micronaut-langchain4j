@@ -13,8 +13,7 @@ class ImageGenerator {
         this.imageModel = imageModel
     }
 
-    URI generate(String prompt) {
-        Image image = imageModel.generate(prompt).content() // <2>
-        image.url()
+    Image generate(String prompt) {
+        imageModel.generate(prompt).content() // <2>
     }
 }
