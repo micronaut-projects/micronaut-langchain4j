@@ -8,6 +8,7 @@ agenticService: Agentic Service
 structuredOutput: Structured Outputs
 testing: Testing
 tools: Tools
+guardrails: Guardrails
 reflection: Reflection and GraalVM Native Image
 serde: Micronaut Serialization
 observability: Observability
