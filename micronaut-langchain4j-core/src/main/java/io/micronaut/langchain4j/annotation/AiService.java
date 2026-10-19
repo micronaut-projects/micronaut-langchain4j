@@ -17,6 +17,7 @@ package io.micronaut.langchain4j.annotation;
 
 import io.micronaut.aop.Introduction;
 import io.micronaut.context.annotation.AliasFor;
+import io.micronaut.core.annotation.AllowsReflection;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.langchain4j.aiservices.AiServiceCreationContext;
@@ -33,6 +34,7 @@ import java.lang.annotation.Target;
 @Introduction
 @Documented
 @ReflectiveAccess
+@AllowsReflection
 public @interface AiService {
 
     /**

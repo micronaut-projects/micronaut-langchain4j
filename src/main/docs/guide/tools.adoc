@@ -12,4 +12,8 @@ You can supply the tools to use to an `@AiService`:
 snippet::example.micronaut.aiservice.tools.CompanyBot[source="main"]
 
 [.lang-python]
-NOTE: LangChain4j discovers `@Tool` methods reflectively on the Java class of the tool bean, so the annotations of Python tool classes and AI services must be copied onto the generated Java classes: declare the `@AllowsReflection` hint (`micronaut.core.annotation`) on them, or name their packages in the `micronaut.introspection.allow-reflection` compiler option (`micronautBuild.python.compilerArgs.add("-Amicronaut.introspection.allowReflection=example.micronaut.*")` in the Gradle build, as the examples of this guide do). The tool is registered under the method name, which the model sees, so the Python example keeps the Java name `lastUpdatePrivacy`.
+NOTE: The tool is registered under the method name, which the model sees, so the Python example keeps the Java name `lastUpdatePrivacy`.
+
+The tools are not discovered by LangChain4j scanning the tool class: Micronaut builds the `ToolSpecification` of each `@Tool` method from its compile-time metadata (the method and parameter names, `@Tool`, `@P`, `@ToolMemoryId`) and invokes the method through its Micronaut `ExecutableMethod`. Tool classes therefore need no reflection, neither in a GraalVM native image nor for classes written in Python. The tools of a service are also available programmatically, as LangChain4j `AiServiceTool` instances, from api:io.micronaut.langchain4j.tools.ToolRegistry#getAiServiceTools(java.util.Set)[].
+
+NOTE: LangChain4j's `@CompensateFor` compensating actions are not supported, since LangChain4j only registers them for the tools it discovers reflectively. A warning is logged when a tool bean used by a service declares one, because the action never runs, even with `compensateOnToolErrors`.
