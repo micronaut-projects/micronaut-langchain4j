@@ -39,6 +39,48 @@ The segment under `oracle` (for example `default`) maps to the datasource name.
 For multiple datasources, configure multiple entries such as
 `langchain4j.chat-memory-store.oracle.reporting.*`.
 
+To use the JDBC implementation `dev.langchain4j.community.store.memory.chat.sql.SQLChatMemoryStore` (PostgreSQL, MySQL, MariaDB or H2), add the following dependency:
+
+dependency:micronaut-langchain4j-jdbc[groupId=io.micronaut.langchain4j]
+
+Then configure the chat memory store of a datasource. The SQL dialect is detected from the database, and `auto-create-table` creates the table if it does not exist:
+
+[configuration]
+----
+langchain4j.chat-memory-store.jdbc.default.table-name: chat_memory
+langchain4j.chat-memory-store.jdbc.default.auto-create-table: true
+----
+
+The segment under `jdbc` (for example `default`) is the name of the datasource.
+
+NOTE: For Oracle Database, use the dedicated Oracle chat memory store of `micronaut-langchain4j-store-oracle` described above rather than the JDBC store.
+
+To use the MongoDB implementation `dev.langchain4j.community.store.memory.chat.mongodb.MongoDbChatMemoryStore`, add the following dependency:
+
+dependency:micronaut-langchain4j-store-mongodb[groupId=io.micronaut.langchain4j]
+
+Then configure the database and the collection, and optionally `expire-after-seconds` to delete conversations after some time. The store uses the default MongoDB client, or the one of the `server` named:
+
+[configuration]
+----
+langchain4j.chat-memory-store.mongodb.default.database-name: chat
+langchain4j.chat-memory-store.mongodb.default.collection-name: memory
+----
+
+=== Chat Memory of the AI Services
+
+The AI services whose methods have a `@MemoryId` parameter keep a memory per memory ID. Their default `ChatMemoryProvider` keeps the conversations in the chat memory store named by `langchain4j.chat-memory.store`, otherwise in the persistent chat memory store if the application has exactly one (Redis, Neo4j, Cassandra, Oracle, JDBC or MongoDB), otherwise in memory. A `ChatMemoryProvider` bean named after the service, or annotated with `@Primary`, replaces it.
+
+By default the memory keeps the last 20 messages. A token window memory keeps the last messages that fit in a number of tokens instead, counted with the `TokenCountEstimator` bean of the application (for example `OpenAiTokenCountEstimator`):
+
+[configuration]
+----
+langchain4j.chat-memory.type: token-window
+langchain4j.chat-memory.max-tokens: 4000
+----
+
+include::{includedir}configurationProperties/io.micronaut.langchain4j.store.memory.chat.ChatMemoryConfiguration.adoc[]
+
 The following example shows how to use the `ChatMemory`:
 
 snippet::example.micronaut.AssistantWithMemory[source=main]
