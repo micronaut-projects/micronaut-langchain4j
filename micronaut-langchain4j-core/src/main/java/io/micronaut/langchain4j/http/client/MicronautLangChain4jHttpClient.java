@@ -22,6 +22,8 @@ import dev.langchain4j.http.client.FormDataFile;
 import dev.langchain4j.http.client.HttpRequest;
 import dev.langchain4j.http.client.SuccessfulHttpResponse;
 import dev.langchain4j.http.client.sse.ServerSentEventListener;
+import dev.langchain4j.http.client.sse.HttpResponseReceived;
+import dev.langchain4j.http.client.sse.HttpStreamingEvent;
 import dev.langchain4j.http.client.sse.ServerSentEventContext;
 import dev.langchain4j.http.client.sse.ServerSentEventParsingHandle;
 import dev.langchain4j.http.client.sse.DefaultServerSentEventParser;
@@ -51,6 +53,9 @@ import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 import org.jspecify.annotations.Nullable;
+import reactor.adapter.JdkFlowAdapter;
+import reactor.core.Disposable;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
@@ -64,17 +69,21 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Flow;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.client.HttpClient {
     private static final Duration DEFAULT_READ_TIMEOUT = Duration.ofSeconds(60);
+    private static final String NO_RESPONSE = "HTTP client completed without response";
     private static final AtomicInteger FALLBACK_EXECUTOR_SEQUENCE = new AtomicInteger();
     private static final Executor FALLBACK_SSE_EXECUTOR = runnable -> {
         Thread thread = new Thread(runnable, "micronaut-langchain4j-sse-" + FALLBACK_EXECUTOR_SEQUENCE.incrementAndGet());
@@ -129,6 +138,117 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         }
     }
 
+    /**
+     * Executes the request without blocking a thread: the response is read by the Micronaut HTTP client's event loop.
+     * Used by the non-blocking chat models (and the asynchronous AI services) of LangChain4j.
+     */
+    @Override
+    public CompletableFuture<SuccessfulHttpResponse> executeAsync(HttpRequest request) {
+        ClientHandle client;
+        try {
+            client = client(request.url());
+        } catch (RuntimeException e) {
+            return CompletableFuture.failedFuture(e);
+        }
+        CompletableFuture<SuccessfulHttpResponse> result = new CompletableFuture<>();
+        Mono<io.micronaut.http.HttpResponse<String>> exchange = Mono.from(client.httpClient().exchange(
+                standardRequest(request),
+                Argument.STRING,
+                Argument.STRING))
+            .onErrorResume(HttpClientResponseException.class, e -> Mono.just(stringResponse(e)));
+        if (readTimeout != null) {
+            exchange = exchange.timeout(readTimeout);
+        }
+        Disposable subscription = exchange
+            .doFinally(signal -> closeQuietly(client))
+            .subscribe(
+                response -> {
+                    String body = response.getBody(String.class).orElse(null);
+                    if (isSuccessful(response)) {
+                        result.complete(successfulResponse(response, body));
+                    } else {
+                        result.completeExceptionally(new HttpException(response.code(), body));
+                    }
+                },
+                error -> result.completeExceptionally(error instanceof ReadTimeoutException || error instanceof java.util.concurrent.TimeoutException
+                    ? new TimeoutException(error)
+                    : error),
+                () -> {
+                    if (!result.isDone()) {
+                        result.completeExceptionally(new LangChain4jException(NO_RESPONSE));
+                    }
+                });
+        result.whenComplete((response, error) -> {
+            if (result.isCancelled()) {
+                subscription.dispose();
+            }
+        });
+        return result;
+    }
+
+    /**
+     * Exposes the streamed response as a cold publisher: each subscription executes the request, emits an
+     * {@link HttpResponseReceived} event followed by the parsed events, and cancelling the subscription cancels the
+     * request.
+     */
+    @Override
+    public Flow.Publisher<HttpStreamingEvent> stream(HttpRequest request, ServerSentEventParser parser) {
+        Flux<HttpStreamingEvent> events = Flux.create(sink -> {
+            AtomicReference<ServerSentEventParsingHandle> handle = new AtomicReference<>();
+            sink.onCancel(() -> {
+                ServerSentEventParsingHandle parsingHandle = handle.get();
+                if (parsingHandle != null) {
+                    parsingHandle.cancel();
+                }
+            });
+            execute(request, parser, new CancellableListener() {
+                @Override
+                public void onStart(ServerSentEventParsingHandle parsingHandle) {
+                    handle.set(parsingHandle);
+                    // the subscriber may have cancelled before the handle was known
+                    if (sink.isCancelled()) {
+                        parsingHandle.cancel();
+                    }
+                }
+
+                @Override
+                public void onOpen(SuccessfulHttpResponse response) {
+                    sink.next(new HttpResponseReceived(response));
+                }
+
+                @Override
+                public void onEvent(dev.langchain4j.http.client.sse.ServerSentEvent event, ServerSentEventContext context) {
+                    handle.compareAndSet(null, context.parsingHandle());
+                    sink.next(event);
+                }
+
+                @Override
+                public void onEvent(dev.langchain4j.http.client.sse.ServerSentEvent event) {
+                    sink.next(event);
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+                    sink.error(throwable);
+                }
+
+                @Override
+                public void onClose() {
+                    sink.complete();
+                }
+            });
+        });
+        return JdkFlowAdapter.publisherToFlowPublisher(events);
+    }
+
+    private static io.micronaut.http.HttpResponse<String> stringResponse(HttpClientResponseException e) {
+        io.micronaut.http.HttpResponse<?> response = e.getResponse();
+        String body = readBody(response);
+        return io.micronaut.http.HttpResponse.<String>status(response.code(), response.reason())
+            .headers(headers -> response.getHeaders().forEach((name, values) -> values.forEach(value -> headers.add(name, value))))
+            .body(body);
+    }
+
     @Override
     public void execute(HttpRequest request, ServerSentEventParser parser, ServerSentEventListener listener) {
         CompletableFuture.runAsync(() -> {
@@ -140,18 +260,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
                     return;
                 }
                 try (client) {
-                    io.micronaut.http.HttpResponse<?> response = rawExchange(client.rawHttpClient(), request);
-                    try {
-                        if (!isSuccessful(response)) {
-                            safeOnError(listener, new HttpException(response.code(), readBody(response)));
-                            return;
-                        }
-                        safeOnOpen(listener, successfulResponse(response, null));
-                        parseBody(response, parser, listener);
-                        safeOnClose(listener);
-                    } finally {
-                        closeResponse(response);
-                    }
+                    streamRawResponse(client, request, parser, listener);
                 }
             } catch (ReadTimeoutException e) {
                 safeOnError(listener, new TimeoutException(e));
@@ -159,6 +268,59 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
                 safeOnError(listener, e);
             }
         }, sseExecutor());
+    }
+
+    private void streamRawResponse(ClientHandle client, HttpRequest request, ServerSentEventParser parser, ServerSentEventListener listener) {
+        RawStreamHandle handle = new RawStreamHandle(client);
+        if (listener instanceof CancellableListener cancellableListener) {
+            cancellableListener.onStart(handle);
+        }
+        if (handle.isCancelled()) {
+            return;
+        }
+        RawHttpClient rawHttpClient = client.rawHttpClient();
+        io.micronaut.http.HttpResponse<?> response = rawHttpClient != null
+            ? rawExchange(rawHttpClient, request, handle)
+            : standardExchange(client.httpClient(), request, handle);
+        if (response == null) {
+            return;
+        }
+        handle.response(response);
+        try {
+            if (handle.isCancelled()) {
+                return;
+            }
+            if (!isSuccessful(response)) {
+                safeOnError(listener, new HttpException(response.code(), readBody(response)));
+                return;
+            }
+            safeOnOpen(listener, successfulResponse(response, null));
+            if (parseUnlessCancelled(response, parser, listener, handle)) {
+                safeOnClose(listener);
+            }
+        } finally {
+            closeResponse(response);
+        }
+    }
+
+    /**
+     * @return Whether the body was parsed, rather than the stream cancelled
+     */
+    private static boolean parseUnlessCancelled(
+        io.micronaut.http.HttpResponse<?> response,
+        ServerSentEventParser parser,
+        ServerSentEventListener listener,
+        RawStreamHandle handle) {
+        try {
+            parseBody(response, parser, listener);
+        } catch (RuntimeException e) {
+            // cancelling closes the response, which fails the parsing
+            if (handle.isCancelled()) {
+                return false;
+            }
+            throw e;
+        }
+        return !handle.isCancelled();
     }
 
     private ClientHandle client(String url) {
@@ -246,6 +408,60 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
             Publisher<? extends io.micronaut.http.HttpResponse<?>> responsePublisher =
                 client.exchange(micronautRequest, requestBody, Thread.currentThread());
             return block(responsePublisher, readTimeout);
+        }
+    }
+
+    /**
+     * Sends a streamed request whose pending exchange the handle can cancel while waiting for the response headers.
+     *
+     * @return The response, or {@code null} if the stream was cancelled before the response arrived
+     */
+    private io.micronaut.http.@Nullable HttpResponse<?> rawExchange(RawHttpClient client, HttpRequest request, RawStreamHandle handle) {
+        MutableHttpRequest<Object> micronautRequest = micronautRequest(request);
+        try (CloseableByteBody requestBody = body(request)) {
+            return awaitExchange(client.exchange(micronautRequest, requestBody, Thread.currentThread()), handle);
+        }
+    }
+
+    /**
+     * Sends a streamed request with a client that has no raw exchange, whose pending exchange the handle can cancel
+     * while waiting for the response headers.
+     *
+     * @return The response, or {@code null} if the stream was cancelled before the response arrived
+     */
+    private io.micronaut.http.@Nullable HttpResponse<?> standardExchange(
+        io.micronaut.http.client.HttpClient client,
+        HttpRequest request,
+        RawStreamHandle handle) {
+        try {
+            return awaitExchange(client.exchange(standardRequest(request), Argument.STRING, Argument.STRING), handle);
+        } catch (HttpClientResponseException e) {
+            return e.getResponse();
+        }
+    }
+
+    private io.micronaut.http.@Nullable HttpResponse<?> awaitExchange(
+        Publisher<? extends io.micronaut.http.HttpResponse<?>> responsePublisher,
+        RawStreamHandle handle) {
+        Duration timeout = readTimeout == null ? DEFAULT_READ_TIMEOUT : readTimeout;
+        CompletableFuture<? extends io.micronaut.http.HttpResponse<?>> exchange = Mono.from(responsePublisher).toFuture();
+        handle.exchange(exchange);
+        try {
+            return Objects.requireNonNull(exchange.get(timeout.toMillis(), TimeUnit.MILLISECONDS), NO_RESPONSE);
+        } catch (CancellationException _) {
+            return null;
+        } catch (java.util.concurrent.TimeoutException e) {
+            exchange.cancel(true);
+            throw new TimeoutException("Request timed out after " + timeout, e);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            exchange.cancel(true);
+            throw new LangChain4jException("Interrupted waiting for the response", e);
+        } catch (ExecutionException e) {
+            if (e.getCause() instanceof RuntimeException runtimeException) {
+                throw runtimeException;
+            }
+            throw new LangChain4jException("Error sending the request", e.getCause());
         }
     }
 
@@ -476,12 +692,69 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
     private static <T> T block(Publisher<? extends T> publisher, @Nullable Duration readTimeout) {
         Duration timeout = readTimeout == null ? DEFAULT_READ_TIMEOUT : readTimeout;
         try {
-            return Objects.requireNonNull(Mono.from(publisher).block(timeout), "HTTP client completed without response");
+            return Objects.requireNonNull(Mono.from(publisher).block(timeout), NO_RESPONSE);
         } catch (IllegalStateException e) {
             if (e.getMessage() != null && e.getMessage().contains("Timeout on blocking read")) {
                 throw new TimeoutException("Request timed out after " + timeout, e);
             }
             throw e;
+        }
+    }
+
+    /**
+     * A listener that receives the handle cancelling the request before the response is published, so that the
+     * request can be cancelled before its first event.
+     */
+    private interface CancellableListener extends ServerSentEventListener {
+        void onStart(ServerSentEventParsingHandle handle);
+    }
+
+    /**
+     * Cancels a streamed request read from the raw response: closes the response, which stops the parsing.
+     */
+    private static final class RawStreamHandle implements ServerSentEventParsingHandle {
+        private final ClientHandle client;
+        private final AtomicBoolean cancelled = new AtomicBoolean();
+        private final AtomicReference<io.micronaut.http.@Nullable HttpResponse<?>> response = new AtomicReference<>();
+        private final AtomicReference<@Nullable CompletableFuture<?>> exchange = new AtomicReference<>();
+
+        private RawStreamHandle(ClientHandle client) {
+            this.client = client;
+        }
+
+        private void exchange(CompletableFuture<?> pendingExchange) {
+            exchange.set(pendingExchange);
+            if (cancelled.get()) {
+                pendingExchange.cancel(true);
+            }
+        }
+
+        private void response(io.micronaut.http.HttpResponse<?> rawResponse) {
+            response.set(rawResponse);
+            if (cancelled.get()) {
+                closeResponse(rawResponse);
+            }
+        }
+
+        @Override
+        public void cancel() {
+            if (cancelled.compareAndSet(false, true)) {
+                // cancels the subscription of the exchange still waiting for the response headers
+                CompletableFuture<?> pendingExchange = exchange.get();
+                if (pendingExchange != null) {
+                    pendingExchange.cancel(true);
+                }
+                io.micronaut.http.HttpResponse<?> rawResponse = response.get();
+                if (rawResponse != null) {
+                    closeResponse(rawResponse);
+                }
+                closeQuietly(client);
+            }
+        }
+
+        @Override
+        public boolean isCancelled() {
+            return cancelled.get();
         }
     }
 
@@ -500,6 +773,13 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         @Override
         public void onSubscribe(Subscription subscription) {
             this.subscription.set(subscription);
+            if (listener instanceof CancellableListener cancellableListener) {
+                cancellableListener.onStart(this);
+            }
+            if (cancelled.get()) {
+                // cancelled before the response was published: the subscription is already cancelled
+                return;
+            }
             safeOnOpen(listener, SuccessfulHttpResponse.builder()
                 .statusCode(200)
                 .headers(Map.of())

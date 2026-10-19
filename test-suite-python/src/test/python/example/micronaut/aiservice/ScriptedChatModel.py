@@ -5,6 +5,7 @@ from dev.langchain4j.model.chat.request import ChatRequest
 from dev.langchain4j.model.chat.response import ChatResponse
 from jakarta.inject import Singleton
 from java.util import List
+from java.util.concurrent import CompletableFuture
 from micronaut.context.annotation import Primary, Requires
 
 
@@ -27,6 +28,10 @@ class ScriptedChatModel(ChatModel):
             return ChatResponse.builder().aiMessage(AiMessage.builder().toolExecutionRequests(List.of(request)).build()).build()
         system = [message.text() for message in messages if isinstance(message, SystemMessage)]
         return self._answer(f"system:{system[0] if system else ''}")
+
+    # like the providers with a non-blocking HTTP client, for the asynchronous AI services
+    def doChatAsync(self, chat_request: ChatRequest) -> CompletableFuture:
+        return CompletableFuture.completedFuture(self.doChat(chat_request))
 
     def _answer(self, text: str) -> ChatResponse:
         return ChatResponse.builder().aiMessage(AiMessage.from_(text)).build()
