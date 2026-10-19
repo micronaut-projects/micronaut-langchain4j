@@ -120,7 +120,7 @@ final class DefaultChatMemoryProvider implements ChatMemoryProvider {
     private ChatMemoryStore createEnabled(BeanDefinition<ChatMemoryStore> definition) {
         try {
             return beanContext.getBean(definition);
-        } catch (DisabledBeanException e) {
+        } catch (DisabledBeanException _) {
             return null;
         } catch (BeanContextException e) {
             for (Throwable cause = e.getCause(); cause != null; cause = cause.getCause()) {
