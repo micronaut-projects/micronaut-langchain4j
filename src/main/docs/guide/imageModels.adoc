@@ -16,4 +16,4 @@ Inject the image model where images are generated:
 snippet::example.micronaut.image.ImageGenerator[source="main"]
 
 <1> The `ImageModel` bean is injected.
-<2> The model generates an image, returned as a URL or as base64 data depending on the model.
+<2> The model generates an image. Depending on the model, the `Image` holds a URL (`url()`) or base64 data (`base64Data()` with its `mimeType()`): `gpt-image-1`, for example, only returns base64 data.
