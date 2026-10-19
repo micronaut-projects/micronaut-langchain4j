@@ -48,3 +48,45 @@ snippet::example.micronaut.aiservice.rag.RagTest[source="test"]
 To configure a single service, declare an api:langchain4j.aiservices.AiServiceCustomizer[] bean for it and call `contentRetriever(...)` or `retrievalAugmentor(...)` on `AiServiceCreationContext.aiServices()`.
 
 NOTE: Before 2.3.0 an `EmbeddingStoreContentRetriever` was attached to every `@AiService` automatically whenever an `EmbeddingModel` bean and an `EmbeddingStore` bean existed. Because provider modules expose an embedding model and the in-memory embedding store is enabled by default, that was the case in most applications, causing an embedding round trip on every call and failures against models without embedding support. Declare a `ContentRetriever` bean as shown above to restore the previous behaviour.
+
+==== Configuring Retrieval
+
+Content retrievers and the ingestion of documents can also be configured, without code.
+
+A content retriever configured under `langchain4j.rag.content-retrievers.<name>` is an `EmbeddingStoreContentRetriever` bean qualified with `<name>`, so the `@AiService` with that name uses it:
+
+.Example Configuration
+[configuration]
+----
+langchain4j:
+  rag:
+    content-retrievers:
+      expert:
+        max-results: 3
+        min-score: 0.6
+----
+
+include::{includedir}configurationProperties/io.micronaut.langchain4j.rag.ContentRetrieverConfiguration.adoc[]
+
+An ingestion configured under `langchain4j.rag.ingestion.<name>` loads the documents of its sources when the application starts, splits them into segments, embeds them and adds them to the embedding store. The sources are directories of the file system, or of the classpath with the `classpath:` prefix. The documents are parsed with the `DocumentParser` that LangChain4j finds on the classpath (for example `dev.langchain4j:langchain4j-document-parser-apache-tika` for PDF and Office documents), and as text otherwise.
+
+.Example Configuration
+[configuration]
+----
+langchain4j:
+  rag:
+    ingestion:
+      expert:
+        sources:
+          - classpath:docs
+          - /var/data/manuals
+        glob: '**.md'
+        max-segment-size: 800
+        max-overlap-size: 80
+----
+
+include::{includedir}configurationProperties/io.micronaut.langchain4j.rag.IngestionConfiguration.adoc[]
+
+Both use the default `EmbeddingStore` and `EmbeddingModel` beans unless `embedding-store` and `embedding-model` name other beans. Each ingestion also creates an `EmbeddingStoreIngestor` bean qualified with its name, to ingest other documents programmatically. Set `ingest-on-startup` to `false` to only create the ingestor.
+
+NOTE: The in-memory embedding store keeps the segments in memory only, so the documents are ingested again on every start. With a persistent embedding store, disable `ingest-on-startup` once the documents have been ingested, or ingest them with the `EmbeddingStoreIngestor` bean when they change.
