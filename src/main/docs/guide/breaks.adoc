@@ -14,7 +14,7 @@ The default model names of several providers referenced models that are retired 
 |OpenAI |Chat |`gpt-3.5-turbo` |`gpt-4.1-mini`
 |OpenAI |Embedding |`text-embedding-ada-002` |`text-embedding-3-small`
 |OpenAI |Image |`dall-e-3` |`gpt-image-1`
-|Vertex AI Gemini |Chat |`gemini-1.5-flash-001` |`gemini-2.5-flash`
+|Vertex AI Gemini |Chat |`gemini-1.5-flash-001` |`gemini-3.8-flash`
 |===
 
 Set the `model-name` property of the model to keep using a previous model. Note that embeddings produced by different embedding models are not compatible, so applications that stored embeddings created with the previous OpenAI default must either set `model-name: text-embedding-ada-002` or re-embed their content.
@@ -31,6 +31,6 @@ The default chat memory provider of the AI services kept the conversations in me
 
 The Hugging Face models use the Micronaut HTTP client instead of LangChain4j's JDK HTTP client, like the OpenAI, Anthropic, Ollama, Mistral AI and Google AI Gemini models. Add a Micronaut HTTP client implementation, such as `io.micronaut:micronaut-http-client`, to the runtime classpath.
 
-==== LangChain4j Community 1.20
+==== LangChain4j Community 1.22
 
-The LangChain4j community modules (Redis, Neo4j, OCI GenAI) have been upgraded from `1.16.0-beta26` to `1.20.0-beta30`. Refer to the https://github.com/langchain4j/langchain4j-community/releases[LangChain4j Community release notes] for changes.
+The LangChain4j community modules (Redis, Neo4j, OCI GenAI) have been upgraded from `1.16.0-beta26` to `1.22.0-beta32`, aligned with the LangChain4j `1.22.0` BOM. Refer to the https://github.com/langchain4j/langchain4j-community/releases[LangChain4j Community release notes] for changes.
