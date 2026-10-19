@@ -54,6 +54,24 @@ class DefaultChatMemoryProviderTest {
     }
 
     @Test
+    void usesTheInMemoryStoreWhenTheOnlyPersistentStoreIsDisabled() {
+        try (ApplicationContext context = ApplicationContext.run(Map.of("spec.name", "disabled"))) {
+            ChatMemoryProvider provider = context.getBean(ChatMemoryProvider.class);
+            provider.get("conversation").add(UserMessage.from("Hello"));
+            assertEquals(1, provider.get("conversation").messages().size());
+            assertEquals(1, context.getBean(ChatMemoryStore.class, io.micronaut.inject.qualifiers.Qualifiers.byName("inMemory")).getMessages("conversation").size());
+        }
+    }
+
+    @Test
+    void ignoresTheDisabledStores() {
+        try (ApplicationContext context = ApplicationContext.run(Map.of("spec.name", "persistent", "spec.disabled", true))) {
+            context.getBean(ChatMemoryProvider.class).get("conversation").add(UserMessage.from("Hello"));
+            assertEquals(1, context.getBean(RecordingStore.class).updates.size());
+        }
+    }
+
+    @Test
     void usesTheNamedStore() {
         Map<String, Object> properties = new HashMap<>();
         properties.put("spec.name", "persistent");
@@ -111,6 +129,27 @@ class DefaultChatMemoryProviderTest {
         public void updateMessages(Object memoryId, List<ChatMessage> messages) {
             updates.add(messages);
             super.updateMessages(memoryId, messages);
+        }
+    }
+
+    @Factory
+    static class DisabledStoreFactory {
+        // like the stores disabled with enabled: false, which are only known to be disabled once created
+        @Singleton
+        @Named("archive")
+        @Requires(condition = DisabledStoreCondition.class)
+        ChatMemoryStore archive() {
+            throw new io.micronaut.context.exceptions.DisabledBeanException("The archive chat memory store is disabled");
+        }
+    }
+
+    static final class DisabledStoreCondition implements io.micronaut.context.condition.Condition {
+        @Override
+        public boolean matches(io.micronaut.context.condition.ConditionContext context) {
+            var environment = context.getBeanContext() instanceof ApplicationContext applicationContext ? applicationContext.getEnvironment() : null;
+            return environment != null
+                && ("disabled".equals(environment.getProperty("spec.name", String.class).orElse(null))
+                    || environment.getProperty("spec.disabled", Boolean.class).orElse(false));
         }
     }
 
