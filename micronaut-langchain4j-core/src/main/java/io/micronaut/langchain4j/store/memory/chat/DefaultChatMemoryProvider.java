@@ -24,8 +24,11 @@ import dev.langchain4j.store.memory.chat.ChatMemoryStore;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.exceptions.BeanContextException;
 import io.micronaut.context.exceptions.ConfigurationException;
+import io.micronaut.context.exceptions.DisabledBeanException;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.qualifiers.Qualifiers;
@@ -40,7 +43,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * The default {@link ChatMemoryProvider} of the AI services, configured with {@link ChatMemoryConfiguration}.
  *
  * <p>The conversations are kept in the configured chat memory store, otherwise in the persistent chat memory store if
- * the application has exactly one, otherwise in memory.</p>
+ * the application has exactly one (that is enabled), otherwise in memory.</p>
  */
 @Singleton
 @Primary
@@ -107,9 +110,34 @@ final class DefaultChatMemoryProvider implements ChatMemoryProvider {
         List<BeanDefinition<ChatMemoryStore>> persistent = beanContext.getBeanDefinitions(ChatMemoryStore.class).stream()
             .filter(definition -> !IN_MEMORY.equals(definition.stringValue(Named.class).orElse(null)))
             .toList();
-        if (persistent.size() == 1) {
-            return beanContext.getBean(persistent.getFirst());
+        // a store disabled by its configuration (enabled: false) is only known to be disabled once it is created
+        ChatMemoryStore persistentStore = null;
+        for (BeanDefinition<ChatMemoryStore> definition : persistent) {
+            ChatMemoryStore candidate = createEnabled(definition);
+            if (candidate != null) {
+                if (persistentStore != null) {
+                    persistentStore = null;
+                    break;
+                }
+                persistentStore = candidate;
+            }
         }
-        return beanContext.getBean(ChatMemoryStore.class, Qualifiers.byName(IN_MEMORY));
+        return persistentStore != null ? persistentStore : beanContext.getBean(ChatMemoryStore.class, Qualifiers.byName(IN_MEMORY));
+    }
+
+    @Nullable
+    private ChatMemoryStore createEnabled(BeanDefinition<ChatMemoryStore> definition) {
+        try {
+            return beanContext.getBean(definition);
+        } catch (DisabledBeanException e) {
+            return null;
+        } catch (BeanContextException e) {
+            for (Throwable cause = e.getCause(); cause != null; cause = cause.getCause()) {
+                if (cause instanceof DisabledBeanException) {
+                    return null;
+                }
+            }
+            throw e;
+        }
     }
 }
