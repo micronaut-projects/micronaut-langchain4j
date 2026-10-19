@@ -110,18 +110,9 @@ final class DefaultChatMemoryProvider implements ChatMemoryProvider {
         List<BeanDefinition<ChatMemoryStore>> persistent = beanContext.getBeanDefinitions(ChatMemoryStore.class).stream()
             .filter(definition -> !IN_MEMORY.equals(definition.stringValue(Named.class).orElse(null)))
             .toList();
-        // a store disabled by its configuration (enabled: false) is only known to be disabled once it is created
-        ChatMemoryStore persistentStore = null;
-        for (BeanDefinition<ChatMemoryStore> definition : persistent) {
-            ChatMemoryStore candidate = createEnabled(definition);
-            if (candidate != null) {
-                if (persistentStore != null) {
-                    persistentStore = null;
-                    break;
-                }
-                persistentStore = candidate;
-            }
-        }
+        // several persistent stores are ambiguous, and are not created to find out which ones are enabled: a store
+        // disabled by its configuration (enabled: false) is only known to be disabled once it is created
+        ChatMemoryStore persistentStore = persistent.size() == 1 ? createEnabled(persistent.getFirst()) : null;
         return persistentStore != null ? persistentStore : beanContext.getBean(ChatMemoryStore.class, Qualifiers.byName(IN_MEMORY));
     }
 
