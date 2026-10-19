@@ -65,7 +65,10 @@ public class PgVectorEmbeddingStoreFactory {
     }
 
     static final class DataSourcePgVectorStore extends PgVectorEmbeddingStore {
-        DataSourcePgVectorStore(DataSource datasource, String table, Integer dimension, Boolean useIndex, Integer indexListSize, Boolean createTable, Boolean dropTableFirst, MetadataStorageConfig metadataStorageConfig) {
+        @SuppressWarnings("java:S107") // mirrors the constructor of PgVectorEmbeddingStore
+        DataSourcePgVectorStore(DataSource datasource, @Nullable String table, @Nullable Integer dimension, @Nullable Boolean useIndex,
+                                @Nullable Integer indexListSize, @Nullable Boolean createTable, @Nullable Boolean dropTableFirst,
+                                @Nullable MetadataStorageConfig metadataStorageConfig) {
             super(datasource, table, dimension, useIndex, indexListSize, createTable, dropTableFirst, metadataStorageConfig);
         }
     }
