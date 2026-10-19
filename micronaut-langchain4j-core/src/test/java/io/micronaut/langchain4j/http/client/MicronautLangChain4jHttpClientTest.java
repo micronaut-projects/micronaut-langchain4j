@@ -861,6 +861,40 @@ class MicronautLangChain4jHttpClientTest {
     }
 
     @Test
+    void cancelsARawStreamWaitingForItsResponseHeaders() throws Exception {
+        CountDownLatch subscribed = new CountDownLatch(1);
+        CountDownLatch cancelled = new CountDownLatch(1);
+        // a managed client (it is not closed on cancellation) whose response headers never arrive
+        Publisher<HttpResponse<?>> pendingResponse = subscriber -> {
+            subscriber.onSubscribe(new Subscription() {
+                @Override
+                public void request(long n) {
+                    subscribed.countDown();
+                }
+
+                @Override
+                public void cancel() {
+                    cancelled.countDown();
+                }
+            });
+        };
+        ServerSentEventParser parser = (input, listener) -> new dev.langchain4j.http.client.sse.DefaultServerSentEventParser().parse(input, listener);
+        java.util.concurrent.Flow.Publisher<HttpStreamingEvent> publisher = client(
+            new RawOnlyHttpClient(pendingResponse),
+            java.time.Duration.ofSeconds(30)
+        ).stream(HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .url("http://localhost/pending-stream")
+            .build(), parser);
+
+        reactor.core.Disposable subscription = reactor.adapter.JdkFlowAdapter.flowPublisherToFlux(publisher).subscribe();
+        assertTrue(subscribed.await(5, TimeUnit.SECONDS));
+        subscription.dispose();
+
+        assertTrue(cancelled.await(5, TimeUnit.SECONDS), "the pending exchange is cancelled before the read timeout");
+    }
+
+    @Test
     void cancelsSseClientSubscriptions() throws Exception {
         AtomicReference<Subscription> subscription = new AtomicReference<>();
         AtomicBoolean cancelled = new AtomicBoolean();
