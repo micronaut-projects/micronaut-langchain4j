@@ -15,6 +15,10 @@ on:
       - master
       - main
       - '[0-9]+.[0-9]+.x'
+      # stacked PRs target each other's branches
+      - 'python/**'
+      - 'python-*'
+      - 'stack/**'
     types: [opened, synchronize, reopened, ready_for_review]
 # A new push to a pull request cancels its older run, freeing the shared runner
 # pool. Pushes to branches get a group of their own and are never cancelled:
@@ -63,7 +67,7 @@ jobs:
           fetch-depth: 0
 
       - name: "🔧 Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@0426e2e191540e8514dff98dc52a5f5146a2a276 # v1
+        uses: graalvm/setup-graalvm@27b360dbb857524eaf0b4c4cef364d38e5b4f173 # v1
         with:
           distribution: 'graalvm'
           java-version: ${{ matrix.java }}
@@ -97,8 +101,8 @@ jobs:
       - name: "🔎 Run static analysis"
         id: sonar
         if: env.SONAR_TOKEN_AVAILABLE == 'true' && matrix.java == '25'
-        # Waits for the quality gate so a failing gate stops the native tests, but does not fail this
-        # job: snapshot and docs publishing below keep running on branch pushes.
+        # Waits for the quality gate so a failing gate stops the native and Python tests, but does not
+        # fail this job: snapshot and docs publishing below keep running on branch pushes.
         continue-on-error: true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -107,7 +111,7 @@ jobs:
 
       - name: "📊 Publish Test Report"
         if: always()
-        uses: mikepenz/action-junit-report@a9170d5795813c01ab4901ffb045b52bab4ab09d # v6
+        uses: mikepenz/action-junit-report@6ef3fdcfcd5f0b5d14df3e659ef19b8c6820f93d # v6
         with:
           check_name: Java CI / Test Report (${{ matrix.java }})
           report_paths: '**/build/test-results/test/TEST-*.xml'
@@ -115,7 +119,7 @@ jobs:
 
       - name: "📜 Upload binary compatibility check results"
         if: matrix.java == '25'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: binary-compatibility-reports
           path: "**/build/reports/binary-compatibility-*.html"
@@ -147,10 +151,15 @@ jobs:
       - name: "❓ Optional cleanup step"
         run: |
           [ -f ./cleanup.sh ] && ./cleanup.sh || [ ! -f ./cleanup.sh ]
-  # Native tests start only when the build and its tests passed and the Sonar quality gate did not
-  # fail, so a red or cancelled build never takes runners for the native matrix.
+  # Native and Python tests start only when the build and its tests passed and the Sonar quality gate
+  # did not fail, so a red or cancelled build never takes runners for their matrices.
   native:
     needs: build
     if: needs.build.outputs.sonar != 'failure'
     uses: ./.github/workflows/graalvm-latest.yml
+    secrets: inherit
+  python:
+    needs: build
+    if: needs.build.outputs.sonar != 'failure'
+    uses: ./.github/workflows/python.yml
     secrets: inherit
