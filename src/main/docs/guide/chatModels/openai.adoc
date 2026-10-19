@@ -50,11 +50,9 @@ langchain4j:
     chat-models:
       assistant:
         model-name: gpt-5-mini
-        base-url: https://api.openai.com/v1
     streaming-chat-models:
       assistant:
         model-name: gpt-5-mini
-        base-url: https://api.openai.com/v1
 ----
 
-NOTE: The Responses API client of LangChain4j appends `/responses` to the base URL, while the Chat Completions client expects a base URL ending with a slash. Set the `base-url` of the Responses models without the trailing slash.
+NOTE: The Responses API client of LangChain4j appends `/responses` to the base URL. The default base URL, `https://api.openai.com/v1`, suits both APIs; set a custom `base-url` (of `langchain4j.open-ai` or of the Responses models) without a trailing slash.
