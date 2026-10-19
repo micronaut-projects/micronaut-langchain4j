@@ -205,7 +205,16 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
                     parsingHandle.cancel();
                 }
             });
-            execute(request, parser, new ServerSentEventListener() {
+            execute(request, parser, new CancellableListener() {
+                @Override
+                public void onStart(ServerSentEventParsingHandle parsingHandle) {
+                    handle.set(parsingHandle);
+                    // the subscriber may have cancelled before the handle was known
+                    if (sink.isCancelled()) {
+                        parsingHandle.cancel();
+                    }
+                }
+
                 @Override
                 public void onOpen(SuccessfulHttpResponse response) {
                     sink.next(new HttpResponseReceived(response));
@@ -256,15 +265,36 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
                     return;
                 }
                 try (client) {
+                    RawStreamHandle handle = new RawStreamHandle(client);
+                    if (listener instanceof CancellableListener cancellableListener) {
+                        cancellableListener.onStart(handle);
+                    }
+                    if (handle.isCancelled()) {
+                        return;
+                    }
                     io.micronaut.http.HttpResponse<?> response = rawExchange(client.rawHttpClient(), request);
+                    handle.response(response);
                     try {
+                        if (handle.isCancelled()) {
+                            return;
+                        }
                         if (!isSuccessful(response)) {
                             safeOnError(listener, new HttpException(response.code(), readBody(response)));
                             return;
                         }
                         safeOnOpen(listener, successfulResponse(response, null));
-                        parseBody(response, parser, listener);
-                        safeOnClose(listener);
+                        try {
+                            parseBody(response, parser, listener);
+                        } catch (RuntimeException e) {
+                            // cancelling closes the response, which fails the parsing
+                            if (handle.isCancelled()) {
+                                return;
+                            }
+                            throw e;
+                        }
+                        if (!handle.isCancelled()) {
+                            safeOnClose(listener);
+                        }
                     } finally {
                         closeResponse(response);
                     }
@@ -636,6 +666,50 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         }
     }
 
+    /**
+     * A listener that receives the handle cancelling the request before the response is published, so that the
+     * request can be cancelled before its first event.
+     */
+    private interface CancellableListener extends ServerSentEventListener {
+        void onStart(ServerSentEventParsingHandle handle);
+    }
+
+    /**
+     * Cancels a streamed request read from the raw response: closes the response, which stops the parsing.
+     */
+    private static final class RawStreamHandle implements ServerSentEventParsingHandle {
+        private final ClientHandle client;
+        private final AtomicBoolean cancelled = new AtomicBoolean();
+        private final AtomicReference<io.micronaut.http.@Nullable HttpResponse<?>> response = new AtomicReference<>();
+
+        private RawStreamHandle(ClientHandle client) {
+            this.client = client;
+        }
+
+        private void response(io.micronaut.http.HttpResponse<?> rawResponse) {
+            response.set(rawResponse);
+            if (cancelled.get()) {
+                closeResponse(rawResponse);
+            }
+        }
+
+        @Override
+        public void cancel() {
+            if (cancelled.compareAndSet(false, true)) {
+                io.micronaut.http.HttpResponse<?> rawResponse = response.get();
+                if (rawResponse != null) {
+                    closeResponse(rawResponse);
+                }
+                closeQuietly(client);
+            }
+        }
+
+        @Override
+        public boolean isCancelled() {
+            return cancelled.get();
+        }
+    }
+
     private static final class SseSubscriber implements Subscriber<Event<String>>, ServerSentEventParsingHandle {
         private final ServerSentEventListener listener;
         private final ClientHandle client;
@@ -651,6 +725,13 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         @Override
         public void onSubscribe(Subscription subscription) {
             this.subscription.set(subscription);
+            if (listener instanceof CancellableListener cancellableListener) {
+                cancellableListener.onStart(this);
+            }
+            if (cancelled.get()) {
+                // cancelled before the response was published: the subscription is already cancelled
+                return;
+            }
             safeOnOpen(listener, SuccessfulHttpResponse.builder()
                 .statusCode(200)
                 .headers(Map.of())
