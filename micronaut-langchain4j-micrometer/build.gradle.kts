@@ -17,3 +17,21 @@ dependencies {
 micronautBuild {
     binaryCompatibility.enabled = false
 }
+
+tasks.test {
+    filter.excludeTestsMatching("*WithoutObservationTest")
+}
+
+// the metrics listener must be registered when langchain4j-observation is absent
+val testWithoutObservation by tasks.registering(Test::class) {
+    description = "Runs the tests that require langchain4j-observation to be absent from the classpath."
+    group = "verification"
+    testClassesDirs = sourceSets.test.get().output.classesDirs
+    classpath = sourceSets.test.get().runtimeClasspath.filter { !it.name.startsWith("langchain4j-observation-") }
+    filter.includeTestsMatching("*WithoutObservationTest")
+    useJUnitPlatform()
+}
+
+tasks.check {
+    dependsOn(testWithoutObservation)
+}
