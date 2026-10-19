@@ -1,0 +1,19 @@
+Add the following dependency to use the https://milvus.io[Milvus] embedding store, based on LangChain4j's Milvus V2 integration:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-store-milvus[]
+
+.Example Configuration
+[configuration]
+----
+langchain4j:
+  milvus-v2:
+    embedding-store:
+      uri: http://localhost:19530
+      collection-name: documents
+      dimension: 384
+      consistency-level: STRONG
+----
+
+The `dimension` must match the dimension of the embeddings of your embedding model. Milvus is eventually consistent by default: set `consistency-level` to `STRONG` to search the embeddings right after they are added.
+
+include::{includedir}configurationProperties/dev.langchain4j.store.embedding.milvus.v2.MilvusV2EmbeddingStore$Builder.adoc[]
