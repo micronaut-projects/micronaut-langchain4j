@@ -862,6 +862,17 @@ class MicronautLangChain4jHttpClientTest {
 
     @Test
     void cancelsARawStreamWaitingForItsResponseHeaders() throws Exception {
+        assertCancelsAStreamWaitingForItsResponseHeaders(RawOnlyHttpClient::new);
+    }
+
+    @Test
+    void cancelsAStandardClientStreamWaitingForItsResponseHeaders() throws Exception {
+        // a client without raw exchange, like the JDK HTTP client
+        assertCancelsAStreamWaitingForItsResponseHeaders(pendingResponse -> new StandardOnlyHttpClient(_ -> pendingResponse));
+    }
+
+    private static void assertCancelsAStreamWaitingForItsResponseHeaders(
+        Function<Publisher<HttpResponse<?>>, io.micronaut.http.client.HttpClient> clientFactory) throws Exception {
         CountDownLatch subscribed = new CountDownLatch(1);
         CountDownLatch cancelled = new CountDownLatch(1);
         // a managed client (it is not closed on cancellation) whose response headers never arrive
@@ -880,7 +891,7 @@ class MicronautLangChain4jHttpClientTest {
         };
         ServerSentEventParser parser = (input, listener) -> new dev.langchain4j.http.client.sse.DefaultServerSentEventParser().parse(input, listener);
         java.util.concurrent.Flow.Publisher<HttpStreamingEvent> publisher = client(
-            new RawOnlyHttpClient(pendingResponse),
+            clientFactory.apply(pendingResponse),
             java.time.Duration.ofSeconds(30)
         ).stream(HttpRequest.builder()
             .method(HttpMethod.GET)
