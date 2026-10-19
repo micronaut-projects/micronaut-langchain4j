@@ -109,7 +109,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
             name = "httpClientProvider",
             injected = true
         ),
-        @Lang4jConfig.Property(name = "baseUrl", common = true, required = true, defaultValue = "https://api.openai.com/v1/"),
+        @Lang4jConfig.Property(name = "baseUrl", common = true, required = true, defaultValue = OpenAiModule.DEFAULT_BASE_URL),
         @Lang4jConfig.Property(name = "apiKey", common = true, required = true),
         @Lang4jConfig.Property(name = "organizationId", common = true),
         @Lang4jConfig.Property(name = "timeout", common = true),
@@ -118,6 +118,8 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
     }
 )
 final class OpenAiModule {
+    // without a trailing slash: the Responses API client appends "/responses" to the base URL
+    public static final String DEFAULT_BASE_URL = "https://api.openai.com/v1";
     public static final String DEFAULT_CHAT_MODEL = "gpt-4.1-mini";
     public static final String DEFAULT_IMAGE_MODEL = "gpt-image-1";
     public static final String DEFAULT_EMBEDDING_MODEL = "text-embedding-3-small";
