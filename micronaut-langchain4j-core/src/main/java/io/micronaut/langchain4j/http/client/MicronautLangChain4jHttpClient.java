@@ -83,6 +83,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.client.HttpClient {
     private static final Duration DEFAULT_READ_TIMEOUT = Duration.ofSeconds(60);
+    private static final String NO_RESPONSE = "HTTP client completed without response";
     private static final AtomicInteger FALLBACK_EXECUTOR_SEQUENCE = new AtomicInteger();
     private static final Executor FALLBACK_SSE_EXECUTOR = runnable -> {
         Thread thread = new Thread(runnable, "micronaut-langchain4j-sse-" + FALLBACK_EXECUTOR_SEQUENCE.incrementAndGet());
@@ -174,7 +175,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
                     : error),
                 () -> {
                     if (!result.isDone()) {
-                        result.completeExceptionally(new LangChain4jException("HTTP client completed without response"));
+                        result.completeExceptionally(new LangChain4jException(NO_RESPONSE));
                     }
                 });
         result.whenComplete((response, error) -> {
@@ -277,7 +278,10 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         if (handle.isCancelled()) {
             return;
         }
-        io.micronaut.http.HttpResponse<?> response = rawExchange(client.rawHttpClient(), request, handle);
+        RawHttpClient rawHttpClient = client.rawHttpClient();
+        io.micronaut.http.HttpResponse<?> response = rawHttpClient != null
+            ? rawExchange(rawHttpClient, request, handle)
+            : standardExchange(client.httpClient(), request);
         if (response == null) {
             return;
         }
@@ -420,8 +424,8 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
                 Mono.from(client.exchange(micronautRequest, requestBody, Thread.currentThread())).toFuture();
             handle.exchange(exchange);
             try {
-                return Objects.requireNonNull(exchange.get(timeout.toMillis(), TimeUnit.MILLISECONDS), "HTTP client completed without response");
-            } catch (CancellationException e) {
+                return Objects.requireNonNull(exchange.get(timeout.toMillis(), TimeUnit.MILLISECONDS), NO_RESPONSE);
+            } catch (CancellationException _) {
                 return null;
             } catch (java.util.concurrent.TimeoutException e) {
                 exchange.cancel(true);
@@ -666,7 +670,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
     private static <T> T block(Publisher<? extends T> publisher, @Nullable Duration readTimeout) {
         Duration timeout = readTimeout == null ? DEFAULT_READ_TIMEOUT : readTimeout;
         try {
-            return Objects.requireNonNull(Mono.from(publisher).block(timeout), "HTTP client completed without response");
+            return Objects.requireNonNull(Mono.from(publisher).block(timeout), NO_RESPONSE);
         } catch (IllegalStateException e) {
             if (e.getMessage() != null && e.getMessage().contains("Timeout on blocking read")) {
                 throw new TimeoutException("Request timed out after " + timeout, e);
