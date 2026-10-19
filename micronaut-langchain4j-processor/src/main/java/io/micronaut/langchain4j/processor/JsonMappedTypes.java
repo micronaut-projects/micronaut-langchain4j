@@ -27,6 +27,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringJoiner;
 import java.util.function.Predicate;
 
 /**
@@ -45,6 +46,7 @@ final class JsonMappedTypes {
         Map.class.getName()
     );
     private static final List<String> SKIPPED_PACKAGES = List.of("java.", "javax.", "jakarta.", "dev.langchain4j.");
+    private static final int MAX_PARAMETERIZATIONS = 16;
 
     private JsonMappedTypes() {
     }
@@ -93,6 +95,32 @@ final class JsonMappedTypes {
         return NativeImageMetadataVisitor.WORKFLOW_ANNOTATIONS.stream().anyMatch(method::hasDeclaredAnnotation);
     }
 
+    /**
+     * The name of a type with its type arguments, such as {@code test.Box<test.Foo>}. A type argument already being
+     * described, as in {@code Node<T extends Node<T>>}, is written with its name only.
+     */
+    private static String key(ClassElement type, Set<String> describing) {
+        Map<String, ClassElement> arguments = type.getTypeArguments();
+        if (arguments.isEmpty() || !describing.add(type.getName())) {
+            return type.getName();
+        }
+        StringJoiner key = new StringJoiner(",", type.getName() + "<", ">");
+        for (ClassElement argument : arguments.values()) {
+            key.add(argument.isArray() ? key(argument.fromArray(), describing) + "[]" : key(argument, describing));
+        }
+        describing.remove(type.getName());
+        return key.toString();
+    }
+
+    /**
+     * Bounds the parameterizations of a type that are traversed: a type whose fields parameterize it with a growing
+     * type, as {@code Node<T>} with a {@code Node<List<T>>} field, would otherwise be traversed without end.
+     */
+    private static boolean tooManyParameterizations(String name, Set<String> visited) {
+        String prefix = name + "<";
+        return visited.stream().filter(key -> key.startsWith(prefix)).count() >= MAX_PARAMETERIZATIONS;
+    }
+
     private static void collect(ClassElement type, Predicate<ClassElement> accept, Set<ClassElement> types, Set<String> visited) {
         if (type == null || type.isPrimitive()) {
             return;
@@ -108,10 +136,14 @@ final class JsonMappedTypes {
             }
         }
         String name = type.getName();
-        if (type.isInterface() || type.isAbstract() || SKIPPED_PACKAGES.stream().anyMatch(name::startsWith) || !visited.add(name)) {
+        // each parameterization of a generic type is traversed, as its fields resolve to other types (Box<Foo> and
+        // Box<Bar>); a type referencing itself repeats its key, which ends the traversal
+        if (type.isInterface() || type.isAbstract() || SKIPPED_PACKAGES.stream().anyMatch(name::startsWith)
+            || tooManyParameterizations(name, visited) || !visited.add(key(type, new HashSet<>()))) {
             return;
         }
-        if (accept.test(type)) {
+        // the type itself is collected once, whatever its parameterizations
+        if (accept.test(type) && types.stream().noneMatch(collected -> collected.getName().equals(name))) {
             types.add(type);
         }
         if (!type.isEnum()) {
