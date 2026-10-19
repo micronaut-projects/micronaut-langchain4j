@@ -65,6 +65,7 @@ public class PgVectorEmbeddingStoreFactory {
     }
 
     static final class DataSourcePgVectorStore extends PgVectorEmbeddingStore {
+        @SuppressWarnings("java:S107") // mirrors the constructor of PgVectorEmbeddingStore
         DataSourcePgVectorStore(DataSource datasource, @Nullable String table, @Nullable Integer dimension, @Nullable Boolean useIndex,
                                 @Nullable Integer indexListSize, @Nullable Boolean createTable, @Nullable Boolean dropTableFirst,
                                 @Nullable MetadataStorageConfig metadataStorageConfig) {
