@@ -26,6 +26,7 @@ import io.micronaut.inject.BeanDefinition;
 import io.micronaut.langchain4j.aiservices.AiServiceCustomizer;
 import io.micronaut.langchain4j.aiservices.AiServiceDef;
 import io.micronaut.langchain4j.annotation.AiService;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -64,10 +65,11 @@ public class AiServiceInterceptor implements MethodInterceptor<Object, Object> {
         AnnotationValue<AiService> annotation = context.getAnnotation(AiService.class);
         String name = annotation.stringValue("named").orElse(null);
         Set<Class<?>> tools = annotation.contains("tools") ? Set.of(annotation.classValues("tools")) : null;
+        List<String> toolProviders = annotation.contains("toolProviders") ? List.of(annotation.stringValues("toolProviders")) : null;
         @SuppressWarnings("unchecked") Class<AiServiceCustomizer<Object>> customizer =
             (Class<AiServiceCustomizer<Object>>) annotation.classValue("customizer").orElse(null);
 
         BeanDefinition<Object> beanDefinition = beanContext.getBeanDefinition(declaringType);
-        return new AiServiceDef<>(beanDefinition, declaringType, name, tools, customizer);
+        return new AiServiceDef<>(beanDefinition, declaringType, name, tools, customizer, toolProviders);
     }
 }
