@@ -170,6 +170,14 @@ class NativeImageMetadataVisitorTest {
         assertEquals(service.indexOf("\"test.Model$Box\""), service.lastIndexOf("\"test.Model$Box\""), service);
     }
 
+    @Test
+    void independentParameterizationsAreNotBounded() {
+        String service = generateMetadata("test.Model", SerdeImportVisitorTest.manyParameterizations(17)).get("test.Model$Assistant");
+        for (int i = 1; i <= 17; i++) {
+            assertTrue(service.contains("{\"type\": \"test.Model$Foo" + i + "\", \"allDeclaredFields\": true"), service);
+        }
+    }
+
     private static Map<String, String> generateMetadata(String className, String source) {
         try (JavaParser parser = new JavaParser()) {
             Iterable<? extends JavaFileObject> generated = parser.generate(className, source);
