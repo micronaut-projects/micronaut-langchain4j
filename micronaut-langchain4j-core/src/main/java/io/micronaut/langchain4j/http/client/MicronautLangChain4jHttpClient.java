@@ -265,42 +265,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
                     return;
                 }
                 try (client) {
-                    RawStreamHandle handle = new RawStreamHandle(client);
-                    if (listener instanceof CancellableListener cancellableListener) {
-                        cancellableListener.onStart(handle);
-                    }
-                    if (handle.isCancelled()) {
-                        return;
-                    }
-                    RawHttpClient rawHttpClient = client.rawHttpClient();
-                    io.micronaut.http.HttpResponse<?> response = rawHttpClient != null
-                        ? rawExchange(rawHttpClient, request)
-                        : standardExchange(client.httpClient(), request);
-                    handle.response(response);
-                    try {
-                        if (handle.isCancelled()) {
-                            return;
-                        }
-                        if (!isSuccessful(response)) {
-                            safeOnError(listener, new HttpException(response.code(), readBody(response)));
-                            return;
-                        }
-                        safeOnOpen(listener, successfulResponse(response, null));
-                        try {
-                            parseBody(response, parser, listener);
-                        } catch (RuntimeException e) {
-                            // cancelling closes the response, which fails the parsing
-                            if (handle.isCancelled()) {
-                                return;
-                            }
-                            throw e;
-                        }
-                        if (!handle.isCancelled()) {
-                            safeOnClose(listener);
-                        }
-                    } finally {
-                        closeResponse(response);
-                    }
+                    streamRawResponse(client, request, parser, listener);
                 }
             } catch (ReadTimeoutException e) {
                 safeOnError(listener, new TimeoutException(e));
@@ -343,6 +308,56 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
             }
         }
         return request;
+    }
+
+    private void streamRawResponse(ClientHandle client, HttpRequest request, ServerSentEventParser parser, ServerSentEventListener listener) {
+        RawStreamHandle handle = new RawStreamHandle(client);
+        if (listener instanceof CancellableListener cancellableListener) {
+            cancellableListener.onStart(handle);
+        }
+        if (handle.isCancelled()) {
+            return;
+        }
+        RawHttpClient rawHttpClient = client.rawHttpClient();
+        io.micronaut.http.HttpResponse<?> response = rawHttpClient != null
+            ? rawExchange(rawHttpClient, request)
+            : standardExchange(client.httpClient(), request);
+        handle.response(response);
+        try {
+            if (handle.isCancelled()) {
+                return;
+            }
+            if (!isSuccessful(response)) {
+                safeOnError(listener, new HttpException(response.code(), readBody(response)));
+                return;
+            }
+            safeOnOpen(listener, successfulResponse(response, null));
+            if (parseUnlessCancelled(response, parser, listener, handle)) {
+                safeOnClose(listener);
+            }
+        } finally {
+            closeResponse(response);
+        }
+    }
+
+    /**
+     * @return Whether the body was parsed, rather than the stream cancelled
+     */
+    private static boolean parseUnlessCancelled(
+        io.micronaut.http.HttpResponse<?> response,
+        ServerSentEventParser parser,
+        ServerSentEventListener listener,
+        RawStreamHandle handle) {
+        try {
+            parseBody(response, parser, listener);
+        } catch (RuntimeException e) {
+            // cancelling closes the response, which fails the parsing
+            if (handle.isCancelled()) {
+                return false;
+            }
+            throw e;
+        }
+        return !handle.isCancelled();
     }
 
     private ClientHandle client(String url) {
