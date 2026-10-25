@@ -16,7 +16,7 @@ langchain4j:
 Then, you will be able to inject a bean of type `dev.langchain4j.model.chat.StreamingChatModel`.
 
 Additionally, you can use an <<aiService, AI Service>> with a method whose return type uses Project Reactor.
-For example, an `@AIService` interface with a method whose return type is `Flux<String>`.
+For example, an `@AiService` interface with a method whose return type is `Flux<String>`.
 In order to do this, you will need to add the following dependency:
 
 dependency:langchain4j-reactor[groupId=dev.langchain4j]
