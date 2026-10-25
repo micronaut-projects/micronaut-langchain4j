@@ -24,6 +24,7 @@ import dev.langchain4j.http.client.SuccessfulHttpResponse;
 import dev.langchain4j.http.client.sse.ServerSentEventListener;
 import dev.langchain4j.http.client.sse.ServerSentEventContext;
 import dev.langchain4j.http.client.sse.ServerSentEventParsingHandle;
+import dev.langchain4j.http.client.sse.DefaultServerSentEventParser;
 import dev.langchain4j.http.client.sse.ServerSentEventParser;
 import io.micronaut.context.BeanProvider;
 import io.micronaut.context.BeanContext;
@@ -133,7 +134,8 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
         CompletableFuture.runAsync(() -> {
             try {
                 ClientHandle client = client(request.url());
-                if (client.sseClient() != null) {
+                // the SSE client parses standard server-sent events: a custom parser (Ollama streams NDJSON) needs the raw response
+                if (client.sseClient() != null && parser instanceof DefaultServerSentEventParser) {
                     stream(client, request, listener);
                     return;
                 }
@@ -261,7 +263,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
 
     private void stream(ClientHandle client, HttpRequest request, ServerSentEventListener listener) {
         try {
-            client.sseClient().eventStream(micronautRequest(request), Argument.STRING)
+            client.sseClient().eventStream(standardRequest(request), Argument.STRING)
                 .subscribe(new SseSubscriber(listener, client));
         } catch (RuntimeException e) {
             closeQuietly(client);
