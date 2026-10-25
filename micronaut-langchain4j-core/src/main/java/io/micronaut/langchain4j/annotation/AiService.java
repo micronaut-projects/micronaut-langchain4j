@@ -19,6 +19,7 @@ import io.micronaut.aop.Introduction;
 import io.micronaut.context.annotation.AliasFor;
 import io.micronaut.core.annotation.AllowsReflection;
 import io.micronaut.core.annotation.AnnotationMetadata;
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.langchain4j.aiservices.AiServiceCreationContext;
 import io.micronaut.langchain4j.aiservices.AiServiceCustomizer;
@@ -83,6 +84,19 @@ public @interface AiService {
      * @since 2.4.0
      */
     String[] mcpClients() default {};
+
+    /**
+     * The name of the LangChain4j {@code Skills} bean whose Agent Skills are offered to the service, for example the
+     * skills configured with {@code langchain4j.skills.<name>}.
+     *
+     * <p>Requires {@code dev.langchain4j:langchain4j-skills} on the classpath. The service receives the
+     * {@code activate_skill} tool and its system message lists the available skills.</p>
+     *
+     * @return The name of the skills bean
+     * @since 2.4.0
+     */
+    @Experimental
+    String skills() default "";
 
     /**
      * A customizer can be registered to customize its creation.
