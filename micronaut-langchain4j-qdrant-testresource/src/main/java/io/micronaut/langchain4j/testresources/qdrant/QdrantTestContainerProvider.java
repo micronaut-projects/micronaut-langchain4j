@@ -17,8 +17,6 @@ package io.micronaut.langchain4j.testresources.qdrant;
 
 import io.micronaut.core.io.socket.SocketUtils;
 import io.micronaut.testresources.testcontainers.AbstractTestContainersProvider;
-import io.qdrant.client.QdrantClient;
-import io.qdrant.client.QdrantGrpcClient;
 import io.qdrant.client.grpc.Collections;
 import java.util.Collection;
 import java.util.List;
@@ -33,12 +31,7 @@ public class QdrantTestContainerProvider
     extends AbstractTestContainersProvider<QdrantContainer> {
     private static final Logger LOG = LoggerFactory.getLogger(QdrantTestContainerProvider.class);
     private static final String COLLECTION_NAME = "collection-name";
-    private static final String HOST = "host";
-    private static final String PORT = "port";
-    private static final String PREFIX = "langchain4j.qdrant.embedding-store";
-    private static final String P_COLLECTION = PREFIX + "." + COLLECTION_NAME;
-    private static final String P_PORT = PREFIX + '.' + PORT;
-    private static final String P_HOST = PREFIX + '.' + HOST;
+    private static final String P_COLLECTION = Qdrant.PREFIX + "." + COLLECTION_NAME;
     private static final String DIMENSION = "containers.qdrant.dimension";
     private static final String DISTANCE = "containers.qdrant.distance";
 
@@ -58,37 +51,14 @@ public class QdrantTestContainerProvider
         String dimension = testResourcesConfig.getOrDefault(DIMENSION, 384).toString();
         String distance = testResourcesConfig.getOrDefault(DISTANCE, Collections.Distance.Cosine.name()).toString();
 
-        return new QdrantContainer(imageName) {
-            @Override
-            protected void doStart() {
-                super.doStart();
-                QdrantGrpcClient.Builder grpcClientBuilder = QdrantGrpcClient.newBuilder(
-                    SocketUtils.LOCALHOST, getMappedPort(6334), false
-                );
-                QdrantClient qdrantClient = new QdrantClient(grpcClientBuilder.build());
-                try {
-                    LOG.info("Creating Qdrant Collection {}.", collectionName);
-                    qdrantClient.createCollectionAsync(
-                        collectionName,
-                        Collections.VectorParams.newBuilder()
-                            .setSize(Integer.parseInt(dimension))
-                            .setDistance(Collections.Distance.valueOf(distance))
-                            .build()
-                    ).get();
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                } catch (Exception e) {
-                    LOG.info("Qdrant Collection already exists, skipping creation.");
-                }
-            }
-        };
+        return Qdrant.createContainer(imageName, collectionName, dimension, distance);
     }
 
     @Override
     protected Optional<String> resolveProperty(String propertyName, QdrantContainer container) {
-        if (propertyName.endsWith(HOST)) {
+        if (propertyName.endsWith(Qdrant.HOST)) {
             return Optional.of(SocketUtils.LOCALHOST);
-        } else if (propertyName.endsWith(PORT)) {
+        } else if (propertyName.endsWith(Qdrant.PORT)) {
             return Optional.of(String.valueOf(container.getMappedPort(6334)));
         }
         return Optional.empty();
@@ -97,14 +67,14 @@ public class QdrantTestContainerProvider
     @Override
     public List<String> getResolvableProperties(Map<String, Collection<String>> propertyEntries, Map<String, Object> testResourcesConfig) {
         return List.of(
-            P_HOST,
-            P_PORT
+            Qdrant.P_HOST,
+            Qdrant.P_PORT
         );
     }
 
     @Override
     public List<String> getRequiredPropertyEntries() {
-        return List.of(PREFIX);
+        return List.of(Qdrant.PREFIX);
     }
 
     @Override
@@ -115,13 +85,13 @@ public class QdrantTestContainerProvider
     @Override
     public List<String> getRequiredProperties(String expression) {
         if (isQdrantProperty(expression)) {
-            return List.of(PREFIX + '.' + COLLECTION_NAME);
+            return List.of(Qdrant.PREFIX + '.' + COLLECTION_NAME);
         } else {
             return List.of();
         }
     }
 
     private boolean isQdrantProperty(String expression) {
-        return expression.startsWith(PREFIX);
+        return expression.startsWith(Qdrant.PREFIX);
     }
 }

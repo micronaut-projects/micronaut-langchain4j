@@ -15,13 +15,13 @@
  */
 package io.micronaut.langchain4j.bedrock;
 
-import dev.langchain4j.model.bedrock.BedrockAnthropicStreamingChatModel;
-import dev.langchain4j.model.bedrock.BedrockLlamaChatModel;
+import dev.langchain4j.model.bedrock.BedrockChatModel;
+import dev.langchain4j.model.bedrock.BedrockCohereEmbeddingModel;
+import dev.langchain4j.model.bedrock.BedrockStreamingChatModel;
 import dev.langchain4j.model.bedrock.BedrockTitanEmbeddingModel;
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
-import dev.langchain4j.model.image.ImageModel;
 import io.micronaut.langchain4j.annotation.Lang4jConfig;
 import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
 import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
@@ -29,14 +29,18 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
 @Lang4jConfig(
     models = {
         @Model(
-            kind = ChatLanguageModel.class,
-            impl = BedrockLlamaChatModel.class),
+            kind = ChatModel.class,
+            impl = BedrockChatModel.class),
         @Model(
-            kind = StreamingChatLanguageModel.class,
-            impl = BedrockAnthropicStreamingChatModel.class),
+            kind = StreamingChatModel.class,
+            impl = BedrockStreamingChatModel.class),
         @Model(
             kind = EmbeddingModel.class,
-            impl = BedrockTitanEmbeddingModel.class)
+            impl = BedrockTitanEmbeddingModel.class,
+            exposed = EmbeddingModel.class),
+        @Model(
+            kind = EmbeddingModel.class,
+            impl = BedrockCohereEmbeddingModel.class)
     },
     properties = {
         @Property(
@@ -45,9 +49,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
             required = true
         ),
         @Property(name = "model", common = true, required = true, defaultValue = "claude-3-haiku-20240307"),
-        @Property(name = "anthropicVersion", common = true),
-        @Property(name = "region", common = true),
-        @Property(name = "maxRetries", common = true, defaultValue = "5")
+        @Property(name = "region", common = true)
     }
 )
 final class BedrockModule {

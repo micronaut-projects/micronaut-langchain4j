@@ -15,8 +15,8 @@
  */
 package io.micronaut.langchain4j.jlama;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.jlama.JlamaChatModel;
 import dev.langchain4j.model.jlama.JlamaEmbeddingModel;
@@ -31,11 +31,11 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
 @Lang4jConfig(
     models = {
         @Model(
-            kind = ChatLanguageModel.class,
+            kind = ChatModel.class,
             impl = JlamaChatModel.class)
         ,
         @Model(
-            kind = StreamingChatLanguageModel.class,
+            kind = StreamingChatModel.class,
             impl = JlamaStreamingChatModel.class
         ),
         @Model(

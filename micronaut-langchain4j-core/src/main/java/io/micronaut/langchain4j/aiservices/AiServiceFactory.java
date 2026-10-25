@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2024 original authors
+ * Copyright 2017-2026 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,26 +15,30 @@
  */
 package io.micronaut.langchain4j.aiservices;
 
-import dev.langchain4j.memory.chat.MessageWindowChatMemory;
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
-import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.memory.chat.ChatMemoryProvider;
+import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.moderation.ModerationModel;
-import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.service.AiServices;
-import dev.langchain4j.store.embedding.EmbeddingStore;
-import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore;
+import dev.langchain4j.service.TokenStream;
+import dev.langchain4j.spi.ServiceHelper;
+import dev.langchain4j.spi.services.TokenStreamAdapter;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.BeanProvider;
 import io.micronaut.context.Qualifier;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Parameter;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.core.type.Argument;
 import io.micronaut.core.util.CollectionUtils;
+import io.micronaut.inject.BeanDefinition;
+import io.micronaut.inject.ExecutableMethod;
 import io.micronaut.inject.qualifiers.Qualifiers;
+import io.micronaut.langchain4j.jsonschema.StructuredOutputSchemas;
 import io.micronaut.langchain4j.tools.ToolRegistry;
+import io.micronaut.langchain4j.utils.RetrievalUtils;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
@@ -45,6 +49,7 @@ import java.util.function.Consumer;
  */
 @Factory
 public class AiServiceFactory {
+    private static final Collection<TokenStreamAdapter> TOKEN_STREAM_ADAPTERS = ServiceHelper.loadFactories(TokenStreamAdapter.class);
 
     private final BeanContext beanContext;
     private final ToolRegistry toolRegistry;
@@ -59,6 +64,12 @@ public class AiServiceFactory {
      *
      * <p>A {@link io.micronaut.context.event.BeanCreatedEventListener} can be registered to intercept creation.</p>
      *
+     * <p>Retrieval is configured only when a {@link dev.langchain4j.rag.RetrievalAugmentor} bean or a
+     * {@link dev.langchain4j.rag.content.retriever.ContentRetriever} bean exists, see {@link RetrievalUtils}.</p>
+     *
+     * <p>The methods returning a type with a generated JSON schema send it as the response format, see
+     * {@link StructuredOutputSchemas}.</p>
+     *
      * @param serviceDef The service definition
      * @return The AI services.
      */
@@ -68,8 +79,8 @@ public class AiServiceFactory {
         Class<Object> type = serviceDef.type();
         String name = serviceDef.name();
 
-        AiServices<Object> builder = AiServices
-            .builder(type);
+        MicronautAiServiceContext context = new MicronautAiServiceContext(type, serviceDef.beanDefinition(), beanContext);
+        AiServices<Object> builder = AiServices.builder(context);
 
         AiServiceCustomizer<Object> creationCustomizer = Optional.ofNullable(serviceDef.customizer())
             .flatMap(beanContext::findBean)
@@ -84,34 +95,36 @@ public class AiServiceFactory {
             builder.tools(toolsTyped);
         }
 
-        lookupByNameOrDefault(name, ChatLanguageModel.class, builder::chatLanguageModel);
-
-        lookupByNameOrDefault(name, StreamingChatLanguageModel.class, builder::streamingChatLanguageModel);
+        ModelSelection modelSelection = selectModels(serviceDef.beanDefinition());
+        if (modelSelection.chatModel()) {
+            lookupByNameOrDefault(name, ChatModel.class, builder::chatModel);
+        }
+        if (modelSelection.streamingChatModel()) {
+            lookupByNameOrDefault(name, StreamingChatModel.class, builder::streamingChatModel);
+        }
 
         lookupByNameOrDefault(name, ModerationModel.class, builder::moderationModel);
 
-        // default to in-memory chat store, but allow replacement
-        lookupByNameOrDefault(name, InMemoryChatMemoryStore.class, new InMemoryChatMemoryStore(), (store) -> builder.chatMemory(
-            MessageWindowChatMemory.builder()
-                .maxMessages(10)
-                .chatMemoryStore(store)
-                .build()
-        ));
+        lookupByNameOrDefault(name, ChatMemoryProvider.class, builder::chatMemoryProvider);
 
-        lookupByNameOrDefault(name, EmbeddingModel.class, null, embeddingModel ->
-            lookupByNameOrDefault(name, EmbeddingStore.class, null, embeddingStore ->
-                builder.contentRetriever(new EmbeddingStoreContentRetriever(embeddingStore, embeddingModel))));
+        RetrievalUtils.configureRetrieval(beanContext, name, builder::retrievalAugmentor, builder::contentRetriever);
         if (creationCustomizer != null) {
             creationCustomizer.customize(new AiServiceCreationContext<>(
                 serviceDef,
                 builder
             ));
         }
+        // after the customizer, which may replace the chat model or the chat request transformer
+        beanContext.findBean(StructuredOutputSchemas.class)
+            .ifPresent(schemas -> schemas.configure(context, returnTypes(serviceDef.beanDefinition())));
         return builder;
     }
 
-    private <T> void lookupByNameOrDefault(String name, Class<T> beanType, @Nullable T defaultValue, Consumer<T> configurer) {
-        lookupByNameOrDefault(name, Argument.of(beanType), defaultValue, configurer);
+    private static List<Argument<?>> returnTypes(BeanDefinition<?> beanDefinition) {
+        return beanDefinition.getExecutableMethods().stream()
+            .filter(method -> method.getDeclaringType() != Object.class)
+            .<Argument<?>>map(method -> method.getReturnType().asArgument())
+            .toList();
     }
 
     private <T> void lookupByNameOrDefault(String name, Class<T> beanType, Consumer<T> configurer) {
@@ -128,7 +141,64 @@ public class AiServiceFactory {
             configurer.accept(defaultValue);
         }
 
-        provider.ifPresent(configurer);
-        provider.find(qualifier).ifPresent(configurer);
+        provider.find(qualifier).ifPresentOrElse(configurer,
+            () -> provider.ifPresent(configurer));
+    }
+
+    static ModelSelection selectModels(BeanDefinition<?> beanDefinition) {
+        boolean hasStreamingMethods = false;
+        boolean hasNonStreamingMethods = false;
+        for (ExecutableMethod<?, ?> method : beanDefinition.getExecutableMethods()) {
+            if (method.getDeclaringType() == Object.class) {
+                continue;
+            }
+            if (isStreamingReturnType(method)) {
+                hasStreamingMethods = true;
+            } else {
+                hasNonStreamingMethods = true;
+            }
+        }
+        if (!hasStreamingMethods) {
+            return ModelSelection.CHAT;
+        }
+        if (!hasNonStreamingMethods) {
+            return ModelSelection.STREAMING;
+        }
+        return ModelSelection.BOTH;
+    }
+
+    private static boolean isStreamingReturnType(ExecutableMethod<?, ?> method) {
+        Argument<?> returnType = method.getReturnType().asArgument();
+        if (TokenStream.class.isAssignableFrom(returnType.getType())) {
+            return true;
+        }
+        for (TokenStreamAdapter tokenStreamAdapter : TOKEN_STREAM_ADAPTERS) {
+            if (tokenStreamAdapter.canAdaptTokenStreamTo(returnType.getType())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    enum ModelSelection {
+        CHAT(true, false),
+        STREAMING(false, true),
+        BOTH(true, true);
+
+        private final boolean chatModel;
+        private final boolean streamingChatModel;
+
+        ModelSelection(boolean chatModel, boolean streamingChatModel) {
+            this.chatModel = chatModel;
+            this.streamingChatModel = streamingChatModel;
+        }
+
+        boolean chatModel() {
+            return chatModel;
+        }
+
+        boolean streamingChatModel() {
+            return streamingChatModel;
+        }
     }
 }

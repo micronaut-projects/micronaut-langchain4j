@@ -15,10 +15,8 @@
  */
 package io.micronaut.langchain4j.openai;
 
-import static io.micronaut.langchain4j.annotation.Lang4jConfig.*;
-
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.image.ImageModel;
 import dev.langchain4j.model.moderation.ModerationModel;
@@ -37,12 +35,12 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
 @Lang4jConfig(
     models = {
         @Model(
-            kind = ChatLanguageModel.class,
+            kind = ChatModel.class,
             impl = OpenAiChatModel.class,
             defaultModelName = OpenAiModule.DEFAULT_CHAT_MODEL
         ),
         @Model(
-            kind = StreamingChatLanguageModel.class,
+            kind = StreamingChatModel.class,
             impl = OpenAiStreamingChatModel.class,
             defaultModelName = OpenAiModule.DEFAULT_CHAT_MODEL
         ),
@@ -61,24 +59,28 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Model;
         )
     },
     properties = {
-        @Property(
+        @Lang4jConfig.Property(
             name = "proxy",
             injected = true
         ),
-        @Property(
+        @Lang4jConfig.Property(
             name = "listeners",
             injected = true
         ),
-        @Property(
+        @Lang4jConfig.Property(
             name = "tokenizer",
             injected = true
         ),
-        @Property(name = "baseUrl", common = true, required = true, defaultValue = "https://api.openai.com/v1/"),
-        @Property(name = "apiKey", common = true, required = true),
-        @Property(name = "organizationId", common = true),
-        @Property(name = "timeout", common = true),
-        @Property(name = "logRequests", common = true, defaultValue = StringUtils.FALSE),
-        @Property(name = "logResponses", common = true, defaultValue = StringUtils.FALSE)
+        @Lang4jConfig.Property(
+            name = "httpClientBuilder",
+            injected = true
+        ),
+        @Lang4jConfig.Property(name = "baseUrl", common = true, required = true, defaultValue = "https://api.openai.com/v1/"),
+        @Lang4jConfig.Property(name = "apiKey", common = true, required = true),
+        @Lang4jConfig.Property(name = "organizationId", common = true),
+        @Lang4jConfig.Property(name = "timeout", common = true),
+        @Lang4jConfig.Property(name = "logRequests", common = true, defaultValue = StringUtils.FALSE),
+        @Lang4jConfig.Property(name = "logResponses", common = true, defaultValue = StringUtils.FALSE)
     }
 )
 final class OpenAiModule {

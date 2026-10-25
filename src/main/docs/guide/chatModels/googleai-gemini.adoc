@@ -1,6 +1,6 @@
 Add the following dependency:
 
-dependency:io.micronaut.langchain4j:micronaut-googleai-gemini[]
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-googleai-gemini[]
 
 Then add the link:configurationreference.html#io.micronaut.langchain4j.googleaigemini.CommonGoogleAiGeminiChatModelConfiguration[necessary configuration].
 

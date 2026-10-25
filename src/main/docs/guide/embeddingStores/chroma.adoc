@@ -1,0 +1,11 @@
+Add the following dependency:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-store-chroma[]
+
+.Example Configuration
+[configuration]
+----
+langchain4j.chroma.embedding-store.base-url: http://localhost:8000
+langchain4j.chroma.embedding-store.collection-name: documents
+langchain4j.chroma.embedding-store.api-version: V2
+----

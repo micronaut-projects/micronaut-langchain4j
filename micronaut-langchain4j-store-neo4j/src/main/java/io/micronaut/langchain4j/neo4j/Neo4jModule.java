@@ -15,8 +15,8 @@
  */
 package io.micronaut.langchain4j.neo4j;
 
+import dev.langchain4j.community.store.embedding.neo4j.Neo4jEmbeddingStore;
 import dev.langchain4j.store.embedding.EmbeddingStore;
-import dev.langchain4j.store.embedding.neo4j.Neo4jEmbeddingStore;
 import io.micronaut.langchain4j.annotation.Lang4jConfig;
 
 @Lang4jConfig(

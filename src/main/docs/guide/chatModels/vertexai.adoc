@@ -4,6 +4,8 @@ dependency:io.micronaut.langchain4j:micronaut-langchain4j-vertexai[]
 
 Then add the link:configurationreference.html#io.micronaut.langchain4j.vertexai.CommonVertexAiChatModelConfiguration[necessary configuration].
 
+To provide explicit Google Cloud credentials, register a `GoogleCredentials` bean. When no such bean is present, the Vertex AI client uses Application Default Credentials.
+
 .Example Configuration
 [configuration]
 ----

@@ -1,21 +1,34 @@
 package io.micronaut.langchain4j.neo4j;
 
+import dev.langchain4j.community.store.embedding.neo4j.Neo4jEmbeddingStore;
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2EmbeddingModel;
 import dev.langchain4j.store.embedding.EmbeddingMatch;
+import dev.langchain4j.store.embedding.EmbeddingSearchRequest;
+import dev.langchain4j.store.embedding.EmbeddingSearchResult;
 import dev.langchain4j.store.embedding.EmbeddingStore;
-import dev.langchain4j.store.embedding.neo4j.Neo4jEmbeddingStore;
+import io.micronaut.context.exceptions.ConfigurationException;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.langchain4j.testutils.Neo4jUtils;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import io.micronaut.test.support.TestPropertyProvider;
 import jakarta.inject.Inject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.neo4j.driver.Driver;
 
 @MicronautTest
-public class Neo4jTest {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class Neo4jTest implements TestPropertyProvider {
+
     @Inject
     Driver driver;
 
@@ -39,10 +52,24 @@ public class Neo4jTest {
         embeddingStore.add(embedding2, segment2);
 
         Embedding queryEmbedding = embeddingModel.embed("What is your favourite sport?").content();
-        List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.findRelevant(queryEmbedding, 1);
-        EmbeddingMatch<TextSegment> embeddingMatch = relevant.get(0);
+        EmbeddingSearchResult<TextSegment> relevant = embeddingStore.search(EmbeddingSearchRequest.builder().queryEmbedding(queryEmbedding).maxResults(1).build());
+        EmbeddingMatch<TextSegment> embeddingMatch = relevant.matches().get(0);
 
         System.out.println(embeddingMatch.score()); // 0.8144288608390052
         Assertions.assertEquals("I like football.", embeddingMatch.embedded().text());
+    }
+
+    @Override
+    public @NonNull Map<String, String> getProperties() {
+        Map<String, String> result = new HashMap<>();
+        try {
+            Map<String, Object> props = Neo4jUtils.getProperties();
+            for (String k : props.keySet()) {
+                result.put(k, props.get(k).toString());
+            }
+        } catch (Exception e) {
+            throw new ConfigurationException("Could not set Neo4j properties", e);
+        }
+        return result;
     }
 }

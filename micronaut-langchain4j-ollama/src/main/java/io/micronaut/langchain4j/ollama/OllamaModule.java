@@ -15,8 +15,8 @@
  */
 package io.micronaut.langchain4j.ollama;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.model.ollama.OllamaEmbeddingModel;
@@ -32,11 +32,11 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
 @Lang4jConfig(
     models = {
         @Model(
-            kind = ChatLanguageModel.class,
+            kind = ChatModel.class,
             impl = OllamaChatModel.class)
         ,
         @Model(
-            kind = StreamingChatLanguageModel.class,
+            kind = StreamingChatModel.class,
             impl = OllamaStreamingChatModel.class
         ),
         @Model(
@@ -45,6 +45,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
         )
     },
     properties = {
+        @Property(name = "httpClientBuilder", injected = true),
         @Property(name = "baseUrl", common = true, required = true),
         @Property(name = "modelName", common = true, required = true, defaultValue = "llama3"),
         @Property(name = "timeout", common = true),

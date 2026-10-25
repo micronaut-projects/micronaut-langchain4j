@@ -15,8 +15,8 @@
  */
 package io.micronaut.langchain4j.redis;
 
+import dev.langchain4j.community.store.embedding.redis.RedisEmbeddingStore;
 import dev.langchain4j.store.embedding.EmbeddingStore;
-import dev.langchain4j.store.embedding.redis.RedisEmbeddingStore;
 import io.micronaut.langchain4j.annotation.Lang4jConfig;
 
 @Lang4jConfig(

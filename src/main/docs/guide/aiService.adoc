@@ -1,0 +1,50 @@
+You can also define new https://docs.langchain4j.dev/tutorials/ai-services[AI services]:
+
+.Defining `@AiService` interfaces
+snippet::example.micronaut.aiservice.Friend[source="main"]
+
+<1> Define an interface annotated with ann:langchain4j.annotation.AiService[]
+<2> Use Langchain4j annotations like `@SystemMessage`
+
+[.lang-python]
+NOTE: In Python an AI service is an abstract class (`abc.ABC`) whose methods are declared with `...` bodies; the decorators mirror the LangChain4j annotations.
+
+[.lang-python]
+NOTE: LangChain4j builds the service implementation reflectively from the Java interface generated for the Python class and reads the `@SystemMessage`/`@UserMessage` annotations from it, so the annotations must be copied onto the generated interface: declare the `@AllowsReflection` hint (`micronaut.core.annotation`) on the AI service, or name its package in the `micronaut.introspection.allow-reflection` compiler option (`micronautBuild.python.compilerArgs.add("-Amicronaut.introspection.allowReflection=example.micronaut.*")` in the Gradle build, as the examples of this guide do).
+
+You can now inject the `@AiService` definition into any Micronaut component including tests:
+
+.Calling `@AiService` definitions
+snippet::example.micronaut.aiservice.AiServiceTest[source="test"]
+
+=== Retrieval Augmented Generation
+
+Retrieval is opt-in. An `@AiService` performs retrieval augmented generation (RAG) only when the application declares one of:
+
+- a `dev.langchain4j.rag.RetrievalAugmentor` bean, or
+- a `dev.langchain4j.rag.content.retriever.ContentRetriever` bean, which LangChain4j wraps in a `DefaultRetrievalAugmentor`.
+
+A `RetrievalAugmentor` bean takes precedence over a `ContentRetriever` bean. For either type, a bean `@Named` after the service (for example `@Named("expert")` for `@AiService("expert")`) is preferred over the default bean. If several candidates exist and none is named after the service or marked `@Primary`, no retrieval is configured.
+
+.Defining an `@AiService` that returns `Result<String>`
+snippet::example.micronaut.aiservice.rag.Expert[source="main"]
+
+<1> A plain `@AiService`; nothing on the interface refers to retrieval.
+<2> Returning `dev.langchain4j.service.Result` exposes the retrieved sources alongside the answer.
+
+.Declaring a `ContentRetriever` bean
+snippet::example.micronaut.aiservice.rag.RetrievalFactory[source="main"]
+
+<1> The bean is picked up by every `@AiService` that has no bean named after it. Add `@Named` to target one service.
+<2> Build the retriever from the configured `EmbeddingStore` and `EmbeddingModel`.
+
+.Retrieved content reaches the model and the result
+snippet::example.micronaut.aiservice.rag.RagTest[source="test"]
+
+<1> Ingest a segment into the embedding store.
+<2> Call the service as usual.
+<3> The retrieved segment is available as a source of the result.
+
+To configure a single service, declare an api:langchain4j.aiservices.AiServiceCustomizer[] bean for it and call `contentRetriever(...)` or `retrievalAugmentor(...)` on `AiServiceCreationContext.aiServices()`.
+
+NOTE: Before 2.3.0 an `EmbeddingStoreContentRetriever` was attached to every `@AiService` automatically whenever an `EmbeddingModel` bean and an `EmbeddingStore` bean existed. Because provider modules expose an embedding model and the in-memory embedding store is enabled by default, that was the case in most applications, causing an embedding round trip on every call and failures against models without embedding support. Declare a `ContentRetriever` bean as shown above to restore the previous behaviour.

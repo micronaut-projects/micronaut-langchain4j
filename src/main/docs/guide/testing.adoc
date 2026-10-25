@@ -1,0 +1,19 @@
+Micronaut LangChain4j includes a small evaluation API for asserting AI responses in tests.
+
+The `EvaluationRequest` record captures the original user text, optional grounding context, and generated response.
+An `Evaluator` consumes that request and returns an `EvaluationResult`.
+
+Built-in evaluators include:
+
+* `RelevancyEvaluator` for checking whether the response answers the user request.
+* `FactCheckingEvaluator` for checking whether the response is grounded in the supplied context.
+
+When an AI service returns `dev.langchain4j.service.Result<T>`, you can reuse retrieved sources as evaluation context:
+
+.Defining an `@AiService` that returns `Result<String>`
+snippet::example.micronaut.aiservice.evaluation.EvaluatingFriend[source="main"]
+
+.Evaluating an AI service response
+snippet::example.micronaut.aiservice.evaluation.AiServiceEvaluationExample[source="test"]
+
+`FactCheckingEvaluator` requires non-empty context, which makes it a good fit for RAG-style responses backed by retrieved sources.

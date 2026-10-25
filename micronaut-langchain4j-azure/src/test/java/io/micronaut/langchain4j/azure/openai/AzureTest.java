@@ -17,6 +17,7 @@ import reactor.core.publisher.Mono;
 @MicronautTest
 @Property(name = "langchain4j.azure-open-ai.api-key", value = "somekey")
 @Property(name = "langchain4j.azure-open-ai.endpoint", value = "blah")
+@Property(name = "langchain4j.azure-open-ai.deployment-name", value = "blah")
 @Property(name = "langchain4j.azure-open-ai.chat-models.default.endpoint", value = "blah")
 @Property(name = "langchain4j.azure-open-ai.image-models.default.endpoint", value = "blah")
 @Property(name = "langchain4j.azure-open-ai.chat-models.default.response-format", value = "json_object")

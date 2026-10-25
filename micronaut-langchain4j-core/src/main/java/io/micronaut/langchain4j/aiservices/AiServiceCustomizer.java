@@ -15,7 +15,7 @@
  */
 package io.micronaut.langchain4j.aiservices;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.langchain4j.annotation.AiService;
 
 /**

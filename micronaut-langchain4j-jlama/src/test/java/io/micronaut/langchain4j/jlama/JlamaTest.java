@@ -1,6 +1,6 @@
 package io.micronaut.langchain4j.jlama;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class JlamaTest {
 
     @Inject
-    ChatLanguageModel chatLanguageModel;
+    ChatModel chatLanguageModel;
 
     @Test
     void testJlamaLanguageModel() {

@@ -2,20 +2,31 @@ introduction:
   title: Introduction
 quickStart:
   title: Quick Start
+responseStreaming: Response Streaming
+aiService: AI Service
+agenticService: Agentic Service
+structuredOutput: Structured Outputs
+testing: Testing
+tools: Tools
 chatModels:
   title: Chat Language Models
+  chatModelExample: ChatModel Example
+  chatMemory: Chat Memory
   anthropic: Anthropic
   azure: Azure
   bedrock: Bedrock
   hugging-face: HuggingFace
   mistralai: MistralAi
   ollama: Ollama
+  oci-genai: Oracle Cloud GenAI
   openai: OpenAi
   googleai-gemini: Google AI Gemini
   vertexai: VertexAi
   vertexai-gemini: VertexAi Gemini
 embeddingStores:
   title: Embedding Stores
+  embeddingStoresInMemory: In-Memory
+  chroma: Chroma
   elasticsearch: Elastic Search
   mongodb: MongoDB
   neo4j: Neo4j
@@ -26,4 +37,3 @@ embeddingStores:
   qdrant: Qdrant
 repository: Repository
 releaseHistory: Release History
-

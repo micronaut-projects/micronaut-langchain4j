@@ -1,6 +1,6 @@
 package io.micronaut.langchain4j.chatmodels.tck.tests;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.langchain4j.chatmodels.tck.SuiteCondition;
@@ -17,6 +17,6 @@ public class BeanOfTypeChatLanguageModelExistsTest {
 
     @Test
     void beanOfTypeChatLanguageModelExists() {
-        assertTrue(beanContext.containsBean(ChatLanguageModel.class), "it is possible to inject a bean of type ChatLanguageModel");
+        assertTrue(beanContext.containsBean(ChatModel.class), "it is possible to inject a bean of type ChatLanguageModel");
     }
 }

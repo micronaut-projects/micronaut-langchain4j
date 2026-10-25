@@ -1,0 +1,48 @@
+Models are stateless by design. Chat memory serves as container for previous messages,
+helping you maintain context in a conversation, but the model itself is not aware of this memory;
+it relies on you to include the relevant messages in each request for coherent and contextually relevant responses.
+
+Langchain4J provides an API https://docs.langchain4j.dev/tutorials/chat-memory#persistence[`ChatMemory`] to help you manage chat memory. You can provide your own implementation or use one of the provided implementations.
+
+The default implementation of `ChatMemory`, `dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore`, stores `ChatMessage` instances in memory.
+
+To use the Redis implementation `dev.langchain4j.community.store.memory.chat.redis.RedisChatMemoryStore`, add the following dependency:
+
+dependency:micronaut-langchain4j-store-redis[groupId=io.micronaut.langchain4j]
+
+To use the Neo4J implementation `dev.langchain4j.community.store.memory.chat.neo4j.Neo4jChatMemoryStore`, add the following dependency:
+
+dependency:micronaut-langchain4j-store-neo4j[groupId=io.micronaut.langchain4j]
+
+To use the Cassandra implementation `dev.langchain4j.store.memory.chat.cassandra.CassandraChatMemoryStore`, add the following dependency:
+
+dependency:micronaut-langchain4j-cassandra[groupId=io.micronaut.langchain4j]
+
+To use the Oracle implementation `dev.langchain4j.store.memory.chat.oracle.OracleChatMemoryStore`, add the following dependency:
+
+dependency:micronaut-langchain4j-store-oracle[groupId=io.micronaut.langchain4j]
+
+Then configure a JDBC datasource and the chat memory store properties, for example:
+
+[configuration]
+----
+datasources.default.dialect: oracle
+langchain4j.chat-memory-store.oracle.default.enabled: true
+langchain4j.chat-memory-store.oracle.default.table-name: CHAT_MEMORY
+langchain4j.chat-memory-store.oracle.default.memory-id-column-name: MEMORY_ID
+langchain4j.chat-memory-store.oracle.default.content-column-name: CONTENT
+----
+
+The table must already exist. By default, the expected schema is `CHAT_MEMORY(MEMORY_ID, CONTENT)`.
+
+The segment under `oracle` (for example `default`) maps to the datasource name.
+For multiple datasources, configure multiple entries such as
+`langchain4j.chat-memory-store.oracle.reporting.*`.
+
+The following example shows how to use the `ChatMemory`:
+
+snippet::example.micronaut.AssistantWithMemory[source=main]
+
+You could invoke the previous class as illustrated in the following test:
+
+snippet::example.micronaut.AssistantWithMemoryTest[tags=test]

@@ -10,23 +10,35 @@ import dev.langchain4j.store.embedding.qdrant.QdrantEmbeddingStore;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Primary;
-import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.langchain4j.aiservices.AiServiceCustomizer;
+import io.micronaut.langchain4j.testresources.qdrant.Qdrant;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import io.micronaut.test.support.TestPropertyProvider;
+import io.qdrant.client.grpc.Collections;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
+
+import java.util.Map;
 
 @MicronautTest
 @EnabledIfEnvironmentVariable(
     named = "LANGCHAIN4J_OPEN_AI_API_KEY",
-    matches = "\\.+"
+    matches = ".+"
 )
-public class ToolTest {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class ToolTest implements TestPropertyProvider {
     @Inject
     ApplicationContext applicationContext;
+
+    @Override
+    public @NonNull Map<String, String> getProperties() {
+        return Qdrant.getProperties("mycollection", "384", Collections.Distance.Cosine.name());
+    }
 
     @Test
     void testInjectTools() {

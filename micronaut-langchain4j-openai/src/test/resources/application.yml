@@ -1,0 +1,7 @@
+langchain4j:
+  open-ai:
+    api-key: ${OPENAI_API_KEY}
+    streaming-chat-model:
+      model-name: gpt-4o
+      log-requests: true
+      log-responses: true
