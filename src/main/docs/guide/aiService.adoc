@@ -45,7 +45,7 @@ snippet::example.micronaut.aiservice.rag.RagTest[source="test"]
 <2> Call the service as usual.
 <3> The retrieved segment is available as a source of the result.
 
-To configure a single service, declare an api:langchain4j.aiservices.AiServiceCustomizer[] bean for it and call `contentRetriever(...)` or `retrievalAugmentor(...)` on `AiServiceCreationContext.aiServices()`.
+To configure a single service, declare an api:langchain4j.aiservices.AiServiceCustomizer[] bean for it and call `contentRetriever(...)` or `retrievalAugmentor(...)` on `AiServiceCreationContext.aiServices()`, see <<aiServiceCustomization, Customizing AI Services>>.
 
 NOTE: Before 2.3.0 an `EmbeddingStoreContentRetriever` was attached to every `@AiService` automatically whenever an `EmbeddingModel` bean and an `EmbeddingStore` bean existed. Because provider modules expose an embedding model and the in-memory embedding store is enabled by default, that was the case in most applications, causing an embedding round trip on every call and failures against models without embedding support. Declare a `ContentRetriever` bean as shown above to restore the previous behaviour.
 
@@ -116,3 +116,38 @@ langchain4j:
 The content retriever retrieves 10 segments by embedding similarity, and the scoring model passes the 3 most relevant ones with a score of at least 0.7 to the model.
 
 include::{includedir}configurationProperties/io.micronaut.langchain4j.rag.RetrievalAugmentorConfiguration.adoc[]
+
+[[aiServiceCustomization]]
+=== Customizing AI Services
+
+An api:langchain4j.aiservices.AiServiceCustomizer[] bean customizes the LangChain4j `AiServices` builder of an AI service before the service is built, for any setting that the annotations and the configuration do not cover:
+
+snippet::example.micronaut.aiservice.customizer.Concierge[source="main"]
+
+snippet::example.micronaut.aiservice.customizer.ConciergeCustomizer[source="main"]
+
+<1> The customizer is a bean whose type argument is the AI service it customizes. A customizer qualified with the name of the service (`@Named`), or selected with the `customizer` member of `@AiService`, takes precedence.
+<2> The `AiServices` builder of the service: here, a transformer that appends an instruction to the system message.
+
+The builder of the model beans (for example `OpenAiChatModel.OpenAiChatModelBuilder`) can be customized the same way with a `BeanCreatedEventListener`.
+
+[[moderation]]
+=== Moderation
+
+The methods of an AI service annotated with LangChain4j's `@Moderate` check the user message with the `ModerationModel` bean, in parallel with the call to the chat model, and throw a `ModerationException` when it is flagged:
+
+snippet::example.micronaut.aiservice.moderation.ModeratedAssistant[source="main"]
+
+<1> The user message is moderated.
+
+The moderation model of the AI service is the `ModerationModel` bean qualified with the name of the service, otherwise the default one, for example the OpenAI moderation model:
+
+.Example Configuration
+[configuration]
+----
+langchain4j:
+  open-ai:
+    api-key: ${OPENAI_API_KEY}
+    moderation-model:
+      model-name: omni-moderation-latest
+----

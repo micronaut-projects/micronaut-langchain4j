@@ -1,0 +1,27 @@
+https://micronaut-projects.github.io/micronaut-test-resources/latest/guide/[Micronaut Test Resources] starts the services the tests need in containers. Micronaut LangChain4j provides test resources for Ollama and Qdrant, and the embedding and chat memory stores backed by a database (PGVector, Oracle, Redis, Neo4j, Cassandra, MongoDB, JDBC) can use the database test resources of Micronaut.
+
+Add the test resources of Micronaut LangChain4j to the test resources service classpath of your https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/#_the_test_resources_plugin[Gradle build] or https://micronaut-projects.github.io/micronaut-maven-plugin/latest/examples/test-resources.html#adding_modules_or_libraries_to_the_test_resources_service_classpath[Maven build].
+
+=== Ollama
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-ollama-testresource[scope="testResourcesService"]
+
+When `langchain4j.ollama.base-url` is not configured, an Ollama container with the configured model is started, and the base URL is resolved from it. The image is `langchain4j/ollama-<model-name>`, which bundles the model:
+
+.Example Configuration
+[configuration]
+----
+langchain4j.ollama.model-name: orca-mini
+----
+
+=== Qdrant
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-qdrant-testresource[scope="testResourcesService"]
+
+When the host and port of the Qdrant embedding store are not configured, a Qdrant container is started with a collection of 384 dimensions (cosine distance) named after `collection-name`, and `langchain4j.qdrant.embedding-store.host` and `port` are resolved from it:
+
+.Example Configuration
+[configuration]
+----
+langchain4j.qdrant.embedding-store.collection-name: test
+----
