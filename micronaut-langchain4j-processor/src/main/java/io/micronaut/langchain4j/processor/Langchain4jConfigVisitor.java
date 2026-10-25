@@ -61,6 +61,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -70,6 +71,7 @@ import javax.lang.model.element.Modifier;
 
 @Internal
 public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig, Object> {
+    private static final String LISTENERS = "listeners";
     public static final String CONFIG_PREFIX = "langchain4j.";
     private static final Map<String, String> MODEL_NAME_MAPPINGS = Map.of(
         "ChatLanguageModel", "ChatModel",
@@ -95,8 +97,8 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         AnnotationValue<Lang4jConfig> lang4jConfig = element.findAnnotation(Lang4jConfig.class).orElse(null);
         String packageName = element.getPackageName();
         if (generator != null && lang4jConfig != null) {
-            List<PropertyConfig> properties = lang4jConfig.getAnnotations("properties", Lang4jConfig.Property.class)
-                .stream().map(PropertyConfig::new).toList();
+            List<PropertyConfig> properties = withListeners(lang4jConfig.getAnnotations("properties", Lang4jConfig.Property.class)
+                .stream().map(PropertyConfig::new).toList());
             List<PropertyConfig> commonProperties = properties
                 .stream().filter(p -> p.common && !p.injected)
                 .toList();
@@ -552,14 +554,35 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             .build();
     }
 
+    /**
+     * Every model builder with a {@code listeners} method gets the listener beans (chat model listeners,
+     * embedding model listeners...) injected, so that observability does not depend on each module declaring them.
+     * Builders without such a method are skipped by {@link #addInjectionPoint}.
+     *
+     * @param properties The declared properties
+     * @return The properties including the injected listeners
+     */
+    private static List<PropertyConfig> withListeners(List<PropertyConfig> properties) {
+        if (properties.stream().anyMatch(p -> p.name().equals(LISTENERS))) {
+            return properties;
+        }
+        List<PropertyConfig> all = new ArrayList<>(properties);
+        all.add(new PropertyConfig(LISTENERS, null, false, true, false));
+        return all;
+    }
+
     private static void addInjectionPoint(ClassElement builderType,
                                           String requiredInject,
                                           boolean isRequired,
                                           ClassDef.ClassDefBuilder classDefBuilder,
                                           FieldDef builderField) {
-        MethodElement methodElement = builderType.getEnclosedElement(
-                ElementQuery.ALL_METHODS.named(requiredInject))
-            .orElse(null);
+        // prefer a single List or collection parameter over a varargs overload
+        List<MethodElement> candidates = builderType.getEnclosedElements(
+            ElementQuery.ALL_METHODS.named(requiredInject).onlyAccessible().onlyInstance());
+        MethodElement methodElement = candidates.stream()
+            .filter(m -> m.getParameters().length == 1 && m.getParameters()[0].getType().isAssignable(Iterable.class))
+            .findFirst()
+            .orElse(candidates.isEmpty() ? null : candidates.getFirst());
         if (methodElement != null && methodElement.hasParameters()) {
             TypeDef typeToInject = TypeDef.of(methodElement.getParameters()[0].getGenericType());
             String methodName = methodElement.getName();
