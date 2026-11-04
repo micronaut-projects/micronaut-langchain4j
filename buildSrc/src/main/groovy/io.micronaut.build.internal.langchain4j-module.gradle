@@ -14,6 +14,13 @@ dependencies {
     api(platform(libs.boms.langchain4j))
     implementation(platform(libs.boms.langchain4j))
     constraints {
+        // TODO: remove when the libraries that bring them depend on non-vulnerable versions
+        api(libs.guava) {
+            because('GHSA-xxph-c9ww-hj94: third-party clients bring guava older than 33.7.2')
+        }
+        api(libs.opentelemetry.api) {
+            because('GHSA-ccrj-gw8r-854m: micronaut-elasticsearch 6.1.0 brings opentelemetry-api 1.63.0')
+        }
         // TODO: remove when langchain4j depends on jackson-databind 2.22.2 or later (1.20.2 still
         // depends on 2.22.1) and micronaut-oraclecloud stops managing 2.22.1 (6.1.3 is the latest)
         api(libs.jackson.databind) {
