@@ -129,7 +129,7 @@ final class JsonMappedTypes {
         }
 
         private void collect(ClassElement type) {
-            if (type == null || type.isPrimitive()) {
+            if (type.isPrimitive()) {
                 return;
             }
             if (type.isArray()) {
