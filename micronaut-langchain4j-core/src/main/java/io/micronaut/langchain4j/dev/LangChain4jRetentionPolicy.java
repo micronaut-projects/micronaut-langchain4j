@@ -64,6 +64,9 @@ import java.util.concurrent.atomic.AtomicReference;
  *     <li>another singleton of the context, which the context destroys as it stops.</li>
  * </ul>
  *
+ * <p>The context asks this policy before it makes its own checks, so a bean that both would refuse is reported as
+ * refused by this policy.</p>
+ *
  * <p>It looks only at beans whose class is one of LangChain4j's, and abstains on any other. It runs in development
  * mode only, as a context stops for a restart, and never on a request.</p>
  *
