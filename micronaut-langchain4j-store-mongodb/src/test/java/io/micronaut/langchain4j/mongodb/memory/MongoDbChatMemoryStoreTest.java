@@ -25,8 +25,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Testcontainers(disabledWithoutDocker = true)
 class MongoDbChatMemoryStoreTest {
 
+    // MongoDB 8.3 and 9.0 refuse to start on the Ubuntu 7.0 kernels of the CI runners (SERVER-136848)
     @Container
-    static final MongoDBContainer MONGO = new MongoDBContainer("mongo:8.3.8");
+    static final MongoDBContainer MONGO = new MongoDBContainer("mongo:7.0");
 
     @Test
     void persistsTheConversationsInMongoDb() {
