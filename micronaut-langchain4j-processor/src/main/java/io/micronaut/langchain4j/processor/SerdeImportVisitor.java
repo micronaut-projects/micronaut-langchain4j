@@ -120,7 +120,8 @@ public final class SerdeImportVisitor implements TypeElementVisitor<Object, Obje
         List<Object> imports = new ArrayList<>();
         for (ClassElement type : types) {
             imports.add(AnnotationDef.builder(ClassTypeDef.of(SERDE_IMPORT))
-                .addMember("value", ClassTypeDef.of(type).getStaticField("class", TypeDef.CLASS))
+                // the class literal of the raw type: a generic record is imported once, for all its parameterizations
+                .addMember("value", ClassTypeDef.of(type.getCanonicalName()).getStaticField("class", TypeDef.CLASS))
                 .build());
         }
         ClassDef holder = ClassDef.builder(packageName.isEmpty() ? simpleName : packageName + "." + simpleName)
