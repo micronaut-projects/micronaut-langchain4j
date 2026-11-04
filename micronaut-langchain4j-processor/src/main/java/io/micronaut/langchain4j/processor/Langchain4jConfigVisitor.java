@@ -69,6 +69,9 @@ import java.util.Map;
 import java.util.Set;
 import javax.lang.model.element.Modifier;
 
+/**
+ * Generates the configuration and the model factories of a LangChain4j provider annotated with {@link Lang4jConfig}.
+ */
 @Internal
 public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig, Object> {
     public static final String CONFIG_PREFIX = "langchain4j.";

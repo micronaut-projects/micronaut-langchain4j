@@ -24,6 +24,9 @@ import io.micronaut.inject.annotation.TypedAnnotationTransformer;
 import io.micronaut.inject.visitor.VisitorContext;
 import java.util.List;
 
+/**
+ * Makes the methods annotated with LangChain4j's {@link Tool} executable and reflectively accessible.
+ */
 @Internal
 public class ToolAnnotationTransformer implements TypedAnnotationTransformer<Tool> {
     @Override
