@@ -47,6 +47,8 @@ tools-jackson-core = "3.2.3"
 apache-httpclient5 = "5.6.5"
 apache-httpcore5 = "5.4.4"
 jackson-databind = "2.22.4"
+guava = "33.7.2-jre"
+opentelemetry-api = "1.67.0"
 jsoup = "1.23.2"
 
 # Managed versions appear in the BOM
@@ -67,6 +69,8 @@ apache-httpclient5 = { module = 'org.apache.httpcomponents.client5:httpclient5',
 apache-httpcore5 = { module = 'org.apache.httpcomponents.core5:httpcore5', version.ref = 'apache-httpcore5' }
 apache-httpcore5-h2 = { module = 'org.apache.httpcomponents.core5:httpcore5-h2', version.ref = 'apache-httpcore5' }
 jackson-databind = { module = 'com.fasterxml.jackson.core:jackson-databind', version.ref = 'jackson-databind' }
+guava = { module = 'com.google.guava:guava', version.ref = 'guava' }
+opentelemetry-api = { module = 'io.opentelemetry:opentelemetry-api', version.ref = 'opentelemetry-api' }
 jsoup = { module = 'org.jsoup:jsoup', version.ref = 'jsoup' }
 
 # Micronaut BOMS
