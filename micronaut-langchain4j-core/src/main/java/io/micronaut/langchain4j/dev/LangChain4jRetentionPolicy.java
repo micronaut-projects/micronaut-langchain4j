@@ -45,21 +45,23 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Refuses to retain a LangChain4j model, embedding store or builder across a development restart when what it holds
- * would not survive the restart. The generated factories mark the models and stores they produce with
- * {@link io.micronaut.context.annotation.Retain}, and the context checks what the bean received; but a model is built
- * by a LangChain4j builder from a configuration bean, which the context leaves out of the retained closure, so it does
- * not see what the configuration bean handed to the builder. This policy looks at the objects the bean holds instead,
- * and refuses it when it reaches:
+ * Refuses to retain a LangChain4j model, embedding store or builder across a development restart when an object it
+ * holds would not survive the restart. The generated factories mark the models and stores they produce with
+ * {@link io.micronaut.context.annotation.Retain}. The context checks what the bean received through injection, and what
+ * the configuration beans it was made from received: it refuses a bean made from a configuration that holds a provider,
+ * a proxy, something bound to the context or a class the restart replaces, such as the Micronaut HTTP client builder of
+ * LangChain4j. That check reads the dependencies of the beans, so it does not see an object that reached the model in
+ * another way, such as one a factory passed to a LangChain4j builder.
+ *
+ * <p>This policy is the narrower safety net for those objects. It walks the graph of the built bean, through its
+ * fields, the containers it holds and the callbacks of a JDK HTTP client or a thread pool, and refuses the bean when
+ * it reaches:</p>
  *
  * <ul>
- *     <li>an object, a class or a class loader of the application, which a restart replaces: a listener, a tokenizer
- *     or an HTTP client builder of the application, for example;</li>
- *     <li>the context, a provider, the environment or the event publisher, which resolve through the stopped context:
- *     the Micronaut HTTP client of LangChain4j resolves its client through them, so a model built on it is created
- *     again in each generation, on the event loops the development runtime keeps;</li>
- *     <li>another singleton of the context, which the context destroys as it stops, such as a client bean that was
- *     injected into the configuration.</li>
+ *     <li>an object, a class or a class loader of the application, which a restart replaces;</li>
+ *     <li>the context, a provider, the environment or the event publisher, which resolve through the stopped
+ *     context;</li>
+ *     <li>another singleton of the context, which the context destroys as it stops.</li>
  * </ul>
  *
  * <p>It looks only at beans whose class is one of LangChain4j's, and abstains on any other. It runs in development
