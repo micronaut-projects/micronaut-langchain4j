@@ -119,6 +119,81 @@ class SerdeImportVisitorTest {
         assertEquals(Set.of("Country", "Step"), introspected);
     }
 
+    @Test
+    void everyParameterizationOfAGenericRecordIsTraversed() {
+        Set<String> introspected = introspectedTypes("""
+            package test;
+
+            import io.micronaut.langchain4j.annotation.AiService;
+            import java.util.List;
+
+            public interface Model {
+
+                @AiService
+                interface Assistant {
+                    Box<Foo> foo(String text);
+
+                    Box<Bar> bar(String text);
+
+                    Node<Baz> node(String text);
+                }
+
+                record Box<T>(T value) {
+                }
+
+                record Foo(String name) {
+                }
+
+                record Bar(int count) {
+                }
+
+                // parameterizes itself with a growing type: the traversal still ends
+                record Node<T>(T value, Node<List<T>> next) {
+                }
+
+                record Baz(String name) {
+                }
+            }
+            """);
+        assertEquals(Set.of("Box", "Foo", "Bar", "Node", "Baz"), introspected);
+    }
+
+    @Test
+    void independentParameterizationsAreNotBounded() {
+        // more independent parameterizations of the same record than a type may be nested in itself
+        Set<String> introspected = introspectedTypes(manyParameterizations(17));
+        Set<String> expected = new java.util.HashSet<>(Set.of("Box"));
+        for (int i = 1; i <= 17; i++) {
+            expected.add("Foo" + i);
+        }
+        assertEquals(expected, introspected);
+    }
+
+    static String manyParameterizations(int count) {
+        StringBuilder methods = new StringBuilder();
+        StringBuilder records = new StringBuilder();
+        for (int i = 1; i <= count; i++) {
+            methods.append("        Box<Foo").append(i).append("> foo").append(i).append("(String text);\n");
+            records.append("    record Foo").append(i).append("(String name) {\n    }\n");
+        }
+        return """
+            package test;
+
+            import io.micronaut.langchain4j.annotation.AiService;
+
+            public interface Model {
+
+                @AiService
+                interface Assistant {
+            %s    }
+
+                record Box<T>(T value) {
+                }
+
+            %s}
+            """.formatted(methods, records);
+    }
+
     private static Set<String> introspectedTypes(String source) {
         try (JavaParser parser = new JavaParser()) {
             Iterable<? extends JavaFileObject> generated = parser.generate("test.Model", source);
