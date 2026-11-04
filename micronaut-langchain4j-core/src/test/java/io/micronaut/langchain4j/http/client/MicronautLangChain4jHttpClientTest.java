@@ -906,6 +906,178 @@ class MicronautLangChain4jHttpClientTest {
     }
 
     @Test
+    void timesOutAStreamWaitingForItsResponseHeaders() throws Exception {
+        Throwable failure = streamFailure(new RawOnlyHttpClient(reactor.core.publisher.Mono.never()), java.time.Duration.ofMillis(10), customParser());
+
+        assertInstanceOf(TimeoutException.class, failure);
+    }
+
+    @Test
+    void reportsTheFailureOfAStreamedExchange() throws Exception {
+        Throwable runtimeFailure = streamFailure(
+            new RawOnlyHttpClient(reactor.core.publisher.Mono.error(new IllegalStateException("boom"))),
+            java.time.Duration.ofSeconds(5),
+            customParser());
+        assertInstanceOf(IllegalStateException.class, runtimeFailure);
+        assertEquals("boom", runtimeFailure.getMessage());
+
+        IOException ioFailure = new IOException("down");
+        Throwable checkedFailure = streamFailure(
+            new RawOnlyHttpClient(reactor.core.publisher.Mono.error(ioFailure)),
+            java.time.Duration.ofSeconds(5),
+            customParser());
+        assertInstanceOf(dev.langchain4j.exception.LangChain4jException.class, checkedFailure);
+        assertEquals(ioFailure, checkedFailure.getCause());
+    }
+
+    @Test
+    void reportsTheErrorStatusOfAStandardClientStream() throws Exception {
+        Throwable failure = streamFailure(
+            new StandardOnlyHttpClient(_ -> reactor.core.publisher.Mono.error(
+                new HttpClientResponseException("bad request", HttpResponse.badRequest("invalid")))),
+            java.time.Duration.ofSeconds(5),
+            customParser());
+
+        assertEquals(400, assertInstanceOf(HttpException.class, failure).statusCode());
+    }
+
+    @Test
+    void reportsAParserFailureAndClosesTheResponse() throws Exception {
+        AtomicBoolean closed = new AtomicBoolean();
+        Throwable failure = streamFailure(
+            new RawOnlyHttpClient(single(byteBodyResponse("data: first\n\n", closed))),
+            java.time.Duration.ofSeconds(5),
+            (input, listener) -> {
+                throw new IllegalStateException("unparseable");
+            });
+
+        assertEquals("unparseable", failure.getMessage());
+        assertTrue(closed.get());
+    }
+
+    @Test
+    void ignoresTheParserFailureOfACancelledStream() throws Exception {
+        AtomicBoolean closed = new AtomicBoolean();
+        CountDownLatch closedLatch = new CountDownLatch(1);
+        CountDownLatch parsed = new CountDownLatch(1);
+        ServerSentEventParser parser = (input, listener) -> {
+            parsed.countDown();
+            throw new IllegalStateException("the response is closed");
+        };
+        java.util.concurrent.Flow.Publisher<HttpStreamingEvent> publisher = client(
+            new RawOnlyHttpClient(single(byteBodyResponse("data: first\n\n", closed, closedLatch))),
+            java.time.Duration.ofSeconds(5)
+        ).stream(rawStreamRequest(), parser);
+
+        List<HttpStreamingEvent> events = reactor.adapter.JdkFlowAdapter.flowPublisherToFlux(publisher)
+            .take(1)
+            .collectList()
+            .block(java.time.Duration.ofSeconds(5));
+
+        assertEquals(1, events.size());
+        assertTrue(parsed.await(5, TimeUnit.SECONDS));
+        assertTrue(closedLatch.await(5, TimeUnit.SECONDS));
+    }
+
+    @Test
+    void doesNotSendARawStreamCancelledOnSubscription() throws Exception {
+        CountDownLatch exchanged = new CountDownLatch(1);
+        Publisher<HttpResponse<?>> response = subscriber -> {
+            exchanged.countDown();
+            subscriber.onSubscribe(new EmptySubscription());
+        };
+
+        cancelOnSubscription(client(new RawOnlyHttpClient(response), java.time.Duration.ofSeconds(5))
+            .stream(rawStreamRequest(), customParser()));
+
+        assertFalse(exchanged.await(200, TimeUnit.MILLISECONDS));
+    }
+
+    @Test
+    void doesNotRequestTheEventsOfASseStreamCancelledOnSubscription() throws Exception {
+        CountDownLatch cancelled = new CountDownLatch(1);
+        AtomicBoolean requested = new AtomicBoolean();
+        SseHttpClient sseClient = new SseHttpClient(subscriber -> subscriber.onSubscribe(new Subscription() {
+            @Override
+            public void request(long n) {
+                requested.set(true);
+            }
+
+            @Override
+            public void cancel() {
+                cancelled.countDown();
+            }
+        }));
+
+        cancelOnSubscription(client(sseClient, java.time.Duration.ofSeconds(5)).stream(rawStreamRequest()));
+
+        assertTrue(cancelled.await(5, TimeUnit.SECONDS));
+        assertFalse(requested.get());
+    }
+
+    @Test
+    void mapsTheFailuresOfAsynchronousRequests() {
+        HttpException status = assertInstanceOf(HttpException.class, asyncFailure(reactor.core.publisher.Mono.error(
+            new HttpClientResponseException("bad request", HttpResponse.badRequest("invalid")))));
+        assertEquals(400, status.statusCode());
+        assertEquals("invalid", status.getMessage());
+
+        assertInstanceOf(TimeoutException.class, asyncFailure(reactor.core.publisher.Mono.error(
+            io.micronaut.http.client.exceptions.ReadTimeoutException.TIMEOUT_EXCEPTION)));
+
+        assertEquals("boom", asyncFailure(reactor.core.publisher.Mono.error(new IllegalStateException("boom"))).getMessage());
+
+        assertInstanceOf(dev.langchain4j.exception.LangChain4jException.class, asyncFailure(reactor.core.publisher.Mono.empty()));
+    }
+
+    private static Throwable asyncFailure(Publisher<? extends HttpResponse<?>> response) {
+        java.util.concurrent.CompletableFuture<SuccessfulHttpResponse> result = client(
+            new StandardOnlyHttpClient(_ -> response),
+            java.time.Duration.ofSeconds(5)
+        ).executeAsync(rawStreamRequest());
+        return assertThrows(java.util.concurrent.ExecutionException.class, () -> result.get(5, TimeUnit.SECONDS)).getCause();
+    }
+
+    private static Throwable streamFailure(
+        io.micronaut.http.client.HttpClient httpClient,
+        java.time.Duration readTimeout,
+        ServerSentEventParser parser) throws Exception {
+        java.util.concurrent.CompletableFuture<Throwable> failure = new java.util.concurrent.CompletableFuture<>();
+        client(httpClient, readTimeout).execute(rawStreamRequest(), parser, new ServerSentEventListener() {
+            @Override
+            public void onEvent(ServerSentEvent event) {
+                // The failures are the subject of these tests.
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                failure.complete(throwable);
+            }
+        });
+        return failure.get(5, TimeUnit.SECONDS);
+    }
+
+    private static void cancelOnSubscription(java.util.concurrent.Flow.Publisher<HttpStreamingEvent> publisher) {
+        reactor.adapter.JdkFlowAdapter.flowPublisherToFlux(publisher).subscribe(new reactor.core.publisher.BaseSubscriber<>() {
+            @Override
+            protected void hookOnSubscribe(Subscription subscription) {
+                cancel();
+            }
+        });
+    }
+
+    private static ServerSentEventParser customParser() {
+        return (input, listener) -> new dev.langchain4j.http.client.sse.DefaultServerSentEventParser().parse(input, listener);
+    }
+
+    private static HttpRequest rawStreamRequest() {
+        return HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .url("http://localhost/stream")
+            .build();
+    }
+
+    @Test
     void cancelsSseClientSubscriptions() throws Exception {
         AtomicReference<Subscription> subscription = new AtomicReference<>();
         AtomicBoolean cancelled = new AtomicBoolean();
