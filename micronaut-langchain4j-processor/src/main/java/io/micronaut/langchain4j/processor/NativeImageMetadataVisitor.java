@@ -100,13 +100,11 @@ public final class NativeImageMetadataVisitor implements TypeElementVisitor<Obje
 
     @Override
     public void visitClass(ClassElement element, VisitorContext context) {
-        String type = element.getName();
         List<String> entries = new ArrayList<>(serviceEntries(element));
         // the structured outputs and the tool parameters and results: LangChain4j derives their JSON schema from their
         // fields, and Jackson, unless Micronaut Serialization maps them, binds them reflectively
         for (ClassElement jsonType : JsonMappedTypes.collect(element, t -> true)) {
-            entries.add("""
-                {"type": "%s", "allDeclaredFields": true, "allDeclaredConstructors": true, "allDeclaredMethods": true}"""
+            entries.add("{\"type\": \"%s\", \"allDeclaredFields\": true, \"allDeclaredConstructors\": true, \"allDeclaredMethods\": true}"
                 .formatted(jsonType.getName()));
         }
         if (entries.isEmpty()) {
