@@ -25,6 +25,7 @@ chatModels:
   oci-genai: Oracle Cloud GenAI
   openai: OpenAi
   googleai-gemini: Google AI Gemini
+  google-genai: Google Gen AI
   vertexai: VertexAi
   vertexai-gemini: VertexAi Gemini
 scoringModels:
