@@ -2,6 +2,7 @@ introduction:
   title: Introduction
 quickStart:
   title: Quick Start
+tutorial: Tutorial
 responseStreaming: Response Streaming
 aiService: AI Service
 agenticService: Agentic Service
