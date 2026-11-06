@@ -19,3 +19,18 @@ When there is a `MeterRegistry` bean, LangChain4j's `MicrometerMetricsChatModelL
 When there is also an `ObservationRegistry` bean (for example with `micronaut-micrometer-observation`) and `dev.langchain4j:langchain4j-observation` is on the classpath, LangChain4j's `ObservationChatModelListener` is registered instead. It records each chat model request as a Micrometer observation, which produces the same metrics and, with a tracing bridge, spans.
 
 Set `langchain4j.micrometer.enabled` to `false` to disable these listeners.
+
+[[aiServiceEvents]]
+=== AI Service Events
+
+The AI services publish LangChain4j's AI service events as Micronaut application events. Observe them with `@EventListener` methods or `ApplicationEventListener` beans:
+
+snippet::example.micronaut.aiservice.events.AiServiceAuditor[source="main"]
+
+<1> An event listener method receives the events of every AI service.
+<2> The invocation context identifies the AI service, the method and the invocation, which correlates the events of one invocation.
+<3> Each tool execution produces an event with the request and the result of the tool.
+
+The following events are published: `AiServiceStartedEvent`, `AiServiceRequestIssuedEvent`, `AiServiceResponseReceivedEvent`, `AiServiceCompletedEvent`, `AiServiceErrorEvent`, `InputGuardrailExecutedEvent`, `OutputGuardrailExecutedEvent`, `ToolExecutedEvent` and `ToolCompensatedEvent` (all in the `dev.langchain4j.observability.api.event` package). A listener of a super type, such as `AiServiceEvent`, receives all of them. An event type is only published when there is a listener for it.
+
+Beans implementing LangChain4j's `AiServiceListener` (for example `AiServiceCompletedListener`) are also registered with every AI service.
