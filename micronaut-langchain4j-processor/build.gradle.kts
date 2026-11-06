@@ -10,5 +10,7 @@ dependencies {
     testImplementation(mn.micronaut.inject.java.test)
     testImplementation(libs.langchain4j.ollama)
     testImplementation(projects.micronautLangchain4jAgentic)
+    testImplementation(mnSerde.micronaut.serde.processor)
+    testImplementation(mnSerde.micronaut.serde.api)
     testImplementation(mnSourcegen.micronaut.sourcegen.generator.java)
 }

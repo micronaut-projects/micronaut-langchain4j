@@ -91,6 +91,93 @@ class NativeImageMetadataVisitorTest {
         assertTrue(metadata.isEmpty(), metadata::toString);
     }
 
+    @Test
+    void structuredOutputsAndToolTypesAreRegisteredForTheirJsonSchema() {
+        Map<String, String> metadata = generateMetadata("test.Model", """
+            package test;
+
+            import dev.langchain4j.agent.tool.Tool;
+            import io.micronaut.langchain4j.annotation.AiService;
+            import java.util.List;
+
+            interface Model {
+                @AiService
+                interface Assistant {
+                    List<Person> people(String text);
+                }
+
+                record Person(String name, Address address, Kind kind) {
+                }
+
+                class Address {
+                    private String city;
+                }
+
+                enum Kind { FRIEND }
+
+                @jakarta.inject.Singleton
+                class Tools {
+                    @Tool("Finds an order")
+                    String find(Query query) {
+                        return null;
+                    }
+                }
+
+                record Query(String id) {
+                }
+            }
+            """);
+        String service = metadata.get("test.Model$Assistant");
+        for (String type : new String[] {"Person", "Address", "Kind"}) {
+            assertTrue(service.contains("{\"type\": \"test.Model$" + type
+                + "\", \"allDeclaredFields\": true, \"allDeclaredConstructors\": true, \"allDeclaredMethods\": true}"), service);
+        }
+        String tools = metadata.get("test.Model$Tools");
+        assertTrue(tools.contains("{\"type\": \"test.Model$Query\", \"allDeclaredFields\": true"), tools);
+        assertFalse(tools.contains("proxy"), tools);
+    }
+
+    @Test
+    void everyParameterizationOfAGenericRecordIsRegistered() {
+        Map<String, String> metadata = generateMetadata("test.Model", """
+            package test;
+
+            import io.micronaut.langchain4j.annotation.AiService;
+
+            interface Model {
+                @AiService
+                interface Assistant {
+                    Box<Foo> foo(String text);
+
+                    Box<Bar> bar(String text);
+                }
+
+                record Box<T>(T value) {
+                }
+
+                record Foo(String name) {
+                }
+
+                record Bar(int count) {
+                }
+            }
+            """);
+        String service = metadata.get("test.Model$Assistant");
+        for (String type : new String[] {"Box", "Foo", "Bar"}) {
+            assertTrue(service.contains("{\"type\": \"test.Model$" + type + "\", \"allDeclaredFields\": true"), service);
+        }
+        // the generic record is registered once
+        assertEquals(service.indexOf("\"test.Model$Box\""), service.lastIndexOf("\"test.Model$Box\""), service);
+    }
+
+    @Test
+    void independentParameterizationsAreNotBounded() {
+        String service = generateMetadata("test.Model", SerdeImportVisitorTest.manyParameterizations(17)).get("test.Model$Assistant");
+        for (int i = 1; i <= 17; i++) {
+            assertTrue(service.contains("{\"type\": \"test.Model$Foo" + i + "\", \"allDeclaredFields\": true"), service);
+        }
+    }
+
     private static Map<String, String> generateMetadata(String className, String source) {
         try (JavaParser parser = new JavaParser()) {
             Iterable<? extends JavaFileObject> generated = parser.generate(className, source);
