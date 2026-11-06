@@ -77,8 +77,8 @@ final class MultimodalArguments {
      * @param values The values of the arguments
      * @return The values, with the multimodal URLs converted to content
      */
-    Object[] convert(Object[] values) {
-        Object[] converted = values.clone();
+    @Nullable Object[] convert(@Nullable Object[] values) {
+        @Nullable Object[] converted = values.clone();
         for (int i = 0; i < converted.length; i++) {
             Converter converter = argumentConverters[i];
             if (converter != null) {

@@ -24,6 +24,7 @@ import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.langchain4j.agentic.annotation.AgenticService;
 
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -62,7 +63,7 @@ public final class AgenticServiceInterceptor implements MethodInterceptor<Object
     private Object cachedAgent(MethodInvocationContext<Object, Object> context) {
         var declaringType = context.getDeclaringType();
         var iface = resolveAgentInterface(declaringType);
-        var annotation = context.getAnnotation(AgenticService.class);
+        var annotation = Objects.requireNonNull(context.getAnnotation(AgenticService.class), "@AgenticService");
         return agentRegistry.getOrCreateAgent(iface, () -> resolveAgent(annotation, declaringType));
     }
 

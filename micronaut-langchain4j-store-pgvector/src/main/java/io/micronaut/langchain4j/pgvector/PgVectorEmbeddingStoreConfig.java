@@ -28,13 +28,13 @@ import javax.sql.DataSource;
 public class PgVectorEmbeddingStoreConfig {
     public static final String PREFIX = "langchain4j.pgvector.embedding-stores";
     private final DataSource dataSource;
-    private String table;
-    private Integer dimension;
-    private Boolean useIndex;
-    private Integer indexListSize;
-    private Boolean createTable;
-    private Boolean dropTableFirst;
-    private MetadataStorageConfig metadataStorageConfig;
+    private @Nullable String table;
+    private @Nullable Integer dimension;
+    private @Nullable Boolean useIndex;
+    private @Nullable Integer indexListSize;
+    private @Nullable Boolean createTable;
+    private @Nullable Boolean dropTableFirst;
+    private @Nullable MetadataStorageConfig metadataStorageConfig;
 
     public PgVectorEmbeddingStoreConfig(
         @Parameter DataSource dataSource,
@@ -53,7 +53,7 @@ public class PgVectorEmbeddingStoreConfig {
     /**
      * @return The table.
      */
-    public String getTable() {
+    public @Nullable String getTable() {
         return table;
     }
 
@@ -61,14 +61,14 @@ public class PgVectorEmbeddingStoreConfig {
      * The table to use.
      * @param table The table.
      */
-    public void setTable(String table) {
+    public void setTable(@Nullable String table) {
         this.table = table;
     }
 
     /**
      * @return The dimension to use.
      */
-    public Integer getDimension() {
+    public @Nullable Integer getDimension() {
         return dimension;
     }
 
@@ -76,7 +76,7 @@ public class PgVectorEmbeddingStoreConfig {
      * Sets the dimension.
      * @param dimension The dimension
      */
-    public void setDimension(Integer dimension) {
+    public void setDimension(@Nullable Integer dimension) {
         this.dimension = dimension;
     }
 
@@ -84,7 +84,7 @@ public class PgVectorEmbeddingStoreConfig {
      * Whether to use the index.
      * @return True if the index should be used
      */
-    public Boolean getUseIndex() {
+    public @Nullable Boolean getUseIndex() {
         return useIndex;
     }
 
@@ -92,7 +92,7 @@ public class PgVectorEmbeddingStoreConfig {
      * Sets whether to use the index.
      * @param useIndex True if the index should be used
      */
-    public void setUseIndex(Boolean useIndex) {
+    public void setUseIndex(@Nullable Boolean useIndex) {
         this.useIndex = useIndex;
     }
 
@@ -100,7 +100,7 @@ public class PgVectorEmbeddingStoreConfig {
      * The index list size.
      * @return The index list size.
      */
-    public Integer getIndexListSize() {
+    public @Nullable Integer getIndexListSize() {
         return indexListSize;
     }
 
@@ -108,7 +108,7 @@ public class PgVectorEmbeddingStoreConfig {
      * Sets the index list size.
      * @param indexListSize The index list size.
      */
-    public void setIndexListSize(Integer indexListSize) {
+    public void setIndexListSize(@Nullable Integer indexListSize) {
         this.indexListSize = indexListSize;
     }
 
@@ -116,7 +116,7 @@ public class PgVectorEmbeddingStoreConfig {
      * Whether to create the table.
      * @return Whether to create the table
      */
-    public Boolean getCreateTable() {
+    public @Nullable Boolean getCreateTable() {
         return createTable;
     }
 
@@ -124,7 +124,7 @@ public class PgVectorEmbeddingStoreConfig {
      * Sets whether to create the table.
      * @param createTable The table
      */
-    public void setCreateTable(Boolean createTable) {
+    public void setCreateTable(@Nullable Boolean createTable) {
         this.createTable = createTable;
     }
 
@@ -132,7 +132,7 @@ public class PgVectorEmbeddingStoreConfig {
      * Whether to drop the table first.
      * @return True if the table should be dropped.
      */
-    public Boolean getDropTableFirst() {
+    public @Nullable Boolean getDropTableFirst() {
         return dropTableFirst;
     }
 
@@ -140,7 +140,7 @@ public class PgVectorEmbeddingStoreConfig {
      * Sets whether the table should be dropped.
      * @param dropTableFirst True if the table should be dropped.
      */
-    public void setDropTableFirst(Boolean dropTableFirst) {
+    public void setDropTableFirst(@Nullable Boolean dropTableFirst) {
         this.dropTableFirst = dropTableFirst;
     }
 
@@ -148,7 +148,7 @@ public class PgVectorEmbeddingStoreConfig {
      * The metadata storage config.
      * @return The config
      */
-    public MetadataStorageConfig getMetadataStorageConfig() {
+    public @Nullable MetadataStorageConfig getMetadataStorageConfig() {
         return metadataStorageConfig;
     }
 }

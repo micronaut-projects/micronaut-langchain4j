@@ -30,6 +30,7 @@ import io.micronaut.langchain4j.annotation.AiService;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -55,7 +56,7 @@ public class AiServiceInterceptor implements MethodInterceptor<Object, Object> {
             .orElse(null);
         if (multimodal != null) {
             // the content replaces the URL arguments: the LangChain4j proxy is invoked reflectively since the types differ
-            Object[] arguments = multimodal.convert(context.getParameterValues());
+            @Nullable Object[] arguments = multimodal.convert(context.getParameterValues());
             try {
                 return Proxy.getInvocationHandler(target).invoke(target, context.getTargetMethod(), arguments);
             } catch (RuntimeException | Error e) {
@@ -81,7 +82,7 @@ public class AiServiceInterceptor implements MethodInterceptor<Object, Object> {
 
     private AiServiceDef<Object> serviceDefinition(MethodInvocationContext<Object, Object> context) {
         Class<Object> declaringType = context.getDeclaringType();
-        AnnotationValue<AiService> annotation = context.getAnnotation(AiService.class);
+        AnnotationValue<AiService> annotation = Objects.requireNonNull(context.getAnnotation(AiService.class), "@AiService");
         String name = annotation.stringValue("named").orElse(null);
         Set<Class<?>> tools = annotation.contains("tools") ? Set.of(annotation.classValues("tools")) : null;
         List<String> toolProviders = annotation.contains("toolProviders") ? List.of(annotation.stringValues("toolProviders")) : null;

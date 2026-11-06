@@ -49,6 +49,7 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.inject.ExecutableMethod;
 
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -141,7 +142,7 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
 
     @Override
     public ToolExecutionResult executeWithContext(ToolExecutionRequest request, InvocationContext context) {
-        Object[] arguments = prepareArguments(request, context);
+        @Nullable Object[] arguments = prepareArguments(request, context);
         Object result = invoke(arguments);
         CompletableFuture<?> future = toCompletableFuture(result);
         if (future != null) {
@@ -158,7 +159,7 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
 
     @Override
     public CompletableFuture<ToolExecutionResult> executeAsync(ToolExecutionRequest request, InvocationContext context) {
-        Object[] arguments = prepareArguments(request, context);
+        @Nullable Object[] arguments = prepareArguments(request, context);
         Object result;
         try {
             result = invoke(arguments);
@@ -184,7 +185,7 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
      * method throws. The errors of the virtual machine ({@link OutOfMemoryError}, {@link StackOverflowError}, ...) are
      * not failures of the tool to report to the model, and are rethrown.
      */
-    private Object invoke(Object[] arguments) {
+    private @Nullable Object invoke(@Nullable Object[] arguments) {
         try {
             return method.invoke(bean, arguments);
         } catch (VirtualMachineError e) {
@@ -194,10 +195,10 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
         }
     }
 
-    private Object[] prepareArguments(ToolExecutionRequest request, InvocationContext context) {
+    private @Nullable Object[] prepareArguments(ToolExecutionRequest request, InvocationContext context) {
         try {
             Map<String, Object> argumentsMap = ToolArguments.argumentsAsMap(request.arguments());
-            Object[] arguments = new Object[parameters.length];
+            @Nullable Object[] arguments = new Object[parameters.length];
             for (int i = 0; i < parameters.length; i++) {
                 arguments[i] = parameters[i].resolve(toolName, argumentsMap, context);
             }
@@ -207,7 +208,7 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
         }
     }
 
-    private JsonObjectSchema parametersSchema() {
+    private @Nullable JsonObjectSchema parametersSchema() {
         Map<String, JsonSchemaElement> properties = new LinkedHashMap<>();
         List<String> required = new ArrayList<>();
         Map<Class<?>, JsonSchemaElementUtils.VisitedClassMetadata> visited = new LinkedHashMap<>();
@@ -250,7 +251,7 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
         return metadata;
     }
 
-    private CompletableFuture<?> toCompletableFuture(Object result) {
+    private @Nullable CompletableFuture<?> toCompletableFuture(@Nullable Object result) {
         if (result instanceof CompletableFuture<?> future) {
             return future;
         }
@@ -272,7 +273,7 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
         return method.getReturnType().asArgument().getFirstTypeVariable().<Class<?>>map(Argument::getType).orElse(Object.class);
     }
 
-    private static ToolExecutionResult toToolExecutionResult(Object result, Class<?> declaredType) {
+    private static ToolExecutionResult toToolExecutionResult(@Nullable Object result, Class<?> declaredType) {
         List<Content> contents = toContents(result);
         if (contents != null) {
             return ToolExecutionResult.builder().result(result).resultContents(contents).build();
@@ -283,7 +284,7 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
             .build();
     }
 
-    private static List<Content> toContents(Object result) {
+    private static @Nullable List<Content> toContents(@Nullable Object result) {
         if (result instanceof Image image) {
             return List.of(ImageContent.from(image));
         }
@@ -299,7 +300,7 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
         return null;
     }
 
-    private static String toText(Object result, Class<?> declaredType) {
+    private static String toText(@Nullable Object result, Class<?> declaredType) {
         if (declaredType == void.class || declaredType == Void.class) {
             return SUCCESS;
         }
@@ -345,8 +346,8 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
         Class<?> type,
         Class<?> valueClass,
         Type valueType,
-        String description,
-        String defaultValue,
+        @Nullable String description,
+        @Nullable String defaultValue,
         boolean required) {
 
         static ToolParameter of(ExecutableMethod<?, ?> method, Argument<?> argument) {
@@ -396,7 +397,7 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
                                      ParameterKind kind,
                                      Class<?> type,
                                      Argument<?> valueArgument,
-                                     String defaultValue,
+                                     @Nullable String defaultValue,
                                      boolean declaredRequired) {
             String location = "Parameter '%s' of tool '%s.%s'".formatted(
                 argument.getName(), method.getDeclaringType().getName(), method.getMethodName());
@@ -428,7 +429,7 @@ public final class ExecutableMethodToolExecutor implements ToolExecutor {
             }
         }
 
-        Object resolve(String toolName, Map<String, Object> arguments, InvocationContext context) {
+        @Nullable Object resolve(String toolName, Map<String, Object> arguments, InvocationContext context) {
             return switch (kind) {
                 case MEMORY_ID -> context.chatMemoryId();
                 case INVOCATION_PARAMETERS -> context.invocationParameters();

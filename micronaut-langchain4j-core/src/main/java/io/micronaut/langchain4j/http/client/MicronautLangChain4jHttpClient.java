@@ -201,7 +201,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
     public Flow.Publisher<HttpStreamingEvent> stream(HttpRequest modelRequest, ServerSentEventParser parser) {
         HttpRequest request = authorize(modelRequest);
         Flux<HttpStreamingEvent> events = Flux.create(sink -> {
-            AtomicReference<ServerSentEventParsingHandle> handle = new AtomicReference<>();
+            AtomicReference<@Nullable ServerSentEventParsingHandle> handle = new AtomicReference<>();
             sink.onCancel(() -> {
                 ServerSentEventParsingHandle parsingHandle = handle.get();
                 if (parsingHandle != null) {
@@ -407,22 +407,20 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
     }
 
     private io.micronaut.http.client.@Nullable HttpClient configuredManagedHttpClient(URI origin) {
-        if (httpClientRegistryProvider == null || beanContext == null) {
+        BeanProvider<HttpClientRegistry<io.micronaut.http.client.HttpClient>> registry = httpClientRegistryProvider;
+        BeanContext context = beanContext;
+        if (registry == null || context == null) {
             return null;
         }
         try {
-            if (!httpClientRegistryProvider.isResolvable()) {
+            if (!registry.isResolvable()) {
                 return null;
             }
-            return configuredManagedClients.computeIfAbsent(origin, this::resolveConfiguredManagedRawHttpClient);
+            return configuredManagedClients.computeIfAbsent(origin, key -> registry.get()
+                .resolveClient(null, LoadBalancer.fixed(key), configuration(), context));
         } catch (BeanContextException | IllegalStateException _) {
             return null;
         }
-    }
-
-    private io.micronaut.http.client.HttpClient resolveConfiguredManagedRawHttpClient(URI origin) {
-        return httpClientRegistryProvider.get()
-            .resolveClient(null, LoadBalancer.fixed(origin), configuration(), beanContext);
     }
 
     private boolean hasConfiguredTimeout() {
@@ -522,7 +520,7 @@ final class MicronautLangChain4jHttpClient implements dev.langchain4j.http.clien
 
     private void stream(ClientHandle client, HttpRequest request, ServerSentEventListener listener) {
         try {
-            client.sseClient().eventStream(standardRequest(request), Argument.STRING)
+            Objects.requireNonNull(client.sseClient(), "sseClient").eventStream(standardRequest(request), Argument.STRING)
                 .subscribe(new SseSubscriber(listener, client));
         } catch (RuntimeException e) {
             closeQuietly(client);

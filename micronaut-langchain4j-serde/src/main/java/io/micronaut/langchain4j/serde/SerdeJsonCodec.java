@@ -15,6 +15,8 @@
  */
 package io.micronaut.langchain4j.serde;
 
+import org.jspecify.annotations.Nullable;
+
 import dev.langchain4j.exception.JsonReadException;
 import dev.langchain4j.exception.JsonWriteException;
 import dev.langchain4j.internal.Json;
@@ -78,12 +80,12 @@ final class SerdeJsonCodec implements Json.JsonCodec {
     }
 
     @Override
-    public <T> T fromJson(String json, Class<T> type) {
+    public <T> @Nullable T fromJson(String json, Class<T> type) {
         return fromJson(json, (Type) type);
     }
 
     @Override
-    public <T> T fromJson(String json, Type type) {
+    public <T> @Nullable T fromJson(String json, Type type) {
         try {
             @SuppressWarnings("unchecked")
             Argument<T> argument = (Argument<T>) Argument.of(type);

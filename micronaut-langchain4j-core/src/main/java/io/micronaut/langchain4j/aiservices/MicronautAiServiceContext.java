@@ -20,11 +20,14 @@ import dev.langchain4j.service.guardrail.GuardrailService;
 import io.micronaut.context.BeanContext;
 import io.micronaut.inject.BeanDefinition;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
+
+import org.jspecify.annotations.Nullable;
 
 final class MicronautAiServiceContext extends AiServiceContext {
     private final GuardrailService.Builder micronautGuardrailServiceBuilder;
-    private final AtomicReference<GuardrailService> guardrailService = new AtomicReference<>();
+    private final AtomicReference<@Nullable GuardrailService> guardrailService = new AtomicReference<>();
 
     MicronautAiServiceContext(Class<?> aiServiceClass, BeanDefinition<?> beanDefinition, BeanContext beanContext) {
         super(aiServiceClass);
@@ -39,7 +42,7 @@ final class MicronautAiServiceContext extends AiServiceContext {
             if (guardrailService.compareAndSet(null, built)) {
                 return built;
             }
-            return guardrailService.get();
+            return Objects.requireNonNull(guardrailService.get());
         }
         return service;
     }
