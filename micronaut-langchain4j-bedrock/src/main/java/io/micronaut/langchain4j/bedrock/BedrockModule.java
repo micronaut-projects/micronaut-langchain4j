@@ -48,7 +48,6 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig.Property;
             injected = true,
             required = true
         ),
-        @Property(name = "model", common = true, required = true, defaultValue = "claude-3-haiku-20240307"),
         @Property(name = "region", common = true)
     }
 )

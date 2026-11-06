@@ -19,7 +19,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Generates the code necessary to integrate a ChatLanguageModel provider.
+ * Generates the code necessary to integrate a LangChain4j model provider.
  */
 @Retention(RetentionPolicy.SOURCE)
 public @interface Lang4jConfig {
