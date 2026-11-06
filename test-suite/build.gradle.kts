@@ -12,6 +12,7 @@ dependencies {
     implementation(projects.micronautLangchain4jCore)
     implementation(projects.micronautLangchain4jGoogleGenai)
     implementation(mn.reactive.streams)
+    implementation(mn.micronaut.http.client.core)
     implementation(projects.micronautLangchain4jAgentic)
     implementation(projects.micronautLangchain4jOpenai)
     testImplementation(platform(mnTest.boms.testcontainers))

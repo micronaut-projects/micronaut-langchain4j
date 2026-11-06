@@ -1,0 +1,20 @@
+The OpenAI, Anthropic, Ollama, Mistral AI, Google AI Gemini, Hugging Face, Cohere, Jina and Voyage AI models send their requests with the https://docs.micronaut.io/latest/guide/#nettyHttpClient[Micronaut HTTP client] instead of the HTTP client of LangChain4j. These modules exclude LangChain4j's JDK HTTP client, so add a Micronaut HTTP client implementation to your application:
+
+dependency:micronaut-http-client[groupId="io.micronaut", scope="runtimeOnly"]
+
+Because the requests go through the Micronaut HTTP client:
+
+* The `micronaut.http.client.*` configuration applies to them, for example the proxy, the SSL configuration, the connection pool and the event loop.
+* The `timeout` of a model sets the read timeout of its requests.
+* HTTP client filters apply to them, for example to add headers or to record requests:
+
+snippet::example.micronaut.http.RequestSourceFilter[source="main"]
+
+<1> The filter matches the request paths of the provider, here the `/v1/` paths of the OpenAI API.
+<2> A header is added to every request.
+
+* HTTP client observability, such as Micrometer metrics and the tracing of Micronaut Tracing, records the requests.
+
+The streaming responses (server-sent events) and the non-blocking requests of the asynchronous AI services are also handled by the Micronaut HTTP client.
+
+The other providers (Azure OpenAI, Bedrock, Vertex AI, OCI GenAI and Google Gen AI) use the HTTP client of their cloud SDK.

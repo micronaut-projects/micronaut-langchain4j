@@ -12,6 +12,9 @@ guardrails: Guardrails
 reflection: Reflection and GraalVM Native Image
 serde: Micronaut Serialization
 observability: Observability
+httpClient: HTTP Client
+imageModels: Image Models
+testResources: Test Resources
 chatModels:
   title: Chat Language Models
   chatModelExample: ChatModel Example
@@ -20,6 +23,7 @@ chatModels:
   azure: Azure
   bedrock: Bedrock
   hugging-face: HuggingFace
+  jlama: Jlama
   mistralai: MistralAi
   ollama: Ollama
   oci-genai: Oracle Cloud GenAI
