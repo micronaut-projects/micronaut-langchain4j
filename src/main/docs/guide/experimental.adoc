@@ -1,0 +1,85 @@
+The features of this section integrate experimental LangChain4j APIs: they are annotated with `@Experimental` and can change in a minor release, following LangChain4j.
+
+[[decisionServices]]
+=== Decision Services
+
+A decision service answers questions with a LangChain4j `DecisionModel`, a model that returns the probability of each possible answer instead of generated text: yes/no questions, a choice between options, or a position on a scale. Annotate an interface with ann:langchain4j.annotation.DecisionService[] and its methods with LangChain4j's `@Decide`:
+
+snippet::example.micronaut.decision.TicketTriage[source=main]
+
+<1> The interface is implemented with LangChain4j's `DecisionServices`. It uses the `DecisionModel` bean named after the service (`@DecisionService("support")`), otherwise the default `DecisionModel` bean, and the `ThresholdProvider` bean selected the same way.
+<2> A `boolean` method asks a yes/no question: the answer is `true` when the probability of "yes" reaches the threshold.
+<3> An enum method chooses one of the constants.
+<4> `Choice`, `Scale`, `YesNoAnswer` and `DecisionResult` also return the probabilities. A record whose fields are annotated with `@Decide` asks several questions in a single call.
+
+The parameters are sent to the model as the input, by name, so name them with `@V` unless the code is compiled with `-parameters`.
+
+The constants of the enum can be described with LangChain4j's `@Description`:
+
+snippet::example.micronaut.decision.Team[source=main]
+
+<1> The description helps the model choose.
+
+[.lang-python]
+NOTE: A Python `Enum` compiles to a Java enum whose constants have no `@Description`: give them self-explanatory names.
+
+A test can provide its own `DecisionModel` bean:
+
+snippet::example.micronaut.decision.TicketTriageTest[source=test]
+
+[[routingChatModels]]
+=== Routing Chat Models
+
+A routing chat model is a `ChatModel` that sends each request to one of several chat models, for example a small model for simple requests and a large one for the others. Configure it under `langchain4j.routing-chat-models.<name>`: the model is a `ChatModel` bean of that name, which an `@AiService` with the same name uses.
+
+[configuration]
+----
+langchain4j:
+  routing-chat-models:
+    assistant:
+      routes:
+        fast: small
+        expert: large
+      descriptions:
+        fast: Greetings, small talk and simple questions
+        expert: Mathematics, reasoning and code
+      default-route: fast
+----
+
+`routes` maps each route to the name of a `ChatModel` bean, and `descriptions` describes the requests of each route. By default, the route is chosen by asking a `DecisionModel` which description matches the request: the `DecisionModel` bean named by `decision-model`, otherwise the default one. `question`, `min-probability` and `fallback-strategy` (`DEFAULT_ROUTE` or `FAIL`) tune that choice. Set `router` to the name of a `ChatModelRouter` bean to choose the route in another way.
+
+[[agentSkills]]
+=== Agent Skills
+
+https://agentskills.io[Agent Skills] are folders of instructions and resources that a model loads when a request needs them, instead of keeping them all in its context. Add the LangChain4j Skills dependency:
+
+dependency:langchain4j-skills[groupId=dev.langchain4j]
+
+Each skill is a directory with a `SKILL.md` file, whose front matter names and describes it, for example `src/main/resources/skills/packing/SKILL.md`:
+
+[source,markdown]
+----
+---
+name: packing
+description: Prepares a packing list for a trip
+---
+
+List the clothes for the weather of the destination, then the travel documents.
+----
+
+Configure a set of skills, loaded from a classpath directory and/or a file system directory, under `langchain4j.skills.<name>`:
+
+[configuration]
+----
+langchain4j:
+  skills:
+    travel:
+      classpath: skills
+----
+
+Then select it with the `skills` member of `@AiService`:
+
+snippet::example.micronaut.aiservice.skills.TravelAgent[source=main]
+
+<1> The service receives the `activate_skill` tool, which returns the instructions of a skill to the model.
+<2> The available skills are listed after the system message.

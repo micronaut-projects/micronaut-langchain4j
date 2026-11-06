@@ -67,10 +67,11 @@ public class AiServiceInterceptor implements MethodInterceptor<Object, Object> {
         Set<Class<?>> tools = annotation.contains("tools") ? Set.of(annotation.classValues("tools")) : null;
         List<String> toolProviders = annotation.contains("toolProviders") ? List.of(annotation.stringValues("toolProviders")) : null;
         List<String> mcpClients = annotation.contains("mcpClients") ? List.of(annotation.stringValues("mcpClients")) : null;
+        String skills = annotation.stringValue("skills").filter(s -> !s.isBlank()).orElse(null);
         @SuppressWarnings("unchecked") Class<AiServiceCustomizer<Object>> customizer =
             (Class<AiServiceCustomizer<Object>>) annotation.classValue("customizer").orElse(null);
 
         BeanDefinition<Object> beanDefinition = beanContext.getBeanDefinition(declaringType);
-        return new AiServiceDef<>(beanDefinition, declaringType, name, tools, customizer, toolProviders, mcpClients);
+        return new AiServiceDef<>(beanDefinition, declaringType, name, tools, customizer, toolProviders, mcpClients, skills);
     }
 }
