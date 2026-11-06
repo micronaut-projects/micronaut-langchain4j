@@ -13,7 +13,9 @@ dependencies {
     implementation(libs.testcontainers)
     implementation(libs.testcontainers.infinispan)
     testRuntimeOnly(mnTestResources.micronaut.test.resources.embedded)
+    testImplementation(mnTest.junit.jupiter.api)
     testRuntimeOnly(mnTest.junit.jupiter.engine)
+    testRuntimeOnly(mnTest.junit.platform.launcher)
 }
 
 micronautBuild {

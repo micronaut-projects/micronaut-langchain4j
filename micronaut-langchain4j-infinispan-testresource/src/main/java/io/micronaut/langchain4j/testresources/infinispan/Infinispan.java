@@ -15,7 +15,6 @@
  */
 package io.micronaut.langchain4j.testresources.infinispan;
 
-import io.micronaut.core.io.socket.SocketUtils;
 import java.util.Map;
 import org.infinispan.testcontainers.InfinispanContainer;
 import org.testcontainers.containers.GenericContainer;
@@ -85,7 +84,7 @@ public final class Infinispan {
      */
     public static Map<String, String> getProperties(GenericContainer<?> container) {
         return Map.of(
-            HOST, SocketUtils.LOCALHOST,
+            HOST, container.getHost(),
             PORT, String.valueOf(container.getMappedPort(HOTROD_PORT)),
             CLIENT_INTELLIGENCE, "BASIC",
             USERNAME, DEFAULT_USERNAME,
