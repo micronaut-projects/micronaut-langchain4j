@@ -59,6 +59,19 @@ public @interface AiService {
     Class<?>[] tools() default {};
 
     /**
+     * The names of the {@link dev.langchain4j.service.tool.ToolProvider} beans that provide dynamic tools, for example
+     * the tools of MCP servers.
+     *
+     * <p>When this member is not set, the {@code ToolProvider} bean qualified with the {@link #named() name} of the
+     * service is used, otherwise the default {@code ToolProvider} bean if there is one. Set it to an empty array to use
+     * no tool provider.</p>
+     *
+     * @return The names of the tool provider beans
+     * @since 2.4.0
+     */
+    String[] toolProviders() default {};
+
+    /**
      * A customizer can be registered to customize its creation.
      *
      * <p>Normally these are picked up automatically if declared as beans, using this members allows the chosen customizer to be overridden.</p>
