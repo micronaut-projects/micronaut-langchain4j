@@ -8,6 +8,8 @@ dependencies {
         exclude(group = "dev.langchain4j", module = "langchain4j-http-client-jdk")
     }
     testImplementation(mn.micronaut.http.client.core)
+    testImplementation(platform(mnReactor.boms.reactor))
+    testImplementation(libs.reactor.core)
     testRuntimeOnly(mn.micronaut.http.client)
     testRuntimeOnly(mn.micronaut.jackson.databind)
 }
