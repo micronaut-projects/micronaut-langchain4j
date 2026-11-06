@@ -20,6 +20,20 @@ if (System.getenv("SONAR_TOKEN") != null) {
             property("sonar.coverage.exclusions", "**/testutils/**")
         }
     }
+    // the reload tests of test-suite-dev-reload also cover the development support of these modules
+    listOf(":micronaut-langchain4j-core", ":micronaut-langchain4j-agentic").forEach { path ->
+        project(path) {
+            configure<SonarExtension> {
+                properties {
+                    property(
+                        "sonar.coverage.jacoco.xmlReportPaths",
+                        listOf(projectDir, rootDir.resolve("test-suite-dev-reload"))
+                            .joinToString(",") { it.resolve("build/reports/jacoco/test/jacocoTestReport.xml").path }
+                    )
+                }
+            }
+        }
+    }
 }
 
 
