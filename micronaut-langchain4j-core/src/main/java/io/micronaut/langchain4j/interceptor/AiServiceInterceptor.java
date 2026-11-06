@@ -23,10 +23,14 @@ import io.micronaut.context.BeanContext;
 import io.micronaut.core.annotation.AnnotationValue;
 import org.jspecify.annotations.Nullable;
 import io.micronaut.inject.BeanDefinition;
+import io.micronaut.inject.ExecutableMethod;
 import io.micronaut.langchain4j.aiservices.AiServiceCustomizer;
 import io.micronaut.langchain4j.aiservices.AiServiceDef;
 import io.micronaut.langchain4j.annotation.AiService;
+import java.lang.reflect.Proxy;
+import java.lang.reflect.UndeclaredThrowableException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -37,6 +41,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AiServiceInterceptor implements MethodInterceptor<Object, Object> {
     private final ConcurrentHashMap<Class<Object>, Object> cachedAiServices = new ConcurrentHashMap<>();
     private final BeanContext beanContext;
+    private final ConcurrentHashMap<ExecutableMethod<?, ?>, Optional<MultimodalArguments>> multimodalArguments = new ConcurrentHashMap<>();
 
     public AiServiceInterceptor(BeanContext beanContext) {
         this.beanContext = beanContext;
@@ -45,6 +50,20 @@ public class AiServiceInterceptor implements MethodInterceptor<Object, Object> {
     @Override
     public @Nullable Object intercept(MethodInvocationContext<Object, Object> context) {
         Object target = cachedAiService(context);
+        MultimodalArguments multimodal = multimodalArguments
+            .computeIfAbsent(context.getExecutableMethod(), method -> Optional.ofNullable(MultimodalArguments.of(method.getArguments())))
+            .orElse(null);
+        if (multimodal != null) {
+            // the content replaces the URL arguments: the LangChain4j proxy is invoked reflectively since the types differ
+            Object[] arguments = multimodal.convert(context.getParameterValues());
+            try {
+                return Proxy.getInvocationHandler(target).invoke(target, context.getTargetMethod(), arguments);
+            } catch (RuntimeException | Error e) {
+                throw e;
+            } catch (Throwable e) {
+                throw new UndeclaredThrowableException(e);
+            }
+        }
         return context.getExecutableMethod().invoke(target, context.getParameterValues());
     }
 
