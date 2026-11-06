@@ -223,29 +223,31 @@ final class LangChain4jRetentionPolicy implements BeanRetentionPolicy {
         private void expand(Object object) {
             Class<?> type = object.getClass();
             if (type.isArray()) {
-                if (!type.getComponentType().isPrimitive()) {
-                    int length = Array.getLength(object);
-                    for (int i = 0; i < length; i++) {
-                        add(Array.get(object, i));
-                    }
-                }
-                return;
-            }
-            if (isJdk(type)) {
+                addElements(object, type);
+            } else if (isJdk(type)) {
                 expandJdk(object);
-                return;
+            } else {
+                for (Class<?> declaring = type; declaring != null && !isJdk(declaring); declaring = declaring.getSuperclass()) {
+                    addFields(object, declaring);
+                }
             }
-            for (Class<?> declaring = type; declaring != null && !isJdk(declaring); declaring = declaring.getSuperclass()) {
-                for (Field field : declaring.getDeclaredFields()) {
-                    if (Modifier.isStatic(field.getModifiers()) || field.getType().isPrimitive()) {
-                        continue;
-                    }
-                    if (!field.trySetAccessible()) {
-                        continue;
-                    }
+        }
+
+        private void addElements(Object array, Class<?> type) {
+            if (!type.getComponentType().isPrimitive()) {
+                int length = Array.getLength(array);
+                for (int i = 0; i < length; i++) {
+                    add(Array.get(array, i));
+                }
+            }
+        }
+
+        private void addFields(Object object, Class<?> declaring) {
+            for (Field field : declaring.getDeclaredFields()) {
+                if (!Modifier.isStatic(field.getModifiers()) && !field.getType().isPrimitive() && field.trySetAccessible()) {
                     try {
                         add(field.get(object));
-                    } catch (IllegalAccessException | RuntimeException e) {
+                    } catch (IllegalAccessException | RuntimeException _) {
                         // not readable: nothing to check through it
                     }
                 }
@@ -286,7 +288,7 @@ final class LangChain4jRetentionPolicy implements BeanRetentionPolicy {
                     add(pool.getFactory());
                     add(pool.getUncaughtExceptionHandler());
                 }
-            } catch (RuntimeException e) {
+            } catch (RuntimeException _) {
                 // a container that cannot be read as a whole, such as one modified meanwhile: nothing more is read
             }
         }

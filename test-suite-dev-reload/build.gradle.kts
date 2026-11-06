@@ -1,5 +1,6 @@
 plugins {
     id("io.micronaut.build.internal.java-base")
+    jacoco
 }
 
 configurations.testRuntimeClasspath {
@@ -36,4 +37,18 @@ dependencies {
     testRuntimeOnly(mnTest.junit.jupiter.engine)
     testRuntimeOnly(mnTest.junit.platform.launcher)
     testRuntimeOnly(mnLogging.logback.classic)
+}
+
+// The development support of these modules runs in the reload tests here, so their coverage is reported for them
+val reloadedProjects = listOf(projects.micronautLangchain4jCore, projects.micronautLangchain4jAgentic).map { project(it.path) }
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    sourceDirectories.setFrom(reloadedProjects.map { it.file("src/main/java") })
+    classDirectories.setFrom(reloadedProjects.map { it.layout.buildDirectory.dir("classes/java/main") })
+    reports.xml.required = true
+}
+
+tasks.check {
+    dependsOn(tasks.jacocoTestReport)
 }
