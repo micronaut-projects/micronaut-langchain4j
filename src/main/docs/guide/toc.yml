@@ -10,6 +10,7 @@ testing: Testing
 tools: Tools
 reflection: Reflection and GraalVM Native Image
 serde: Micronaut Serialization
+observability: Observability
 chatModels:
   title: Chat Language Models
   chatModelExample: ChatModel Example
