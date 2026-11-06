@@ -15,6 +15,7 @@
  */
 package io.micronaut.langchain4j.dev;
 
+import dev.langchain4j.devtest.Holder;
 import dev.langchain4j.http.client.jdk.JdkHttpClient;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.BeanRegistration;
@@ -24,11 +25,16 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.net.http.HttpClient;
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -85,8 +91,51 @@ class LangChain4jRetentionPolicyTest {
         }
     }
 
+    @Test
+    void whatTheRuntimeClasspathHoldsIsNotRefused() {
+        assertEquals(BeanRetentionPolicy.Decision.ABSTAIN, decideHolding(new Holder(new int[] {1})));
+        assertEquals(BeanRetentionPolicy.Decision.ABSTAIN, decideHolding(new Object[] {"text", Holder.class}));
+        assertEquals(BeanRetentionPolicy.Decision.ABSTAIN, decideHolding(Optional.of(Holder.class.getClassLoader())));
+        assertEquals(BeanRetentionPolicy.Decision.ABSTAIN, decideHolding(new AtomicReference<>("text")));
+    }
+
+    @Test
+    void whatARestartReplacesIsRefusedWhereverItIsHeld() throws Exception {
+        try (URLClassLoader application = new URLClassLoader(
+            new URL[] {Holder.class.getProtectionDomain().getCodeSource().getLocation()},
+            ClassLoader.getPlatformClassLoader())) {
+            Class<?> type = application.loadClass(Holder.class.getName());
+            Object instance = type.getConstructor(Object.class).newInstance((Object) null);
+
+            assertEquals(BeanRetentionPolicy.Decision.REFUSE, decideHolding(application));
+            assertEquals(BeanRetentionPolicy.Decision.REFUSE, decideHolding(new Object[] {type}));
+            assertEquals(BeanRetentionPolicy.Decision.REFUSE, decideHolding(Optional.of(instance)));
+            assertEquals(BeanRetentionPolicy.Decision.REFUSE, decideHolding(new AtomicReference<>(instance)));
+        }
+    }
+
+    @Test
+    void aSingletonOfTheContextIsRefused() {
+        Object singleton = new Holder("singleton");
+        context.registerSingleton(singleton);
+
+        assertEquals(BeanRetentionPolicy.Decision.REFUSE, decideHolding(singleton));
+    }
+
+    @Test
+    void tooManyObjectsAreRefused() {
+        Object[] objects = new Object[200_002];
+        Arrays.setAll(objects, i -> new Object());
+
+        assertEquals(BeanRetentionPolicy.Decision.REFUSE, decideHolding(objects));
+    }
+
     private static BeanRetentionPolicy.Decision decide(Executor executor) {
         return decide(HttpClient.newBuilder().executor(executor));
+    }
+
+    private static BeanRetentionPolicy.Decision decideHolding(Object value) {
+        return new LangChain4jRetentionPolicy(context).decide(new BeanRegistration<>(BeanIdentifier.of("test"), null, new Holder(value)));
     }
 
     private static BeanRetentionPolicy.Decision decide(HttpClient.Builder client) {
