@@ -18,6 +18,7 @@ dependencies {
     testImplementation(platform(mn.micronaut.core.bom))
     testImplementation(platform(libs.boms.langchain4j))
     testImplementation(projects.micronautLangchain4jCore)
+    testImplementation(projects.micronautLangchain4jAgentic)
     testImplementation(projects.micronautLangchain4jOllama)
     // the reload harness compiles the application under test with the processors on the test classpath, the
     // LangChain4j one included, which makes @Tool methods executable

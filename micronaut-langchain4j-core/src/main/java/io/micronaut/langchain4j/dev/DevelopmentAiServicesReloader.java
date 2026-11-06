@@ -124,6 +124,9 @@ final class DevelopmentAiServicesReloader {
         }
         boolean tools = context.recreate(ToolRegistry.class, null);
         boolean interceptor = context.recreate(AiServiceInterceptor.class, null);
+        for (DevelopmentServicesRebuild rebuild : context.getBeansOfType(DevelopmentServicesRebuild.class)) {
+            rebuild.rebuild(context);
+        }
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rebuilding the AI services, since {}: tool registry recreated {}, interceptor recreated {}", reason, tools, interceptor);
         }

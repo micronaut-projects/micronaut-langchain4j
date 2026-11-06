@@ -17,6 +17,7 @@ The module looks at the objects a built bean holds, for those that the context d
 * an object, a class or a class loader of the application, which a restart replaces;
 * the context, a provider, the environment or the event publisher, which resolve through the stopped context;
 * another singleton of the context, which is destroyed with the context.
+* a JDK executor whose callbacks it cannot read, such as those of `Executors.newSingleThreadExecutor()` or a thread-per-task executor.
 
 It logs what it found at `DEBUG` under `io.micronaut.langchain4j.dev`, and the context logs that the module refused the bean at `DEBUG` under `io.micronaut.context.lifecycle`.
 
@@ -32,5 +33,7 @@ Without a restart:
 
 * A `@Tool` method or an `@AiService` added, removed or replaced, or a reload that retires a class loader, builds the AI services again on their next call, with the current tools.
 * A change of the file an in-memory embedding store is read from (`langchain4j.in-memory.embedding-stores.*.path`) recreates that store, and builds the AI services again.
+
+An `@AgenticService` is built on its first call too. Without a restart, the same changes build it again on its next call, and so does an `@AgenticService` added, removed or replaced.
 
 A prompt template that an AI service reads from a resource, with `fromResource`, is read on each call, so its next call uses the changed file.

@@ -41,6 +41,8 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -209,6 +211,9 @@ final class LangChain4jRetentionPolicy implements BeanRetentionPolicy {
                     return "an instance of " + type.getName() + ", which is bound to the stopped context";
                 }
             }
+            if (object instanceof Executor && isJdk(type) && !(object instanceof ThreadPoolExecutor) && !(object instanceof ForkJoinPool)) {
+                return "the executor " + type.getName() + ", whose callbacks cannot be read";
+            }
             if (object != root && singletons().contains(object)) {
                 return "the singleton " + type.getName() + " of the stopped context, which it destroys";
             }
@@ -277,6 +282,9 @@ final class LangChain4jRetentionPolicy implements BeanRetentionPolicy {
                 } else if (object instanceof ThreadPoolExecutor executor) {
                     add(executor.getThreadFactory());
                     add(executor.getRejectedExecutionHandler());
+                } else if (object instanceof ForkJoinPool pool) {
+                    add(pool.getFactory());
+                    add(pool.getUncaughtExceptionHandler());
                 }
             } catch (RuntimeException e) {
                 // a container that cannot be read as a whole, such as one modified meanwhile: nothing more is read
