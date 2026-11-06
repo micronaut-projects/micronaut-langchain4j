@@ -1,0 +1,7 @@
+samples:
+  - name: framework
+    input: What is Micronaut?
+    context: Micronaut is a modern JVM framework for building microservices and serverless applications.
+  - name: native
+    input: Can a Micronaut application be compiled to a native executable?
+    context: Micronaut applications can be compiled to native executables with GraalVM.
