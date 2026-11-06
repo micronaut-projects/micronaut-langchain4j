@@ -30,6 +30,7 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../../index.html">Overview</a></li>
 <li class="nav-bar-cell1-rev">Package</li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
 <li><a href="../../../../search.html">Search</a></li>
 <li><a href="../../../../help-doc.html#package">Help</a></li>
@@ -61,7 +62,11 @@ loadScripts(document, 'script');</script>
 </div>
 <hr>
 <div class="horizontal-scroll">
-<div class="package-signature">package <span class="element-name">io.micronaut.langchain4j.tools</span></div>
+<div class="package-signature"><span class="annotations">@NullMarked
+</span>package <span class="element-name">io.micronaut.langchain4j.tools</span></div>
+<section class="package-description" id="package-description">
+<div class="block">Tools: the methods annotated with the LangChain4j @Tool annotation.</div>
+</section>
 </div>
 <section class="summary">
 <ul class="summary-list">
@@ -71,8 +76,14 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ToolRegistry.html" title="class in io.micronaut.langchain4j.tools">ToolRegistry</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ExecutableMethodToolExecutor.html" title="class in io.micronaut.langchain4j.tools">ExecutableMethodToolExecutor</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">A LangChain4j <code>ToolExecutor</code> that invokes a <code>Tool</code> method of a bean through its Micronaut
+<code>ExecutableMethod</code>, with a <code>ToolSpecification</code> built from the compile-time annotation metadata and
+argument names of the method.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ToolRegistry.html" title="class in io.micronaut.langchain4j.tools">ToolRegistry</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Register of tools.</div>
 </div>
 </div>

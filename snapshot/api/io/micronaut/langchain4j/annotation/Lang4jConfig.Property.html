@@ -30,6 +30,7 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../../index.html">Overview</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
 <li><a href="../../../../search.html">Search</a></li>
 <li><a href="../../../../help-doc.html#class">Help</a></li>
@@ -63,6 +64,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#required()" tabindex="0">required</a></li>
 <li><a href="#injected()" tabindex="0">injected</a></li>
 <li><a href="#common()" tabindex="0">common</a></li>
+<li><a href="#excluded()" tabindex="0">excluded</a></li>
 </ol>
 </li>
 </ol>
@@ -118,13 +120,19 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><code><a href="#defaultValue()" class="member-name-link">defaultValue</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><code><a href="#injected()" class="member-name-link">injected</a></code></div>
+<div class="col-second even-row-color"><code><a href="#excluded()" class="member-name-link">excluded</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Is it injected.</div>
+<div class="block">Whether the builder property is excluded from the configuration, for a property that the configuration
+binding would set to a value the model rejects (for example an empty map).</div>
 </div>
 <div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><code><a href="#required()" class="member-name-link">required</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#injected()" class="member-name-link">injected</a></code></div>
 <div class="col-last odd-row-color">
+<div class="block">Is it injected.</div>
+</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><code><a href="#required()" class="member-name-link">required</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Is it required.</div>
 </div>
 </div>
@@ -210,6 +218,26 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>True if common.</dd>
+</dl>
+<dl class="notes">
+<dt>Default:</dt>
+<dd><code>false</code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="excluded()">
+<h3>excluded</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">excluded</span></div>
+<div class="block">Whether the builder property is excluded from the configuration, for a property that the configuration
+binding would set to a value the model rejects (for example an empty map).</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>True if excluded</dd>
+<dt>Since:</dt>
+<dd>2.4.0</dd>
 </dl>
 <dl class="notes">
 <dt>Default:</dt>
