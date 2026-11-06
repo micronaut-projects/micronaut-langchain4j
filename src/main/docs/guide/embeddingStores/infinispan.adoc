@@ -19,6 +19,8 @@ integration exposes only the cache name, dimension, and Hot Rod configuration; i
 the embedding store's schema-registration setting. Compatibility with Infinispan Server releases
 earlier than 15.2.6 has not been verified.
 
+The Hot Rod client of the store is stopped when the application context is closed.
+
 Set `langchain4j.infinispan.client-intelligence` to `BASIC` when connecting through a proxy or
 load balancer that does not expose the addresses advertised by the Infinispan cluster. Micronaut
 Test Resources automatically supplies `BASIC` for its Docker container.
