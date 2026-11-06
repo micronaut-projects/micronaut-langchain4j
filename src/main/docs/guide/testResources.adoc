@@ -1,4 +1,4 @@
-https://micronaut-projects.github.io/micronaut-test-resources/latest/guide/[Micronaut Test Resources] starts the services the tests need in containers. Micronaut LangChain4j provides test resources for Ollama and Qdrant, and the embedding and chat memory stores backed by a database (PGVector, Oracle, Redis, Neo4j, Cassandra, MongoDB, JDBC) can use the database test resources of Micronaut.
+https://micronaut-projects.github.io/micronaut-test-resources/latest/guide/[Micronaut Test Resources] starts the services the tests need in containers. Micronaut LangChain4j provides test resources for Ollama, Qdrant and Infinispan, and the embedding and chat memory stores backed by a database (PGVector, Oracle, Redis, Neo4j, Cassandra, MongoDB, JDBC) can use the database test resources of Micronaut.
 
 Add the test resources of Micronaut LangChain4j to the test resources service classpath of your https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/#_the_test_resources_plugin[Gradle build] or https://micronaut-projects.github.io/micronaut-maven-plugin/latest/examples/test-resources.html#adding_modules_or_libraries_to_the_test_resources_service_classpath[Maven build].
 
@@ -24,4 +24,17 @@ When the host and port of the Qdrant embedding store are not configured, a Qdran
 [configuration]
 ----
 langchain4j.qdrant.embedding-store.collection-name: test
+----
+
+=== Infinispan
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-infinispan-testresource[scope="testResourcesService"]
+
+When `langchain4j.infinispan.host` and `port` are not configured, an Infinispan container is started, and the connection properties of the Infinispan embedding store are resolved from it:
+
+.Example Configuration
+[configuration]
+----
+langchain4j.infinispan.embedding-store.cache-name: embeddings
+langchain4j.infinispan.embedding-store.dimension: 384
 ----
