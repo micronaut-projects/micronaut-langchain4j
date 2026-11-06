@@ -88,6 +88,7 @@ configure<io.micronaut.build.MicronautBuildSettingsExtension> {
     importMicronautCatalog("micronaut-grpc")
     importMicronautCatalog("micronaut-serde")
     importMicronautCatalog("micronaut-micrometer")
+    importMicronautCatalog("micronaut-security")
     importMicronautCatalog("micronaut-sql")
     importMicronautCatalog("micronaut-oraclecloud")
     // importMicronautCatalog("micronaut-validation")
