@@ -62,3 +62,32 @@ langchain4j:
 ----
 
 include::{includedir}configurationProperties/io.micronaut.langchain4j.aiservices.AiServiceConfiguration.adoc[]
+
+=== MCP Tools
+
+The tools of https://modelcontextprotocol.io[Model Context Protocol] (MCP) servers can be provided to AI services with the https://micronaut-projects.github.io/micronaut-mcp/latest/guide/#clientLangchain4j[Micronaut MCP LangChain4j client]:
+
+dependency:micronaut-mcp-client-langchain4j[groupId=io.micronaut.mcp]
+
+The client creates a LangChain4j `McpClient` bean for each configured MCP server, named after its configuration, and a `ToolProvider` bean that provides the tools of all of them.
+
+.Example Configuration
+[configuration]
+----
+micronaut:
+  mcp:
+    client:
+      http:
+        github:
+          url: https://example.com/mcp
+----
+
+This `ToolProvider` is unqualified, so when it is the only unqualified one it is the default tool provider of the AI services that do not select tool providers (see the previous section): they receive the tools of every configured MCP server. To restrict a service to some MCP servers, name their clients with the `mcpClients` member of `@AiService`:
+
+snippet::example.micronaut.aiservice.mcp.GitHubAssistant[source="main"]
+
+<1> The AI service only receives the tools of the MCP server configured under `micronaut.mcp.client.http.github`.
+
+When `mcpClients` is set, no `ToolProvider` bean is applied implicitly. Combine it with `toolProviders` to add other tool providers. The `mcpClients` member requires `dev.langchain4j:langchain4j-mcp` on the classpath, which the Micronaut MCP LangChain4j client provides.
+
+To expose the tools of a Micronaut application as an MCP server, see the https://micronaut-projects.github.io/micronaut-mcp/latest/guide/#server[Micronaut MCP server documentation].

@@ -72,6 +72,19 @@ public @interface AiService {
     String[] toolProviders() default {};
 
     /**
+     * The names of the LangChain4j {@code McpClient} beans whose tools are provided to the service, for example the
+     * clients configured with the Micronaut MCP LangChain4j client.
+     *
+     * <p>Requires {@code dev.langchain4j:langchain4j-mcp} on the classpath. When this member is set and
+     * {@link #toolProviders()} is not, no {@code ToolProvider} bean is applied implicitly, so that the service only
+     * receives the tools of the named MCP clients.</p>
+     *
+     * @return The names of the MCP client beans
+     * @since 2.4.0
+     */
+    String[] mcpClients() default {};
+
+    /**
      * A customizer can be registered to customize its creation.
      *
      * <p>Normally these are picked up automatically if declared as beans, using this members allows the chosen customizer to be overridden.</p>
