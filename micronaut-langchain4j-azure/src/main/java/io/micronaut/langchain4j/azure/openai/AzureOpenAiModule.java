@@ -18,6 +18,8 @@ package io.micronaut.langchain4j.azure.openai;
 import com.azure.ai.openai.models.ChatCompletionsJsonResponseFormat;
 import com.azure.ai.openai.models.ChatCompletionsResponseFormat;
 import com.azure.ai.openai.models.ChatCompletionsTextResponseFormat;
+import dev.langchain4j.model.audio.AudioTranscriptionModel;
+import dev.langchain4j.model.azure.AzureOpenAiAudioTranscriptionModel;
 import dev.langchain4j.model.azure.AzureOpenAiChatModel;
 import dev.langchain4j.model.azure.AzureOpenAiEmbeddingModel;
 import dev.langchain4j.model.azure.AzureOpenAiImageModel;
@@ -50,6 +52,11 @@ import jakarta.inject.Singleton;
         @Model(
             kind = EmbeddingModel.class,
             impl = AzureOpenAiEmbeddingModel.class
+        ),
+        @Model(
+            kind = AudioTranscriptionModel.class,
+            impl = AzureOpenAiAudioTranscriptionModel.class,
+            configRequired = true
         )
     },
     properties = {

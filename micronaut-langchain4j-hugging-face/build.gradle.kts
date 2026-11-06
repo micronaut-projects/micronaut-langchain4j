@@ -4,5 +4,9 @@ plugins {
 
 dependencies {
     testImplementation(projects.testSuiteUtils)
-    implementation(libs.langchain4j.hugging.face)
+    implementation(libs.langchain4j.hugging.face) {
+        exclude(group = "dev.langchain4j", module = "langchain4j-http-client-jdk")
+    }
+    testRuntimeOnly(mn.micronaut.http.client)
+    testRuntimeOnly(mn.micronaut.jackson.databind)
 }

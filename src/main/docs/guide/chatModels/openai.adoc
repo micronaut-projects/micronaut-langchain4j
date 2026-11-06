@@ -18,3 +18,41 @@ Then add the link:configurationreference.html#io.micronaut.langchain4j.openai.Co
 ----
 langchain4j.open-ai.api-key: YOUR_KEY
 ----
+
+==== Audio
+
+The audio transcription model (`dev.langchain4j.model.audio.AudioTranscriptionModel`) and the text-to-speech model (`dev.langchain4j.model.audio.TextToSpeechModel`) are only created when they are configured:
+
+.Example Configuration
+[configuration]
+----
+langchain4j:
+  open-ai:
+    api-key: ${OPENAI_API_KEY}
+    audio-transcription-model:
+      model-name: gpt-4o-mini-transcribe
+    text-to-speech-model:
+      model-name: gpt-4o-mini-tts
+      voice: alloy
+----
+
+==== Responses API
+
+The chat models of the https://platform.openai.com/docs/api-reference/responses[Responses API] are configured under `langchain4j.open-ai-responses`, and share the API key and other common settings of `langchain4j.open-ai`. Since the Chat Completions model is the default OpenAI chat model, configure the Responses models with a name, and select them with the name, for example with `@AiService(named = "assistant")`:
+
+.Example Configuration
+[configuration]
+----
+langchain4j:
+  open-ai:
+    api-key: ${OPENAI_API_KEY}
+  open-ai-responses:
+    chat-models:
+      assistant:
+        model-name: gpt-5-mini
+    streaming-chat-models:
+      assistant:
+        model-name: gpt-5-mini
+----
+
+NOTE: The Responses API client of LangChain4j appends `/responses` to the base URL. The default base URL, `https://api.openai.com/v1`, suits both APIs; set a custom `base-url` (of `langchain4j.open-ai` or of the Responses models) without a trailing slash.

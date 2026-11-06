@@ -242,6 +242,16 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         return commonConfig;
     }
 
+    /**
+     * Whether a common property is set on a builder: the {@code enabled} property is not, and a common property only
+     * applies to the builders that have it (e.g. the Responses models have no timeout).
+     */
+    private static boolean appliesTo(PropertyDef property, ClassElement builderType) {
+        return !property.getName().equals("enabled")
+            && builderType.getEnclosedElement(ElementQuery.ALL_METHODS.named(property.getName()).onlyAccessible().onlyInstance()
+                .filter(m -> m.getParameters().length == 1)).isPresent();
+    }
+
     private static ModelConfig getModelConfig(ClassElement element, VisitorContext context, AnnotationValue<Model> provider) {
         ClassElement languageModel = provider.stringValue("impl")
             .flatMap(context::getClassElement)
@@ -379,7 +389,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
                     aThis.field("builder", TypeDef.of(builderType)).returning()
                 ));
 
-        addCommonConstructor(commonConfig, classDefBuilder, modelName.method(), modelName.defaultName(), false, builderField);
+        addCommonConstructor(commonConfig, builderType, classDefBuilder, modelName.method(), modelName.defaultName(), false, builderField);
 
         for (String requiredInject : requiredInjects) {
             addInjectionPoint(builderType, requiredInject, true, classDefBuilder, builderField);
@@ -394,6 +404,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
 
     private static void addCommonConstructor(
         RecordDef commonConfig,
+        ClassElement builderType,
         ClassDef.ClassDefBuilder classDefBuilder,
         MethodElement modelNameMethod,
         String defaultModelName,
@@ -421,7 +432,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
             constructorBuilder.addParameter(ParameterDef.builder("config", commonConfig.asTypeDef()).build());
             List<PropertyDef> properties = commonConfig.getProperties();
             for (PropertyDef property : properties) {
-                if (property.getName().equals("enabled")) {
+                if (!appliesTo(property, builderType)) {
                     continue;
                 }
                 constructorBuilder.addStatement(
@@ -548,6 +559,7 @@ public class Langchain4jConfigVisitor implements TypeElementVisitor<Lang4jConfig
         }
         addCommonConstructor(
             commonConfig,
+            builderType,
             classDefBuilder,
             modelNameMethod,
             defaultModelName,

@@ -36,6 +36,7 @@ import io.micronaut.langchain4j.annotation.Lang4jConfig;
         )
     },
     properties = {
+        @Lang4jConfig.Property(name = "httpClientBuilder", injected = true),
         @Lang4jConfig.Property(name = "modelId", common = true, required = true, defaultValue = "tiiuae/falcon-7b-instruct"),
         @Lang4jConfig.Property(name = "accessToken", common = true, required = true),
         @Lang4jConfig.Property(name = "timeout", common = true)
