@@ -1,0 +1,17 @@
+Add the following dependency to use the Voyage AI models:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-voyageai[]
+
+.Example Configuration
+[configuration]
+----
+langchain4j:
+  voyage-ai:
+    api-key: ${VOYAGE_API_KEY}
+    scoring-model:
+      model-name: rerank-2.5
+    embedding-model:
+      model-name: voyage-3.5
+----
+
+include::{includedir}configurationProperties/io.micronaut.langchain4j.voyageai.CommonVoyageAiEmbeddingModelConfiguration.adoc[]

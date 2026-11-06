@@ -1,0 +1,17 @@
+Add the following dependency to use the Cohere models:
+
+dependency:io.micronaut.langchain4j:micronaut-langchain4j-cohere[]
+
+.Example Configuration
+[configuration]
+----
+langchain4j:
+  cohere:
+    api-key: ${COHERE_API_KEY}
+    scoring-model:
+      model-name: rerank-v3.5
+    embedding-model:
+      model-name: embed-v4.0
+----
+
+include::{includedir}configurationProperties/io.micronaut.langchain4j.cohere.CommonCohereEmbeddingModelConfiguration.adoc[]

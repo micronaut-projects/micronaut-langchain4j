@@ -18,8 +18,13 @@ package io.micronaut.langchain4j.rag;
 import dev.langchain4j.data.document.splitter.DocumentSplitters;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.model.scoring.ScoringModel;
+import dev.langchain4j.rag.DefaultRetrievalAugmentor;
+import dev.langchain4j.rag.RetrievalAugmentor;
+import dev.langchain4j.rag.content.aggregator.ReRankingContentAggregator;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
+import dev.langchain4j.rag.query.router.DefaultQueryRouter;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import io.micronaut.context.BeanContext;
@@ -29,6 +34,9 @@ import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.type.Argument;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import org.jspecify.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Creates the content retrievers and the ingestors of the RAG configuration.
@@ -55,6 +63,29 @@ final class RagFactory {
             .maxResults(configuration.getMaxResults());
         if (configuration.getMinScore() != null) {
             builder.minScore(configuration.getMinScore());
+        }
+        return builder.build();
+    }
+
+    @EachBean(RetrievalAugmentorConfiguration.class)
+    RetrievalAugmentor retrievalAugmentor(RetrievalAugmentorConfiguration configuration) {
+        List<ContentRetriever> contentRetrievers = new ArrayList<>();
+        if (configuration.getContentRetrievers().isEmpty()) {
+            contentRetrievers.add(beanContext.findBean(ContentRetriever.class, Qualifiers.byName(configuration.getName()))
+                .orElseGet(() -> beanContext.getBean(ContentRetriever.class)));
+        } else {
+            for (String contentRetriever : configuration.getContentRetrievers()) {
+                contentRetrievers.add(beanContext.getBean(ContentRetriever.class, Qualifiers.byName(contentRetriever)));
+            }
+        }
+        DefaultRetrievalAugmentor.DefaultRetrievalAugmentorBuilder builder = DefaultRetrievalAugmentor.builder()
+            .queryRouter(new DefaultQueryRouter(contentRetrievers));
+        if (configuration.isReRank()) {
+            builder.contentAggregator(ReRankingContentAggregator.builder()
+                .scoringModel(bean(Argument.of(ScoringModel.class), configuration.getScoringModel()))
+                .minScore(configuration.getMinScore())
+                .maxResults(configuration.getMaxResults())
+                .build());
         }
         return builder.build();
     }
