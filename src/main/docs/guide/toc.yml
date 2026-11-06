@@ -43,6 +43,7 @@ embeddingStores:
   embeddingStoresInMemory: In-Memory
   chroma: Chroma
   elasticsearch: Elastic Search
+  infinispan: Infinispan
   milvus: Milvus
   mongodb: MongoDB
   neo4j: Neo4j
