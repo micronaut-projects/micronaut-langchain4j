@@ -1,0 +1,5 @@
+io.micronaut.langchain4j.processor.AllowsReflectionRemapper$AiServices
+io.micronaut.langchain4j.processor.AllowsReflectionRemapper$Agentic
+io.micronaut.langchain4j.processor.AllowsReflectionRemapper$AgenticDeclarative
+io.micronaut.langchain4j.processor.AllowsReflectionRemapper$Tools
+io.micronaut.langchain4j.processor.AllowsReflectionRemapper$StructuredOutputs
