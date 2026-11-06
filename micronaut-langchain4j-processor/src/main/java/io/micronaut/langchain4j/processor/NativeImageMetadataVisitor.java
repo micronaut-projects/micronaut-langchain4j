@@ -60,6 +60,15 @@ public final class NativeImageMetadataVisitor implements TypeElementVisitor<Obje
         DECLARATIVE_PACKAGE + "SupervisorAgent",
         DECLARATIVE_PACKAGE + "PlannerAgent"
     );
+    /**
+     * The other declarative agents, which LangChain4j also finds by reading the methods of their type reflectively.
+     */
+    static final List<String> OTHER_AGENT_ANNOTATIONS = List.of(
+        DECLARATIVE_PACKAGE + "HumanInTheLoop",
+        DECLARATIVE_PACKAGE + "A2AClientAgent",
+        DECLARATIVE_PACKAGE + "McpClientAgent",
+        DECLARATIVE_PACKAGE + "RegistryAgent"
+    );
 
     private static final String INTERNAL_AGENT = "dev.langchain4j.agentic.internal.InternalAgent";
     private static final String AGENTIC_SCOPE_OWNER = "dev.langchain4j.agentic.internal.AgenticScopeOwner";
@@ -90,6 +99,7 @@ public final class NativeImageMetadataVisitor implements TypeElementVisitor<Obje
         names.add(AGENT);
         names.addAll(WORKFLOW_ANNOTATIONS);
         names.add(JsonMappedTypes.TOOL);
+        names.addAll(OTHER_AGENT_ANNOTATIONS);
         return names;
     }
 
