@@ -1,0 +1,1 @@
+Micronaut is a modern JVM framework for building modular, easily testable microservice applications.
