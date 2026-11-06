@@ -1,0 +1,12 @@
+{
+  "reflection": [
+    {"type": "dev.langchain4j.model.huggingface.client.EmbeddingRequest", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.huggingface.client.Options", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.huggingface.client.Options$Builder", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.huggingface.client.Parameters", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.huggingface.client.Parameters$Builder", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.huggingface.client.TextGenerationRequest", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.huggingface.client.TextGenerationRequest$Builder", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true},
+    {"type": "dev.langchain4j.model.huggingface.client.TextGenerationResponse", "allDeclaredConstructors": true, "allPublicConstructors": true, "allDeclaredMethods": true, "allPublicMethods": true, "allDeclaredFields": true, "allPublicFields": true}
+  ]
+}
