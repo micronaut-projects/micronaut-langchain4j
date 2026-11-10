@@ -235,6 +235,6 @@ final class ToolArguments {
 
     private static IllegalArgumentException notConvertable(Object argument, String parameterName, Class<?> parameterClass) {
         return new IllegalArgumentException("Argument \"%s\" is not convertible to %s, got %s: <%s>".formatted(
-            parameterName, parameterClass.getName(), argument == null ? "null" : argument.getClass().getName(), argument));
+            parameterName, parameterClass.getName(), argument.getClass().getName(), argument));
     }
 }
