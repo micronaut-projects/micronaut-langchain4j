@@ -24,6 +24,7 @@ import dev.langchain4j.http.client.SuccessfulHttpResponse;
 import dev.langchain4j.http.client.sse.ServerSentEvent;
 import dev.langchain4j.http.client.sse.ServerSentEventContext;
 import dev.langchain4j.http.client.sse.ServerSentEventListener;
+import dev.langchain4j.http.client.sse.ServerSentEventParser;
 import io.micronaut.core.io.buffer.ByteArrayBufferFactory;
 import io.micronaut.core.type.Argument;
 import io.micronaut.http.ByteBodyHttpResponse;
@@ -42,12 +43,15 @@ import org.junit.jupiter.api.Test;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscription;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -232,6 +236,111 @@ class MicronautLangChain4jHttpClientTest {
         assertTrue(opened.get());
         assertTrue(closed.get());
         assertEquals(List.of("hello", "world"), events);
+    }
+
+    @Test
+    void sendsTheBodyOfServerSentEventRequests() throws Exception {
+        AtomicReference<String> receivedBody = new AtomicReference<>();
+        server = HttpServer.create(new InetSocketAddress(0), 0);
+        server.createContext("/sse", exchange -> {
+            receivedBody.set(new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8));
+            byte[] response = """
+                data: done
+
+                """.getBytes(StandardCharsets.UTF_8);
+            exchange.getResponseHeaders().add("Content-Type", "text/event-stream");
+            exchange.sendResponseHeaders(200, response.length);
+            exchange.getResponseBody().write(response);
+            exchange.close();
+        });
+        server.start();
+
+        AtomicReference<Throwable> error = new AtomicReference<>();
+        CountDownLatch closedLatch = new CountDownLatch(1);
+
+        new MicronautLangChain4jHttpClientBuilder()
+            .build()
+            .execute(HttpRequest.builder()
+                .method(HttpMethod.POST)
+                .url(url("/sse"))
+                .addHeader("Content-Type", "application/json")
+                .body("{\"stream\":true}")
+                .build(), new ServerSentEventListener() {
+                    @Override
+                    public void onEvent(ServerSentEvent event, ServerSentEventContext context) {
+                        // the events are not checked: the test only checks that the request body reaches the server
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        error.set(throwable);
+                        closedLatch.countDown();
+                    }
+
+                    @Override
+                    public void onClose() {
+                        closedLatch.countDown();
+                    }
+                });
+
+        assertTrue(closedLatch.await(5, TimeUnit.SECONDS));
+        assertNull(error.get());
+        assertEquals("{\"stream\":true}", receivedBody.get());
+    }
+
+    @Test
+    void usesTheParserOfTheRequestForNonServerSentEventStreams() throws Exception {
+        server = HttpServer.create(new InetSocketAddress(0), 0);
+        server.createContext("/ndjson", exchange -> {
+            exchange.getRequestBody().readAllBytes();
+            byte[] response = "{\"part\":\"micro\"}\n{\"part\":\"naut\"}\n".getBytes(StandardCharsets.UTF_8);
+            exchange.getResponseHeaders().add("Content-Type", "application/x-ndjson");
+            exchange.sendResponseHeaders(200, response.length);
+            exchange.getResponseBody().write(response);
+            exchange.close();
+        });
+        server.start();
+
+        // like Ollama's parser: one event per line, no SSE framing
+        ServerSentEventParser lineParser = (inputStream, listener) -> {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+                reader.lines().forEach(line -> listener.onEvent(new ServerSentEvent(null, line)));
+            } catch (IOException e) {
+                listener.onError(e);
+            }
+        };
+        List<String> events = new CopyOnWriteArrayList<>();
+        AtomicReference<Throwable> error = new AtomicReference<>();
+        CountDownLatch closedLatch = new CountDownLatch(1);
+
+        new MicronautLangChain4jHttpClientBuilder()
+            .build()
+            .execute(HttpRequest.builder()
+                .method(HttpMethod.POST)
+                .url(url("/ndjson"))
+                .addHeader("Content-Type", "application/json")
+                .body("{}")
+                .build(), lineParser, new ServerSentEventListener() {
+                    @Override
+                    public void onEvent(ServerSentEvent event) {
+                        events.add(event.data());
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        error.set(throwable);
+                        closedLatch.countDown();
+                    }
+
+                    @Override
+                    public void onClose() {
+                        closedLatch.countDown();
+                    }
+                });
+
+        assertTrue(closedLatch.await(5, TimeUnit.SECONDS));
+        assertNull(error.get());
+        assertEquals(List.of("{\"part\":\"micro\"}", "{\"part\":\"naut\"}"), events);
     }
 
     @Test
