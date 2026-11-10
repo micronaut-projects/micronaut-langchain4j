@@ -8,6 +8,8 @@ on:
   pull_request:
     branches:
       - '[0-9]+.[0-9]+.x'
+      # stacked PRs target each other's branches
+      - 'triage/**'
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - '**/*.gradle'
