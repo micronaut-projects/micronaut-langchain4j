@@ -16,61 +16,59 @@
 package io.micronaut.langchain4j.dev;
 
 import io.micronaut.context.BeanContext;
+import io.micronaut.context.BeanDependencyGraph;
 import io.micronaut.context.BeanLocator;
 import io.micronaut.context.BeanProvider;
 import io.micronaut.context.BeanRegistration;
+import io.micronaut.context.ConfigurableBeanContext;
+import io.micronaut.context.annotation.Retain;
 import io.micronaut.context.env.DevelopmentActive;
 import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.context.reload.BeanRetentionPolicy;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.type.Argument;
 import io.micronaut.core.value.PropertyResolver;
+import io.micronaut.inject.BeanDefinition;
+import io.micronaut.inject.FieldInjectionPoint;
+import io.micronaut.inject.MethodInjectionPoint;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.net.http.HttpClient;
-import java.util.ArrayDeque;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.IdentityHashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Predicate;
 
 /**
- * Refuses to retain a LangChain4j model, embedding store or builder across a development restart when an object it
- * holds would not survive the restart. The generated factories mark the models and stores they produce with
- * {@link io.micronaut.context.annotation.Retain}. The context checks what the bean received through injection, and what
- * the configuration beans it was made from received: it refuses a bean made from a configuration that holds a provider,
- * a proxy, something bound to the context or a class the restart replaces, such as the Micronaut HTTP client builder of
- * LangChain4j. That check reads the dependencies of the beans, so it does not see an object that reached the model in
- * another way, such as one a factory passed to a LangChain4j builder.
+ * Refuses to retain a LangChain4j model or embedding store across a development restart when it may hold what the
+ * restart does not keep. The generated factories, and the handwritten Bedrock Titan one, mark the models and stores
+ * they produce with {@link Retain}. The context checks what the bean received through injection, and what the
+ * configuration beans and builders it was made from received; it cannot see what a listener of the application gave
+ * one of those beans as the context created it, such as a chat model listener added to a model builder, which is not
+ * injected.
  *
- * <p>This policy is the narrower safety net for those objects. It walks the graph of the built bean, through its
- * fields, the containers it holds and the callbacks of a JDK HTTP client or a thread pool, and refuses the bean when
- * it reaches:</p>
+ * <p>This policy decides from what the context knows of how the bean was made: its definition, the definitions of the
+ * beans it was made from, as the dependency graph records them, and the listeners of the context. It never reads the
+ * objects LangChain4j built. It refuses a bean of this module that is made from:</p>
  *
  * <ul>
- *     <li>an object, a class or a class loader of the application, which a restart replaces;</li>
- *     <li>the context, a provider, the environment or the event publisher, which resolve through the stopped
- *     context;</li>
- *     <li>another singleton of the context, which the context destroys as it stops.</li>
+ *     <li>a bean that a {@code BeanCreatedEventListener} or {@code BeanInitializedEventListener} of the application
+ *     applies to, such as its builder or its configuration, whatever the listener gave it;</li>
+ *     <li>a bean that received the context, a provider, the environment or the event publisher, which resolve through
+ *     the stopped context, such as the Micronaut HTTP client builder of LangChain4j, which the providers use by
+ *     default. The context refuses such a bean too, with a warning on every restart; it is refused here, first, and
+ *     said at debug level, since it is how the models are made by default.</li>
  * </ul>
  *
- * <p>The context asks this policy before it makes its own checks, so a bean that both would refuse is reported as
- * refused by this policy.</p>
+ * <p>What LangChain4j itself loads from the application, such as a service provider the application declares, is not
+ * seen.</p>
  *
- * <p>It looks only at beans whose class is one of LangChain4j's, and abstains on any other. It runs in development
- * mode only, as a context stops for a restart, and never on a request.</p>
+ * <p>It abstains on any other bean. It runs in development mode only, as a context stops for a restart, and never on
+ * a request.</p>
  *
  * @author graemerocher
  * @since 2.4.0
@@ -81,11 +79,7 @@ import java.util.concurrent.atomic.AtomicReference;
 final class LangChain4jRetentionPolicy implements BeanRetentionPolicy {
 
     private static final Logger LOG = LoggerFactory.getLogger(LangChain4jRetentionPolicy.class);
-    private static final String LANGCHAIN4J_PACKAGE = "dev.langchain4j.";
-    /**
-     * Past this many objects the bean is refused rather than read further: a graph this large is not a client.
-     */
-    private static final int MAX_OBJECTS = 200_000;
+    private static final String MODULE_PACKAGE = "io.micronaut.langchain4j.";
     private static final Class<?>[] CONTEXT_BOUND = {
         BeanLocator.class,
         BeanProvider.class,
@@ -95,208 +89,126 @@ final class LangChain4jRetentionPolicy implements BeanRetentionPolicy {
     };
 
     private final BeanContext beanContext;
-    private final Set<ClassLoader> runtimeLoaders;
-    private final Map<Object, Decision> decisions = Collections.synchronizedMap(new IdentityHashMap<>());
-    private final AtomicReference<@Nullable Set<Object>> singletons = new AtomicReference<>();
+    private final Predicate<Class<?>> isApplicationClass;
+    private @Nullable ApplicationListeners listeners;
 
     /**
-     * @param beanContext The context, whose singletons a retained bean must not hold
+     * @param beanContext The context, whose definitions, listeners and dependency graph tell how a bean was made
      */
+    @Inject
     LangChain4jRetentionPolicy(BeanContext beanContext) {
+        this(beanContext, runtimeClassPredicate().negate());
+    }
+
+    /**
+     * @param beanContext The context
+     * @param isApplicationClass Whether a class is of the application, which the restart replaces
+     */
+    LangChain4jRetentionPolicy(BeanContext beanContext, Predicate<Class<?>> isApplicationClass) {
         this.beanContext = beanContext;
-        Set<ClassLoader> loaders = Collections.newSetFromMap(new IdentityHashMap<>());
-        for (ClassLoader loader = LangChain4jRetentionPolicy.class.getClassLoader(); loader != null; loader = loader.getParent()) {
-            loaders.add(loader);
-        }
-        ClassLoader platform = ClassLoader.getPlatformClassLoader();
-        for (ClassLoader loader = platform; loader != null; loader = loader.getParent()) {
-            loaders.add(loader);
-        }
-        this.runtimeLoaders = loaders;
+        this.isApplicationClass = isApplicationClass;
     }
 
     @Override
     public Decision decide(BeanRegistration<?> registration) {
-        Object bean = registration.bean();
-        if (bean == null || !bean.getClass().getName().startsWith(LANGCHAIN4J_PACKAGE)) {
+        BeanDefinition<?> definition = registration.getBeanDefinition();
+        if (definition == null || !isRetainedByThisModule(definition)) {
             return Decision.ABSTAIN;
         }
-        return decisions.computeIfAbsent(bean, this::inspect);
-    }
-
-    private Decision inspect(Object bean) {
-        String reason = new Walk(bean).firstReason();
+        String reason = listeners().customizing(definition);
+        if (reason == null) {
+            reason = contextBound(definition);
+        }
         if (reason == null) {
             return Decision.ABSTAIN;
         }
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Not retaining [{}] across the restart: it holds {}", bean, reason);
+            LOG.debug("Not retaining [{}] across the restart: {}", registration.bean(), reason);
         }
         return Decision.REFUSE;
     }
 
-    private Set<Object> singletons() {
-        Set<Object> current = singletons.get();
-        if (current == null) {
-            Set<Object> instances = Collections.newSetFromMap(new IdentityHashMap<>());
-            for (BeanRegistration<Object> registration : beanContext.getActiveBeanRegistrations(Object.class)) {
-                Object instance = registration.bean();
-                if (instance != null) {
-                    instances.add(instance);
-                }
-            }
-            singletons.compareAndSet(null, instances);
-            current = singletons.get();
-            return current != null ? current : instances;
+    /**
+     * Whether a bean is one this module marks retained: produced by a factory of this module with {@link Retain}.
+     */
+    private static boolean isRetainedByThisModule(BeanDefinition<?> definition) {
+        return definition.getAnnotationMetadata().getDeclaredMetadata().hasStereotype(Retain.class)
+            && definition.getDeclaringType().map(type -> type.getName().startsWith(MODULE_PACKAGE)).orElse(false);
+    }
+
+    private synchronized ApplicationListeners listeners() {
+        ApplicationListeners found = listeners;
+        if (found == null) {
+            // read as the context stops, which is when the policy is asked, so that a listener added meanwhile counts
+            found = new ApplicationListeners(beanContext, isApplicationClass);
+            listeners = found;
         }
-        return current;
-    }
-
-    private boolean isRuntime(Class<?> type) {
-        ClassLoader loader = type.getClassLoader();
-        return loader == null || runtimeLoaders.contains(loader);
-    }
-
-    private static boolean isJdk(Class<?> type) {
-        String name = type.getName();
-        return type.getClassLoader() == null
-            || type.getClassLoader() == ClassLoader.getPlatformClassLoader()
-            || name.startsWith("java.") || name.startsWith("javax.") || name.startsWith("jdk.") || name.startsWith("sun.");
+        return found;
     }
 
     /**
-     * Reads the objects a bean holds, breadth first, and stops at the first that keeps it from being retained.
+     * The first bean the bean was made from, itself included, that received what resolves through the stopped
+     * context, as its injection points declare it.
      */
-    private final class Walk {
-        private final Object root;
-        private final Set<Object> visited = Collections.newSetFromMap(new IdentityHashMap<>());
-        private final Deque<Object> pending = new ArrayDeque<>();
-
-        private Walk(Object root) {
-            this.root = root;
+    private @Nullable String contextBound(BeanDefinition<?> definition) {
+        Set<BeanDefinition<?>> madeFrom = new LinkedHashSet<>();
+        madeFrom.add(definition);
+        BeanDependencyGraph graph = beanContext instanceof ConfigurableBeanContext configurable ? configurable.findDependencyGraph().orElse(null) : null;
+        if (graph != null) {
+            madeFrom.addAll(graph.transitiveDependenciesOf(definition));
         }
-
-        @Nullable String firstReason() {
-            pending.add(root);
-            while (!pending.isEmpty()) {
-                if (visited.size() > MAX_OBJECTS) {
-                    return "more than " + MAX_OBJECTS + " objects";
-                }
-                Object current = pending.poll();
-                if (!visited.add(current)) {
-                    continue;
-                }
-                String reason = check(current);
-                if (reason != null) {
-                    return reason;
-                }
-                expand(current);
+        for (BeanDefinition<?> candidate : madeFrom) {
+            Class<?> bound = receivedContextBound(candidate);
+            if (bound != null) {
+                return (candidate == definition ? "it receives " : "the bean " + candidate.getBeanType().getName() + " it is made from receives ")
+                    + bound.getName() + ", which resolves through the stopped context";
             }
-            return null;
         }
+        return null;
+    }
 
-        private @Nullable String check(Object object) {
-            if (object instanceof Class<?> type) {
-                return isRuntime(type) ? null : "the application class " + type.getName();
+    private static @Nullable Class<?> receivedContextBound(BeanDefinition<?> definition) {
+        for (Argument<?> argument : definition.getConstructor().getArguments()) {
+            if (isContextBound(argument.getType())) {
+                return argument.getType();
             }
-            if (object instanceof ClassLoader loader) {
-                return runtimeLoaders.contains(loader) ? null : "the application class loader " + loader;
-            }
-            Class<?> type = object.getClass();
-            if (!isRuntime(type)) {
-                return "an instance of the application class " + type.getName();
-            }
-            for (Class<?> bound : CONTEXT_BOUND) {
-                if (bound.isInstance(object)) {
-                    return "an instance of " + type.getName() + ", which is bound to the stopped context";
-                }
-            }
-            if (object instanceof Executor && isJdk(type) && !(object instanceof ThreadPoolExecutor) && !(object instanceof ForkJoinPool)) {
-                return "the executor " + type.getName() + ", whose callbacks cannot be read";
-            }
-            if (object != root && singletons().contains(object)) {
-                return "the singleton " + type.getName() + " of the stopped context, which it destroys";
-            }
-            return null;
         }
-
-        private void expand(Object object) {
-            Class<?> type = object.getClass();
-            if (type.isArray()) {
-                addElements(object, type);
-            } else if (isJdk(type)) {
-                expandJdk(object);
-            } else {
-                for (Class<?> declaring = type; declaring != null && !isJdk(declaring); declaring = declaring.getSuperclass()) {
-                    addFields(object, declaring);
+        for (MethodInjectionPoint<?, ?> method : definition.getInjectedMethods()) {
+            for (Argument<?> argument : method.getArguments()) {
+                if (isContextBound(argument.getType())) {
+                    return argument.getType();
                 }
             }
         }
-
-        private void addElements(Object array, Class<?> type) {
-            if (!type.getComponentType().isPrimitive()) {
-                int length = Array.getLength(array);
-                for (int i = 0; i < length; i++) {
-                    add(Array.get(array, i));
-                }
+        for (FieldInjectionPoint<?, ?> field : definition.getInjectedFields()) {
+            if (isContextBound(field.getType())) {
+                return field.getType();
             }
         }
+        return null;
+    }
 
-        private void addFields(Object object, Class<?> declaring) {
-            for (Field field : declaring.getDeclaredFields()) {
-                if (!Modifier.isStatic(field.getModifiers()) && !field.getType().isPrimitive() && field.trySetAccessible()) {
-                    try {
-                        add(field.get(object));
-                    } catch (IllegalAccessException | RuntimeException _) {
-                        // not readable: nothing to check through it
-                    }
-                }
+    private static boolean isContextBound(Class<?> type) {
+        for (Class<?> bound : CONTEXT_BOUND) {
+            if (bound.isAssignableFrom(type)) {
+                return true;
             }
         }
+        return false;
+    }
 
-        /**
-         * The JDK's own classes are not read field by field, which their modules refuse, but the containers among
-         * them, and what a JDK HTTP client or a thread pool calls back, are read through their API.
-         */
-        private void expandJdk(Object object) {
-            try {
-                if (object instanceof Collection<?> collection) {
-                    for (Object element : collection.toArray()) {
-                        add(element);
-                    }
-                } else if (object instanceof Map<?, ?> map) {
-                    for (Object entry : map.entrySet().toArray()) {
-                        if (entry instanceof Map.Entry<?, ?> mapEntry) {
-                            add(mapEntry.getKey());
-                            add(mapEntry.getValue());
-                        }
-                    }
-                } else if (object instanceof Optional<?> optional) {
-                    optional.ifPresent(this::add);
-                } else if (object instanceof AtomicReference<?> reference) {
-                    add(reference.get());
-                } else if (object instanceof HttpClient client) {
-                    // the callbacks a JDK HTTP client calls, which an application may supply
-                    client.executor().ifPresent(this::add);
-                    client.authenticator().ifPresent(this::add);
-                    client.cookieHandler().ifPresent(this::add);
-                    client.proxy().ifPresent(this::add);
-                } else if (object instanceof ThreadPoolExecutor executor) {
-                    add(executor.getThreadFactory());
-                    add(executor.getRejectedExecutionHandler());
-                } else if (object instanceof ForkJoinPool pool) {
-                    add(pool.getFactory());
-                    add(pool.getUncaughtExceptionHandler());
-                }
-            } catch (RuntimeException _) {
-                // a container that cannot be read as a whole, such as one modified meanwhile: nothing more is read
-            }
+    /**
+     * Whether a class was loaded by the class loader of this module, one of its parents, or the platform: the classes
+     * of the application are loaded by a child of the loader of the libraries, which a restart replaces.
+     */
+    private static Predicate<Class<?>> runtimeClassPredicate() {
+        Set<ClassLoader> loaders = Collections.newSetFromMap(new IdentityHashMap<>());
+        for (ClassLoader loader = LangChain4jRetentionPolicy.class.getClassLoader(); loader != null; loader = loader.getParent()) {
+            loaders.add(loader);
         }
-
-        private void add(@Nullable Object object) {
-            if (object != null && !visited.contains(object)) {
-                pending.add(object);
-            }
+        for (ClassLoader loader = ClassLoader.getPlatformClassLoader(); loader != null; loader = loader.getParent()) {
+            loaders.add(loader);
         }
+        return type -> type.getClassLoader() == null || loaders.contains(type.getClassLoader());
     }
 }

@@ -12,12 +12,12 @@ A model or a store is not kept, and is created again on each restart, when the c
 
 The context refuses a bean made from a configuration that holds something bound to the context, such as a provider or a proxy, or a class that the restart replaces. It logs this at `WARN` under `io.micronaut.context.lifecycle`.
 
-The module looks at the objects a built bean holds, for those that the context does not see through injection. It reads only beans whose class is one of LangChain4j's, and refuses one that holds:
+The module decides from how the bean was made, as the context knows it: the beans it was made from, such as its builder and its configuration, as the dependency graph records them, and the listeners of the context. It does not read the objects LangChain4j built. It refuses a model or a store made from:
 
-* an object, a class or a class loader of the application, which a restart replaces;
-* the context, a provider, the environment or the event publisher, which resolve through the stopped context;
-* another singleton of the context, which is destroyed with the context.
-* a JDK executor whose callbacks it cannot read, such as those of `Executors.newSingleThreadExecutor()` or a thread-per-task executor.
+* a bean that a `BeanCreatedEventListener` or `BeanInitializedEventListener` of the application applies to, such as the model builder, whatever the listener gave it: what a listener adds, a chat model listener for example, is not injected, so the context does not see it;
+* a bean that received the context, a provider, the environment or the event publisher, which resolve through the stopped context.
+
+What LangChain4j loads from the application itself, such as a service provider the application declares, is not seen by either.
 
 It logs what it found at `DEBUG` under `io.micronaut.langchain4j.dev`, and the context logs that the module refused the bean at `DEBUG` under `io.micronaut.context.lifecycle`.
 

@@ -196,24 +196,49 @@ final class DevelopmentAiServicesReloader {
     /**
      * The AI service methods LangChain4j validated on a call, which it keeps in a static set of
      * {@code AiServiceValidation}: the methods of a retired generation are removed from it.
+     *
+     * <p>LangChain4j offers no API for this. {@code dev.langchain4j.service.AiServiceValidation.VALID_METHODS} (1.22.0)
+     * is a private static {@code HashSet<Method>}, which every AI service call adds its method to and nothing ever
+     * clears, so it keeps the AI service interfaces of every retired generation, and their class loaders, reachable.
+     * This is reported upstream as langchain4j/langchain4j#6867, which langchain4j/langchain4j#6889 fixes by validating
+     * the methods as the AI service is built, without the set. The field is read once, reflectively; should it be
+     * missing or of another type, as after that fix, nothing is evicted, which is logged once at debug level, and
+     * {@code ValidatedMethodsTest} fails, so that this can be removed.</p>
      */
-    private static final class ValidatedMethods {
-        private static final String VALIDATION = "dev.langchain4j.service.AiServiceValidation";
-        private static final String FIELD = "VALID_METHODS";
-        private static final @Nullable Set<Method> METHODS = find();
+    static final class ValidatedMethods {
+        static final String VALIDATION = "dev.langchain4j.service.AiServiceValidation";
+        static final String FIELD = "VALID_METHODS";
+        private static final @Nullable Set<Method> METHODS = find(VALIDATION, FIELD);
 
         private ValidatedMethods() {
         }
 
+        /**
+         * The methods LangChain4j validated.
+         *
+         * @return The set LangChain4j keeps, or null when it was not found
+         */
+        static @Nullable Set<Method> methods() {
+            return METHODS;
+        }
+
+        /**
+         * Reads a static set of methods of LangChain4j.
+         *
+         * @param className The class that declares it
+         * @param fieldName The field
+         * @return The set, or null when the class, the field or access to it is missing
+         */
         @SuppressWarnings("unchecked")
-        private static @Nullable Set<Method> find() {
+        static @Nullable Set<Method> find(String className, String fieldName) {
             try {
-                Field field = Class.forName(VALIDATION, false, AiServices.class.getClassLoader()).getDeclaredField(FIELD);
+                Field field = Class.forName(className, false, AiServices.class.getClassLoader()).getDeclaredField(fieldName);
                 if (Modifier.isStatic(field.getModifiers()) && Set.class.isAssignableFrom(field.getType()) && field.trySetAccessible()) {
                     return (Set<Method>) field.get(null);
                 }
+                LOG.debug("The AI service methods LangChain4j validated, {}.{}, cannot be read: the methods of a retired generation are not removed from them", className, fieldName);
             } catch (ReflectiveOperationException | RuntimeException | LinkageError e) {
-                LOG.debug("Cannot read the AI service methods LangChain4j validated, which a retired generation may stay reachable through", e);
+                LOG.debug("The AI service methods LangChain4j validated, {}.{}, cannot be read: the methods of a retired generation are not removed from them", className, fieldName, e);
             }
             return null;
         }
