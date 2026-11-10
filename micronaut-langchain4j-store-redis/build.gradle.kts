@@ -1,3 +1,6 @@
+import javax.xml.parsers.DocumentBuilderFactory
+import org.w3c.dom.Element
+
 plugins {
     id("io.micronaut.build.internal.langchain4j-module-provider")
 }
@@ -16,9 +19,19 @@ val verifyPatchedOrgJson by tasks.registering {
     val expected = libs.versions.org.json
     inputs.file(pom)
     doLast {
-        val dependency = Regex("<groupId>org\\.json</groupId>\\s*<artifactId>json</artifactId>\\s*<version>([^<]+)</version>")
-        val version = dependency.find(pom.get().readText())?.groupValues?.get(1)
-        check(version == expected.get()) { "The published POM declares org.json $version instead of ${expected.get()}" }
+        // only the project's own dependencies reach consumers, not its dependencyManagement
+        fun Element.children(name: String) = (0 until childNodes.length).map { childNodes.item(it) }
+            .filterIsInstance<Element>().filter { it.tagName == name }
+        fun Element.text(name: String) = children(name).firstOrNull()?.textContent?.trim()
+        val project = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(pom.get()).documentElement
+        val dependency = project.children("dependencies").flatMap { it.children("dependency") }
+            .firstOrNull { it.text("groupId") == "org.json" && it.text("artifactId") == "json" }
+        checkNotNull(dependency) { "The published POM has no dependency on org.json, so Maven consumers get the version Jedis brings" }
+        val version = dependency.text("version")
+        val scope = dependency.text("scope") ?: "compile"
+        check(version == expected.get() && scope in setOf("compile", "runtime")) {
+            "The published POM declares org.json $version ($scope) instead of ${expected.get()} (compile or runtime)"
+        }
     }
 }
 tasks.named("check") { dependsOn(verifyPatchedOrgJson) }
