@@ -71,7 +71,7 @@ final class SerdeJsonCodec implements Json.JsonCodec {
     private final Supplier<Mappers> mappers = SupplierUtil.memoized(SerdeJsonCodec::createMappers);
 
     @Override
-    public String toJson(Object o) {
+    public String toJson(@Nullable Object o) {
         try {
             return objectMapper().writeValueAsString(o);
         } catch (Exception e) {
