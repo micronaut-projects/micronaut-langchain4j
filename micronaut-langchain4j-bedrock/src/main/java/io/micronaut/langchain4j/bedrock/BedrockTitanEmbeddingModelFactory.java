@@ -21,6 +21,7 @@ import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.EachBean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Primary;
+import io.micronaut.context.annotation.Retain;
 
 /**
  * Factory for bedrock titan embedding model.
@@ -33,6 +34,7 @@ public class BedrockTitanEmbeddingModelFactory {
      * @return The embedding model.
      */
     @Context
+    @Retain(invalidatedBy = {"langchain4j.bedrock-titan", "langchain4j.bedrock"})
     @Bean(
         typed = EmbeddingModel.class
     )
@@ -48,6 +50,7 @@ public class BedrockTitanEmbeddingModelFactory {
      */
     @Primary
     @Context
+    @Retain(invalidatedBy = {"langchain4j.bedrock-titan", "langchain4j.bedrock"})
     @Bean(
         typed = EmbeddingModel.class
     )
