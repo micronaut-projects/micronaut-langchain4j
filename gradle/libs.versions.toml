@@ -67,18 +67,18 @@ nullaway = "0.14.3"
 [libraries]
 # TODO Remove when non vulnerable versions exist
 commons-compress = { module = 'org.apache.commons:commons-compress', version.ref = 'commons-compress'  }
-commons-lang3 = "3.22.0"
+commons-lang3 = { module = 'org.apache.commons:commons-lang3', version.ref = 'commons-lang3' }
 gson = { module = 'com.google.code.gson:gson', version.ref = 'gson' }
 grpc-netty-shaded = { module = 'io.grpc:grpc-netty-shaded', version.ref = 'grpc-netty-shaded' }
-jinjava = "2.8.5"
-tools-jackson-core = "3.3.0"
+jinjava = { module = "com.hubspot.jinjava:jinjava", version.ref = "jinjava"}
+tools-jackson-core = { module = 'tools.jackson.core:jackson-core', version.ref = 'tools-jackson-core' }
 apache-httpclient5 = { module = 'org.apache.httpcomponents.client5:httpclient5', version.ref = 'apache-httpclient5' }
 apache-httpcore5 = { module = 'org.apache.httpcomponents.core5:httpcore5', version.ref = 'apache-httpcore5' }
 apache-httpcore5-h2 = { module = 'org.apache.httpcomponents.core5:httpcore5-h2', version.ref = 'apache-httpcore5' }
-jackson-databind = "2.23.0"
+jackson-databind = { module = 'com.fasterxml.jackson.core:jackson-databind', version.ref = 'jackson-databind' }
 guava = { module = 'com.google.guava:guava', version.ref = 'guava' }
-opentelemetry-api = "1.68.0"
-jsoup = "1.24.1"
+opentelemetry-api = { module = 'io.opentelemetry:opentelemetry-api', version.ref = 'opentelemetry-api' }
+jsoup = { module = 'org.jsoup:jsoup', version.ref = 'jsoup' }
 org-json = { module = 'org.json:json', version.ref = 'org-json' }
 
 # Micronaut BOMS
@@ -90,14 +90,14 @@ micronaut-kotlin = { module = 'io.micronaut.kotlin:micronaut-kotlin-bom', versio
 micronaut-redis = { module = 'io.micronaut.redis:micronaut-redis-bom', version.ref = 'micronaut-redis' }
 micronaut-grpc = { module = 'io.micronaut.grpc:micronaut-grpc-bom', version.ref = 'micronaut-grpc' }
 micronaut-mongodb = { module = 'io.micronaut.mongodb:micronaut-mongo-bom', version.ref = 'micronaut-mongodb' }
-micronaut-opensearch = "2.2.0"
+micronaut-opensearch = { module = 'io.micronaut.opensearch:micronaut-opensearch-bom', version.ref = 'micronaut-opensearch' }
 micronaut-elasticsearch = { module = 'io.micronaut.elasticsearch:micronaut-elasticsearch-bom', version.ref = 'micronaut-elasticsearch' }
 micronaut-neo4j = { module = 'io.micronaut.neo4j:micronaut-neo4j-bom', version.ref = 'micronaut-neo4j' }
 micronaut-logging = { module = 'io.micronaut.logging:micronaut-logging-bom', version.ref = 'micronaut-logging' }
 micronaut-serde = { module = 'io.micronaut.serde:micronaut-serde-bom', version.ref = 'micronaut-serde' }
-micronaut-sql = "7.2.1"
-micronaut-micrometer = "6.1.2"
-micronaut-security = "5.5.2"
+micronaut-sql = { module = 'io.micronaut.sql:micronaut-sql-bom', version.ref = 'micronaut-sql' }
+micronaut-micrometer = { module = 'io.micronaut.micrometer:micronaut-micrometer-bom', version.ref = 'micronaut-micrometer' }
+micronaut-security = { module = 'io.micronaut.security:micronaut-security-bom', version.ref = 'micronaut-security' }
 micronaut-oraclecloud = { module = 'io.micronaut.oraclecloud:micronaut-oraclecloud-bom', version.ref = 'micronaut-oraclecloud' }
 micronaut-oraclecloud-bmc-generativeaiinference = { module = 'io.micronaut.oraclecloud:micronaut-oraclecloud-bmc-generativeaiinference' }
 micronaut-sourcegen = { module = 'io.micronaut.sourcegen:micronaut-sourcegen-bom', version.ref = 'micronaut-sourcegen' }
@@ -169,8 +169,8 @@ boms-langchain4j-community = { module = "dev.langchain4j:langchain4j-community-b
 # Plugins
 gradle-micronaut = { module = "io.micronaut.gradle:micronaut-gradle-plugin", version.ref = "micronaut-gradle-plugin" }
 gradle-errorprone = { module = "net.ltgt.errorprone:net.ltgt.errorprone.gradle.plugin", version.ref = "errorprone-gradle-plugin" }
-error-prone-core = "2.52.0"
-nullaway = "0.14.3"
+error-prone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "error-prone-core" }
+nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
 
 [bundles]
 
