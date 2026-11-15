@@ -175,4 +175,4 @@ nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
 [bundles]
 
 [plugins]
-micronaut-build-shared-settings = { id = "io.micronaut.build.shared.settings", version = "8.2.1" }
+micronaut-build-shared-settings = { id = "io.micronaut.build.shared.settings", version = "8.1.2" }
