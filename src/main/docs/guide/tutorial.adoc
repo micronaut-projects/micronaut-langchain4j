@@ -1,0 +1,55 @@
+This tutorial builds an assistant that answers questions from your documents and calls your code, then tests it without a model server. It assumes the dependencies and the Ollama configuration of the <<quickStart, Quick Start>>.
+
+=== Define the AI service
+
+An <<aiService, AI service>> is an interface that Micronaut LangChain4j implements:
+
+snippet::example.micronaut.tutorial.KnowledgeAssistant[source="main"]
+
+<1> The name of the service selects the retrieval configured below, and `tools` gives it access to the tools.
+<2> The system message tells the model how to behave.
+<3> `Result` exposes the content retrieved for the answer alongside the answer.
+
+=== Add a tool
+
+A <<tools, tool>> is a bean with `@Tool` methods, which the model can ask to call:
+
+snippet::example.micronaut.tutorial.ReleaseTools[source="main"]
+
+<1> The tool is a regular bean, into which you can inject your services.
+<2> The description tells the model what the tool does.
+
+=== Retrieve from your documents
+
+Configure an embedding model, the ingestion of your documents and a content retriever. Both are named after the service, so that the service uses them:
+
+.Example Configuration
+[configuration]
+----
+langchain4j:
+  ollama:
+    embedding-model:
+      model-name: all-minilm
+  rag:
+    ingestion:
+      knowledge:
+        sources:
+          - classpath:docs
+    content-retrievers:
+      knowledge:
+        max-results: 3
+----
+
+The documents of the `src/main/resources/docs` directory are split, embedded and added to the in-memory embedding store when the application starts. See <<configuringRetrieval, Configuring Retrieval>> for the other options, and <<embeddingStores, Embedding Stores>> to keep the segments in a database.
+
+=== Test the assistant
+
+Inject the service like any bean. The test below uses a scripted chat model and an embedding model that returns the same embedding for every text, so it needs no model server and its result does not vary. See <<testing, Testing>> to evaluate the answers of a real model.
+
+snippet::example.micronaut.tutorial.KnowledgeAssistantTest[source="test"]
+
+<1> The documents of the test are ingested when the context starts.
+<2> The retriever named after the service returns the best segment.
+<3> The service is called like a regular method.
+<4> The ingested document was retrieved for the question.
+<5> The model asked for the tool, and answered from its result.
