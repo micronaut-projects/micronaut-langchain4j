@@ -56,4 +56,5 @@ embeddingStores:
   weaviate: Weaviate
 breaks: Breaking Changes
 repository: Repository
+devMode: Development Mode
 releaseHistory: Release History
